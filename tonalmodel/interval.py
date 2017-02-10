@@ -67,7 +67,7 @@ class IntervalType:
 class Interval(object):
     """
     Class that encapsulates the notions of a musical interval.
-    An interval is a diatonic measuse of distance between two diatonic pitches.  It is qualified by two attributes
+    An interval is a diatonic measure of distance between two diatonic pitches.  It is qualified by two attributes
     1) The number of letter steps between the two pitches
     2) A qualitative characterization of the sound of the distance, as given by IntervalType
     
@@ -156,7 +156,7 @@ class Interval(object):
         Constructor
         
         Args:
-          diatonic_distance: number of diatonic tones, cdefgab, covered by the interval (inclusive), origin 1
+          diatonic_distance: number of diatonic tones, 'cdefgab', covered by the interval (inclusive), origin 1
           interval_type: see class IntervalType, or one of the values IntervalType.Major, ...
         """
         if isinstance(interval_type, int):
@@ -190,7 +190,7 @@ class Interval(object):
         
         pitch_chromatic_distance = pitch_b.chromatic_distance - pitch_a.chromatic_distance         
         
-        # This is just a subtraction of (a_index, a_actave) - (b_index, b_octave)
+        # This is just a subtraction of (a_index, a_octave) - (b_index, b_octave)
         # this is origin 0
         tone_index_diff = pitch_b.diatonic_tone.diatonic_index - pitch_a.diatonic_tone.diatonic_index
         octave_diff = pitch_b.octave - pitch_a.octave
@@ -387,7 +387,7 @@ class Interval(object):
                                    IntervalType.short_notation(self.interval_type.value),
                                    abs(self.diatonic_distance) + 1)
 
-    # Regex used for parsing Interval sepcification.
+    # Regex used for parsing Interval specification.
     INTERVAL_TYPE = '(P|m|M|A|d)'
     INTERVAL_TYPE_NAME = 'IntervalType'
     INTERVAL_TYPE_TAG = '?P<' + INTERVAL_TYPE_NAME + '>'
