@@ -13,9 +13,9 @@ class BluesModality(Modality):
     This class represents major and minor blues modalities - scales with 6 tones over the 12 tone chromatic partition.
     """
     BLUES_MODALITIES = [
-                           ModalityType.MajorBlues, 
-                           ModalityType.MinorBlues,
-                           ]
+                        ModalityType.MajorBlues,
+                        ModalityType.MinorBlues,
+                        ]
     MODALITY_DEFINITION_MAP = {
         ModalityType.MajorBlues: ModalitySpec(ModalityType.MajorBlues, ['P:1', 'M:2', 'A:1', 'm:2', 'm:3',
                                                                         'M:2', 'm:3']),   # Ascending
