@@ -416,7 +416,7 @@ class TertianChordTemplate(ChordTemplate):
         return TertianChordTemplate.parse('t{0}'.format(
             ChordTemplate.SCALE_DEGREE_REVERSE_MAP[scale_degree])).create_chord(diatonic_tonality)
     
-    def create_chord(self, diatonic_tonality):
+    def create_chord(self, diatonic_tonality=None):
         return TertianChord(self, diatonic_tonality)  
         
     def __str__(self):
