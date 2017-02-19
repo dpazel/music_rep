@@ -22,7 +22,7 @@ class Observer(object):
         """
  
     @abstractmethod
-    def notification(self,  observable, message_type, message=None, data=None):
+    def notification(self, observable, message_type, message=None, data=None):
         """
         The method an observer must implement that is called whenever an event of interest happens to the
         observable.
