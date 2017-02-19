@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<!--  ref.: http://www.orchestralibrary.com/reftables/rang.html  -->
+<!--  ref.: http://www.dolmetsch.com/musictheory21.htm#slurstaccato  -->
+<InstrumentCatalog>
+  <Articulations>
+    <Articulation name="Staccato"/>
+    <Articulation name="Marcato"/>
+    <Articulation name="Tenuto"/>
+    <Articulation name="Legato"/>
+  </Articulations>
+  <InstrumentClasses>
+    <InstrumentClass name="Strings">
+      <InstrumentGroup>
+        <Instrument name="Violin">
+            <Range>
+                <Low>g:3</Low>
+                <High>a:7</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Viola">
+            <Range>
+                <Low>c:3</Low>
+                <High>e:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Cello">
+            <Range>
+                <Low>c:2</Low>
+                <High>c:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Double Bass">
+            <Range>
+                <Low>c:2</Low>
+                <High>c:5</High>
+            </Range>
+            <Transpose direction="down" interval="P:8"/>
+        </Instrument>
+      </InstrumentGroup>
+      <Articulations>
+        <Articulation name="Arco"/>
+        <Articulation name="Up-bow"/>
+        <Articulation name="Down-bow"/>
+        <Articulation name="Middle-bow"/>
+        <Articulation name="Jete"/>
+      </Articulations>
+    </InstrumentClass>
+    <InstrumentClass name="Woodwinds">
+      <InstrumentGroup>
+        <Instrument name="Piccolo">
+            <Range>
+                <Low>d:4</Low>
+                <High>c:7</High>
+            </Range>
+            <Transpose direction="up" interval="P:8"/>
+        </Instrument>
+        <InstrumentFamily name="Flute">
+            <Instrument name="Flute">
+                <Range>
+                    <Low>c:4</Low>
+                    <High>d:7</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Alto Flute" key="G">
+                <Range>
+                    <Low>c:4</Low>
+                    <High>c:7</High>
+                </Range>
+                <Transpose direction="down" interval="P:4"/>
+            </Instrument>
+        </InstrumentFamily>
+        <Instrument name="Oboe">
+            <Range>
+                <Low>bb3:3</Low>
+                <High>a:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="English Horn">
+            <Range>
+                <Low>b:3</Low>
+                <High>g:6</High>
+            </Range>
+            <Transpose direction="down" interval="P:5"/>
+        </Instrument>
+        <InstrumentFamily name="Clarinet">
+            <Instrument name="Clarinet" key="Bb">
+                <Range>
+                    <Low>e:3</Low>
+                    <High>c:7</High>
+                </Range>
+                <Transpose direction="down" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Clarinet" key="A">
+                <Range>
+                    <Low>e:3</Low>
+                    <High>c:7</High>
+                </Range>
+                <Transpose direction="down" interval="m:3"/>
+            </Instrument>
+            <Instrument name="Clarinet" key="D">
+                <Range>
+                    <Low>e:3</Low>
+                    <High>c:7</High>
+                </Range>
+                <Transpose direction="up" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Clarinet" key="Eb">
+                <Range>
+                    <Low>e:3</Low>
+                    <High>c:7</High>
+                </Range>
+                <Transpose direction="up" interval="m:3"/>
+            </Instrument>        
+            <Instrument name="Bass Clarinet" key="Bb">
+                <Range>
+                    <Low>Eb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:9"/>  <!-- Assumes treble clef only -->
+            </Instrument>
+        </InstrumentFamily>
+        <Instrument name="Basset Horn">
+            <Range>
+                <Low>c:3</Low>
+                <High>g:6</High>
+            </Range>
+            <Transpose direction="down" interval="P:5"/>
+        </Instrument>
+        <Instrument name="Bassoon">
+            <Range>
+                <Low>Bb:1</Low>
+                <High>Eb:5</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Contrabassoon">
+            <Range>
+                <Low>Bb:1</Low>
+                <High>Bb:4</High>
+            </Range>
+            <Transpose direction="down" interval="P:8"/>
+        </Instrument>
+        <InstrumentFamily name="Saxaphone">
+            <Instrument name="Soprano Saxaphone" key="Bb">
+                <Range>
+                    <Low>Bb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Alto Saxaphone" key="Eb">
+                <Range>
+                    <Low>Bb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:6"/>
+            </Instrument>
+            <Instrument name="Tenor Saxaphone" key="Bb">
+                <Range>
+                    <Low>Bb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:9"/>
+            </Instrument>
+            <Instrument name="Baritone Saxaphone" key="Bb">
+                <Range>
+                    <Low>Bb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:13"/>
+            </Instrument>
+            <Instrument name="Bass Saxaphone" key="Bb">
+                <Range>
+                    <Low>Bb:3</Low>
+                    <High>G:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:17"/>
+            </Instrument>
+        </InstrumentFamily>
+      </InstrumentGroup>
+      <Articulations>
+        <Articulation name="double tonguing"/>
+        <Articulation name="triple tonguing"/>
+        <Articulation name="flutter tonguing"/>
+      </Articulations>
+    </InstrumentClass>
+    <InstrumentClass name="Brass">
+      <InstrumentGroup>
+        <Instrument name="Horn" key="F">
+            <Range>
+                <Low>F#:2</Low>
+                <High>C:6</High>
+            </Range>
+            <Transpose direction="down" interval="P:5"/>
+        </Instrument>
+        <InstrumentFamily name="Tuba">
+            <Instrument name="Tuba" key="Bb">
+                <Range>
+                    <Low>D:1</Low>
+                    <High>F:4</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Tenor Tuba" key="Bb">
+                <Range>
+                    <Low>Bb:1</Low>
+                    <High>Bb:4</High>
+                </Range>
+                <Transpose direction="down" interval="M:2"/>    <!-- Bass Clef -->
+            </Instrument>
+            <Instrument name="Tenor Wagner Tuba" key="Bb">
+                <Range>
+                    <Low>C:3</Low>
+                    <High>G:5</High>
+                </Range>
+                <Transpose direction="down" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Bass Wagner Tuba" key="F">
+                <Range>
+                    <Low>F:2</Low>
+                    <High>D:5</High>
+                </Range>
+                <Transpose direction="down" interval="P:5"/>
+            </Instrument>
+        </InstrumentFamily>
+        <InstrumentFamily name="Trumpet">
+            <Instrument name="Trumpet">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Trumpet in Bb" key="Bb">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="down" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Trumpet in A" key="A">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="down" interval="m:3"/>
+            </Instrument>
+            <Instrument name="Trumpet in G" key="G">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="up" interval="P:5"/>
+            </Instrument>
+            <Instrument name="Trumpet in F" key="F">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="up" interval="P:4"/>
+            </Instrument>
+            <Instrument name="Trumpet in E" key="E">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="up" interval="M:3"/>
+            </Instrument>
+            <Instrument name="Trumpet in Eb" key="Eb">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="up" interval="m:3"/>
+            </Instrument>
+            <Instrument name="Trumpet in D" key="D">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>D:6</High>
+                </Range>
+                <Transpose direction="up" interval="M:2"/>
+            </Instrument>
+            <Instrument name="Piccolo Trumpet in Bb" key="Bb">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>G:5</High>
+                </Range>
+                <Transpose direction="up" interval="m:7"/>
+            </Instrument>
+            <Instrument name="Piccolo Trumpet in A" key="A">
+                <Range>
+                    <Low>F#:3</Low>
+                    <High>G:5</High>
+                </Range>
+                <Transpose direction="up" interval="M:6"/>
+            </Instrument>
+        </InstrumentFamily>
+        <InstrumentFamily name="Trombone">
+            <Instrument name="Bass Trombone">
+                <Range>
+                    <Low>Bb:1</Low>
+                    <High>Bb:4</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Contrabass Trombone">
+                <Range>
+                    <Low>Ab:0</Low>
+                    <High>C:5</High>
+                </Range>
+            </Instrument>
+        </InstrumentFamily>
+      </InstrumentGroup>
+    </InstrumentClass>
+    <InstrumentClass name="Percussion">
+      <InstrumentGroup>
+        <InstrumentFamily name="Timpini">
+            <Instrument name="Timpini 20">
+                <Range>
+                    <Low>F:3</Low>
+                    <High>C:4</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Timpini 23">
+                <Range>
+                    <Low>D:3</Low>
+                    <High>A:3</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Timpini 26=25">
+                <Range>
+                    <Low>Bb:2</Low>
+                    <High>F:3</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Timpini 29-28">
+                <Range>
+                    <Low>F:2</Low>
+                    <High>C:3</High>
+                </Range>
+            </Instrument>
+            <Instrument name="Timpini 32-30">
+                <Range>
+                    <Low>D:2</Low>
+                    <High>A:2</High>
+                </Range>
+            </Instrument>
+        </InstrumentFamily>
+        <Instrument name="Xylophone">
+             <Range>
+                <Low>F:3</Low>
+                <High>C:7</High>
+            </Range>
+            <Transpose direction="up" interval="P:8"/>
+        </Instrument>
+        <Instrument name="Marimba">
+            <Range>
+                <Low>C:2</Low>
+                <High>C:7</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Glockenspiel">
+            <Range>
+                <Low>G:3</Low>
+                <High>C:6</High>
+            </Range>
+            <Transpose direction="up" interval="P:15"/>
+        </Instrument>
+        <Instrument name="Vibraphone">
+            <Range>
+                <Low>F:3</Low>
+                <High>F:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Chimes">
+            <Range>
+                <Low>C:4</Low>
+                <High>F:5</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Guitar">
+            <Range>
+                <Low>E:3</Low>
+                <High>E:6</High>
+            </Range>
+            <Transpose direction="down" interval="P:8"/>
+        </Instrument>
+        <Instrument name="Harp">
+            <Range>
+                <Low>Cb:1</Low>
+                <High>F#:7</High>
+            </Range>
+        </Instrument>   
+      </InstrumentGroup>    
+    </InstrumentClass>
+    <InstrumentClass name="Keyboard">
+      <InstrumentGroup>
+        <Instrument name="Piano">
+            <Range>
+                <Low>A:0</Low>
+                <High>C:8</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Celesta">
+            <Range>
+                <Low>C:3</Low>
+                <High>C:7</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Harpsichord">
+            <Range>
+                <Low>F:1</Low>
+                <High>F:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Harmonium">
+            <Range>
+                <Low>F:1</Low>
+                <High>F:6</High>
+            </Range>
+        </Instrument>
+        <Instrument name="Pipe Organ">
+            <Range>
+                <Low>C:2</Low>
+                <High>C:7</High>
+            </Range>
+        </Instrument>
+      </InstrumentGroup>
+    </InstrumentClass>
+  </InstrumentClasses>
+</InstrumentCatalog>
