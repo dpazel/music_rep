@@ -23,7 +23,7 @@ class TempoEvent(Event):
         """
         Event.__init__(self, tempo, time)
         
-    def tempo(self, position):
+    def tempo(self):
         return self.object.tempo
     
     def __str__(self):
