@@ -112,12 +112,34 @@ class OrderedMap(object):
         
     def items(self):
         return self.od.items()
+
+    def floor(self, key):
+        key_index = self.floor_calc(key)
+        if key_index is None:
+            return None
+
+        alist = self.od.keys()
+        return alist[key_index]
+
+    def ceil(self, key):
+        key_index = self.floor_calc(key)
+
+        alist = self.od.keys()
+        if key_index is None:
+            if self.is_empty():
+                return None
+            if key < alist[0]:
+                return alist[0]
+            if key_index == len(alist) - 1:
+                return None
+        return None if key_index >= len(alist) - 1 else alist[key_index + 1]
+
         
     #  Think of it as searching on N semi-closed intervals instead of searching on points.
     #  For N points there are N-1 sections., indexed 0 --> N-2,
     #       with the interval being represented by the lower point index.
     #  The critical test is seeing if 'item' is within the interval that starts with midpoint
-    def floor(self, key):
+    def floor_calc(self, key):
         """
         For a key find the highest map key less than the given key.
         
@@ -135,7 +157,7 @@ class OrderedMap(object):
         num_sections = num_pts - 1
    
         if key >= alist[num_pts - 1]:
-            return alist[num_pts - 1]
+            return num_pts - 1
         if key < alist[0]:
             return None
     
@@ -153,7 +175,7 @@ class OrderedMap(object):
             else:
                 first = midpoint+1
     
-        return alist[found]   
+        return found
     
     def floor_entry(self, item):
         """
@@ -169,3 +191,18 @@ class OrderedMap(object):
         if floor_key is None:
             return None, None
         return floor_key, self.od[floor_key]
+
+    def ceil_entry(self, item):
+        """
+        For a key find the lowest map key greater than given key, and its mapped value.
+
+        Args:
+          item: the input key for which we want to find the ceil key and the mapped value.
+
+        Returns:
+          (ceil_key, mapped_value)  or (None, None) if ceil fails.
+        """
+        ceil_key = self.ceil(item)
+        if ceil_key is None:
+            return None, None
+        return ceil_key, self.od[ceil_key]

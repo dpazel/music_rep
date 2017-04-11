@@ -98,6 +98,16 @@ class TestOrderedMap(unittest.TestCase):
             self.assertTrue(key == answers[i - 2])
             mapto = om[key]
             print 'find {0} is {1} --> {2}'.format(i, key, mapto)
+
+    def test_ceil(self):
+        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(l)
+        answers = [2, 5, 5, 5, 7, 7, 10, 10, 10, None, None]
+        for i in range(1, 12):
+            key = om.ceil(i)
+            self.assertTrue(key == answers[i - 1])
+            mapto = None if key == None else om[key]
+            print 'find {0} is {1} --> {2}'.format(i, key, mapto)
             
     def test_get(self):
         l = [(10, 100), (5, 20), (7, 70), (2, 50)]
