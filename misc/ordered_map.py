@@ -114,7 +114,18 @@ class OrderedMap(object):
         self.reverse_dict = {}        
         
     def items(self):
+        """
+        Return all items in the ordered dictionary, each in tuple form (key, value).
+        :return:
+        """
         return self.od.items()
+
+    def value_items(self):
+        """
+        Return all items in the ordered dictionary, but only the value in same order as self.items().
+        :return:
+        """
+        return [x[1] for x in self.items()]
 
     def floor(self, key):
         key_index = self.floor_calc(key)
