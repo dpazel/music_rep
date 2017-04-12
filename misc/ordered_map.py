@@ -38,6 +38,9 @@ class OrderedMap(object):
     
     def __getitem__(self, index):
         return self.od[index]
+
+    def __len__(self):
+        return len(self.od)
     
     def is_empty(self):
         return len(self.od) == 0
