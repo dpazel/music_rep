@@ -57,6 +57,9 @@ class DiatonicPitch(object):
     @property
     def chromatic_distance(self):
         return self.__chromatic_distance
+
+    def enharmonics(self):
+        return DiatonicFoundation.map_to_diatonic_scale(self.chromatic_distance)
     
     def diatonic_distance(self):
         """
