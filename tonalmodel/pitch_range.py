@@ -64,11 +64,12 @@ class PitchRange(Range):
         Determines if given chromatic location is in bounds of range.
         
         Args:
-          pitch: spn text for pitch, e.g. 'c:4'
+          pitch: spn text for pitch, e.g. 'c:4' or DiatonticPitch object.
         Returns:
           boolean indicating if in bounds.
         """
-        return self.is_inbounds(DiatonicFoundation.get_chromatic_distance(DiatonicPitch.parse(pitch)))
+        p = DiatonicPitch.parse(pitch) if isinstance(pitch, str) else pitch
+        return self.is_inbounds(DiatonicFoundation.get_chromatic_distance(p))
     
     def find_lowest_placement_in_range(self, placement):
         """
