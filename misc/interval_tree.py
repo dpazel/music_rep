@@ -8,7 +8,7 @@ Note: Implementation is based on Cormen, et. al. Algorithms - in particular red-
 
 """
 
-from rb_node import RBNode
+from misc.rb_node import RBNode
 from fractions import Fraction
 from timemodel.position import Position
 import numbers 

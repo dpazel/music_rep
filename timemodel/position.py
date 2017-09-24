@@ -108,7 +108,7 @@ class Position(object):
             return self.position >= other
     
     def __add__(self, other):
-        from duration import Duration
+        from timemodel.duration import Duration
         from timemodel.offset import Offset
         if isinstance(other, Fraction) or isinstance(other, int):
             return Position(self.position + other)
@@ -128,7 +128,7 @@ class Position(object):
         return self + other       
         
     def __sub__(self, other):
-        from duration import Duration
+        from timemodel.duration import Duration
         from timemodel.offset import Offset
         if isinstance(other, Fraction) or isinstance(other, int):
             return Position(self.position - other)

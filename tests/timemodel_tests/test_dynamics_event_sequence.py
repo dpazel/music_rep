@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
         assert des.velocity(Position(1)) == Dynamics.FF
         assert des.velocity(Position(3, 2)) == Dynamics.FFF
         
-        print des
+        print(des)
         
     def test_crescendo_decrescendo_velocity(self):
         v_lo_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.P] 

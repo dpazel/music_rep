@@ -8,7 +8,7 @@ Purpose: Defines the OctatonicModality class, defining 8 tone scales.
     HW - which starts from the root tone to a semitone tone for the second tone.
 
 """
-from modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 
 
 class OctatonicModality(Modality):

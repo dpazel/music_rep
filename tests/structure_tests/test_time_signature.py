@@ -15,9 +15,9 @@ class TSTest(unittest.TestCase):
     
     def test_TSBeatType(self):
         tsbt = TSBeatType(TSBeatType.Eighth)
-        print tsbt
+        print(tsbt)
         f = tsbt.to_fraction()
-        print f
+        print(f)
         self.assertTrue(f == Fraction(1, 8))
         
         f = TSBeatType.get_fraction_for(TSBeatType.Sixteenth)

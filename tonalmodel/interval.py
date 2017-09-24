@@ -4,12 +4,11 @@ File: interval.py
 Purpose: Defines Interval and IntervalType classes.
 
 """
-from diatonic_tone import DiatonicTone
-from diatonic_pitch import DiatonicPitch
+from tonalmodel.diatonic_tone import DiatonicTone
+from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.diatonic_foundation import DiatonicFoundation
 
 import re
-from __builtin__ import staticmethod
 
 
 class IntervalType:

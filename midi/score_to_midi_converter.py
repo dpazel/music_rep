@@ -11,7 +11,7 @@ from fractions import Fraction
 
 from timemodel.tempo_event import TempoEvent
 from timemodel.time_signature_event import TimeSignatureEvent
-from mido.midifiles_meta import MetaMessage
+from mido.midifiles import MetaMessage
 
 from structure.dynamics import Dynamics
 from structure.tempo import Tempo
@@ -195,7 +195,9 @@ class ScoreToMidiConverter(object):
         
             # Sort the msgs list by tick time, and respect to off before on if same time
             msgs.extend(velocity_msgs)
-            msgs = sorted(msgs, cmp=lambda x, y: ScoreToMidiConverter.compare_note_msgs(x, y))
+
+            from functools import cmp_to_key
+            msgs = sorted(msgs, key=cmp_to_key(lambda x, y: ScoreToMidiConverter.compare_note_msgs(x, y)))
     
             prior_tick = 0
             for m in msgs:

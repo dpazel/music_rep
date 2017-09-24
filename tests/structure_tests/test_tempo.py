@@ -14,15 +14,15 @@ class TempoTest(unittest.TestCase):
 
     def test_tempo_type(self):
         ty = TempoType(TempoType.Grave)
-        print ty
-        print ty.get_range()
+        print(ty)
+        print(ty.get_range())
         self.assertTrue(str(ty) == 'Grave')
         self.assertTrue(ty.get_range().start_index == 25)
         self.assertTrue(ty.get_range().end_index == 45)
         
         ty = TempoType(TempoType.Lento)
-        print ty
-        print ty.get_range()
+        print(ty)
+        print(ty.get_range())
         self.assertTrue(str(ty) == 'Lento')
         self.assertTrue(ty.get_range().start_index == 45)
         self.assertTrue(ty.get_range().end_index == 60)
@@ -50,27 +50,27 @@ class TempoTest(unittest.TestCase):
         tempo = Tempo(50)
         self.assertTrue(tempo.beat_duration.duration == Fraction(1, 4))
         translate = tempo.effective_tempo(Duration(1, 2))
-        print translate
+        print(translate)
         self.assertTrue(translate == 25)
         
         translate = tempo.effective_tempo(Duration(1, 8))
-        print translate
+        print(translate)
         self.assertTrue(translate == 100)
         
         tempo = Tempo(50, Duration(3, 8))
         self.assertTrue(tempo.beat_duration.duration == Fraction(3, 8))
         translate = tempo.effective_tempo(Duration(1, 8))
-        print translate
+        print(translate)
         self.assertTrue(translate == 150)
         
         tempo = Tempo(30.5)
         self.assertTrue(tempo.tempo == 30.5)
         self.assertTrue(tempo.beat_duration.duration == Fraction(1, 4))
         translate = tempo.effective_tempo(Duration(1, 2))
-        print translate
+        print(translate)
         self.assertTrue(translate == 15.25)
         translate = tempo.effective_tempo(Duration(1, 8))
-        print translate
+        print(translate)
         self.assertTrue(translate == 61)
 
 if __name__ == "__main__":

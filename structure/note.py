@@ -6,7 +6,7 @@ Purpose: Defines the basic Note class that holds a pitch, duration, dots, tie in
 
 """
 
-from abstract_note import AbstractNote
+from structure.abstract_note import AbstractNote
 
 from timemodel.duration import Duration
 

@@ -6,9 +6,9 @@ Purpose: To compute pitch scales over a given range on the chromatic scale.
          It is call TonalScale rather than PitchScale, as it relates more to tonality than tone.
 
 """
-from chromatic_scale import ChromaticScale
-from pitch_range import PitchRange
-from diatonic_pitch import DiatonicPitch
+from tonalmodel.chromatic_scale import ChromaticScale
+from tonalmodel.pitch_range import PitchRange
+from tonalmodel.diatonic_pitch import DiatonicPitch
 
 
 class PitchScale(object):

@@ -5,7 +5,7 @@ File: whole_tone_modality.py
 Purpose: To define the whole tone modality type.
 
 """
-from modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 
 
 class WholeToneModality(Modality):

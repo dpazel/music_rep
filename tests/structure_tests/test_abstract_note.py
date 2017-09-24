@@ -19,18 +19,18 @@ class Test(unittest.TestCase):
         pass
 
     def test_simple_beam_reverse(self):
-        print 'test simple beam reverse'
+        print('test simple beam reverse')
         a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(3, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(3, 'c'), Duration(1, 8)) 
         d = Note(DiatonicPitch(3, 'd'), Duration(1, 8)) 
         beam = Beam([a, b, c, d]) 
         
-        print beam
+        print(beam)
         
         beam.reverse()
         
-        print beam
+        print(beam)
         
         notes = beam.get_all_notes()
         assert notes is not None
@@ -46,18 +46,18 @@ class Test(unittest.TestCase):
         assert notes[3].relative_position == Offset(3, 8)
         
     def test_simple_tuplet_reverse(self):
-        print 'test simple tuplet reverse'
+        print('test simple tuplet reverse')
         a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(3, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(3, 'c'), Duration(1, 8)) 
         d = Note(DiatonicPitch(3, 'd'), Duration(1, 8)) 
         tuplet = Tuplet(Duration(1, 8), 3, [a, b, c, d]) 
         
-        print tuplet
+        print(tuplet)
         
         tuplet.reverse()
         
-        print tuplet
+        print(tuplet)
         
         notes = tuplet.get_all_notes()
         assert notes is not None
@@ -73,7 +73,7 @@ class Test(unittest.TestCase):
         assert notes[3].relative_position == Offset(9, 32)
         
     def test_nested_structure_reverse(self):
-        print 'test nested structure reverse'
+        print('test nested structure reverse')
         a = Note(DiatonicPitch(4, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(4, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(4, 'c'), Duration(1, 8)) 
@@ -117,7 +117,7 @@ class Test(unittest.TestCase):
         assert notes[11].diatonic_pitch == DiatonicPitch(3, 'b')
         
     def test_ties_reverse(self):
-        print 'test ties reverse'
+        print('test ties reverse')
         a = Note(DiatonicPitch(3, 'b'), Duration(1, 8))  
         b = Note(DiatonicPitch(4, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(4, 'c'), Duration(1, 8)) 
@@ -161,7 +161,7 @@ class Test(unittest.TestCase):
         assert a1.is_tied_from and a1.tied_from == d1
         
     def test_absolute_position(self):
-        print 'test absolute position'
+        print('test absolute position')
         
         a = Note(DiatonicPitch(4, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(4, 'b'), Duration(1, 8)) 
@@ -194,7 +194,7 @@ class Test(unittest.TestCase):
                    ]
         index = 0
         for n in notes:
-            print '{0} abs. position = {1}'.format(n, n.get_absolute_position())
+            print('{0} abs. position = {1}'.format(n, n.get_absolute_position()))
             assert n.get_absolute_position() == results[index]
             index += 1
 

@@ -17,18 +17,18 @@ class TestEventSequence(unittest.TestCase):
         es = EventSequence()
         p1 = Event('str_1', Position(1, 2))
         es.add(p1)
-        print es
+        print(es)
         assert es.successor(p1) is None
         
         p2 = Event('str_2', Position(1))
         es.add(p2)
-        print es
+        print(es)
         assert es.successor(p1) == p2
         assert es.successor(p2) is None
         
         p3 = Event('str_2', Position(3, 4))
         es.add(p3)
-        print es
+        print(es)
         assert es.successor(p1) == p3
         assert es.successor(p3) == p2
         assert es.successor(p2) is None
@@ -41,7 +41,7 @@ class TestEventSequence(unittest.TestCase):
                   Event(8, Position(3, 2)) 
                   ]
         es = EventSequence(events)
-        print es
+        print(es)
         
         assert es.successor(events[0]) == events[1]
         assert es.successor(events[1]) == events[2]
@@ -59,9 +59,9 @@ class TestEventSequence(unittest.TestCase):
         assert es.last == events[4]
         
         es = EventSequence()
-        for i in reversed(xrange(len(events))):
+        for i in reversed(range(len(events))):
             es.add(events[i])
-        print es
+        print(es)
         
         assert es.successor(events[0]) == events[1]
         assert es.successor(events[1]) == events[2]
@@ -81,7 +81,7 @@ class TestEventSequence(unittest.TestCase):
         es = EventSequence()
         for i in [2, 4, 1, 3, 0]:
             es.add(events[i])
-        print es
+        print(es)
         
         assert es.successor(events[0]) == events[1]
         assert es.successor(events[1]) == events[2]
@@ -99,9 +99,9 @@ class TestEventSequence(unittest.TestCase):
         assert es.last == events[4]
         
         es.remove(events[3])
-        print 'remove object 7'
-        print es
-        print es.print_maps()
+        print('remove object 7')
+        print(es)
+        print(es.print_maps())
         
         assert es.successor(events[0]) == events[1]
         assert es.successor(events[1]) == events[2]
@@ -117,10 +117,10 @@ class TestEventSequence(unittest.TestCase):
         assert es.last == events[4]
         
         new_event = Event(23, Position(3, 4))
-        print 'update object 2 to 23'
+        print('update object 2 to 23')
 
         es.add(new_event)
-        print es
+        print(es)
         es.print_maps()       
         assert es.successor(events[0]) == events[1]
         assert es.successor(events[1]) == new_event
@@ -136,8 +136,8 @@ class TestEventSequence(unittest.TestCase):
         assert es.last == events[4]
         
         es.move_event(new_event, Position(1, 8))
-        print 'move (23, 3/4) to (23, 1/8)'
-        print es
+        print('move (23, 3/4) to (23, 1/8)')
+        print(es)
         es.print_maps()
         
         assert es.successor(events[0]) == new_event

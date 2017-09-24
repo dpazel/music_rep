@@ -5,7 +5,7 @@ File: secundal_chord_template.py
 Purpose: Class that defines a secundal chord in all its variations.
 
 """
-from chord_template import ChordTemplate
+from harmonicmodel.chord_template import ChordTemplate
 from tonalmodel.diatonic_tone import DiatonicTone
 from tonalmodel.interval import Interval, IntervalType
 from harmonicmodel.secundal_chord import SecundalChord
@@ -189,7 +189,7 @@ class SecundalChordTemplate(ChordTemplate):
     
     @staticmethod
     def get_chord_type(interval_list):
-        for k, v in SecundalChordTemplate.SECUNDAL_CHORD_TYPE_MAP.iteritems():
+        for k, v in list(SecundalChordTemplate.SECUNDAL_CHORD_TYPE_MAP.items()):
             if len(interval_list) == len(v):
                 same = True
                 for i in range(0, len(v)):

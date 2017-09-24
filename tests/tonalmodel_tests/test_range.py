@@ -11,15 +11,15 @@ class TestRange(unittest.TestCase):
         pass
 
     def test_create(self):
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
             Range(1.2, 5)
-        print context.exception
-        with self.assertRaises(Exception) as context:
+
+        with self.assertRaises(Exception):
             Range(8, 12.25)
-        print context.exception
-        with self.assertRaises(Exception) as context:
+
+        with self.assertRaises(Exception):
             Range(30, 25)
-        print context.exception
+
         
     def test_inbounds(self):
         ranger = Range(12, 40)

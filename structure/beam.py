@@ -5,9 +5,9 @@ File: beam.py
 Purpose: Defines the Beam note construct.
 
 """
-from abstract_note_collective import AbstractNoteCollective
-from note import Note
-from tuplet import Tuplet
+from structure.abstract_note_collective import AbstractNoteCollective
+from structure.note import Note
+from structure.tuplet import Tuplet
 
 from fractions import Fraction
 from timemodel.duration import Duration

@@ -18,7 +18,7 @@ class TestInterval(unittest.TestCase):
         int_interval = Interval(5, 9)
        
         assert int_interval == Interval(5, 9)
-        assert int_interval == Interval(5l, 9l)
+
         assert int_interval != Interval(5, 9, BoundaryPolicy.Closed)
         assert int_interval == Interval(5, 9, BoundaryPolicy.HI_Open)
         assert int_interval != Interval(4, 7)

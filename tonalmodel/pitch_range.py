@@ -5,9 +5,9 @@ File: pitch_range.py
 Purpose: defines an inclusive chromatic pitch range specified either by chromatic indices or locations. 
 
 """
-from range import Range
+from tonalmodel.range import Range
 from tonalmodel.chromatic_scale import ChromaticScale
-from diatonic_foundation import DiatonicFoundation
+from tonalmodel.diatonic_foundation import DiatonicFoundation
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
 

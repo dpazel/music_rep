@@ -34,7 +34,7 @@ class TestChromaticScale(unittest.TestCase):
         for i in range(12, 47):
             location = ChromaticScale.index_to_location(i)
             logging.info(location)
-            assert location[0] == i / 12 and location[1] == i % 12
+            assert location[0] == i // 12 and location[1] == i % 12
             
     def test_scale(self):
         scale = ChromaticScale.get_chromatic_scale(ChromaticScale.parse_notation("0:9"),

@@ -5,7 +5,7 @@ File: tertian_chord.py
 Purpose: Defines a class to represent a tertian chord
 
 """
-from chord import Chord
+from harmonicmodel.chord import Chord
 from tonalmodel.interval import Interval
 from tonalmodel.diatonic_pitch import DiatonicPitch
 

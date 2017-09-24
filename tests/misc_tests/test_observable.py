@@ -42,7 +42,7 @@ class MyObserver(Observer):
         return self.__last_observed
     
     def notification(self, observable, message_type, message=None, data=None):
-        print 'Observer {0} saw value Updated to {1} in \'{2}\''.format(self.name, data, observable.name)
+        print('Observer {0} saw value Updated to {1} in \'{2}\''.format(self.name, data, observable.name))
         self.__last_observed = data
         
 

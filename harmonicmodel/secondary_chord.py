@@ -5,7 +5,7 @@ File: secondary_chord.py
 Purpose: Represents and instance of a secondary chord.
 
 """
-from chord import Chord
+from harmonicmodel.chord import Chord
 from tonalmodel.tonality import Tonality
 from harmonicmodel.tertian_chord_template import TertianChordTemplate, TertianChordType
 from tonalmodel.modality import ModalityType

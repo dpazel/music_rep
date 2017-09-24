@@ -18,12 +18,12 @@ class Test(unittest.TestCase):
         
         for key in whole_tone_modality.get_valid_root_tones():
             scale = whole_tone_modality.get_tonal_scale(DiatonicTone(key))
-            print '{0} scale for {1} is [{2}]'.format(whole_tone_modality.get_modality_name, key,
-                                                      ', '.join(dt.diatonic_symbol for dt in scale))
+            print('{0} scale for {1} is [{2}]'.format(whole_tone_modality.get_modality_name, key,
+                                                      ', '.join(dt.diatonic_symbol for dt in scale)))
             
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == whole_tone_modality.incremental_intervals
-        print 'End test_whole_tone_key'
+        print('End test_whole_tone_key')
 
 if __name__ == "__main__":
     unittest.main()

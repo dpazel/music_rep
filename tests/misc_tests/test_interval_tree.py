@@ -26,11 +26,11 @@ class TestInterval(unittest.TestCase):
         pass
 
     def test_simple_tree(self):
-        print 'simple tree text'
+        print('simple tree text')
         tree = IntervalTree()
         tree.put(Interval(4,   7),        MyObject(1))
         tree.put(Interval(6.0, 7.000001), MyObject(1))
-        print tree
+        print(tree)
     
         result = tree.query_point(5.9)
         assert result
@@ -49,7 +49,7 @@ class TestInterval(unittest.TestCase):
         assert result[0].interval == Interval(6.0, 7.000001)
 
     def test_duplicate_interval(self):
-        print 'test duplicate interval'
+        print('test duplicate interval')
         tree = IntervalTree()
         tree.put(Interval(4.0, 7.0),  MyObject(1))   
         tree.put(Interval(4.0, 7.0),  MyObject(1))
@@ -62,27 +62,27 @@ class TestInterval(unittest.TestCase):
         assert result[1].interval == Interval(4.0, 7.0)
         assert result[0].value != result[1].value
         
-        print tree
+        print(tree)
         
     def test_problem_interval(self):
-        print 'test problem interval'
+        print('test problem interval')
         tree = IntervalTree()
         tree.put(Interval(0.0, .5),  MyObject(1))   
-        print tree
-        print '---'
+        print(tree)
+        print('---')
         tree.put(Interval(.5, 1.0),  MyObject(1))
-        print tree
-        print '---'
+        print(tree)
+        print('---')
         tree.put(Interval(1.0, 1.25),  MyObject(1))
-        print 'Tree for test problem interval'
-        print tree
+        print('Tree for test problem interval')
+        print(tree)
         
     def test_overlapping_stair(self):
         tree = IntervalTree()
         for i in range(1, 4):
             tree.put(Interval(i, i + 3), MyObject(i))
-        print 'Tree for test overlapping stair'
-        print tree
+        print('Tree for test overlapping stair')
+        print(tree)
         
         result = tree.query_point(1.5)
         assert result
@@ -115,49 +115,49 @@ class TestInterval(unittest.TestCase):
         result = tree.query_interval(Interval(2, 3))
         assert len(result) == 2
         assert sum(w.value.idd for w in result) == 3
-        print ', '.join((str(w) for w in result))
+        print(', '.join((str(w) for w in result)))
         
         result = tree.query_interval(Interval(3, 4))
         assert len(result) == 3
         assert sum(w.value.idd for w in result) == 6
-        print ', '.join((str(w) for w in result))
+        print(', '.join((str(w) for w in result)))
         
     def test_delete_node(self):
-        print 'Delete node test'
+        print('Delete node test')
         tree = IntervalTree()
         for i in range(1, 4):
             tree.put(Interval(i, i + 3), MyObject(i))
-        print tree
+        print(tree)
             
         result = tree.query_point(3.5)
         assert result
         assert len(result) == 3
-        print ', '.join(('[' + str(w.value.idd) + '] ' + str(w) for w in result))
+        print(', '.join(('[' + str(w.value.idd) + '] ' + str(w) for w in result)))
         assert sum(x.value.idd for x in result) == 6
         
-        print 'Deleting [{0}] {1}'.format(result[0].value.idd, result[0])
+        print('Deleting [{0}] {1}'.format(result[0].value.idd, result[0]))
         tree.delete(result[0])       
-        print tree
+        print(tree)
         
         result = tree.query_point(3.5)
         assert result
         assert len(result) == 2
         
         # single node delete test
-        print 'Single node delete test'
+        print('Single node delete test')
         tree = IntervalTree()
         tree.put(Interval(3, 5), MyObject(5))
-        print tree
+        print(tree)
         
         result = tree.query_point(3)
         assert len(result) == 1
         tree.delete(result[0])
-        print tree
+        print(tree)
         result = tree.query_point(3)
         assert len(result) == 0
         
     def test_delete_with_one_child(self):
-        print 'Test delete with one child'
+        print('Test delete with one child')
         tree = IntervalTree()
         tree.put(Interval(15, 30), MyObject(1))
         tree.put(Interval(5, 10), MyObject(2))
@@ -168,7 +168,7 @@ class TestInterval(unittest.TestCase):
         tree.put(Interval(23, 50), MyObject(6))      
         
         # 20 should have a right node only
-        print tree
+        print(tree)
         result = tree.query_point(20)
         f = None
         for r in result:
@@ -180,7 +180,7 @@ class TestInterval(unittest.TestCase):
         assert f.rb_node.right != tree.nil
         
         tree.delete(f)
-        print tree
+        print(tree)
         result = tree.query_point(20)
         f = None
         for r in result:
@@ -190,7 +190,7 @@ class TestInterval(unittest.TestCase):
         assert not f
         
     def test_delete_with_two_child(self):
-        print 'Test delete with two children'
+        print('Test delete with two children')
         tree = IntervalTree()
         tree.put(Interval(15, 30), MyObject(1))
         tree.put(Interval(5, 10), MyObject(2))
@@ -201,7 +201,7 @@ class TestInterval(unittest.TestCase):
         tree.put(Interval(23, 50), MyObject(6))      
         
         # 18 should have left and right
-        print tree
+        print(tree)
         result = tree.query_point(18)
         f = None
         for r in result:
@@ -213,7 +213,7 @@ class TestInterval(unittest.TestCase):
         assert f.rb_node.right != tree.nil
         
         tree.delete(f)
-        print tree
+        print(tree)
         
         result = tree.query_point(18)
         f = None
@@ -224,7 +224,7 @@ class TestInterval(unittest.TestCase):
         assert not f
         
     def test_delete_min_max(self):
-        print 'Test delete min max'
+        print('Test delete min max')
         tree = IntervalTree()
         tree.put(Interval(15, 30), MyObject(1))
         tree.put(Interval(5, 10), MyObject(2))
@@ -235,7 +235,7 @@ class TestInterval(unittest.TestCase):
         tree.put(Interval(23, 50), MyObject(6))      
         
         # 23 span is 23-50
-        print tree
+        print(tree)
         result = tree.query_point(23)
         f = None
         for r in result:
@@ -246,11 +246,11 @@ class TestInterval(unittest.TestCase):
         assert f.rb_node.key == 23
         
         tree.delete(f)
-        print tree
+        print(tree)
         assert tree.root.max == 40
         
     def test_match_interval(self):
-        print 'Test match interval'
+        print('Test match interval')
         
         tree = IntervalTree()
         tree.put(Interval(15, 30), MyObject(1))
@@ -268,8 +268,9 @@ class TestInterval(unittest.TestCase):
         
         assert result[0].interval == Interval(16, 30)   
         
-        print tree   
+        print(tree)
 
 
 if __name__ == "__main__":
     unittest.main()
+

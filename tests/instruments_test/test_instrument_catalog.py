@@ -56,7 +56,7 @@ class TestInstrumentCatalog(unittest.TestCase):
         
         articulations = inst.get_articulations()
         for artic in articulations:
-            print artic.name
+            print(artic.name)
         assert 'Arco' in [a.name for a in articulations]
         assert 'Legato' in [a.name for a in articulations]
         

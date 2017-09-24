@@ -178,20 +178,20 @@ class EventSequence(object):
         return ', '.join(str(x) for x in self.sequence_list)
     
     def print_maps(self):
-        print '---------'
+        print('---------')
         if self.__first:
-            print 'first={0}'.format(self.__first)
+            print('first={0}'.format(self.__first))
         else:
-            print 'first=None'
+            print('first=None')
         if self.__first:
-            print 'last={0}'.format(self.__last)
+            print('last={0}'.format(self.__last))
         else:
-            print 'last=None'
+            print('last=None')
         
-        print 'Successor:'    
+        print('Successor:')
         for i in self._successor.items():
-            print '   {0} --> {1}'.format(i[0].object if i[0] else 'None', i[1].object if i[1] else 'None')
+            print('   {0} --> {1}'.format(i[0].object if i[0] else 'None', i[1].object if i[1] else 'None'))
 
-        print 'Predecessor:'    
+        print('Predecessor:')
         for i in self._predecessor.items():
-            print '   {0} --> {1}'.format(i[0].object if i[0] else 'None', i[1].object if i[1] else 'None')
+            print('   {0} --> {1}'.format(i[0].object if i[0] else 'None', i[1].object if i[1] else 'None'))

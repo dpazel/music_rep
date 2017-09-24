@@ -5,7 +5,7 @@ File: instrument_family.py
 Purpose: Defines a genera for a particular instrument, usually based on key, e.g. Clarinet having Clarinet Bb, Eb, etc. 
 
 """
-from instrument_base import InstrumentBase
+from instruments.instrument_base import InstrumentBase
 
 
 class InstrumentFamily(InstrumentBase):

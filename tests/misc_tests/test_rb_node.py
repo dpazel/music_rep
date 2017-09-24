@@ -1,9 +1,15 @@
 import unittest
-from mock import Mock, MagicMock
+
 from misc.interval_tree import IntervalTree
 from misc.rb_node import RBNode
 from misc.interval import Interval
 from fractions import Fraction
+import sys
+
+if sys.version_info[0] < 3:
+    from mock import Mock, MagicMock
+else:
+    from unittest.mock import Mock, MagicMock
 
 
 class TestRBNode(unittest.TestCase):

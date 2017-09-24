@@ -31,7 +31,7 @@ class TestTempoEventSequence(unittest.TestCase):
                   TempoFunctionEvent(settings[4], Position(60)) 
                   ]
         tes = TempoEventSequence(events)
-        print tes
+        print(tes)
         
         assert tes.tempo(Position(0)) == settings[0].tempo
         assert tes.tempo(Position(10)) == settings[1].tempo
@@ -56,7 +56,7 @@ class TestTempoEventSequence(unittest.TestCase):
         event2 = TempoFunctionEvent(t_hi, Position(40))
         
         tes = TempoEventSequence([event0, event1, event2])
-        print tes
+        print(tes)
 
         assert tes.tempo(Position(0)) == t_low.tempo
         assert tes.tempo(Position(10)) == t_low.tempo
@@ -79,7 +79,7 @@ class TestTempoEventSequence(unittest.TestCase):
         event2 = TempoFunctionEvent(t_low, Position(40)) 
         
         tes = TempoEventSequence([event0, event1, event2])
-        print tes
+        print(tes)
         
         assert tes.tempo(Position(0)) == t_hi.tempo
         assert tes.tempo(Position(10)) == t_hi.tempo

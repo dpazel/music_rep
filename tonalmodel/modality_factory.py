@@ -7,9 +7,9 @@ Purpose: Defines the static class ModalityFactory and the static method to creat
 
 """
 
-from modality import ModalityType
-from diatonic_modality import DiatonicModality
-from whole_tone_modality import WholeToneModality
+from tonalmodel.modality import ModalityType
+from tonalmodel.diatonic_modality import DiatonicModality
+from tonalmodel.whole_tone_modality import WholeToneModality
 from tonalmodel.pentatonic_modality import PentatonicModality
 from tonalmodel.octatonic_modality import OctatonicModality
 from tonalmodel.blues_modality import BluesModality

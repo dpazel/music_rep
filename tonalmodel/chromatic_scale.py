@@ -115,7 +115,7 @@ class ChromaticScale(object):
         Returns:
             (o, i) form of absolute index
         """
-        return index / ChromaticScale.NUMBER_OF_SEMITONES, index % ChromaticScale.NUMBER_OF_SEMITONES
+        return index // ChromaticScale.NUMBER_OF_SEMITONES, index % ChromaticScale.NUMBER_OF_SEMITONES
     
     @staticmethod
     def chromatic_start_index():

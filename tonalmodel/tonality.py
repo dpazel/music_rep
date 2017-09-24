@@ -5,7 +5,7 @@ File: tonality.py
 Purpose: to define the Tonality class.
 
 """
-from modality_factory import ModalityFactory
+from tonalmodel.modality_factory import ModalityFactory
 
 
 class Tonality(object):
