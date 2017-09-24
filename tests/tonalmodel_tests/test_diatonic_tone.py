@@ -34,7 +34,7 @@ class TestDiatonicTone(unittest.TestCase):
                 l = letter + aug
                 tone = DiatonicFoundation.get_tone(l)
                 enharmonics = tone.enharmonics()
-                print '{0}: {1}'.format(l, enharmonics)
+                print('{0}: {1}'.format(l, enharmonics))
                 assert l in enharmonics
 
 if __name__ == "__main__":

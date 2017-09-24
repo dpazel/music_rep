@@ -5,7 +5,7 @@ File: diatonic_modality.py
 Purpose: Defines the DiatonicModality class, defining the major diatonic scales.
 
 """
-from modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 
 
 class DiatonicModality(Modality):

@@ -8,7 +8,7 @@ Purpose: Defines duration as a class type.
 
 from fractions import Fraction
 
-from position import Position
+from timemodel.position import Position
 
 
 class Duration(object):
@@ -195,7 +195,10 @@ class Duration(object):
         return self * other
     
     def __imul__(self, other):
-        return self.__mul__(other)   
+        return self.__mul__(other)
+
+    def __hash__(self):
+        return hash(str(self))
     
     def __str__(self):
         return str(self.duration)

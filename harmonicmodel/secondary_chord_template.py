@@ -5,9 +5,9 @@ File: secondary_chord_template.py
 Purpose: Represent the definition of a secondary chord.
 
 """
-from chord_template import ChordTemplate
+from harmonicmodel.chord_template import ChordTemplate
 from tonalmodel.diatonic_modality import DiatonicModality
-from secondary_chord import SecondaryChord
+from harmonicmodel.secondary_chord import SecondaryChord
 from tonalmodel.modality import ModalityType
 
 import re

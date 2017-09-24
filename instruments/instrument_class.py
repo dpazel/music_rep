@@ -6,7 +6,7 @@ Purpose: Defines a major category of instruments in the instrument category.  In
          is used to identity broad instrument types, e.g. stringw, woodwinds, bass, percussion, keyboards.
 
 """
-from instrument_base import InstrumentBase
+from instruments.instrument_base import InstrumentBase
 
 
 class InstrumentClass(InstrumentBase):

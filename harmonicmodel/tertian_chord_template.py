@@ -5,10 +5,10 @@ File: tertian_chord_template.py
 Purpose: Class that defines a tertian chord in all its variations.
 
 """
-from chord_template import ChordTemplate
+from harmonicmodel.chord_template import ChordTemplate
 from tonalmodel.interval import Interval, IntervalType
 from tonalmodel.diatonic_tone import DiatonicTone
-from tertian_chord import TertianChord
+from harmonicmodel.tertian_chord import TertianChord
 import re
 import logging
 
@@ -400,7 +400,7 @@ class TertianChordTemplate(ChordTemplate):
     
     @staticmethod
     def get_chord_type(interval_list):
-        for k, v in TertianChordTemplate.TERTIAN_CHORD_TYPE_MAP.iteritems():
+        for k, v in list(TertianChordTemplate.TERTIAN_CHORD_TYPE_MAP.items()):
             if len(interval_list) == len(v):
                 same = True
                 for i in range(0, len(v)):

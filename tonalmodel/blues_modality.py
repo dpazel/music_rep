@@ -5,7 +5,7 @@ File: blues_modality.py
 Purpose: to build a modality for the blues scale.
 
 """
-from modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 
 
 class BluesModality(Modality):

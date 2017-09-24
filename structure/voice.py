@@ -176,12 +176,12 @@ class Voice(Observer):
                 return []
             notes = self.get_notes_by_interval(interval)
             return_val = [n for n in notes if Voice._find_line_by_note(n) == line]
-            return_val.sort(key=lambda x: x.get_absolute_position)
+            return_val.sort(key=lambda x: x.get_absolute_position())
             return return_val 
         else:
             result = self.interval_tree.query_interval(interval)
             notes = [info.value for info in result]
-            notes.sort(key=lambda x: x.get_absolute_position)
+            notes.sort(key=lambda x: x.get_absolute_position())
             return notes
         
     def get_notes(self, start_position, end_position, line=None):
@@ -213,12 +213,12 @@ class Voice(Observer):
                 return []
             notes = self.get_notes_starting_in_interval(interval)
             return_val = [n for n in notes if Voice._find_line_by_note(n) == line]
-            return_val.sort(key=lambda x: x.get_absolute_position)
+            return_val.sort(key=lambda x: x.get_absolute_position())
             return return_val
         else:
             result = self.interval_tree.query_interval_start(interval)
             notes = [info.value for info in result]
-            notes.sort(key=lambda x: x.get_absolute_position)
+            notes.sort(key=lambda x: x.get_absolute_position())
             return notes 
 
     @staticmethod

@@ -18,24 +18,24 @@ class Test(unittest.TestCase):
         
         for key in octatonic_modality.get_valid_root_tones():
             scale = octatonic_modality.get_tonal_scale(DiatonicTone(key))
-            print '{0} scale for {1} is [{2}]'.format(octatonic_modality.get_modality_name, key,
-                                                      ', '.join(dt.diatonic_symbol for dt in scale))
+            print('{0} scale for {1} is [{2}]'.format(octatonic_modality.get_modality_name, key,
+                                                      ', '.join(dt.diatonic_symbol for dt in scale)))
             
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == octatonic_modality.incremental_intervals
-        print 'End test_HWOctatonic_key'
+        print('End test_HWOctatonic_key')
             
     def test_WH_Octatonic_key(self):
         octatonic_modality = OctatonicModality(ModalityType.WHOctatonic)
         
         for key in octatonic_modality.get_valid_root_tones():
             scale = octatonic_modality.get_tonal_scale(DiatonicTone(key))
-            print '{0} scale for {1} is [{2}]'.format(octatonic_modality.get_modality_name, key,
-                                                      ', '.join(dt.diatonic_symbol for dt in scale))
+            print('{0} scale for {1} is [{2}]'.format(octatonic_modality.get_modality_name, key,
+                                                      ', '.join(dt.diatonic_symbol for dt in scale)))
             
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == octatonic_modality.incremental_intervals
-        print 'End test_WHOctatonic_key'
+        print('End test_WHOctatonic_key')
 
 if __name__ == "__main__":
     unittest.main()

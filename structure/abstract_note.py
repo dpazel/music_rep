@@ -91,28 +91,28 @@ class AbstractNote(object):
     
     @staticmethod
     def print_structure(note, indent=0):
-        from note import Note
-        from beam import Beam
-        from beam import Tuplet
-        from line import Line
+        from structure.note import Note
+        from structure.beam import Beam
+        from structure.beam import Tuplet
+        from structure.line import Line
         if isinstance(note, Note):
-            print '{0}Note {1} off {2} f={3} {4}'.format(indent*' ', str(note), note.relative_position,
+            print('{0}Note {1} off {2} f={3} {4}'.format(indent*' ', str(note), note.relative_position,
                                                          note.contextual_reduction_factor,
-                                                         'T' if note.is_tied_to else '')
+                                                         'T' if note.is_tied_to else ''))
         elif isinstance(note, Beam):
-            print '{0}Beam dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
-                                                         note.contextual_reduction_factor)
+            print('{0}Beam dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
+                                                         note.contextual_reduction_factor))
             for n in note.sub_notes:
                 AbstractNote.print_structure(n, indent + 4)
         elif isinstance(note, Tuplet):
-            print '{0}Tuplet dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
-                                                           note.contextual_reduction_factor)
+            print('{0}Tuplet dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
+                                                           note.contextual_reduction_factor))
             for n in note.sub_notes:
                 AbstractNote.print_structure(n, indent + 4)
         elif isinstance(note, Line):
-            print '{0}Line dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
-                                                         note.contextual_reduction_factor)
+            print('{0}Line dur {1} off {2} f={3}'.format(indent*' ', note.duration, note.relative_position,
+                                                         note.contextual_reduction_factor))
             for n in note.sub_notes:
                 AbstractNote.print_structure(n, indent + 4)
         else:
-            print 'unknown type {0}'.format(type(note))
+            print('unknown type {0}'.format(type(note)))

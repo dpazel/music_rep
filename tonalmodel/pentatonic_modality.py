@@ -6,7 +6,7 @@ Purpose: Defines the PentatonicModality class, defining the range of
          pentatonic scales and their variations.
 
 """
-from modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 
 
 class PentatonicModality(Modality):

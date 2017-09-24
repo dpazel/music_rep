@@ -22,7 +22,7 @@ class TestTuplet(unittest.TestCase):
         note3 = Note(DiatonicPitch(4, 'e'), Duration(1, 8))
         tuplet = Tuplet(Duration(1, 8), 2, [note1, note2, note3]) 
         
-        print tuplet
+        print(tuplet)
         AbstractNote.print_structure(tuplet)
         
         notes = tuplet.get_all_notes()
@@ -46,7 +46,7 @@ class TestTuplet(unittest.TestCase):
                                                 Note(DiatonicPitch(3, 'e'), Duration(1, 8))])
         tuplet = Tuplet(Duration(1, 8), 2, [note1, sub_tuplet, note2]) 
         
-        print tuplet
+        print(tuplet)
         AbstractNote.print_structure(tuplet)
         
         notes = tuplet.get_all_notes()
@@ -73,9 +73,9 @@ class TestTuplet(unittest.TestCase):
         n_list = [Note(DiatonicPitch(3, 'c'), Duration(1, 8)), Note(DiatonicPitch(3, 'd'), Duration(1, 8))]
         add_beam = Beam(n_list) 
         
-        tuplet = Tuplet(Duration(1, 8), 2, [note1, add_beam, note2]) 
-        
-        print tuplet
+        tuplet = Tuplet(Duration(1, 8), 2, [note1, add_beam, note2])
+
+        print(tuplet)
         AbstractNote.print_structure(tuplet)
         
         notes = tuplet.get_all_notes()
@@ -93,7 +93,7 @@ class TestTuplet(unittest.TestCase):
         assert notes[2].relative_position == Offset(1, 16)
         
     def test_TBB_layers(self):
-        print 'start test_TBB_layers'
+        print('start test_TBB_layers')
         sub_sub_beam = Beam([Note(DiatonicPitch(2, 'c'), Duration(1, 8)), Note(DiatonicPitch(2, 'd'), Duration(1, 8))])
         sub_beam = Beam([Note(DiatonicPitch(3, 'c'), Duration(1, 8)), sub_sub_beam, Note(DiatonicPitch(3, 'd'),
                                                                                          Duration(1, 8))])
@@ -102,7 +102,7 @@ class TestTuplet(unittest.TestCase):
         
         note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
         note2 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))   
-        print '-----------'      
+        print('-----------')
         tuplet = Tuplet(Duration(1, 8), 2, [note1, sub_beam, note2]) 
         AbstractNote.print_structure(tuplet)
         
@@ -122,10 +122,10 @@ class TestTuplet(unittest.TestCase):
         assert tuplet.sub_notes[1].sub_notes[1].duration == Duration(3, 44)
         assert tuplet.sub_notes[1].sub_notes[1].relative_position == Offset(1, 22)
         
-        print 'end test_TBB_layers'
+        print('end test_TBB_layers')
         
     def test_tuplet_variations(self):
-        print 'test tuplet variations'
+        print('test tuplet variations')
              
         # 1. Beam with 3 1/8 notes
         note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
@@ -198,7 +198,7 @@ class TestTuplet(unittest.TestCase):
         assert notes[2].relative_position == Offset(1, 12)   
         
     def test_tie_break(self):
-        print 'test tie break'
+        print('test tie break')
         a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(3, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(3, 'c'), Duration(1, 8))
@@ -216,7 +216,7 @@ class TestTuplet(unittest.TestCase):
         assert not d.is_tied_from
         
     def test_dilation(self):
-        print 'test dilation'  
+        print('test dilation')
         
         a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(3, 'b'), Duration(1, 8)) 
@@ -236,7 +236,7 @@ class TestTuplet(unittest.TestCase):
         
         AbstractNote.print_structure(beam) 
         
-        print 'end test dilation' 
+        print('end test dilation')
 
 if __name__ == "__main__":
     unittest.main()

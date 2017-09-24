@@ -12,12 +12,12 @@ import os
 import logging
 
 from misc.singleton import Singleton
-from instrument_class import InstrumentClass
-from instrument_family import InstrumentFamily
-from Instrument import Instrument
-from articulation import Articulation
+from instruments.instrument_class import InstrumentClass
+from instruments.instrument_family import InstrumentFamily
+from instruments.Instrument import Instrument
+from instruments.articulation import Articulation
 from tonalmodel.interval import Interval
-from instrument_base import InstrumentBase
+from instruments.instrument_base import InstrumentBase
 
 
 class InstrumentCatalog(InstrumentBase, Singleton):
@@ -140,8 +140,8 @@ class InstrumentCatalog(InstrumentBase, Singleton):
 
     def print_catalog(self):
         for inst_class in self.inst_classes:
-            print inst_class
+            print(inst_class)
             for family in inst_class.families:
-                print '    ', family
+                print('    ', family)
                 for instrument in family.instruments:
-                    print '    ', '    ', instrument          
+                    print('    ', '    ', instrument)

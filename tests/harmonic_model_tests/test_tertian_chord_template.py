@@ -1,6 +1,5 @@
 import unittest
-from harmonicmodel.tertian_chord_template import TertianChordTemplate,\
-    TertianChordType
+from harmonicmodel.tertian_chord_template import TertianChordTemplate, TertianChordType
 
 from tonalmodel.modality import ModalityType
 from tonalmodel.tonality import Tonality
@@ -29,7 +28,7 @@ class TestTertianTemplateChord(unittest.TestCase):
             
             chord = chord_t.create_chord(diatonic_tonality)
             tones = chord.tones
-            print '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
+            print('{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type))
             
             i += 1
             
@@ -41,7 +40,7 @@ class TestTertianTemplateChord(unittest.TestCase):
             
             chord = chord_t.create_chord(diatonic_tonality)
             tones = chord.tones
-            print '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
+            print('{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type))
             
             i += 1
             
@@ -49,7 +48,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                  'e#', 'f#', 'g#']
         for t in tones:
             chord_t = TertianChordTemplate.parse(t)
-            print chord_t
+            print(chord_t)
             tone = chord_t.diatonic_basis
             cap_t = t[0:1].upper() + (t[1:2] if len(t) == 2 else '')
             assert cap_t == tone.diatonic_symbol
@@ -57,11 +56,11 @@ class TestTertianTemplateChord(unittest.TestCase):
         torsions = ['+9+b11', '+2', '+b2', '+#2']
         for t in torsions:
             template = TertianChordTemplate.parse('TIII' + t)
-            print template
+            print(template)
             
         template = TertianChordTemplate.parse('IVMaj7+b9@3')
         assert template
-        print template
+        print(template)
         assert template.inversion == 3
         
     def test_stationary_diatonic_tone_chords(self):
@@ -98,12 +97,12 @@ class TestTertianTemplateChord(unittest.TestCase):
                    }
         diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
  
-        for ctype, value in answers.iteritems():
+        for ctype, value in list(answers.items()):
             template = TertianChordTemplate.parse(ltr + ctype)
             chord = template.create_chord(diatonic_tonality)
         
             tones = chord.tones
-            print ', '.join(tone[0].diatonic_symbol for tone in tones)
+            print(', '.join(tone[0].diatonic_symbol for tone in tones))
             assert TestTertianTemplateChord.verify(tones, value), 'Fail #{0}, {1}'.format(
                 ctype, ', '.join(tone[0].diatonic_symbol for tone in tones))
             
@@ -141,12 +140,12 @@ class TestTertianTemplateChord(unittest.TestCase):
                    }
         diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
  
-        for ctype, value in answers.iteritems():
+        for ctype, value in list(answers.items()):
             template = TertianChordTemplate.parse(scale_degree + ctype)
             chord = template.create_chord(diatonic_tonality)
         
             tones = chord.tones
-            print ', '.join(tone[0].diatonic_symbol for tone in tones)
+            print(', '.join(tone[0].diatonic_symbol for tone in tones))
             assert TestTertianTemplateChord.verify(tones, value), \
                 'Fail #{0}, {1}'.format(scale_degree + ctype, ', '.join(tone[0].diatonic_symbol for tone in tones))
             
@@ -163,7 +162,7 @@ class TestTertianTemplateChord(unittest.TestCase):
             chord = template.create_chord(diatonic_tonality)
             
             tones = chord.tones
-            print ', '.join(tone[0].diatonic_symbol for tone in tones)
+            print(', '.join(tone[0].diatonic_symbol for tone in tones))
             assert TestTertianTemplateChord.verify(tones, chords[i]), \
                 'Fail #{0}, {1}'.format(ctype + '@' + str(i), ', '.join(tone[0].diatonic_symbol for tone in tones))
             
@@ -181,12 +180,12 @@ class TestTertianTemplateChord(unittest.TestCase):
                    }
         
         diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("Db"))
-        for t, value in answers.iteritems():
+        for t, value in list(answers.items()):
             template = TertianChordTemplate.parse(c_type + t)
             chord = template.create_chord(diatonic_tonality)
         
             tones = chord.tones
-            print ', '.join(tone[0].diatonic_symbol for tone in tones)
+            print(', '.join(tone[0].diatonic_symbol for tone in tones))
             assert TestTertianTemplateChord.verify(tones, value), \
                 'Fail #{0}, {1}'.format(c_type + '+' + t, ', '.join(tone[0].diatonic_symbol for tone in tones))
             
@@ -194,10 +193,10 @@ class TestTertianTemplateChord(unittest.TestCase):
         diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("Db"))
         template = TertianChordTemplate.parse('DbDom7+8')
         chord = template.create_chord(diatonic_tonality)
-        print chord
+        print(chord)
         
         tones = chord.tones
-        print ', '.join(tone[0].diatonic_symbol for tone in tones)
+        print(', '.join(tone[0].diatonic_symbol for tone in tones))
         assert TestTertianTemplateChord.verify(tones,
                                                ['Db', 'F', 'Ab', 'Cb', 'Db']), 'Fail #{0}, {1}'.format(
             'DbDom7+8', ', '.join(tone[0].diatonic_symbol for tone in tones))
@@ -205,12 +204,12 @@ class TestTertianTemplateChord(unittest.TestCase):
         template = TertianChordTemplate.parse('DbDom7+8@4')
         chord = template.create_chord(diatonic_tonality)
         tones = chord.tones
-        print ', '.join(tone[0].diatonic_symbol for tone in tones)
+        print(', '.join(tone[0].diatonic_symbol for tone in tones))
         assert TestTertianTemplateChord.verify(tones, ['Cb', 'Db', 'F', 'Ab', 'Db']), \
             'Fail #{0}, {1}'.format('DbDom7+8', ', '.join(tone[0].diatonic_symbol for tone in tones))
         
         tones = chord.sorted_tones()
-        print ', '.join(tone[0].diatonic_symbol for tone in tones)
+        print(', '.join(tone[0].diatonic_symbol for tone in tones))
         assert TestTertianTemplateChord.verify(tones, ['Db', 'F', 'Ab', 'Cb', 'Db']), \
             'Fail #{0}, {1}'.format('DbDom7+8', ', '.join(tone[0].diatonic_symbol for tone in tones))
 
@@ -221,7 +220,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                      TertianChordType.Min, TertianChordType.Dim]
         for i in range(1, 8):
             chord = TertianChordTemplate.get_triad(diatonic_tonality, i)       
-            print chord
+            print(chord)
             assert chord.chord_type.value == ret_types[i - 1]
             
     @staticmethod

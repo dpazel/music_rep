@@ -56,6 +56,9 @@ class BeatPosition(object):
         if other is None:
             return False
         return not self.__lt__(other)
+
+    def __hash__(self):
+        return hash(str(self))
     
     def __str__(self):
         return 'BP[{0}, {1}]'.format(self.measure_number, self.beat_number)

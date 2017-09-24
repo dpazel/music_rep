@@ -5,7 +5,7 @@ File: quartal_chord.py
 Purpose: Representing an instance of a quartal chord.
 
 """
-from chord import Chord
+from harmonicmodel.chord import Chord
 from tonalmodel.interval import Interval
 from tonalmodel.diatonic_pitch import DiatonicPitch
 

@@ -19,7 +19,7 @@ class NoteTest(unittest.TestCase):
     def test_simple_beam(self):
         note = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
         beam = Beam([note]) 
-        print beam
+        print(beam)
         assert beam.cardinality() == 1
         assert beam.get_all_notes()[0].diatonic_pitch == DiatonicPitch(4, 'c')
         
@@ -32,7 +32,7 @@ class NoteTest(unittest.TestCase):
         note1 = Note(DiatonicPitch(4, 'd'), Duration(1, 8), 1)
         note2 = Note(DiatonicPitch(4, 'e'), Duration(1, 16))
         beam = Beam([note0, note1, note2]) 
-        print beam
+        print(beam)
         assert beam.cardinality() == 3
         notes = beam.get_all_notes()
         assert notes[0].diatonic_pitch == DiatonicPitch(4, 'c')
@@ -57,7 +57,7 @@ class NoteTest(unittest.TestCase):
         beam.append(sub_beam)
         beam.append(Note(DiatonicPitch(4, 'g'), Duration(1, 8)))
         
-        print beam
+        print(beam)
         
         notes = beam.get_all_notes()
         assert len(notes) == 5
@@ -75,7 +75,7 @@ class NoteTest(unittest.TestCase):
         NoteTest.print_all_notes(notes)
         
     def test_insert_notes(self):
-        print 'test_insert_notes'
+        print('test_insert_notes')
         # same as test_nested_notes
         note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
         note2 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))
@@ -94,7 +94,7 @@ class NoteTest(unittest.TestCase):
         add_beam = Beam(n_list)   
         sub_beam.add(add_beam, 1)  
         
-        print beam
+        print(beam)
         AbstractNote.print_structure(beam)
         
         notes = beam.get_all_notes()
@@ -117,7 +117,7 @@ class NoteTest(unittest.TestCase):
         assert notes[6].relative_position == Offset(11, 32)
         
     def test_add_note_at_lower_level(self):
-        print 'start test_add_note_at_lower_level'
+        print('start test_add_note_at_lower_level')
         sub_beam = Beam([Note(DiatonicPitch(2, 'c'), Duration(1, 8)), Note(DiatonicPitch(2, 'd'), Duration(1, 8))])
         beam = Beam([Note(DiatonicPitch(3, 'c'), Duration(1, 8)), sub_beam, Note(DiatonicPitch(3, 'd'),
                                                                                  Duration(1, 8))])
@@ -141,7 +141,7 @@ class NoteTest(unittest.TestCase):
         assert beam.sub_notes[1].sub_notes[1].relative_position == Offset(1, 16)
         
     def test_tie_break(self):
-        print 'test tie break'
+        print('test tie break')
         a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))  
         b = Note(DiatonicPitch(3, 'b'), Duration(1, 8)) 
         c = Note(DiatonicPitch(3, 'c'), Duration(1, 8))
@@ -160,10 +160,10 @@ class NoteTest(unittest.TestCase):
 
     @staticmethod
     def print_all_notes(notes):
-        print '----------'
+        print('----------')
         for n in notes:
-            print '{0} at {1}'.format(n, n.relative_position)
-        print '----------'
+            print('{0} at {1}'.format(n, n.relative_position))
+        print('----------')
             
 
 if __name__ == "__main__":

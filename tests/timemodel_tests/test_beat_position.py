@@ -12,7 +12,7 @@ class Test(unittest.TestCase):
 
     def test_order(self):
         bp = BeatPosition(5, 2)
-        print bp
+        print(bp)
         self.assertTrue(str(bp) == 'BP[5, 2]')
         
         # ==

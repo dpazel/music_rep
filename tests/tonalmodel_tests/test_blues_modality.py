@@ -18,24 +18,24 @@ class Test(unittest.TestCase):
         
         for key in blues_modality.get_valid_root_tones():
             scale = blues_modality.get_tonal_scale(DiatonicTone(key))
-            print '{0} scale for {1} is [{2}]'.format(blues_modality.get_modality_name, key,
-                                                      ', '.join(dt.diatonic_symbol for dt in scale))
+            print('{0} scale for {1} is [{2}]'.format(blues_modality.get_modality_name, key,
+                                                      ', '.join(dt.diatonic_symbol for dt in scale)))
             
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == blues_modality.incremental_intervals
-        print 'End test_major_blues_key'
+        print('End test_major_blues_key')
             
     def test_minor_blues_key(self):
         blues_modality = BluesModality(ModalityType.MinorBlues)
         
         for key in blues_modality.get_valid_root_tones():
             scale = blues_modality.get_tonal_scale(DiatonicTone(key))
-            print '{0} scale for {1} is [{2}]'.format(blues_modality.get_modality_name, key,
-                                                      ', '.join(dt.diatonic_symbol for dt in scale))
+            print('{0} scale for {1} is [{2}]'.format(blues_modality.get_modality_name, key,
+                                                      ', '.join(dt.diatonic_symbol for dt in scale)))
             
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == blues_modality.incremental_intervals
-        print 'End test_minor_blues_key'
+        print('End test_minor_blues_key')
 
 
 if __name__ == "__main__":

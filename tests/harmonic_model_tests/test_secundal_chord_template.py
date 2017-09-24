@@ -15,7 +15,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
         pass
 
     def test_simple_triads(self):
-        print 'test_simple_triads'
+        print('test_simple_triads')
         ltrs = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
         answers = ['C, D, E MajMaj',
                    'D, E, F MajMin',
@@ -34,12 +34,12 @@ class TestSecundalChordTemplate(unittest.TestCase):
             chord = chord_t.create_chord(diatonic_tonality)
             tones = chord.tones
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s
+            print(s)
             assert s == answers[i - 1], '{0} != {1}'.format(s, answers[i - 1])
             
             i += 1
         
-        print '-----'    
+        print('-----')
         ltrs = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii']
         i = 1
         for t in ltrs:
@@ -49,7 +49,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
             chord = chord_t.create_chord(diatonic_tonality)
             tones = chord.tones
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s
+            print(s)
             assert s == answers[i - 1], '{0} != {1}'.format(s, answers[i - 1])
             
             i += 1
@@ -68,10 +68,10 @@ class TestSecundalChordTemplate(unittest.TestCase):
                                                        'F#, G#, A# MajMaj', 'G#, A#, B MajMin']),
                  Tonality(ModalityType.MelodicMinor, DiatonicTone("Ab")): (['Cb'], ['Cb, Db, Eb MajMaj']),
                  Tonality(ModalityType.Major, DiatonicTone("C#")): (['B#'], ['B#, C#, D# MinMaj'])}
-        for tonality, tone_ltrs_answers in tones.iteritems():
+        for tonality, tone_ltrs_answers in list(tones.items()):
             for t, a in zip(tone_ltrs_answers[0], tone_ltrs_answers[1]):
                 chord_t = SecundalChordTemplate.parse('s' + t)
-                print chord_t
+                print(chord_t)
                 tone = chord_t.diatonic_basis
                 cap_t = t[0:1].upper() + (t[1:2] if len(t) == 2 else '')
                 assert cap_t == tone.diatonic_symbol
@@ -79,51 +79,51 @@ class TestSecundalChordTemplate(unittest.TestCase):
                 chord = chord_t.create_chord(tonality)
                 tones = chord.tones
                 s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-                print s
+                print(s)
                 assert s == a, '{0} != {1}'.format(s, a)
                 
     def test_special_chords(self):
-        print 'test_special_chords'
+        print('test_special_chords')
         triads = ['MajMaj', 'MajMin', 'MinMaj', 'MinMin']
         answers = ['C, D, E MajMaj', 'C, D, Eb MajMin', 'C, Db, Eb MinMaj', 'C, Db, Ebb MinMin']
         tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
         for triad, a in zip(triads, answers):
             chord_t = SecundalChordTemplate.parse('SC' + triad)
-            print chord_t
+            print(chord_t)
             chord = chord_t.create_chord(tonality)
             tones = chord.tones    
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s  
+            print(s)
             assert s == a, '{0} != {1}'.format(s, a)
         
         answers = ['A, B, C# MajMaj', 'A, B, C MajMin', 'A, Bb, C MinMaj', 'A, Bb, Cb MinMin']    
         for triad, a in zip(triads, answers):
             chord_t = SecundalChordTemplate.parse('Svi' + triad)
-            print chord_t
+            print(chord_t)
             chord = chord_t.create_chord(tonality)
             tones = chord.tones    
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s  
+            print(s)
             assert s == a, '{0} != {1}'.format(s, a)
             
     def test_Mm_4_chords(self):
-        print 'test_Mm_4_chords'
+        print('test_Mm_4_chords')
         chord_types = ['MMM', 'MMm', 'MmM', 'Mmm', 'mMM', 'mMm', 'mmM', 'mmm']
         answers = ['C, D, E, F# MMM', 'C, D, E, F MMm', 'C, D, Eb, F MmM', 'C, D, Eb, Fb Mmm', 'C, Db, Eb, F mMM',
                    'C, Db, Eb, Fb mMm', 'C, Db, Ebb, Fb mmM', 'C, Db, Ebb, Fbb mmm']
         tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
         for triad, a in zip(chord_types, answers):
             chord_t = SecundalChordTemplate.parse('SC' + triad)
-            print chord_t
+            print(chord_t)
             chord = chord_t.create_chord(tonality)
-            print chord
+            print(chord)
             tones = chord.tones    
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s  
+            print(s)
             assert s == a, '{0} != {1}'.format(s, a)           
             
     def test_inversion(self):
-        print 'test_inversion'
+        print('test_inversion')
         ctype = 'MMM'
         answers = ['C, D, E, F# MMM', 'D, C, E, F# MMM', 'E, C, D, F# MMM', 'F#, C, D, E MMM'
                    ]
@@ -135,7 +135,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
             
             tones = chord.tones
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
-            print s  
+            print(s)
             assert s == a, '{0} != {1}'.format(s, a)
             
 

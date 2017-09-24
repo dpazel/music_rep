@@ -100,12 +100,12 @@ class TestScore(unittest.TestCase):
         voice_note_map = score.get_notes_by_wnt_interval(Interval(Position(1, 4), Position(3, 4)))
         assert voice_note_map
         for (k, v) in voice_note_map.items():
-            print k
+            print(k)
             for (k1, v1) in v.items():
-                print '{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1))
+                print('{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1)))
                 
         cvoice_map = voice_note_map.get(clarinet_instrument_voice)
-        cvoices = cvoice_map.keys()
+        cvoices = list(cvoice_map.keys())
         assert cvoice_map
         assert cvoices[0] in cvoice_map
         cnotes = cvoice_map[cvoices[0]]
@@ -114,7 +114,7 @@ class TestScore(unittest.TestCase):
         assert TestScore.has_pitch(cnotes, DiatonicPitch.parse('C:5'))
         
         vvoice_map = voice_note_map.get(violin_instrument_voice)
-        vvoices = vvoice_map.keys()
+        vvoices = list(vvoice_map.keys())
         assert vvoice_map
         assert vvoices[0] in vvoice_map
         vnotes = vvoice_map[vvoices[0]]
@@ -126,12 +126,12 @@ class TestScore(unittest.TestCase):
         voice_note_map = score.get_notes_starting_in_wnt_interval(Interval(Position(3, 8), Position(3, 4)))
         assert voice_note_map
         for (k, v) in voice_note_map.items():
-            print k
+            print(k)
             for (k1, v1) in v.items():
-                print '{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1))
+                print('{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1)))
                 
         cvoice_map = voice_note_map.get(clarinet_instrument_voice)
-        cvoices = cvoice_map.keys()
+        cvoices = list(cvoice_map.keys())
         assert cvoice_map
         assert cvoices[0] in cvoice_map
         cnotes = cvoice_map[cvoices[0]]
@@ -139,7 +139,7 @@ class TestScore(unittest.TestCase):
         assert TestScore.has_pitch(cnotes, DiatonicPitch.parse('C:5'))
         
         vvoice_map = voice_note_map.get(violin_instrument_voice)
-        vvoices = vvoice_map.keys()
+        vvoices = list(vvoice_map.keys())
         assert vvoice_map
         assert vvoices[0] in vvoice_map
         vnotes = vvoice_map[vvoices[0]]
@@ -149,23 +149,22 @@ class TestScore(unittest.TestCase):
         assert TestScore.has_pitch(vnotes, DiatonicPitch.parse('F:4'))
         
         duration = score.duration
-        print 'full wnt duration = {0}'.format(duration)
+        print('full wnt duration = {0}'.format(duration))
         assert duration == Duration(1, 1)
         
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
             score.beat_duration
-        self.assertTrue('sequences must be non-empty' in context.exception.message)
         
         # 3/4 TS + 60 beats per minute, 1 beat == 1 sec
         score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))
         score.time_signature_sequence.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4)), Position(0)))
         bp_duration = score.beat_duration
-        print 'full beat duration = {0}'.format(bp_duration)   
+        print('full beat duration = {0}'.format(bp_duration))
         
         assert bp_duration == BeatPosition(1, 1)   
         
         real_duration = score.real_duration 
-        print 'real duration = {0}'.format(real_duration)  
+        print('real duration = {0}'.format(real_duration))
         assert real_duration == 4000
         
     @staticmethod

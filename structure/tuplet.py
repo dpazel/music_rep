@@ -7,8 +7,8 @@ Purpose: Defines Tuplet note construct
 
 @author: donald p pazel
 """
-from abstract_note_collective import AbstractNoteCollective
-from note import Note
+from structure.abstract_note_collective import AbstractNoteCollective
+from structure.note import Note
 from timemodel.duration import Duration
 
 
@@ -79,7 +79,7 @@ class Tuplet(AbstractNoteCollective):
         Only added beams incur a reduction factor of 1/2
         For collective notes, always apply the factor.
         """
-        from beam import Beam
+        from structure.beam import Beam
         if note.parent is not None:
             raise Exception('Cannot add note already assigned a parent')
         if index < 0 or index > len(self.sub_notes):

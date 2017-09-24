@@ -6,7 +6,7 @@ Purpose: Defines a particular instrument.
 
 """
 from tonalmodel.diatonic_pitch import DiatonicPitch
-from instrument_base import InstrumentBase
+from instruments.instrument_base import InstrumentBase
 
 
 class Instrument(InstrumentBase):

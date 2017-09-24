@@ -95,7 +95,7 @@ class OrderedMap(object):
                 raise Exception('Cannot merge OrderedMap from type {0}'.format(type(inputt)))  
             
     def copy(self):
-        return OrderedMap(self.od.items())     
+        return OrderedMap(list(self.od.items()))
     
     def update(self, other_dict):
         self.od.update(other_dict) 
@@ -132,13 +132,13 @@ class OrderedMap(object):
         if key_index is None:
             return None
 
-        alist = self.od.keys()
+        alist = list(self.od.keys())
         return alist[key_index]
 
     def ceil(self, key):
         key_index = self.floor_calc(key)
 
-        alist = self.od.keys()
+        alist = list(self.od.keys())
         if key_index is None:
             if self.is_empty():
                 return None
@@ -166,7 +166,7 @@ class OrderedMap(object):
         if self.is_empty():
             return None
                 
-        alist = self.od.keys()
+        alist = list(self.od.keys())
         num_pts = len(alist)
         num_sections = num_pts - 1
    

@@ -7,8 +7,8 @@ Purpose: Describes a general Offset type that can be independent of time.
 """
 
 from fractions import Fraction
-from position import Position
-from duration import Duration
+from timemodel.position import Position
+from timemodel.duration import Duration
 
 
 class Offset(object):

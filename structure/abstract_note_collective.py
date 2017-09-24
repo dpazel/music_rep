@@ -6,7 +6,7 @@ Purpose: Defines a base class behind all note aggregation structues, e.g. Beam, 
 
 """
 
-from abstract_note import AbstractNote
+from structure.abstract_note import AbstractNote
 from timemodel.offset import Offset
 from timemodel.duration import Duration
 
@@ -78,7 +78,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         Args:
           incremental_factor: the multiplicative factor to apply downward.
         """
-        from note import Note
+        from structure.note import Note
         
         self.contextual_reduction_factor *= incremental_factor
         relpos = Offset(0)
@@ -101,7 +101,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         Args:
           abstract_note: the affected child note of self.sub_notes which causes the relocataion layout.
         """
-        from tuplet import Tuplet
+        from structure.tuplet import Tuplet
         try:
             index = self.sub_notes.index(abstract_note)
         except ValueError:
@@ -161,7 +161,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         return self.sub_notes[index - 1]
     
     def get_first_note(self):
-        from note import Note
+        from structure.note import Note
         if len(self.sub_notes) == 0:
             return None
         
@@ -171,7 +171,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         return n.get_first_note()
     
     def get_last_note(self):
-        from note import Note
+        from structure.note import Note
         if len(self.sub_notes) == 0:
             return None
         

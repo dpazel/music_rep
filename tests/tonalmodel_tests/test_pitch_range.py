@@ -12,19 +12,19 @@ class TestPitchRange(unittest.TestCase):
         pass
 
     def test_create(self):
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
             PitchRange(8, 96)
-        print context.exception
-        with self.assertRaises(Exception) as context:
-            PitchRange(9, 97)
-        print context.exception
 
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
+            PitchRange(9, 97)
+
+
+        with self.assertRaises(Exception):
             PitchRange('Ab:0', 'C:8')
-        print context.exception
-        with self.assertRaises(Exception) as context:
+
+        with self.assertRaises(Exception):
             PitchRange.create('A:0', 'C#:8')
-        print context.exception
+
         
     def test_pitch_inbounds(self):
         pr = PitchRange.create('C:4', 'B:4')
@@ -41,18 +41,18 @@ class TestPitchRange(unittest.TestCase):
             lowest = pr.find_lowest_placement_in_range(i)
             partition = ChromaticScale.index_to_location(lowest)[0]
             self.assertTrue(partition == answers[i], 'Assert failure {0} != {1}'.format(partition, answers[i]))
-            print i, partition
+            print(i, partition)
             
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
             pr.find_lowest_placement_in_range(-1)
-        print context.exception
-        with self.assertRaises(Exception) as context:
+
+        with self.assertRaises(Exception):
             pr.find_lowest_placement_in_range(12)
-        print context.exception
+
         
     def test_odd_ranges(self):
         pr = PitchRange.create('Cb:4', 'B#:4')
-        print str(pr)
+        print(str(pr))
         self.assertTrue(pr.start_index == 4 * 12 - 1)
         self.assertTrue(pr.end_index == 4 * 12 + 12)
 

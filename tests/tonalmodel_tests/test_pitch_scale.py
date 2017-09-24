@@ -15,7 +15,7 @@ def get_symbol(dt):
 def scale_check(pitch_scale, tonality):
     tones = tonality.annotation
     if len(pitch_scale.pitch_scale) == 0:
-        print ''
+        print()
     scale_pitch = pitch_scale.pitch_scale[0]
     tone_index = tones.index(scale_pitch.diatonic_tone)
 
@@ -41,11 +41,11 @@ class TestTonalScale(unittest.TestCase):
                 tonality = Tonality(modality_type, DiatonicFoundation.get_tone(validTone))               
                                 
                 if modality_type == 3 and str(validTone) == 'Db':
-                    print ''
+                    print()
         
                 pitch_scale = PitchScale(tonality, ranges)
-                print 'Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
-                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale)))
+                print('Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
+                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale))))
 
                 scale_check(pitch_scale, tonality)
                 
@@ -56,8 +56,8 @@ class TestTonalScale(unittest.TestCase):
                 tonality = Tonality(modality_type, DiatonicFoundation.get_tone(validTone))
         
                 pitch_scale = PitchScale(tonality, ranges)
-                print 'Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
-                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale)))
+                print('Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
+                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale))))
 
                 scale_check(pitch_scale, tonality)
                 
@@ -68,11 +68,11 @@ class TestTonalScale(unittest.TestCase):
                 tonality = Tonality(modality_type, DiatonicFoundation.get_tone(validTone))
                 
                 if modality_type == 0 and str(validTone) == 'D':
-                    print ''
+                    print()
         
                 pitch_scale = PitchScale(tonality, ranges)
-                print 'Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
-                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale)))
+                print('Scale {0} {1} on {2}: {3}'.format(validTone, str(ModalityType(modality_type)), ranges,
+                                                         ','.join(map(get_symbol, pitch_scale.pitch_scale))))
 
                 scale_check(pitch_scale, tonality)
 

@@ -6,7 +6,7 @@ Purpose: Defines a class to represent a secundal chord.  The chord details are d
          the class SecundalChordTemplate
 
 """
-from chord import Chord
+from harmonicmodel.chord import Chord
 from tonalmodel.interval import Interval, IntervalType
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.diatonic_tone import DiatonicTone

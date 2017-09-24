@@ -5,10 +5,10 @@ File: quartal_chord_template.py
 Purpose: Class that defines a quartal chord in all its variations.
 
 """
-from chord_template import ChordTemplate
+from harmonicmodel.chord_template import ChordTemplate
 from tonalmodel.diatonic_tone import DiatonicTone
 from tonalmodel.interval import Interval, IntervalType
-from quartal_chord import QuartalChord
+from harmonicmodel.quartal_chord import QuartalChord
 
 import re
 import logging
@@ -174,7 +174,7 @@ class QuartalChordTemplate(ChordTemplate):
     
     @staticmethod
     def get_chord_type(interval_list):
-        for k, v in QuartalChordTemplate.QUARTAL_CHORD_TYPE_MAP.iteritems():
+        for k, v in list(QuartalChordTemplate.QUARTAL_CHORD_TYPE_MAP.items()):
             if len(interval_list) == len(v):
                 same = True
                 for i in range(0, len(v)):

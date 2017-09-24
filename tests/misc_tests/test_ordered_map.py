@@ -20,7 +20,7 @@ class TestOrderedMap(unittest.TestCase):
         keys = om.keys()
         last_key = -1
         for k in keys:
-            print k, om[k]
+            print(k, om[k])
             self.assertTrue(last_key < k)
             last_key = k
             
@@ -29,7 +29,7 @@ class TestOrderedMap(unittest.TestCase):
         keys = om.keys()
         last_key = -1
         for k in keys:
-            print k, om[k]
+            print(k, om[k])
             self.assertTrue(last_key < k)
             last_key = k
             
@@ -38,7 +38,7 @@ class TestOrderedMap(unittest.TestCase):
         keys = om.keys()
         last_key = -Fraction(1, 1)
         for k in keys:
-            print k, om[k]
+            print(k, om[k])
             self.assertTrue(last_key < k.position)
             last_key = k.position
             
@@ -47,7 +47,7 @@ class TestOrderedMap(unittest.TestCase):
         keys = om.keys()
         last_key = -Fraction(1, 1)
         for k in keys:
-            print k, om[k]
+            print(k, om[k])
             self.assertTrue(last_key < k.duration)
             last_key = k.duration
             
@@ -58,7 +58,7 @@ class TestOrderedMap(unittest.TestCase):
         keys = om.keys()
         last_key = -1
         for k in keys:
-            print k, om[k]
+            print(k, om[k])
             self.assertTrue(last_key < k)
             last_key = k
             
@@ -97,7 +97,7 @@ class TestOrderedMap(unittest.TestCase):
             key = om.floor(i)
             self.assertTrue(key == answers[i - 2])
             mapto = om[key]
-            print 'find {0} is {1} --> {2}'.format(i, key, mapto)
+            print('find {0} is {1} --> {2}'.format(i, key, mapto))
 
     def test_ceil(self):
         l = [(10, 100), (5, 20), (7, 70), (2, 50)]
@@ -106,8 +106,8 @@ class TestOrderedMap(unittest.TestCase):
         for i in range(1, 12):
             key = om.ceil(i)
             self.assertTrue(key == answers[i - 1])
-            mapto = None if key == None else om[key]
-            print 'find {0} is {1} --> {2}'.format(i, key, mapto)
+            mapto = None if key is None else om[key]
+            print('find {0} is {1} --> {2}'.format(i, key, mapto))
             
     def test_get(self):
         l = [(10, 100), (5, 20), (7, 70), (2, 50)]

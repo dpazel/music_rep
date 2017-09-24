@@ -25,46 +25,46 @@ class TestInterval(unittest.TestCase):
         pitch_a = DiatonicPitch(4, 'C')
         pitch_b = DiatonicPitch(5, 'C')
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Perfect)
         assert interval.diatonic_distance == 7
         
         pitch_a = DiatonicPitch(4, 'C')
         pitch_b = DiatonicPitch(5, 'Cb')
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Diminished)
         assert interval.diatonic_distance == 7
 
         pitch_a = DiatonicPitch(4, 'C')
         pitch_b = DiatonicPitch(5, 'Dbb')        
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Diminished)
         assert interval.diatonic_distance == 8
         
         pitch_a = DiatonicPitch(4, 'C')
         pitch_b = DiatonicPitch(5, 'Cb')        
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Diminished)
         assert interval.diatonic_distance == 7
         
         pitch_a = DiatonicPitch(4, 'C')
         pitch_b = DiatonicPitch(4, 'B#')        
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Augmented)
         assert interval.diatonic_distance == 6
         
         interval = Interval(9, IntervalType(IntervalType.Diminished))
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Diminished)
         assert interval.diatonic_distance == 8
         
         interval = Interval(3, IntervalType(IntervalType.Minor))
         pitch = interval.get_start_pitch(DiatonicPitch(4, 'E'))
-        print pitch
+        print(pitch)
         assert str(pitch) == 'C#:4'
     
     def test_all_c_same_octave_itervals(self):
@@ -78,16 +78,14 @@ class TestInterval(unittest.TestCase):
                 a = DiatonicPitch(4, 'C')
                 b = DiatonicPitch(4, pitch + aug)
                 try:
-                    if example_count == 34:
-                        print
                     interval = Interval.create_interval(a, b)
-                    print '({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval)                   
+                    print('({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval))
                     assert b.diatonic_tone.diatonic_index - a.diatonic_tone.diatonic_index == interval.diatonic_distance
                     assert b.chromatic_distance - a.chromatic_distance == interval.chromatic_distance
                 except Exception as e:
-                    print 'Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                    print('Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e))
                     assert example_count in exception_items, \
-                        'ASSERT ERROR ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                        'ASSERT ERROR ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e)
                     
     def test_all_g_same_octave_itervals(self):
         pitches = list('GABCDEF')
@@ -104,7 +102,7 @@ class TestInterval(unittest.TestCase):
                 b = DiatonicPitch(octave, pitch + aug)
                 try:
                     interval = Interval.create_interval(a, b)
-                    print '({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval) 
+                    print('({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval))
                     
                     dist = b.diatonic_tone.diatonic_index - a.diatonic_tone.diatonic_index
                     if dist < 0:
@@ -112,9 +110,9 @@ class TestInterval(unittest.TestCase):
                     assert dist == interval.diatonic_distance
                     assert b.chromatic_distance - a.chromatic_distance == interval.chromatic_distance
                 except Exception as e:
-                    print 'Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                    print('Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e))
                     assert example_count in exception_items, \
-                        'ASSERT ERROR ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                        'ASSERT ERROR ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e)
                     
     def test_all_c_octave_up_itervals(self):
         pitches = list('CDEFGAB')
@@ -129,11 +127,11 @@ class TestInterval(unittest.TestCase):
                 try:
                     interval = Interval.create_interval(a, b)
                     assert b.chromatic_distance - a.chromatic_distance == interval.chromatic_distance
-                    print '({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval)
+                    print('({0}): {1}, {2}) --> {3}'.format(example_count, a, b, interval))
                 except Exception as e:
-                    print 'Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                    print('Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e))
                     assert example_count in exception_items, \
-                        'Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e.message)
+                        'Exception ({0}): ({1}, {2}) : {3}'.format(example_count, a, b, e)
 
     def test_upper_pitch(self):
         pitch = DiatonicPitch(4, 'C')
@@ -150,7 +148,7 @@ class TestInterval(unittest.TestCase):
                         continue
                 interval = Interval(i, interval_type)
                 p = interval.get_end_pitch(pitch)
-                print p
+                print(p)
                 assert p.diatonic_distance() == 4 * 7 + 0 + (i - 1)
 
     def test_lower_pitch(self):
@@ -172,12 +170,12 @@ class TestInterval(unittest.TestCase):
                     p = interval.get_start_pitch(pitch)
                 except:
                     e = sys.exc_info()[0]
-                    print 'exception {0} for interval i={1} interval={2} pitch={3}'.format(e, i, interval_type, pitch)
+                    print('exception {0} for interval i={1} interval={2} pitch={3}'.format(e, i, interval_type, pitch))
                     raise Exception('exception {0} for creating interval i={1} type={2} pitch={3}'.format(e, i,
                                                                                                           interval_type,
                                                                                                           pitch))
 
-                print p
+                print(p)
                 assert p.diatonic_distance() == 4 * 7 + 0 - (i - 1)
 
     def test_upper_tone_non_C(self):
@@ -194,9 +192,9 @@ class TestInterval(unittest.TestCase):
                     if interval_type == IntervalType(IntervalType.Perfect):
                         continue
                 interval = Interval(i, interval_type)
-                print interval
+                print(interval)
                 p = interval.get_end_pitch(pitch)
-                print p
+                print(p)
                 assert p.diatonic_distance() == 4 * 7 + 2 + (i - 1), \
                     'dist {0} does not match computation {1} on {2}'.format(p.diatonic_distance(), 4 * 7 + 0 + (i - 1),
                                                                             interval)
@@ -260,7 +258,7 @@ class TestInterval(unittest.TestCase):
             
                 interval = Interval(i, interval_type)
                 semitones = interval.semitones()
-                print '{0} has {1} semitones'.format(interval, semitones)
+                print('{0} has {1} semitones'.format(interval, semitones))
                 assert semitones == answers[test_index], \
                     'semitones {0} != {1}  interval {2}'.format(semitones, answers[test_index], interval)
                 test_index += 1
@@ -269,7 +267,7 @@ class TestInterval(unittest.TestCase):
         dta = DiatonicPitch(3, 'A')
         dtb = DiatonicPitch(4, 'D')
         interval = Interval.create_interval(dta, dtb)
-        print interval
+        print(interval)
         assert interval.semitones() == 5, '{0} != 5'.format(interval.semitones())  
         
     def test_various(self):
@@ -277,12 +275,12 @@ class TestInterval(unittest.TestCase):
         dtb = DiatonicPitch(3, 'C')
         interval = Interval.create_interval(dta, dtb)
         semitones = interval.semitones()
-        print 'Interval "{0}" based on {1} and {2} has {3} semitones'.format(interval, dta, dtb, semitones)
+        print('Interval "{0}" based on {1} and {2} has {3} semitones'.format(interval, dta, dtb, semitones))
         
         # get a major 3rd pitch
         interval = Interval.create_interval(DiatonicPitch(2, 'E'), DiatonicPitch(2, 'G#'))
         end_pitch = interval.get_end_pitch(DiatonicPitch(4, 'E'))
-        print end_pitch
+        print(end_pitch)
         assert str(end_pitch) == 'G#:4'
         
     def test_parse(self):
@@ -309,15 +307,15 @@ class TestInterval(unittest.TestCase):
                    'A:5', 'P:5', 'd:5', 'A:4', 'P:4', 'd:4',
                    'A:3', 'M:3', 'm:3', 'd:3', 'A:2', 'M:2', 'm:2', 'd:2', 'A:1', 'P:1', 'd:1']
         intervals = [Interval.parse(s) for s in interval_strs]
-        print '+++++'
+        print('+++++')
         for interval, answer in zip(intervals, answers):
-            print '{0} --> {1}'.format(interval, interval.inversion())
+            print('{0} --> {1}'.format(interval, interval.inversion()))
             assert str(interval.inversion()) == answer
-        print '-----'
+        print('-----')
 
         interval = Interval.parse('A:12')
         inversion = interval.inversion()
-        print 'int={0} inv={1}'.format(interval, inversion)
+        print('int={0} inv={1}'.format(interval, inversion))
         
         # Test augmented and negative intervals
         interval_strs = ['A:15', 'P:15', 'd:15', 'A:14', 'M:14', 'm:14', 'd:14', 'A:13', 'M:13', 'm:13', 'd:13',
@@ -327,11 +325,11 @@ class TestInterval(unittest.TestCase):
         answers = ['d:1', 'P:1', 'A:1', 'd:2', 'm:2', 'M:2', 'A:2', 'd:3', 'm:3', 'M:3', 'A:3', 'd:4', 'P:4', 'A:4',
                    'd:5', 'P:5', 'A:5', 'd:6', 'm:6', 'M:6', 'A:6', 'd:7', 'm:7', 'M:7', 'A:7']
         intervals = [Interval.parse(s) for s in interval_strs]
-        print '+++++'
+        print('+++++')
         for interval, answer in zip(intervals, answers):
-            print '{0} --> {1}  {2}'.format(interval, interval.inversion(), answer)
+            print('{0} --> {1}  {2}'.format(interval, interval.inversion(), answer))
             assert str(interval.inversion()) == answer
-        print '-----'
+        print('-----')
         
         interval_strs = ['-d:1', '-P:1', '-A:1', '-d:2', '-m:2', '-M:2', '-A:2', '-d:3', '-m:3', '-M:3', '-A:3',
                          '-d:4', '-P:4', '-A:4', '-d:5', '-P:5', '-A:5',
@@ -340,11 +338,11 @@ class TestInterval(unittest.TestCase):
                    '-P:5', '-d:5', '-A:4', '-P:4', '-d:4',
                    '-A:3', '-M:3', '-m:3', '-d:3', '-A:2', '-M:2', '-m:2', '-d:2', 'd:1', 'P:1', 'A:1']
         intervals = [Interval.parse(s) for s in interval_strs]
-        print '+++++'
+        print('+++++')
         for interval, answer in zip(intervals, answers):
-            print '{0} --> {1}'.format(interval, interval.inversion())
+            print('{0} --> {1}'.format(interval, interval.inversion()))
             assert str(interval.inversion()) == answer
-        print '-----'
+        print('-----')
         
         interval_strs = ['-A:15', '-P:15', '-d:15', '-A:14', '-M:14', '-m:14', '-d:14',
                          '-A:13', '-M:13', '-m:13', '-d:13', '-A:12', '-P:12', '-d:12',
@@ -353,35 +351,35 @@ class TestInterval(unittest.TestCase):
         answers = ['A:1', 'P:1', 'd:1', 'd:2', 'm:2', 'M:2', 'A:2', 'd:3', 'm:3', 'M:3', 'A:3', 'd:4', 'P:4', 'A:4',
                    'd:5', 'P:5', 'A:5', 'd:6', 'm:6', 'M:6', 'A:6', 'd:7', 'm:7', 'M:7', 'A:7']
         intervals = [Interval.parse(s) for s in interval_strs]
-        print '+++++'
+        print('+++++')
         for interval, answer in zip(intervals, answers):
-            print '{0} --> {1}  {2}'.format(interval, interval.inversion(), answer)
-        print '-----'
+            print('{0} --> {1}  {2}'.format(interval, interval.inversion(), answer))
+        print('-----')
         
     def test_negative_intervals(self):
         interval = Interval(-3, IntervalType.Major)
         assert interval.diatonic_distance == -2
         assert interval.chromatic_distance == -4
         assert str(interval) == '-M:3'
-        print interval
+        print(interval)
         
         interval = Interval.parse('-P:5')
         assert interval.diatonic_distance == -4
         assert interval.chromatic_distance == -7
         assert str(interval) == '-P:5'
-        print interval
+        print(interval)
         
         pitch_a = DiatonicPitch(5, 'C')
         pitch_b = DiatonicPitch(4, 'C')
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Perfect)
         assert interval.diatonic_distance == -7
         
         pitch_a = DiatonicPitch(5, 'C')
         pitch_b = DiatonicPitch(4, 'Cb')
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Augmented)
         assert interval.diatonic_distance == -7
         assert str(interval) == '-A:8'
@@ -389,7 +387,7 @@ class TestInterval(unittest.TestCase):
         pitch_a = DiatonicPitch(5, 'C')
         pitch_b = DiatonicPitch(4, 'C#')
         interval = Interval.create_interval(pitch_a, pitch_b)
-        print interval
+        print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Diminished)
         assert interval.diatonic_distance == -7
         assert str(interval) == '-d:8'
@@ -416,13 +414,13 @@ class TestInterval(unittest.TestCase):
         interval = Interval.parse('-M:3')
         p = DiatonicPitch(4, 'Ab')
         end_p = interval.get_end_pitch(p)
-        print end_p
+        print(end_p)
         assert str(end_p) == 'Fb:4'
         
         interval = Interval.parse('-P:5')
         p = DiatonicPitch(4, 'D')
         end_p = interval.get_end_pitch(p)
-        print end_p
+        print(end_p)
         assert str(end_p) == 'G:3'
 
         interval_strs = ['-P:1', '-M:2', '-M:3', '-P:4', '-P:5', '-M:6', '-M:7', '-P:8', '-M:9', '-M:10',
@@ -436,7 +434,7 @@ class TestInterval(unittest.TestCase):
         end_ps = []
         for interval in intervals:
             end_p = interval.get_end_pitch(p)
-            print end_p
+            print(end_p)
             end_ps.append(end_p)
         for end_p, answer in zip(end_ps, answers):
             assert str(end_p) == answer
@@ -465,12 +463,12 @@ class TestInterval(unittest.TestCase):
                    'G:6'
                    ]
         end_ps = []
-        print '+++++'
+        print('+++++')
         for interval in intervals:
             end_p = interval.get_start_pitch(p)
-            print end_p
+            print(end_p)
             end_ps.append(end_p)
-        print '-----'
+        print('-----')
         for end_p, answer in zip(end_ps, answers):
             assert str(end_p) == answer
             
@@ -484,7 +482,7 @@ class TestInterval(unittest.TestCase):
         TestInterval.print_table(len(interval_strs), result)
         
     def test_print_simple_interval_add(self):
-        print '--Simple Interval Addition'
+        print('--Simple Interval Addition')
         interval_strs = ['P:1', 'M:2', 'M:3', 'd:3', 'd:4']
         result = TestInterval.add_intervals(interval_strs)
         TestInterval.print_table(len(interval_strs), result)
@@ -499,10 +497,10 @@ class TestInterval(unittest.TestCase):
                 # noinspection PyBroadException
                 try:                
                     c = a + b
-                    print '{0} + {1} = {2}'.format(a, b, c)
+                    print('{0} + {1} = {2}'.format(a, b, c))
                     result.append(c)
                 except Exception:
-                    print '{0} + {1} = X'.format(a, b)
+                    print('{0} + {1} = X'.format(a, b))
                     result.append(None)
         return result
         
@@ -514,10 +512,8 @@ class TestInterval(unittest.TestCase):
         
         a = Interval(2, IntervalType(IntervalType.Diminished))  
         
-        with self.assertRaises(Exception) as context:      
+        with self.assertRaises(Exception):
             a += Interval(3, IntervalType(IntervalType.Minor))
-            
-        assert context.exception.message is not None
         
     def test_reduction(self):
         
@@ -532,7 +528,7 @@ class TestInterval(unittest.TestCase):
                    '-M:2', '-M:3', '-P:4', '-P:5', '-M:6', '-M:7', '-d:8', '-P:8', '-A:8']
         for interval, answer in zip(intervals, answers):
             reduction = interval.reduction()
-            print 'reduce({0}) --> {1}, answer = {2}'.format(interval, reduction, answer)   
+            print('reduce({0}) --> {1}, answer = {2}'.format(interval, reduction, answer))
             assert str(reduction) == answer, 'reduce({0}) --> {1}, answer = {2}'.format(interval, reduction, answer)
             
     def test_whole_note_scale_inrements(self):
@@ -555,8 +551,8 @@ class TestInterval(unittest.TestCase):
                 answers.append(answer)
             incrementals = ', '.join(t for t in intervals)
             results = ', '.join(str(t) for t in answers)
-            print '{0}   -->   {1}'.format(incrementals, results)
-        print 'end of test'
+            print('{0}   -->   {1}'.format(incrementals, results))
+        print('end of test')
  
     def test_HW_Oct_scale_inrements(self):
         prime = ['P:1', 'm:2', 'M:2', 'm:2', 'M:2', 'm:2', 'M:2', 'm:2', 'M:2']
@@ -579,11 +575,11 @@ class TestInterval(unittest.TestCase):
                 answers.append(answer)
             incrementals = ', '.join(t for t in intervals)
             results = ', '.join(str(t) for t in answers)
-            print '{0}   -->   {1}'.format(incrementals, results)
-        print 'end of test' 
+            print('{0}   -->   {1}'.format(incrementals, results))
+        print('end of test')
         
     def test_WH_Oct_scale_increments(self):
-        print 'test_WH_Oct_scale_increments'
+        print('test_WH_Oct_scale_increments')
         prime = ['P:1', 'M:2', 'm:2', 'M:2', 'm:2', 'M:2', 'm:2', 'M:2', 'm:2']
         for i in range(0, 4):
             intervals = ['P:1']
@@ -604,29 +600,34 @@ class TestInterval(unittest.TestCase):
                 answers.append(answer)
             incrementals = ', '.join(t for t in intervals)
             results = ', '.join(str(t) for t in answers)
-            print '{0}   -->   {1}'.format(incrementals, results)
-        print 'end of test'          
+            print('{0}   -->   {1}'.format(incrementals, results))
+        print('end of test')
 
     @staticmethod
     def print_table(row_len, result):
         rows = len(result) // row_len
         
-        print '     |',
+        # print('     |', end="")
+        sys.stdout.write('     |')
         for i in range(0, row_len):
-            print '   {0}'.format(result[i]),
-        print
-        print '{0}{1}'.format('-----|', row_len * '-------')
+            #vprint('   {0}'.format(result[i]), end="")
+            sys.stdout.write('   {0}'.format(result[i]))
+        print()
+        print('{0}{1}'.format('-----|', row_len * '-------'))
         
         index = 0
         for j in range(0, rows):
-            print '{0}  |'.format(result[j]),
+            # print('{0}  |'.format(result[j]), end="")
+            sys.stdout.write('{0}  |'.format(result[j]))
             for i in range(0, row_len):
                 if result[index]:
-                    print '   {0}'.format(result[index]),
+                    #print('   {0}'.format(result[index]), end="")
+                    sys.stdout.write('   {0}'.format(result[index]))
                 else:
-                    print '    X '.format(result[index]),
+                    # print('    X '.format(result[index]), end="")
+                    sys.stdout.write('    X '.format(result[index]))
                 index += 1
-            print
+            print()
 
 if __name__ == "__main__":
     unittest.main()

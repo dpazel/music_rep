@@ -5,7 +5,7 @@ File: instrument_voice.py
 Purpose: A collection of Voices, each associated with the same instrument.
 
 """
-from voice import Voice
+from structure.voice import Voice
 from timemodel.duration import Duration
 
 

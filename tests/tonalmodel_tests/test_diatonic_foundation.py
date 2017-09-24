@@ -40,7 +40,7 @@ class DiatonicFoundationTest(unittest.TestCase):
         
         assert tones is not None
         assert len(tones) > 12
-        print len(tones)
+        print(len(tones))
         
     def test_semitone_difference(self):
         assert DiatonicFoundation.get_chromatic_distance(DiatonicPitch.parse('C:4')) == 48

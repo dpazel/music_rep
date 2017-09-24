@@ -25,12 +25,12 @@ class TestVoice(unittest.TestCase):
         pass
 
     def test_single_voice(self):
-        print 'test single voice'
+        print('test single voice')
         note0 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
         note1 = Note(DiatonicPitch(4, 'd'), Duration(1, 8), 1)
         note2 = Note(DiatonicPitch(4, 'e'), Duration(1, 16))
         beam = Beam([note0, note1, note2]) 
-        print beam
+        print(beam)
         assert beam.cardinality() == 3
         
         line = Line(beam)
@@ -45,7 +45,7 @@ class TestVoice(unittest.TestCase):
         voice.pin(line, Offset(3, 4))
         
         coverage = voice.coverage()
-        print 'Coverage = {0}'.format(coverage)
+        print('Coverage = {0}'.format(coverage))
         assert coverage.lower == Position(3, 4)
         assert coverage.upper == Position(9, 8)
         
@@ -53,18 +53,18 @@ class TestVoice(unittest.TestCase):
         
         interval = Interval(Position(15, 16), Position(9, 8))
         notes = voice.get_notes_by_interval(interval)
-        print ', '.join([str(n) for n in notes])
+        print(', '.join([str(n) for n in notes]))
         for n in notes:
             intvl = TestVoice.compute_note_interval(n)
-            print '{0} intersect {1} = {2}'.format(intvl, interval, intvl.intersection(interval))
+            print('{0} intersect {1} = {2}'.format(intvl, interval, intvl.intersection(interval)))
             
         assert len(notes) == 2
-        print notes[0].get_absolute_position(), notes[1].get_absolute_position()
+        print(notes[0].get_absolute_position(), notes[1].get_absolute_position())
         assert TestVoice.has_pitch(notes, DiatonicPitch.parse('D:4'))
         assert TestVoice.has_pitch(notes, DiatonicPitch.parse('E:4'))
         
     def test_two_voices(self):
-        print 'test two voices'
+        print('test two voices')
         c = InstrumentCatalog.instance()        
         violin = c.get_instrument("violin")
         
@@ -78,7 +78,7 @@ class TestVoice(unittest.TestCase):
         subbeam = Beam([note3, note4])  
         beam = Beam(subbeam)     
         line1 = Line([tuplet, beam])
-        print line1
+        print(line1)
         
         notee0 = Note(DiatonicPitch(5, 'a'), Duration(1, 8))
         notee1 = Note(DiatonicPitch(5, 'b'), Duration(1, 8), 1)
@@ -86,13 +86,13 @@ class TestVoice(unittest.TestCase):
         notee3 = Note(DiatonicPitch(5, 'd'), Duration(1, 16)) 
         line2 = Line([notee0, notee1, notee2])  
         line2.pin(notee3, Offset(1, 2)) 
-        print line2 
+        print(line2)
         
         voice = Voice(violin)
         voice.pin(line1, Offset(1, 4))
         voice.pin(line2, Offset(0, 1))
         
-        print voice
+        print(voice)
         
         interval = Interval(Position(1, 2), Position(1))
         notes = voice.get_notes_by_interval(interval)
@@ -256,7 +256,7 @@ class TestVoice(unittest.TestCase):
         notee1 = Note(DiatonicPitch(5, 'b'), Duration(1, 8))  
         beam.append([notee0, notee1])
         
-        print voice
+        print(voice)
         notes = voice.get_notes_starting_in_interval(Interval(Position(3, 4), Position(1, 1)))
         
         assert len(notes) == 2
@@ -281,7 +281,7 @@ class TestVoice(unittest.TestCase):
         beam = Beam([note2, note3])
         line.pin(beam, Offset(1, 2))   
         
-        print voice
+        print(voice)
         notes = voice.get_notes_starting_in_interval(Interval(Position(1, 2), Position(1, 1)))  
         
         assert len(notes) == 2
@@ -306,7 +306,7 @@ class TestVoice(unittest.TestCase):
         beam1 = Beam([note2, note3])
         beam.append(beam1)  
         
-        print voice
+        print(voice)
         notes = voice.get_notes_starting_in_interval(Interval(Position(1, 2), Position(1, 1)))  
         
         assert len(notes) == 2
@@ -315,9 +315,8 @@ class TestVoice(unittest.TestCase):
         
         # try to add note out of range on violin.
         notex = Note(DiatonicPitch(7, 'b'), Duration(1, 8))
-        with self.assertRaises(Exception) as context:
+        with self.assertRaises(Exception):
             line.pin(notex, Offset(3, 1))
-        self.assertTrue('not in instrument Violin' in context.exception.message)
         
     def test_add_notes_to_tuplet(self):
         c = InstrumentCatalog.instance()        
@@ -341,7 +340,7 @@ class TestVoice(unittest.TestCase):
         notee0 = Note(DiatonicPitch(5, 'a'), Duration(1, 8))
         tuplet.append(notee0)
         
-        print voice
+        print(voice)
         notes = voice.get_notes_starting_in_interval(Interval(Position(1, 2), Position(5, 4)))
         
         assert len(notes) == 5

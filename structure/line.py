@@ -5,7 +5,7 @@ File: tuplet.py
 Purpose: Defines Line note construct
 
 """
-from abstract_note_collective import AbstractNoteCollective
+from structure.abstract_note_collective import AbstractNoteCollective
 from structure.note import Note
 from structure.beam import Beam
 from structure.tuplet import Tuplet

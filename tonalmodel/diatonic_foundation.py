@@ -66,7 +66,7 @@ class DiatonicFoundation(object):
         Return:
           all enharmonic diatonic pitches
         """
-        from diatonic_pitch import DiatonicPitch
+        from tonalmodel.diatonic_pitch import DiatonicPitch
         location = ChromaticScale.index_to_location(chromatic_index)
         enharmonics = DiatonicTone.DIATONIC_OFFSET_ENHARMONIC_MAPPING[location[1]]
         octave_adjustments = DiatonicFoundation.ENHARMONIC_OCTAVE_ADJUSTMENT_MAPPING[location[1]]

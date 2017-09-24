@@ -275,17 +275,17 @@ class TestScoreToMidiConverter(unittest.TestCase):
                
     @staticmethod
     def read_midi_file(filename):
-        print 'Opening {0}'.format(filename)
+        print('Opening {0}'.format(filename))
         mid = MidiFile(filename)
         ticks_per_beat = mid.ticks_per_beat
-        print 'ticks per beat {0}'.format(ticks_per_beat)
+        print('ticks per beat {0}'.format(ticks_per_beat))
     
         for i, track in enumerate(mid.tracks):
             print('Track {}: {}'.format(i, track.name))
             for message in track:
                 print(message)
     
-        print 'Exiting read_midi_file {0} length {1} seconds'.format(filename, mid.length)
+        print('Exiting read_midi_file {0} length {1} seconds'.format(filename, mid.length))
 
 
 if __name__ == "__main__":

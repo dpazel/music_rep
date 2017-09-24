@@ -12,16 +12,16 @@ class TestPosition(unittest.TestCase):
 
     def test_increment(self):
         p = Position(1)
-        print p
+        print(p)
         p += 1
-        print p
+        print(p)
         assert p.position == 2
         p += 1
-        print p
+        print(p)
         assert p.position == 3
         
         p = 2 - p
-        print p
+        print(p)
         assert p.position == -1
 
 
