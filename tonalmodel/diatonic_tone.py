@@ -65,7 +65,7 @@ class DiatonicTone(object):
         self.__diatonic_index = DiatonicTone.DIATONIC_INDEX_MAPPING[diatonic_info[0]]
 
         self.__augmentation_offset = DiatonicTone.AUGMENTATION_OFFSET_MAPPING[self.augmentation_symbol]
-        # Full offset from beginning of chromatic partition, this is note the same as placement.
+        # Full offset from beginning of chromatic partition, this is not the same as placement.
         # Note; This can be < 0 or > 11, , Cb is -1, and B# is 12
         # Note that in DiatonicPitch, this provides the accurate adjustment of chromatic partition (octave) number.
         self.__tonal_offset = DiatonicTone.DIATONIC_OFFSETS[self.diatonic_letter] + self.augmentation_offset
