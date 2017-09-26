@@ -174,7 +174,7 @@ class DiatonicTone(object):
         Returns:
           DiatonicTone for the altered tone.
         """
-        from diatonic_tone_cache import DiatonicToneCache
+        from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
         basic_symbol = tone.diatonic_letter
         augmentation = tone.augmentation_offset + augmentation_delta
