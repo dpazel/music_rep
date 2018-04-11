@@ -118,7 +118,8 @@ class QuartalChordTemplate(ChordTemplate):
           diatonic_basis: DiatonicTone used as root of chord, e.g. C major chord, the C part
           scale_degree: int version of roman numeral
           chord_type: The chord type ala SecundalChordType
-          specified_fourths: list of incremental fourth Interval's comprising the chord
+          specified_fourths: list of incremental fourth Interval's comprising the chord, e.g. [p, P, P]
+                             usually used in lieu of, or addition to chord_type chord_type
           inversion: int for which of the chord tones (ordinal) serves as root [origin 1]
         """
         ChordTemplate.__init__(self)

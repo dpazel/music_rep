@@ -69,4 +69,8 @@ class SecondaryChord(Chord):
         return self.__secondary_tonality
     
     def __str__(self):
-        return '{0}'.format(str(self.primary_chord))
+        from harmonicmodel.chord_template import ChordTemplate
+        s = str(ChordTemplate.SCALE_DEGREE_REVERSE_MAP[self.chord_template.secondary_scale_degree])
+        t = str(self.secondary_tonality.modality.modality_type)
+        tones = ', '.join(str(tone[0].diatonic_symbol) for tone in self.primary_chord.tones)
+        return '{0}/{1}({2}) [{3}]'.format(str(self.primary_chord.chord_template), s, t, tones)
