@@ -5,24 +5,27 @@ File: univariate_function.py
 Purpose: Class that defines a generic (abstract) univariate function.
 
 """
+from abc import ABC, abstractmethod
 
-from abc import ABCMeta, abstractmethod, abstractproperty
 
-class UnivariateFunction(object):
+class UnivariateFunction(ABC):
     """
     Class that defines a generic (abstract) univariate function.
     """
-    __metaclass__ = ABCMeta
+
+    def __init(self):
+        super().__init__()
 
     @abstractmethod
     def eval(self, v):
         pass
     
-    @abstractproperty
+    @property
+    @abstractmethod
     def domain_start(self):
         pass
-        
-    @abstractproperty
+
+    @property
+    @abstractmethod
     def domain_end(self):
         pass
-        

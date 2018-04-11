@@ -88,6 +88,9 @@ class PiecewiseLinearFunction(UnivariateFunction):
     @property
     def domain_end(self):
         return self.__domain_end
+
+    def __call__(self, x):
+        return self.eval(x)
         
     def eval(self, x):
         if len(self.transition_points) == 0:

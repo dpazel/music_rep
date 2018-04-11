@@ -51,4 +51,4 @@ class GenericUnivariateFunction(UnivariateFunction):
         if self.restrict_domain:
             if x < self.domain_start or x > self.domain_end:
                 raise Exception('{0} must be in [{1}, {2}]'.format(x, self.domain_start, self.domain_end))
-        return (self.f)(x)
+        return self.f(x)
