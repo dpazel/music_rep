@@ -6,5 +6,7 @@ Dependencies:
   - Python: 3.x
   - Mido: https://mido.readthedocs.io/en/latest/installing.html
   - Mock: https://pypi.python.org/pypi/mock
+  - Antlr4: http://www.antlr.org/download.html
+         (pip3 install antlr4-python3-runtime)
   - Be sure to use pip3 for 3.x Python installations if dependencies
     
