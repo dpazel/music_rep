@@ -72,6 +72,9 @@ class Interval(object):
     @property
     def policy(self):
         return self.__policy
+
+    def length(self):
+        return self.upper - self.lower
     
     def contains(self, value):
         """
