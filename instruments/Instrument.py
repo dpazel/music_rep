@@ -7,6 +7,7 @@ Purpose: Defines a particular instrument.
 """
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from instruments.instrument_base import InstrumentBase
+from tonalmodel.pitch_range import PitchRange
 
 
 class Instrument(InstrumentBase):
@@ -72,7 +73,15 @@ class Instrument(InstrumentBase):
     @property
     def sounding_high(self):
         return self.__sounding_high
-    
+
+    def sounding_pitch_range(self):
+        return PitchRange(self.sounding_low.chromatic_distance,
+                          self.sounding_high.chromatic_distance)
+
+    def written_pitch_range(self):
+        return PitchRange(self.written_low.chromatic_distance,
+                          self.written_high.chromatic_distance)
+
     def __str__(self):
         first = '{0} [{1}-{2}]'.format(self.name, self.written_low, self.written_high)
         
