@@ -31,7 +31,7 @@ grammar LineGrammar;
 */
 
 @header {
-from structure.LineGrammar.line_constructor import LineConstructor
+from structure.LineGrammar.core.line_constructor import LineConstructor
 import sys
 }
 
