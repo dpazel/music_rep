@@ -65,6 +65,19 @@ class TestTuplet(unittest.TestCase):
         
         assert tuplet.sub_notes[1].duration == Duration(1, 8)
         assert tuplet.sub_notes[1].relative_position == Offset(1, 16)
+
+        sub_tuplet_prime = sub_tuplet.clone()
+        notes = sub_tuplet_prime.get_all_notes()
+        AbstractNote.print_structure(sub_tuplet_prime)
+        assert notes[0].duration == Duration(1, 12)
+        assert str(notes[0].diatonic_pitch) == 'C:3'
+
+        tuplet_prime = tuplet.clone()
+        notes = tuplet_prime.get_all_notes()
+        AbstractNote.print_structure(tuplet_prime)
+        assert notes[0].duration == Duration(1, 16)
+        assert str(notes[0].diatonic_pitch) == 'C:4'
+        assert notes[1].duration == Duration(1, 24)
         
     def test_tuplet_with_nested_beam(self):
         note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
@@ -91,6 +104,19 @@ class TestTuplet(unittest.TestCase):
         assert notes[1].relative_position == Offset(0)
         assert notes[2].duration == Duration(1, 16)
         assert notes[2].relative_position == Offset(1, 16)
+
+        add_beam_prime = add_beam.clone()
+        notes = add_beam_prime.get_all_notes()
+        AbstractNote.print_structure(add_beam_prime)
+        assert notes[0].duration == Duration(1, 8)
+        assert str(notes[0].diatonic_pitch) == 'C:3'
+
+        tuplet_prime = tuplet.clone()
+        notes = tuplet_prime.get_all_notes()
+        AbstractNote.print_structure(tuplet_prime)
+        assert notes[0].duration == Duration(1, 16)
+        assert str(notes[0].diatonic_pitch) == 'C:4'
+        assert notes[1].duration == Duration(1, 16)
         
     def test_TBB_layers(self):
         print('start test_TBB_layers')

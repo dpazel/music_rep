@@ -1,4 +1,6 @@
 import unittest
+
+from structure.abstract_note import AbstractNote
 from structure.beam import Beam
 from structure.note import Note
 from structure.line import Line
@@ -344,7 +346,21 @@ class TestVoice(unittest.TestCase):
         notes = voice.get_notes_starting_in_interval(Interval(Position(1, 2), Position(5, 4)))
         
         assert len(notes) == 5
-        assert TestVoice.has_pitch(notes, DiatonicPitch.parse('A:5'))    
+        assert TestVoice.has_pitch(notes, DiatonicPitch.parse('A:5'))
+
+        beam_prime = beam.clone()
+        notes = beam_prime.get_all_notes()
+        AbstractNote.print_structure(beam_prime)
+        assert notes[0].duration == Duration(1, 8)
+        assert str(notes[0].diatonic_pitch) == 'A:4'
+
+        line_prime = line.clone()
+        notes = line_prime.get_all_notes()
+        AbstractNote.print_structure(line_prime)
+        assert notes[0].duration == Duration(1, 8)
+        assert str(notes[0].diatonic_pitch) == 'A:4'
+        assert notes[2].duration == Duration(1, 8)
+        assert str(notes[2].diatonic_pitch) == 'C:4'
 
     @staticmethod
     def compute_note_interval(note):

@@ -73,6 +73,35 @@ class NoteTest(unittest.TestCase):
         assert notes[3].relative_position == Offset(1, 8)
         assert notes[4].relative_position == Offset(9, 32)
         NoteTest.print_all_notes(notes)
+
+        notes = sub_beam.get_all_notes()
+        NoteTest.print_all_notes(notes)
+
+        b = Beam()
+        b.append(beam)
+
+        notes = sub_beam.get_all_notes()
+        NoteTest.print_all_notes(notes)
+        assert notes[0].duration == Duration(1, 32)
+        assert str(notes[0].diatonic_pitch) == 'C:4'
+
+        sub_beam_prime = sub_beam.clone()
+        notes = sub_beam_prime.get_all_notes()
+        NoteTest.print_all_notes(notes)
+        assert notes[0].duration == Duration(1, 8)
+        assert str(notes[0].diatonic_pitch) == 'C:4'
+
+        beam_prime = beam.clone()
+        notes = beam_prime.get_all_notes()
+        NoteTest.print_all_notes(notes)
+        assert notes[0].duration == Duration(1, 8)
+        assert str(notes[0].diatonic_pitch) == 'F:4'
+
+        b_prime = b.clone()
+        notes = b_prime.get_all_notes()
+        NoteTest.print_all_notes(notes)
+        assert notes[0].duration == Duration(1, 16)
+        assert str(notes[0].diatonic_pitch) == 'F:4'
         
     def test_insert_notes(self):
         print('test_insert_notes')
