@@ -33,9 +33,12 @@ class Duration(object):
           [1] denominator (int)
         """
         if len(args) == 1:
-            if not isinstance(args[0], Fraction) and not isinstance(args[0], int):
+            if isinstance(args[0], Duration):
+                duration_fraction = args[0].duration
+            elif not isinstance(args[0], Fraction) and not isinstance(args[0], int):
                 raise Exception('Single argument to Duration must be fraction or int, not {0}.'.format(type(args[0])))
-            duration_fraction = args[0] if isinstance(args[0], Fraction) else Fraction(args[0])
+            else:
+                duration_fraction = args[0] if isinstance(args[0], Fraction) else Fraction(args[0])
         elif len(args) == 2:
             if not isinstance(args[0], int) or not isinstance(args[1], int):
                 raise Exception('For 2 arguments, both must be integer.')
