@@ -5,6 +5,8 @@ import sys
 from tonalmodel.interval import Interval
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.interval import IntervalType
+from tonalmodel.diatonic_tone import DiatonicTone
+from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
 
 class TestInterval(unittest.TestCase):
@@ -577,6 +579,49 @@ class TestInterval(unittest.TestCase):
             results = ', '.join(str(t) for t in answers)
             print('{0}   -->   {1}'.format(incrementals, results))
         print('end of test')
+
+    def test_pure_distances(self):
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('E'),
+                                                  DiatonicToneCache.get_tone('C'))
+        assert dd == 5
+        assert cc == 8
+
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('Ab'),
+                                                  DiatonicToneCache.get_tone('B'))
+        assert dd == 1
+        assert cc == 3
+
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('C'),
+                                                  DiatonicToneCache.get_tone('B'))
+        assert dd == 6
+        assert cc == 11
+
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('B'),
+                                                  DiatonicToneCache.get_tone('C'))
+        assert dd == 1
+        assert cc == 1
+
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('Ebb'),
+                                                  DiatonicToneCache.get_tone('A#'))
+        assert dd == 3
+        assert cc == 8
+
+        dd, cc = Interval.calculate_pure_distance(DiatonicToneCache.get_tone('A#'),
+                                                  DiatonicToneCache.get_tone('Ebb'))
+        assert dd == 4
+        assert cc == 4
+
+        end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('C'), 4, 6)
+        assert 'Gb'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+
+        end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('G'), 2, 5)
+        assert 'B#'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+
+        end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('Gb'), 4, 6, False)
+        assert 'C'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+
+        end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('B#'), 2, 5, False)
+        assert 'G' == DiatonicTone.to_upper(end_tone.diatonic_symbol)
         
     def test_WH_Oct_scale_increments(self):
         print('test_WH_Oct_scale_increments')
@@ -610,7 +655,7 @@ class TestInterval(unittest.TestCase):
         # print('     |', end="")
         sys.stdout.write('     |')
         for i in range(0, row_len):
-            #vprint('   {0}'.format(result[i]), end="")
+            # vprint('   {0}'.format(result[i]), end="")
             sys.stdout.write('   {0}'.format(result[i]))
         print()
         print('{0}{1}'.format('-----|', row_len * '-------'))
@@ -621,7 +666,7 @@ class TestInterval(unittest.TestCase):
             sys.stdout.write('{0}  |'.format(result[j]))
             for i in range(0, row_len):
                 if result[index]:
-                    #print('   {0}'.format(result[index]), end="")
+                    # print('   {0}'.format(result[index]), end="")
                     sys.stdout.write('   {0}'.format(result[index]))
                 else:
                     # print('    X '.format(result[index]), end="")
