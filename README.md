@@ -9,4 +9,7 @@ Dependencies:
   - Antlr4: http://www.antlr.org/download.html
          (pip3 install antlr4-python3-runtime)
   - Be sure to use pip3 for 3.x Python installations if dependencies
+  
+If you plan to change resource/LineGrammar.g4, ensure you install antlr4 support, and direct the generated files 
+to structure/LineGrammar.  Pycharm users should install antlr plugin.
     
