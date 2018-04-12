@@ -2,7 +2,7 @@
 
 File: abstract_note_collective.py
 
-Purpose: Defines a base class behind all note aggregation structues, e.g. Beam, Tuplet, Line
+Purpose: Defines a base class behind all note aggregation structues, e.g. Beam, Tuplet, Line, etc.
 
 """
 
