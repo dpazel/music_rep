@@ -6,6 +6,7 @@ Purpose: Defines Interval and IntervalType classes.
 """
 from tonalmodel.diatonic_tone import DiatonicTone
 from tonalmodel.diatonic_pitch import DiatonicPitch
+from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 from tonalmodel.diatonic_foundation import DiatonicFoundation
 
 import re
@@ -186,6 +187,11 @@ class Interval(object):
         Returns:
           the resulting Interval
         """
+
+        if isinstance(pitch_a, str):
+            pitch_a = DiatonicPitch.parse(pitch_a)
+        if isinstance(pitch_b, str):
+            pitch_b = DiatonicPitch.parse(pitch_b)
         
         pitch_chromatic_distance = pitch_b.chromatic_distance - pitch_a.chromatic_distance         
         
@@ -201,8 +207,11 @@ class Interval(object):
         # compute the interval type.  Reduce values to within those of INTERVAL_MAP
         d_d = tone_index_diff - 7 * octave
         c_d = pitch_chromatic_distance - 12 * octave  
-        # (0, -1) is special, and we need to call it out as a special case.      
-        interval_type = Interval.INTERVAL_MAP[((abs(d_d)), -1 if c_d == -1 and d_d == 0 else abs(c_d))]
+        # (0, -1) is special, and we need to call it out as a special case.
+        (dd, cd) = ((abs(d_d)), -1 if c_d == -1 and d_d == 0 else abs(c_d))
+        if (dd, cd) not in Interval.INTERVAL_MAP:
+            raise Exception('\'{0}\' and \'{1}\' do not form a valid interval.'.format(pitch_a, pitch_b))
+        interval_type = Interval.INTERVAL_MAP[(dd, cd)]
         
         # as usual, the diatonic distance is origin 1, so bump it in the correct sign.
         return Interval((abs(tone_index_diff) + 1) * Interval._sign(tone_index_diff), interval_type)        
@@ -437,7 +446,7 @@ class Interval(object):
             if raw_distance != 2 and raw_distance != 3 and raw_distance != 6 and raw_distance != 7:
                 raise Exception('Illegal interval distance for major/minor interval {0}'.format(interval_string))
             
-        # When sign is -1 and interval_distance = 0, we need to flip the interval
+        # When sign is -1 and interval_distance = 0, we need to flip_tests the interval
         if sign == -1 and interval_distance == 1:
             interval_type = IntervalType.Augmented if interval_type == IntervalType.Diminished else \
                             IntervalType.Diminished if interval_type == IntervalType.Augmented else IntervalType.Perfect
@@ -463,7 +472,7 @@ class Interval(object):
         octaves = (diatonic_count - 1) // 7
         b_ct = chromatic_count - 12 * octaves        
         
-        if not (b_dc, b_ct) in Interval.INTERVAL_MAP:
+        if (b_dc, b_ct) not in Interval.INTERVAL_MAP:
             raise Exception('Illegal Addition {0} + {1}    ({2}, {3})'.format(a, b, diatonic_count, chromatic_count))
         return Interval(diatonic_count, Interval.INTERVAL_MAP[(b_dc, b_ct)])
     
@@ -478,3 +487,36 @@ class Interval(object):
     @staticmethod
     def _sign(x):
         return 1 if x >= 0 else -1
+
+    # The following methods compensate, in some limited cases, for not allowing doubly-augmented/diminished chords.
+
+    @staticmethod
+    def calculate_pure_distance(tone1, tone2):
+        """
+        Calculate the diatonic and chromatic distances between two tones, tone1 to tone2 (as if upwards)
+        :param tone1:
+        :param tone2:
+        :return:
+        """
+        pitch1 = DiatonicPitch(4, tone1)
+        pitch2 = DiatonicPitch(5 if DiatonicPitch.crosses_c(tone1, tone2, True) else 4, tone2)
+        cc = pitch2.chromatic_distance - pitch1.chromatic_distance
+        dd = (tone2.diatonic_index - tone1.diatonic_index) % 7
+        return dd, cc
+
+    @staticmethod
+    def end_tone_from_pure_distance(tone, dd, cc, up_down=True):
+        """
+        Given a tone and diatonic/chromatic distances compute the end tone above or below it.
+        :param tone:
+        :param dd:
+        :param cc:
+        :param up_down:
+        :return:
+        """
+        new_dd = (tone.diatonic_index + dd) % 7 if up_down else (tone.diatonic_index - dd) % 7
+        end_tone = DiatonicToneCache.get_tone(DiatonicTone.get_diatonic_letter(new_dd))
+        aug = (cc - (end_tone.placement - tone.placement) % 12) if up_down else \
+            (cc - (tone.placement - end_tone.placement) % 12)
+
+        return DiatonicTone.alter_tone_by_augmentation(end_tone, aug)
