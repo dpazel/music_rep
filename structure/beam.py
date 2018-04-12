@@ -98,7 +98,10 @@ class Beam(AbstractNoteCollective):
         first_note = note
         if not isinstance(note, Note):   
             first_note = note.get_first_note()
-        prior = first_note.prior_note()   
+            # If empty beam or tuplet is added, there is nothing to look for in terms of ties.
+            if first_note is None:
+                return
+        prior = first_note.prior_note()
         if prior is not None and prior.is_tied_to:
             prior.untie()  
          

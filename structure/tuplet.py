@@ -102,6 +102,9 @@ class Tuplet(AbstractNoteCollective):
         first_note = note
         if not isinstance(note, Note):   
             first_note = note.get_first_note()
+            # If empty tuplet or beam added, not note to tie.
+            if first_note is None:
+                return
         prior = first_note.prior_note()   
         if prior is not None and prior.is_tied_to:
             prior.untie()  
