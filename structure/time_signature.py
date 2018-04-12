@@ -6,6 +6,7 @@ Purpose: Defines TimeSignature and TSBeatType
 
 """
 from fractions import Fraction
+from enum import Enum
 
 
 class TSBeatType:
@@ -63,7 +64,25 @@ class TSBeatType:
             ts_beat_type = TSBeatType(ts_beat_type)
         elif not isinstance(ts_beat_type, TSBeatType):
             raise Exception('Illegal argument type for get_fraction_for {0}'.format(type(ts_beat_type)))
-        return ts_beat_type.to_fraction()        
+        return ts_beat_type.to_fraction()
+
+
+class BeatType(Enum):
+    """
+    Enum to provide characterization of beat as strong or weak.
+    """
+    Strong = 'S'
+    Weak = 'W'
+
+    @staticmethod
+    def to_beat_type(ltr):
+        if ltr == 'S':
+            return BeatType.Strong
+        if ltr == 'W':
+            return BeatType.Weak
+        else:
+            raise Exception('Illegal BeatType designation \'{0}\''.format(ltr))
+
 
 
 class TimeSignature(object):
@@ -71,11 +90,13 @@ class TimeSignature(object):
     Class representation of time signature.
     self.__beats_per_measure: number of beats per measure
     self.__beat_duration: holds the whole-note value (fraction) for the beat duration.
+    self.__beat_pattern: string of S, B's length beats_per_measure indicating strong/weak beats (optional)
     """
 
-    def __init__(self, *args, **kwargs):
-        # args -- tuple of anonymous arguments
-        # kwargs -- dictionary of named arguments
+    S = 'S'  # Strong beat designation
+    W = 'W'  # Weak beat designation
+
+    def __init__(self, beats_per_measure, beat_duration, beat_pattern=None):
         """
         Constructor
         Args 
@@ -85,22 +106,31 @@ class TimeSignature(object):
         When TSBeatType is specified for beat duration, its fraction value is retained only.
         """
         from timemodel.duration import Duration
-        if len(args) == 2:
-            if not isinstance(args[0], int):
-                raise Exception('First argument of time signature must be integer')
-            self.__beats_per_measure = args[0]
-            if isinstance(args[1], Fraction):
-                self.__beat_duration = Duration(args[1])
-            elif isinstance(args[1], int):
-                self.__beat_duration = Duration(Fraction(args[1], 1))
-            elif isinstance(args[1], TSBeatType):
-                self.__beat_duration = Duration(args[1].to_fraction())
-            elif isinstance(args[1], Duration):
-                self.__beat_duration = args[1]
-            else:
-                raise Exception("Second argument of time signature illegal type {0}".format(type(args[1])))
+
+        if not isinstance(beats_per_measure, int):
+            raise Exception('First argument of time signature must be integer')
+        self.__beats_per_measure = beats_per_measure
+        if isinstance(beat_duration, Fraction):
+            self.__beat_duration = Duration(beat_duration)
+        elif isinstance(beat_duration, int):
+            self.__beat_duration = Duration(Fraction(beat_duration, 1))
+        elif isinstance(beat_duration, TSBeatType):
+            self.__beat_duration = Duration(beat_duration.to_fraction())
+        elif isinstance(beat_duration, Duration):
+            self.__beat_duration = beat_duration
         else:
-            raise Exception('TimeSignature takes two arguments')
+            raise Exception("Second argument of time signature illegal type {0}".format(type(beat_duration)))
+
+        if beat_pattern is not None:
+            if not isinstance(beat_pattern, str):
+                raise Exception("Beat pattern must be string, not {0}.".format(type(beat_pattern)))
+            bp = beat_pattern.upper()
+            if len(bp) != beats_per_measure:
+                raise Exception("beat pattern must match beats_per_measure as length {0}.".format(beats_per_measure))
+            for bt in bp:
+                if bt != TimeSignature.S and bt != TimeSignature.W:
+                    raise Exception('Beat pattern must only contain \'S\' or \'W\'')
+            self.__beat_pattern = bp
         
     @property
     def beats_per_measure(self):
@@ -109,6 +139,25 @@ class TimeSignature(object):
     @property
     def beat_duration(self):
         return self.__beat_duration
+
+    @property
+    def beat_pattern(self):
+        return self.__beat_pattern
+
+    def beats_matching(self, beat_type):
+        beat_list = list()
+        ltr = beat_type.value
+        for i in range(0, len(self.beat_pattern)):
+            if self.beat_pattern[i] == ltr:
+                beat_list.append(i)
+        return beat_list
+
+    def beat_type(self, beat_index):
+        if self.beat_pattern is None:
+            return None
+        if beat_index >= self.beats_per_measure:
+            return None
+        return BeatType.to_beat_type(self.beat_pattern[beat_index])
     
     def __str__(self):
         return 'TS[{0}, {1}]'.format(self.beats_per_measure, self.beat_duration)
