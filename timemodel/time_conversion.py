@@ -81,6 +81,9 @@ class TimeConversion(object):
         self.ts_line = ts_line
         self.__max_position = max_position
         self.__pickup = pickup
+
+        if not isinstance(max_position, Position):
+            raise Exception('max_position argument must be Position not \'{0}\'.'.format(type(max_position)))
         
         # check if the pickup exceeds the first TS
         if self.ts_line is None or self.ts_line.is_empty or self.tempo_line is None or self.tempo_line.is_empty:
