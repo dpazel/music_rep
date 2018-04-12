@@ -5,7 +5,7 @@ File: abstract_note.py
 Purpose: AbstractNote, the root class behind all note constructs
 
 """
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 from timemodel.offset import Offset
 from timemodel.position import Position
 from fractions import Fraction
@@ -55,7 +55,7 @@ class AbstractNote(object):
     def contextual_reduction_factor(self, contextual_reduction_factor):
         self.__contextual_reduction_factor = contextual_reduction_factor        
                 
-    @abstractproperty
+    @property
     def duration(self):
         raise NotImplementedError('users must define duration to use this base class')
     
@@ -116,3 +116,31 @@ class AbstractNote(object):
                 AbstractNote.print_structure(n, indent + 4)
         else:
             print('unknown type {0}'.format(type(note)))
+
+    def clone(self):
+        from structure.beam import Beam
+        from structure.tuplet import Tuplet
+        from structure.note import Note
+        from structure.line import Line
+        from timemodel.duration import Duration
+        cpy = None
+        if isinstance(self, Beam):
+            cpy = Beam()
+            for s in self.sub_notes:
+                s_prime = s.clone()
+                cpy.append(s_prime)
+        elif isinstance(self, Tuplet):
+            cpy = Tuplet(self.unit_duration, self.unit_duration_factor)
+            for s in self.sub_notes:
+                s_prime = s.clone()
+                cpy.append(s_prime)
+        elif isinstance(self, Note):
+            d = Duration(self.base_duration.duration / self.contextual_reduction_factor)
+            cpy = Note(self.diatonic_pitch if self.diatonic_pitch is not None else None, d, self.num_dots)
+        elif isinstance(self, Line):
+            cpy = Line(None, self.instrument)
+            for s in self.sub_notes:
+                s_prime = s.clone()
+                cpy.pin(s_prime, s.relative_position)
+
+        return cpy
