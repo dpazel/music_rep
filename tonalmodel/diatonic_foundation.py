@@ -129,6 +129,3 @@ class DiatonicFoundation(object):
     @staticmethod
     def get_tones():
         return DiatonicToneCache.get_tones()
-
-    
-          
