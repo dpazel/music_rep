@@ -3,7 +3,7 @@ from tonalmodel.diatonic_modality import DiatonicModality
 from tonalmodel.modality import ModalityType
 from tonalmodel.tonality import Tonality
 
-class TestDiatonicModality(unittest.TestCase):
+class TestTonality(unittest.TestCase):
 
     def setUp(self):
         pass
