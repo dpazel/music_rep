@@ -45,9 +45,9 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
           NOTE: fix, cannot treat as property due to note insertion (self.sub_notes.insert(...), but should 
                 allow way to get a copy of self.sub_notes
         """
-        l = []
-        l.extend(self.sub_notes)
-        return l
+        lst = []
+        lst.extend(self.sub_notes)
+        return lst
 
     @property
     def duration(self):
@@ -209,6 +209,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         if self.parent:
             self.deregister(self.parent)  # make parent not observe me.
         AbstractNote.parent.fset(self, p)
+        # super(AbstractNote, self.__class__).parent.fset(self, p)  ???
         if self.parent:
             self.register(self.parent)    # make the parent observe me
 
