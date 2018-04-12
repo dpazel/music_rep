@@ -51,6 +51,9 @@ class Line(AbstractNoteCollective):
     @property
     def duration(self):
         return self.length()
+
+    def append(self, note_structure):
+        self.pin(note_structure, Offset(self.duration.duration))
                 
     def pin(self, note_structure, offset=Offset(0)):
         """
@@ -61,6 +64,9 @@ class Line(AbstractNoteCollective):
           note_structure: (List of Line, Note, Tuplet, Beam) to add
           offset:  (Offset), of the first in list or given structure.
         """
+
+        if not isinstance(offset, Offset):
+            raise Exception('Offset parameter in pin() must be of type Offset, not \'{0}\'.'.format(type(offset)))
         if isinstance(note_structure, list):
             for n in note_structure:
                 self._append_note(n, offset)
