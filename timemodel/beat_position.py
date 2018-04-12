@@ -29,6 +29,14 @@ class BeatPosition(object):
     @property
     def beat_number(self):
         return self.__beat_number
+
+    @property
+    def beat(self):
+        return int(self.beat_number)
+
+    @property
+    def beat_fraction(self):
+        return self.beat_number - self.beat
     
     def __lt__(self, other):
         return (self.measure_number < other.measure_number) or \
