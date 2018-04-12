@@ -23,8 +23,8 @@ class Event(object):
         self.__object = objct
         self.__time = time
         
-        if not time:
-            raise Exception('Attempt to define and event without a time element')
+        if time is None:
+            raise Exception('Attempt to define an event without a time element')
         
     @property
     def object(self):
