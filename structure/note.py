@@ -41,7 +41,7 @@ class Note(AbstractNote):
         self.__num_dots = num_dots
         if type(base_duration) == Duration:
             self.__base_duration = base_duration
-        elif type(base_duration) == basestring:
+        elif isinstance(base_duration, str):
             if base_duration.upper() in Note.STANDARD_NOTES.keys():
                 self.__base_duration = Note.STANDARD_NOTES[base_duration.upper()]
             else:
@@ -54,6 +54,10 @@ class Note(AbstractNote):
     @property
     def diatonic_pitch(self):
         return self.__diatonic_pitch
+
+    @diatonic_pitch.setter
+    def diatonic_pitch(self, new_pitch):
+        self.__diatonic_pitch = new_pitch
     
     @property
     def duration(self):
