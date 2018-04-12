@@ -71,12 +71,24 @@ class DiatonicPitch(object):
         return '{0}:{1}'.format(self.diatonic_tone.diatonic_symbol, self.octave)
     
     def __eq__(self, other):
-        if other is None:
+        if other is None or not isinstance(other, DiatonicPitch):
             return False
         return self.octave == other.octave and self.diatonic_tone == other.diatonic_tone
     
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __lt__(self, other):
+        if other is None:
+            return False
+        return self.chromatic_distance < other.chromatic_distance
+
+    def __le__(self, other):
+        if other is None:
+            return False
+        if self.__eq__(other):
+            return True
+        return self.__lt__(other)
     
     def __hash__(self):
         return self.__str__().__hash__()
@@ -102,3 +114,22 @@ class DiatonicPitch(object):
             return None
 
         return DiatonicPitch(0 if m.group(3) is None else int(m.group(3)), diatonic_tone)
+
+    LTRS = 'CDEFGAB'
+
+    @staticmethod
+    def crosses_c(t1, t2, up_down=True):
+        """
+        Utility method to determine if two tones (within octave) cross C, implying a different octaves.
+        :param t1: 
+        :param t2: 
+        :param up_down: t1 goes to t2 either in increasing (True) or decreasing (False) manner.
+        :return: 
+        """
+        ltr = t1.diatonic_letter.upper() if isinstance(t1, DiatonicTone) else t1.upper()
+        i1 = DiatonicPitch.LTRS.index(ltr)
+        ltr = t2.diatonic_letter.upper() if isinstance(t2, DiatonicTone) else t2.upper()
+        i2 = DiatonicPitch.LTRS.index(ltr)
+        if i1 == i2:
+            return False
+        return up_down if i1 > i2 else not up_down
