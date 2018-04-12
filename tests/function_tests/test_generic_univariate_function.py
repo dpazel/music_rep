@@ -2,7 +2,7 @@ import unittest
 from function.generic_univariate_function import GenericUnivariateFunction
 
 
-class Test(unittest.TestCase):
+class TestGenericUnivariateFunction(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -11,7 +11,7 @@ class Test(unittest.TestCase):
         pass
 
     def test_simple_function(self):
-        f = GenericUnivariateFunction(Test.square, -1, 5)
+        f = GenericUnivariateFunction(TestGenericUnivariateFunction.square, -1, 5)
         
         assert f.eval(-1) == 1
         assert f.eval(0) == 0
