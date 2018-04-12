@@ -17,11 +17,11 @@ class WholeToneModality(Modality):
     WHOLE_TONE_SPEC = ModalitySpec(ModalityType.WholeTone, ['P:1', 'M:2', 'M:2', 'M:2',
                                                             'M:2', 'M:2', 'd:3'])
 
-    def __init__(self, modality_type):
+    def __init__(self, modality_type, modal_index=0):
         """
         Constructor
         """
         if not modality_type == ModalityType.WholeTone:
             raise Exception('Illegal modality for whole tone: {0}'.format(modality_type))
         
-        Modality.__init__(self, WholeToneModality.WHOLE_TONE_SPEC)
+        Modality.__init__(self, WholeToneModality.WHOLE_TONE_SPEC, modal_index)

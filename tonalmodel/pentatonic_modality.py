@@ -35,7 +35,7 @@ class PentatonicModality(Modality):
                                                                                   'M:2']),
     }
 
-    def __init__(self, modality_type):
+    def __init__(self, modality_type, modal_index=0):
         """
         Constructor.
         
@@ -48,7 +48,7 @@ class PentatonicModality(Modality):
         if modality_type not in PentatonicModality.PENTATONIC_MODALITIES:
             raise Exception('Illegal pentatonic modality: {0}'.format(modality_type))
         
-        Modality.__init__(self, PentatonicModality.MODALITY_DEFINITION_MAP[modality_type])
+        Modality.__init__(self, PentatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
 
     @staticmethod
     def pentatonic_modality_types_as_string_array():

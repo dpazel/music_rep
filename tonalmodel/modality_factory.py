@@ -21,7 +21,7 @@ class ModalityFactory(object):
     """
    
     @staticmethod
-    def create_modality(modality_type):
+    def create_modality(modality_type, modal_index=0):
         """
         Create modality by modality type
         
@@ -34,45 +34,45 @@ class ModalityFactory(object):
         Note: update this method with each new Modality
         """
         if modality_type == ModalityType.Major:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.NaturalMinor:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.MelodicMinor:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.HarmonicMinor:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Ionian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Dorian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Phrygian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Lydian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Myxolydian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Aeolian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Locrian:
-            return DiatonicModality(modality_type)
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.WholeTone:
-            return WholeToneModality(modality_type)
+            return WholeToneModality(modality_type, modal_index)
         if modality_type == ModalityType.MajorPentatonic:
-            return PentatonicModality(modality_type)
+            return PentatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.EgyptianPentatonic:
-            return PentatonicModality(modality_type)
+            return PentatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.MinorBluesPentatonic:
-            return PentatonicModality(modality_type)
+            return PentatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.MajorBluesPentatonic:
-            return PentatonicModality(modality_type)
+            return PentatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.MinorPentatonic:
-            return PentatonicModality(modality_type)
+            return PentatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.HWOctatonic:
-            return OctatonicModality(modality_type)
+            return OctatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.WHOctatonic:
-            return OctatonicModality(modality_type)
+            return OctatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.MajorBlues:
-            return BluesModality(modality_type)
+            return BluesModality(modality_type, modal_index)
         if modality_type == ModalityType.MinorBlues:
-            return BluesModality(modality_type)
+            return BluesModality(modality_type, modal_index)
         raise Exception('Unrecognized modality type {0} in create_modality'.format(modality_type))

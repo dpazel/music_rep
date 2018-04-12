@@ -51,7 +51,7 @@ class DiatonicModality(Modality):
                                                                   'M:2']),
     }
 
-    def __init__(self, modality_type):
+    def __init__(self, modality_type, modal_index=0):
         """
         Constructor
         """
@@ -60,7 +60,7 @@ class DiatonicModality(Modality):
         if modality_type not in DiatonicModality.MODALITY_DEFINITION_MAP:
             raise Exception('Illegal diatonic modality value: {0}'.format(str(modality_type)))
         
-        Modality.__init__(self, DiatonicModality.MODALITY_DEFINITION_MAP[modality_type])
+        Modality.__init__(self, DiatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
 
     @staticmethod
     def diatonic_modality_types_as_string_array():

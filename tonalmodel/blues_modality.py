@@ -23,7 +23,7 @@ class BluesModality(Modality):
                                                                         'm:3', 'M:2']),   # Ascending
         }
 
-    def __init__(self, modality_type):
+    def __init__(self, modality_type, modal_index=0):
         """
         Constructor.
         
@@ -36,7 +36,7 @@ class BluesModality(Modality):
         if modality_type not in BluesModality.BLUES_MODALITIES:
             raise Exception('Illegal blues modality: {0}'.format(modality_type))
         
-        Modality.__init__(self, BluesModality.MODALITY_DEFINITION_MAP[modality_type])
+        Modality.__init__(self, BluesModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
 
     @staticmethod
     def blues_modality_types_as_string_array():
