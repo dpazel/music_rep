@@ -45,8 +45,11 @@ class PitchRange(Range):
         Returns:
           PitchRange based on inputs.
         """
-        return PitchRange(DiatonicFoundation.get_chromatic_distance(DiatonicPitch.parse(start_spn)),
-                          DiatonicFoundation.get_chromatic_distance(DiatonicPitch.parse(end_spn)))
+        start = DiatonicFoundation.get_chromatic_distance(DiatonicPitch.parse(start_spn)
+                                                          if isinstance(start_spn, str) else start_spn)
+        end = DiatonicFoundation.get_chromatic_distance(
+            DiatonicPitch.parse(end_spn) if isinstance(end_spn, str) else end_spn)
+        return PitchRange(start, end)
     
     def is_location_inbounds(self, location):
         """
