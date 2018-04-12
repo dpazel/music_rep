@@ -25,6 +25,9 @@ class ModalityType(object):
         
     def __str__(self):
         return ModalityType.to_str(self.value)
+
+    def value(self):
+        return self.value
     
     @staticmethod
     def to_str(value):
@@ -186,14 +189,29 @@ class Modality(object):
                      'Bb': 10, 'Eb': 3, 'Ab': 8, 'Db': 1, 'Gb': 6, 'Cb': 11,
                      'C#': 1, 'D#': 3, 'F#': 6, 'G#': 8, 'A#': 10, 'Fb': 4, 'B#': 0, 'E#': 5}
     
-    def __init__(self, modality_spec): 
+    def __init__(self, modality_spec, modal_index=0):
         self.__modality_spec = modality_spec
+
+        if modal_index < 0 or modal_index > len(self.modality_spec.incremental_intervals) - 2:
+            raise Exception('modal_index \'{0}\' invalid, must be positive and less than \'{1}\'.'.
+                            format(modal_index, len(self.modality_spec.incremental_intervals) - 1))
+        self.__modal_index = modal_index
             
-        self.__root_intervals = []
-        sumit = None
-        for interval in self.__modality_spec.incremental_intervals:
-            sumit = sumit + interval if sumit is not None else interval
-            self.__root_intervals.append(sumit)
+        self.__root_intervals = list()
+        self.__incremental_intervals = list()
+        sumit = self.__modality_spec.incremental_intervals[0]   # Should be P:1
+        self.__root_intervals.append(sumit)
+        self.__incremental_intervals.append(sumit)
+        for i in range(modal_index + 1, len(self.modality_spec.incremental_intervals) + modal_index + 1):
+            ri = i % len(self.modality_spec.incremental_intervals)
+            if ri != 0:
+                sumit = sumit + self.modality_spec.incremental_intervals[ri]
+                self.__incremental_intervals.append(self.modality_spec.incremental_intervals[ri])
+                self.__root_intervals.append(sumit)
+        #sumit = None
+        #for interval in self.__modality_spec.incremental_intervals:
+        #    sumit = sumit + interval if sumit is not None else interval
+        #    self.__root_intervals.append(sumit)
         
         last_interval = self.__root_intervals[len(self.__root_intervals) - 1]    
         if str(last_interval) != 'P:8':
@@ -202,6 +220,10 @@ class Modality(object):
     @property
     def modality_spec(self):
         return self.__modality_spec
+
+    @property
+    def modal_index(self):
+        return self.__modal_index
     
     @property    
     def get_modality_name(self):
@@ -213,7 +235,7 @@ class Modality(object):
     
     @property
     def incremental_intervals(self):
-        return self.modality_spec.incremental_intervals
+        return self.__incremental_intervals
     
     @property
     def root_intervals(self):
@@ -222,7 +244,8 @@ class Modality(object):
     def get_number_of_tones(self):
         return len(self.root_intervals)
 
-    def get_valid_root_tones(self):
+    @staticmethod
+    def get_valid_root_tones():
         return Modality.COMMON_ROOTS
     
     def get_tonal_scale(self, diatonic_tone):
@@ -255,4 +278,5 @@ class Modality(object):
         return tones
     
     def __str__(self):
-        return str(self.modality_spec)
+        return '{0}{1}'.format(str(self.modality_spec),
+                               '[{0}]'.format(self.modal_index) if self.modal_index != 0 else '')
