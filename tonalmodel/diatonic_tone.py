@@ -179,8 +179,36 @@ class DiatonicTone(object):
 
         basic_symbol = tone.diatonic_letter
         augmentation = tone.augmentation_offset + augmentation_delta
+        basic_symbol, augmentation = DiatonicTone.enharmonic_adjust(basic_symbol, augmentation)
         aug_symbol = DiatonicTone.augmentation(augmentation)
         return DiatonicToneCache.get_cache().get_tone(basic_symbol + aug_symbol)
+
+    @staticmethod
+    def enharmonic_adjust(ltr, augmentation):
+        '''
+        In some cases, symbols like G#### or Abbbbb might come up. This is a check for those rare cases, so
+        that enharmonic equivalents can be accessed.
+        :param ltr:
+        :param augmentation:
+        :return:
+        '''
+        LTRS = 'CDEFGAB'
+        POS_INC = [2, 2, 1, 2, 2, 2, 1]
+        NEG_INC = [-1, -2, -2, -1, -2, -2, -2]
+        if abs(augmentation) <= 3:
+            return ltr, augmentation
+        if augmentation > 0:
+            while augmentation > 2:
+                i = LTRS.index(ltr.upper())
+                augmentation -= POS_INC[i]
+                ltr = LTRS[i + 1] if i < 6 else LTRS[0]
+        else:
+            while augmentation < -2:
+                i = LTRS.index(ltr.upper())
+                augmentation -= NEG_INC[i]
+                ltr = LTRS[i - 1] if i > 0 else LTRS[6]
+        return ltr, augmentation
+
     
     @staticmethod   
     def parse(diatonic_tone_text):
@@ -199,3 +227,22 @@ class DiatonicTone(object):
         if not m:
             return None
         return m.group(1).upper(), '' if m.group(2) is None else m.group(2)
+
+    @staticmethod
+    def to_upper(diatonic_tone_text):
+        parts = DiatonicTone.parse(diatonic_tone_text)
+        if parts is None:
+            return None
+        return parts[0] + parts[1]
+
+
+    @staticmethod
+    def calculate_diatonic_distance(tone1, tone2):
+        """
+        Diatonic count from tone1 to tone2 (upwards)
+        :param tone1:
+        :param tone2:
+        :return:
+        """
+        return tone2.diatonic_index - tone1.diatonic_index if tone1.diatonic_index <= tone2.diatonic_index else \
+            tone2.diatonic_index - tone1.diatonic_index + 7
