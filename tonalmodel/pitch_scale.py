@@ -50,6 +50,18 @@ class PitchScale(object):
     def create_default(tonality):
         return PitchScale(tonality, PitchRange(ChromaticScale.chromatic_start_index(),
                                                ChromaticScale.chromatic_end_index()))
+
+    @staticmethod
+    def compute_tonal_pitches(tonality, pitch_range):
+        """
+        For a tonality and pitch range, compute all scale pitches in that range.
+
+        :param tonality: Tonality
+        :param pitch_range: PitchRange
+        :return:
+        """
+        pitch_scale = PitchScale(tonality, pitch_range)
+        return pitch_scale.pitch_scale
     
     def __compute_pitch_scale(self):
         (tone_index, pitch_index) = self.__find_lowest_tone()   # Determine the lowest tone in the range
@@ -88,3 +100,82 @@ class PitchScale(object):
                     tone_index = self.tone_scale.index(tone)
                     pitch_index = lowest_index
         return (tone_index, pitch_index)
+
+    @staticmethod
+    def compute_closest_scale_tones(tonality, pitch):
+        """
+        Returns either the pitch if in tonality, or lower/upper pitches in scale to pitch.
+        :param tonality:
+        :param pitch:
+        :return: an array with 1 element if exact match, otherwise closest lower and upper bound pitches
+                 in given tonality.
+        """
+        from tonalmodel.pitch_range import PitchRange
+        chromatic_index = pitch.chromatic_distance
+        pitch_range = PitchRange(max(chromatic_index - 12, ChromaticScale.chromatic_start_index()),
+                                 min(chromatic_index + 12, ChromaticScale.chromatic_end_index()))
+        pitch_scale = PitchScale(tonality, pitch_range)
+
+        for i in range(0, len(pitch_scale.pitch_scale)):
+            p = pitch_scale.pitch_scale[i]
+            if p.chromatic_distance < chromatic_index:
+                continue
+            if p.chromatic_distance == chromatic_index:
+                return [p]
+            if i == 0:
+                raise Exception(
+                    'unexpected logic issue in compute_closest_pitch_range {0}, {1]'.format(tonality, pitch))
+            return [pitch_scale.pitch_scale[i - 1], p]
+        raise Exception(
+            'unexpected logic fail in compute_closest_pitch_range {0}, {1]'.format(tonality, pitch))
+
+    @staticmethod
+    def compute_tonal_pitch_range(tonality, pitch, lower_index, upper_index):
+        """
+        Find all pitches within range of tonality based on an arbitrary pitch given as starting point.
+        In all cases, look at the closest pitches (1 or 2) as origin 0, and the lower/upper as counting indices
+        below or up from them.
+        :param tonality:
+        :param pitch:
+        :param lower_index:
+        :param upper_index:
+        :return:
+        """
+        import math
+        from tonalmodel.pitch_range import PitchRange
+        starting_points = PitchScale.compute_closest_scale_tones(tonality, pitch)
+
+        # Determine the number of octaves that will cover the given range.
+        up_chrom = max(0, int(math.ceil(float(abs(upper_index)) / len(tonality.annotation)) * 12) *
+                       (-1 if upper_index < 0 else 1))
+        down_chrom = min(0, int(math.ceil(float(abs(lower_index)) / len(tonality.annotation)) * 12) *
+                         (-1 if lower_index < 0 else 1))
+
+        # Compute all pitches within that range
+        low = max(starting_points[0].chromatic_distance + down_chrom, ChromaticScale.chromatic_start_index())
+        high = min((starting_points[0].chromatic_distance if len(starting_points) == 1
+                                  else starting_points[1].chromatic_distance) + up_chrom, ChromaticScale.chromatic_end_index())
+        #pitch_range = PitchRange(starting_points[0].chromatic_distance + down_chrom,
+        #                         (starting_points[0].chromatic_distance if len(starting_points) == 1
+        #                          else starting_points[1].chromatic_distance) + up_chrom)
+        pitch_range = PitchRange(low, high)
+        pitch_scale = PitchScale(tonality, pitch_range).pitch_scale
+
+        # The first starting point is either the enharmonic equivalent to pitch, or the lower scale pitch to the pitch.
+        # lower_starting_index is the index in pitch_scale for that pitch.
+        lower_starting_index = [index for index in range(0, len(pitch_scale))
+                                if pitch_scale[index].chromatic_distance == starting_points[0].chromatic_distance][0]
+
+        if len(starting_points) == 1:
+            full_range = range(lower_starting_index + lower_index,
+                               min(lower_starting_index + upper_index + 1, len(pitch_scale)))
+            return [pitch_scale[i] for i in full_range]
+        else:
+            upper_starting_index = [index for index in range(0, len(pitch_scale))
+                                    if pitch_scale[index].chromatic_distance ==
+                                    starting_points[1].chromatic_distance][0]
+            lo = lower_index + (lower_starting_index if lower_index <= 0 else upper_starting_index)
+            hi = upper_index + (lower_starting_index if upper_index < 0 else upper_starting_index)
+            full_range = range(lo, hi + 1)
+            return [pitch_scale[i] for i in full_range]
+
