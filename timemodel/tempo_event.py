@@ -6,6 +6,7 @@ Purpose: Defines a tempo as an Event
 
 """
 from timemodel.event import Event
+from timemodel.position import Position
 
 
 class TempoEvent(Event):
@@ -19,8 +20,10 @@ class TempoEvent(Event):
         
         Args:
           tempo:(Tempo) object.
-          time: Comparable object.
+          time: Postion.
         """
+        if not isinstance(time, Position):
+           raise Exception('time argument to TempoEvent must be Position not \'{0}\'.'.format(type(time)))
         Event.__init__(self, tempo, time)
         
     def tempo(self):
