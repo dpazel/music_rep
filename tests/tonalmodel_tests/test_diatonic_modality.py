@@ -3,6 +3,7 @@ from tonalmodel.diatonic_modality import DiatonicModality
 from tonalmodel.modality import ModalityType
 from tonalmodel.diatonic_tone import DiatonicTone
 from tests.utility import build_incremental_intervals
+from tonalmodel.modality_factory import ModalityFactory
 
 
 class TestDiatonicModality(unittest.TestCase):
@@ -144,6 +145,32 @@ class TestDiatonicModality(unittest.TestCase):
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == diatonic_modality.incremental_intervals
         print('End test_Locrian_key')
+
+    def test_major_modal_indexed_key(self):
+        for i in range(0, 7):
+            diatonic_modality = DiatonicModality(ModalityType.Major, i)
+
+            for key in diatonic_modality.get_valid_root_tones():
+                scale = diatonic_modality.get_tonal_scale(DiatonicTone(key))
+                print('{0} scale for {1} is [{2}]'.format(str(diatonic_modality), key,
+                                                          ', '.join(dt.diatonic_symbol for dt in scale)))
+
+                incremental_intervals = build_incremental_intervals(scale)
+                assert incremental_intervals == diatonic_modality.incremental_intervals
+        print('End test_major_modal_indexed_key')
+
+    def test_pentatonic_modal_indexed_key(self):
+        for i in range(0, 5):
+            diatonic_modality = ModalityFactory.create_modality(ModalityType.MajorPentatonic, i)
+
+            for key in diatonic_modality.get_valid_root_tones():
+                scale = diatonic_modality.get_tonal_scale(DiatonicTone(key))
+                print('{0} scale for {1} is [{2}]'.format(str(diatonic_modality), key,
+                                                          ', '.join(dt.diatonic_symbol for dt in scale)))
+
+                incremental_intervals = build_incremental_intervals(scale)
+                assert incremental_intervals == diatonic_modality.incremental_intervals
+        print('End test_pentatonic_modal_indexed_key')
           
 if __name__ == "__main__":
     unittest.main()
