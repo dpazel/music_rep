@@ -121,7 +121,7 @@ class LineConstructor(object):
         return Tonality(modality_type, tone)
 
     def construct_chord_template(self, tone, chord_type_str):
-        chord_template_str = 't' + (str(tone) + chord_type_str if tone is not None else chord_type_str)
+        chord_template_str = 't' + (tone.diatonic_symbol + chord_type_str if tone is not None else chord_type_str)
         return ChordTemplate.generic_chord_template_parse(chord_template_str)
 
     def construct_harmonic_tag(self, tonality, chord_template):
