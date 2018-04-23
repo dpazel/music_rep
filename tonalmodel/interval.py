@@ -505,6 +505,19 @@ class Interval(object):
         return dd, cc
 
     @staticmethod
+    def calculate_tone_interval(tone1, tone2):
+        """
+        Calculate interval between tone1 to tone2 assuming closest octave.
+        :param tone1:
+        :param tone2:
+        :return:
+        """
+        dd, cc = Interval.calculate_pure_distance(tone1, tone2)
+        if (dd, cc) not in Interval.INTERVAL_MAP:
+            return None
+        return Interval(dd + 1, Interval.INTERVAL_MAP[(dd, cc)])
+
+    @staticmethod
     def end_tone_from_pure_distance(tone, dd, cc, up_down=True):
         """
         Given a tone and diatonic/chromatic distances compute the end tone above or below it.
