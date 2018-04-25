@@ -81,6 +81,7 @@ tone returns [t=None]
 
 duration returns[d]:
      ( DURATIONLETTER {$d = LineConstructor.construct_duration_by_shorthand($DURATIONLETTER.text) }
+     | COMMON_DURATION_CHORD_NUMERAL_LETTERS {$d = LineConstructor.construct_duration_by_shorthand($COMMON_DURATION_CHORD_NUMERAL_LETTERS.text) }
      | '(' durationFraction ')' {$d = LineConstructor.construct_duration($durationFraction.f[0], $durationFraction.f[1])});
 
 durationFraction returns [f]:
@@ -92,6 +93,7 @@ tonality returns [tonal]:
 chordTemplate returns [ctemplate]:
     (tone '-' CHORDMODALITY {$ctemplate = self.lc.construct_chord_template($tone.t, $CHORDMODALITY.text)})
     | CHORDNUMERAL {$ctemplate = self.lc.construct_chord_template(None, $CHORDNUMERAL.text)}
+    | COMMON_DURATION_CHORD_NUMERAL_LETTERS {$ctemplate = self.lc.construct_chord_template(None, $COMMON_DURATION_CHORD_NUMERAL_LETTERS.text)}
     ;
 
 harmonicTag returns[ht]:
@@ -108,10 +110,12 @@ LINEBEGIN : '{';
 LINEEND: '}';
 WS : [ \t]+ -> skip ; // toss out whitespace
 COMMON_TONE_ALTERATION_LETTER: 'b';
-DURATIONLETTER: ('W' | 'w' | 'H' | 'h' | 'Q' | 'q' | 'I' | 'i' | 'S' | 's' | 'T' | 't' | 'X' | 'x');
+COMMON_DURATION_CHORD_NUMERAL_LETTERS: ('I' | 'i' );
+DURATIONLETTER: ('W' | 'w' | 'H' | 'h' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'X' | 'x');
 TONELETTER: ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' );
 ALTERATION: ('b' | 'bb' | '#' | '##');
 MODALITY: ('Major' | 'Natural' | 'Melodic' | 'Harmonic' | 'Minor');
-CHORDNUMERAL: ('I' | 'II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'i' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii');
+CHORDNUMERAL: ('II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii');
 CHORDMODALITY: ('Maj' | 'Min' | 'Aug' | 'Dim') ;
+
 

@@ -11,8 +11,8 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27")
-        buf.write("\u0097\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30")
+        buf.write("\u009b\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\3\2")
         buf.write("\3\2\6\2\35\n\2\r\2\16\2\36\3\2\3\2\3\3\3\3\3\3\3\3\5")
         buf.write("\3\'\n\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\4\3\4\7\4\61\n\4\f")
@@ -21,46 +21,49 @@ def serializedATN():
         buf.write("\3\6\3\6\3\6\3\6\3\6\3\6\6\6Q\n\6\r\6\16\6R\3\6\3\6\3")
         buf.write("\6\3\7\3\7\3\7\3\7\3\7\5\7]\n\7\3\7\3\7\3\b\3\b\3\b\3")
         buf.write("\b\5\be\n\b\3\b\3\b\5\bi\n\b\3\b\3\b\3\t\3\t\3\t\3\t\3")
-        buf.write("\t\3\t\3\t\5\tt\n\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13")
-        buf.write("\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u0087\n\f\3")
-        buf.write("\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u0093\n\r\3")
-        buf.write("\r\3\r\3\r\2\2\16\2\4\6\b\n\f\16\20\22\24\26\30\2\2\2")
-        buf.write("\u009a\2\32\3\2\2\2\4*\3\2\2\2\6\65\3\2\2\2\b>\3\2\2\2")
-        buf.write("\nH\3\2\2\2\fW\3\2\2\2\16d\3\2\2\2\20s\3\2\2\2\22u\3\2")
-        buf.write("\2\2\24z\3\2\2\2\26\u0086\3\2\2\2\30\u0088\3\2\2\2\32")
-        buf.write("\34\7\16\2\2\33\35\5\4\3\2\34\33\3\2\2\2\35\36\3\2\2\2")
-        buf.write("\36\34\3\2\2\2\36\37\3\2\2\2\37 \3\2\2\2 !\7\17\2\2!\3")
-        buf.write("\3\2\2\2\"#\5\6\4\2#$\b\3\1\2$\'\3\2\2\2%\'\5\30\r\2&")
-        buf.write("\"\3\2\2\2&%\3\2\2\2\'+\3\2\2\2(+\5\b\5\2)+\5\n\6\2*&")
-        buf.write("\3\2\2\2*(\3\2\2\2*)\3\2\2\2+\5\3\2\2\2,-\5\20\t\2-\62")
-        buf.write("\b\4\1\2./\7\13\2\2/\61\b\4\1\2\60.\3\2\2\2\61\64\3\2")
-        buf.write("\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2\2\2\64\62\3")
-        buf.write("\2\2\2\65,\3\2\2\2\65\66\3\2\2\2\66\67\3\2\2\2\67:\5\f")
-        buf.write("\7\289\7\f\2\29;\b\4\1\2:8\3\2\2\2:;\3\2\2\2;<\3\2\2\2")
-        buf.write("<=\b\4\1\2=\7\3\2\2\2>?\7\3\2\2?A\b\5\1\2@B\5\4\3\2A@")
-        buf.write("\3\2\2\2BC\3\2\2\2CA\3\2\2\2CD\3\2\2\2DE\3\2\2\2EF\7\4")
-        buf.write("\2\2FG\b\5\1\2G\t\3\2\2\2HI\7\5\2\2IJ\5\20\t\2JK\7\6\2")
-        buf.write("\2KL\7\r\2\2LM\7\7\2\2MN\7\3\2\2NP\b\6\1\2OQ\5\4\3\2P")
-        buf.write("O\3\2\2\2QR\3\2\2\2RP\3\2\2\2RS\3\2\2\2ST\3\2\2\2TU\7")
-        buf.write("\4\2\2UV\b\6\1\2V\13\3\2\2\2WX\5\16\b\2X\\\b\7\1\2YZ\7")
-        buf.write("\b\2\2Z[\7\r\2\2[]\b\7\1\2\\Y\3\2\2\2\\]\3\2\2\2]^\3\2")
-        buf.write("\2\2^_\b\7\1\2_\r\3\2\2\2`a\7\23\2\2ae\b\b\1\2bc\7\21")
-        buf.write("\2\2ce\b\b\1\2d`\3\2\2\2db\3\2\2\2eh\3\2\2\2fi\7\24\2")
-        buf.write("\2gi\7\21\2\2hf\3\2\2\2hg\3\2\2\2hi\3\2\2\2ij\3\2\2\2")
-        buf.write("jk\b\b\1\2k\17\3\2\2\2lm\7\22\2\2mt\b\t\1\2no\7\5\2\2")
-        buf.write("op\5\22\n\2pq\7\7\2\2qr\b\t\1\2rt\3\2\2\2sl\3\2\2\2sn")
-        buf.write("\3\2\2\2t\21\3\2\2\2uv\7\r\2\2vw\7\b\2\2wx\7\r\2\2xy\b")
-        buf.write("\n\1\2y\23\3\2\2\2z{\5\16\b\2{|\7\f\2\2|}\7\25\2\2}~\b")
-        buf.write("\13\1\2~\25\3\2\2\2\177\u0080\5\16\b\2\u0080\u0081\7\f")
-        buf.write("\2\2\u0081\u0082\7\27\2\2\u0082\u0083\b\f\1\2\u0083\u0087")
-        buf.write("\3\2\2\2\u0084\u0085\7\26\2\2\u0085\u0087\b\f\1\2\u0086")
-        buf.write("\177\3\2\2\2\u0086\u0084\3\2\2\2\u0087\27\3\2\2\2\u0088")
-        buf.write("\u0092\7\t\2\2\u0089\u008a\5\24\13\2\u008a\u008b\7\b\2")
-        buf.write("\2\u008b\u008c\5\26\f\2\u008c\u008d\b\r\1\2\u008d\u0093")
-        buf.write("\3\2\2\2\u008e\u008f\7\b\2\2\u008f\u0090\5\26\f\2\u0090")
-        buf.write("\u0091\b\r\1\2\u0091\u0093\3\2\2\2\u0092\u0089\3\2\2\2")
-        buf.write("\u0092\u008e\3\2\2\2\u0093\u0094\3\2\2\2\u0094\u0095\7")
-        buf.write("\n\2\2\u0095\31\3\2\2\2\20\36&*\62\65:CR\\dhs\u0086\u0092")
+        buf.write("\t\3\t\3\t\3\t\3\t\5\tv\n\t\3\n\3\n\3\n\3\n\3\n\3\13\3")
+        buf.write("\13\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f")
+        buf.write("\5\f\u008b\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r")
+        buf.write("\5\r\u0097\n\r\3\r\3\r\3\r\2\2\16\2\4\6\b\n\f\16\20\22")
+        buf.write("\24\26\30\2\2\2\u00a0\2\32\3\2\2\2\4*\3\2\2\2\6\65\3\2")
+        buf.write("\2\2\b>\3\2\2\2\nH\3\2\2\2\fW\3\2\2\2\16d\3\2\2\2\20u")
+        buf.write("\3\2\2\2\22w\3\2\2\2\24|\3\2\2\2\26\u008a\3\2\2\2\30\u008c")
+        buf.write("\3\2\2\2\32\34\7\16\2\2\33\35\5\4\3\2\34\33\3\2\2\2\35")
+        buf.write("\36\3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37 \3\2\2\2 !")
+        buf.write("\7\17\2\2!\3\3\2\2\2\"#\5\6\4\2#$\b\3\1\2$\'\3\2\2\2%")
+        buf.write("\'\5\30\r\2&\"\3\2\2\2&%\3\2\2\2\'+\3\2\2\2(+\5\b\5\2")
+        buf.write(")+\5\n\6\2*&\3\2\2\2*(\3\2\2\2*)\3\2\2\2+\5\3\2\2\2,-")
+        buf.write("\5\20\t\2-\62\b\4\1\2./\7\13\2\2/\61\b\4\1\2\60.\3\2\2")
+        buf.write("\2\61\64\3\2\2\2\62\60\3\2\2\2\62\63\3\2\2\2\63\66\3\2")
+        buf.write("\2\2\64\62\3\2\2\2\65,\3\2\2\2\65\66\3\2\2\2\66\67\3\2")
+        buf.write("\2\2\67:\5\f\7\289\7\f\2\29;\b\4\1\2:8\3\2\2\2:;\3\2\2")
+        buf.write("\2;<\3\2\2\2<=\b\4\1\2=\7\3\2\2\2>?\7\3\2\2?A\b\5\1\2")
+        buf.write("@B\5\4\3\2A@\3\2\2\2BC\3\2\2\2CA\3\2\2\2CD\3\2\2\2DE\3")
+        buf.write("\2\2\2EF\7\4\2\2FG\b\5\1\2G\t\3\2\2\2HI\7\5\2\2IJ\5\20")
+        buf.write("\t\2JK\7\6\2\2KL\7\r\2\2LM\7\7\2\2MN\7\3\2\2NP\b\6\1\2")
+        buf.write("OQ\5\4\3\2PO\3\2\2\2QR\3\2\2\2RP\3\2\2\2RS\3\2\2\2ST\3")
+        buf.write("\2\2\2TU\7\4\2\2UV\b\6\1\2V\13\3\2\2\2WX\5\16\b\2X\\\b")
+        buf.write("\7\1\2YZ\7\b\2\2Z[\7\r\2\2[]\b\7\1\2\\Y\3\2\2\2\\]\3\2")
+        buf.write("\2\2]^\3\2\2\2^_\b\7\1\2_\r\3\2\2\2`a\7\24\2\2ae\b\b\1")
+        buf.write("\2bc\7\21\2\2ce\b\b\1\2d`\3\2\2\2db\3\2\2\2eh\3\2\2\2")
+        buf.write("fi\7\25\2\2gi\7\21\2\2hf\3\2\2\2hg\3\2\2\2hi\3\2\2\2i")
+        buf.write("j\3\2\2\2jk\b\b\1\2k\17\3\2\2\2lm\7\23\2\2mv\b\t\1\2n")
+        buf.write("o\7\22\2\2ov\b\t\1\2pq\7\5\2\2qr\5\22\n\2rs\7\7\2\2st")
+        buf.write("\b\t\1\2tv\3\2\2\2ul\3\2\2\2un\3\2\2\2up\3\2\2\2v\21\3")
+        buf.write("\2\2\2wx\7\r\2\2xy\7\b\2\2yz\7\r\2\2z{\b\n\1\2{\23\3\2")
+        buf.write("\2\2|}\5\16\b\2}~\7\f\2\2~\177\7\26\2\2\177\u0080\b\13")
+        buf.write("\1\2\u0080\25\3\2\2\2\u0081\u0082\5\16\b\2\u0082\u0083")
+        buf.write("\7\f\2\2\u0083\u0084\7\30\2\2\u0084\u0085\b\f\1\2\u0085")
+        buf.write("\u008b\3\2\2\2\u0086\u0087\7\27\2\2\u0087\u008b\b\f\1")
+        buf.write("\2\u0088\u0089\7\22\2\2\u0089\u008b\b\f\1\2\u008a\u0081")
+        buf.write("\3\2\2\2\u008a\u0086\3\2\2\2\u008a\u0088\3\2\2\2\u008b")
+        buf.write("\27\3\2\2\2\u008c\u0096\7\t\2\2\u008d\u008e\5\24\13\2")
+        buf.write("\u008e\u008f\7\b\2\2\u008f\u0090\5\26\f\2\u0090\u0091")
+        buf.write("\b\r\1\2\u0091\u0097\3\2\2\2\u0092\u0093\7\b\2\2\u0093")
+        buf.write("\u0094\5\26\f\2\u0094\u0095\b\r\1\2\u0095\u0097\3\2\2")
+        buf.write("\2\u0096\u008d\3\2\2\2\u0096\u0092\3\2\2\2\u0097\u0098")
+        buf.write("\3\2\2\2\u0098\u0099\7\n\2\2\u0099\31\3\2\2\2\20\36&*")
+        buf.write("\62\65:CR\\dhu\u008a\u0096")
         return buf.getvalue()
 
 
@@ -81,9 +84,9 @@ class LineGrammarParser ( Parser ):
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "DOT", "TIE", "INT", "LINEBEGIN", "LINEEND", 
-                      "WS", "COMMON_TONE_ALTERATION_LETTER", "DURATIONLETTER", 
-                      "TONELETTER", "ALTERATION", "MODALITY", "CHORDNUMERAL", 
-                      "CHORDMODALITY" ]
+                      "WS", "COMMON_TONE_ALTERATION_LETTER", "COMMON_DURATION_CHORD_NUMERAL_LETTERS", 
+                      "DURATIONLETTER", "TONELETTER", "ALTERATION", "MODALITY", 
+                      "CHORDNUMERAL", "CHORDMODALITY" ]
 
     RULE_motif = 0
     RULE_motificElement = 1
@@ -118,12 +121,13 @@ class LineGrammarParser ( Parser ):
     LINEEND=13
     WS=14
     COMMON_TONE_ALTERATION_LETTER=15
-    DURATIONLETTER=16
-    TONELETTER=17
-    ALTERATION=18
-    MODALITY=19
-    CHORDNUMERAL=20
-    CHORDMODALITY=21
+    COMMON_DURATION_CHORD_NUMERAL_LETTERS=16
+    DURATIONLETTER=17
+    TONELETTER=18
+    ALTERATION=19
+    MODALITY=20
+    CHORDNUMERAL=21
+    CHORDMODALITY=22
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -188,7 +192,7 @@ class LineGrammarParser ( Parser ):
                 self.state = 28 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
                     break
 
             self.state = 30
@@ -251,7 +255,7 @@ class LineGrammarParser ( Parser ):
                 self.state = 36
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [LineGrammarParser.T__2, LineGrammarParser.COMMON_TONE_ALTERATION_LETTER, LineGrammarParser.DURATIONLETTER, LineGrammarParser.TONELETTER]:
+                if token in [LineGrammarParser.T__2, LineGrammarParser.COMMON_TONE_ALTERATION_LETTER, LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS, LineGrammarParser.DURATIONLETTER, LineGrammarParser.TONELETTER]:
                     self.state = 32
                     localctx._primitiveNote = self.primitiveNote()
                     self.lc.add_note(localctx._primitiveNote.n)
@@ -337,7 +341,7 @@ class LineGrammarParser ( Parser ):
             self.state = 51
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LineGrammarParser.T__2 or _la==LineGrammarParser.DURATIONLETTER:
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS) | (1 << LineGrammarParser.DURATIONLETTER))) != 0):
                 self.state = 42
                 localctx._duration = self.duration()
                 localctx.dur = localctx._duration.d
@@ -420,7 +424,7 @@ class LineGrammarParser ( Parser ):
                 self.state = 65 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
                     break
 
             self.state = 67
@@ -499,7 +503,7 @@ class LineGrammarParser ( Parser ):
                 self.state = 80 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
+                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LineGrammarParser.T__0) | (1 << LineGrammarParser.T__2) | (1 << LineGrammarParser.T__6) | (1 << LineGrammarParser.COMMON_TONE_ALTERATION_LETTER) | (1 << LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS) | (1 << LineGrammarParser.DURATIONLETTER) | (1 << LineGrammarParser.TONELETTER))) != 0)):
                     break
 
             self.state = 82
@@ -663,10 +667,14 @@ class LineGrammarParser ( Parser ):
             self.parser = parser
             self.d = None
             self._DURATIONLETTER = None # Token
+            self._COMMON_DURATION_CHORD_NUMERAL_LETTERS = None # Token
             self._durationFraction = None # DurationFractionContext
 
         def DURATIONLETTER(self):
             return self.getToken(LineGrammarParser.DURATIONLETTER, 0)
+
+        def COMMON_DURATION_CHORD_NUMERAL_LETTERS(self):
+            return self.getToken(LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS, 0)
 
         def durationFraction(self):
             return self.getTypedRuleContext(LineGrammarParser.DurationFractionContext,0)
@@ -692,7 +700,7 @@ class LineGrammarParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_duration)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 113
+            self.state = 115
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [LineGrammarParser.DURATIONLETTER]:
@@ -700,12 +708,17 @@ class LineGrammarParser ( Parser ):
                 localctx._DURATIONLETTER = self.match(LineGrammarParser.DURATIONLETTER)
                 localctx.d = LineConstructor.construct_duration_by_shorthand((None if localctx._DURATIONLETTER is None else localctx._DURATIONLETTER.text)) 
                 pass
-            elif token in [LineGrammarParser.T__2]:
+            elif token in [LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS]:
                 self.state = 108
-                self.match(LineGrammarParser.T__2)
-                self.state = 109
-                localctx._durationFraction = self.durationFraction()
+                localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS = self.match(LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS)
+                localctx.d = LineConstructor.construct_duration_by_shorthand((None if localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS is None else localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS.text)) 
+                pass
+            elif token in [LineGrammarParser.T__2]:
                 self.state = 110
+                self.match(LineGrammarParser.T__2)
+                self.state = 111
+                localctx._durationFraction = self.durationFraction()
+                self.state = 112
                 self.match(LineGrammarParser.T__4)
                 localctx.d = LineConstructor.construct_duration(localctx._durationFraction.f[0], localctx._durationFraction.f[1])
                 pass
@@ -755,11 +768,11 @@ class LineGrammarParser ( Parser ):
         self.enterRule(localctx, 16, self.RULE_durationFraction)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 115
-            localctx.numerator = self.match(LineGrammarParser.INT)
-            self.state = 116
-            self.match(LineGrammarParser.T__5)
             self.state = 117
+            localctx.numerator = self.match(LineGrammarParser.INT)
+            self.state = 118
+            self.match(LineGrammarParser.T__5)
+            self.state = 119
             localctx.denominator = self.match(LineGrammarParser.INT)
             localctx.f = ((0 if localctx.numerator is None else int(localctx.numerator.text)), (0 if localctx.denominator is None else int(localctx.denominator.text)))
         except RecognitionException as re:
@@ -806,11 +819,11 @@ class LineGrammarParser ( Parser ):
         self.enterRule(localctx, 18, self.RULE_tonality)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 120
-            localctx._tone = self.tone()
-            self.state = 121
-            self.match(LineGrammarParser.TIE)
             self.state = 122
+            localctx._tone = self.tone()
+            self.state = 123
+            self.match(LineGrammarParser.TIE)
+            self.state = 124
             localctx._MODALITY = self.match(LineGrammarParser.MODALITY)
             localctx.tonal = self.lc.construct_tonality(localctx._tone.t, (None if localctx._MODALITY is None else localctx._MODALITY.text))
         except RecognitionException as re:
@@ -830,6 +843,7 @@ class LineGrammarParser ( Parser ):
             self._tone = None # ToneContext
             self._CHORDMODALITY = None # Token
             self._CHORDNUMERAL = None # Token
+            self._COMMON_DURATION_CHORD_NUMERAL_LETTERS = None # Token
 
         def tone(self):
             return self.getTypedRuleContext(LineGrammarParser.ToneContext,0)
@@ -840,6 +854,9 @@ class LineGrammarParser ( Parser ):
 
         def CHORDNUMERAL(self):
             return self.getToken(LineGrammarParser.CHORDNUMERAL, 0)
+
+        def COMMON_DURATION_CHORD_NUMERAL_LETTERS(self):
+            return self.getToken(LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS, 0)
 
         def getRuleIndex(self):
             return LineGrammarParser.RULE_chordTemplate
@@ -860,24 +877,30 @@ class LineGrammarParser ( Parser ):
         localctx = LineGrammarParser.ChordTemplateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_chordTemplate)
         try:
-            self.state = 132
+            self.state = 136
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [LineGrammarParser.COMMON_TONE_ALTERATION_LETTER, LineGrammarParser.TONELETTER]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 125
-                localctx._tone = self.tone()
-                self.state = 126
-                self.match(LineGrammarParser.TIE)
                 self.state = 127
+                localctx._tone = self.tone()
+                self.state = 128
+                self.match(LineGrammarParser.TIE)
+                self.state = 129
                 localctx._CHORDMODALITY = self.match(LineGrammarParser.CHORDMODALITY)
                 localctx.ctemplate = self.lc.construct_chord_template(localctx._tone.t, (None if localctx._CHORDMODALITY is None else localctx._CHORDMODALITY.text))
                 pass
             elif token in [LineGrammarParser.CHORDNUMERAL]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 130
+                self.state = 132
                 localctx._CHORDNUMERAL = self.match(LineGrammarParser.CHORDNUMERAL)
                 localctx.ctemplate = self.lc.construct_chord_template(None, (None if localctx._CHORDNUMERAL is None else localctx._CHORDNUMERAL.text))
+                pass
+            elif token in [LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS]:
+                self.enterOuterAlt(localctx, 3)
+                self.state = 134
+                localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS = self.match(LineGrammarParser.COMMON_DURATION_CHORD_NUMERAL_LETTERS)
+                localctx.ctemplate = self.lc.construct_chord_template(None, (None if localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS is None else localctx._COMMON_DURATION_CHORD_NUMERAL_LETTERS.text))
                 pass
             else:
                 raise NoViableAltException(self)
@@ -927,31 +950,31 @@ class LineGrammarParser ( Parser ):
         self.enterRule(localctx, 22, self.RULE_harmonicTag)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 134
+            self.state = 138
             self.match(LineGrammarParser.T__6)
-            self.state = 144
+            self.state = 148
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [LineGrammarParser.COMMON_TONE_ALTERATION_LETTER, LineGrammarParser.TONELETTER]:
-                self.state = 135
+                self.state = 139
                 localctx._tonality = self.tonality()
-                self.state = 136
+                self.state = 140
                 self.match(LineGrammarParser.T__5)
-                self.state = 137
+                self.state = 141
                 localctx._chordTemplate = self.chordTemplate()
                 localctx.ht=self.lc.construct_harmonic_tag(localctx._tonality.tonal, localctx._chordTemplate.ctemplate)
                 pass
             elif token in [LineGrammarParser.T__5]:
-                self.state = 140
+                self.state = 144
                 self.match(LineGrammarParser.T__5)
-                self.state = 141
+                self.state = 145
                 localctx._chordTemplate = self.chordTemplate()
                 localctx.ht=self.lc.construct_harmonic_tag(None, localctx._chordTemplate.ctemplate)
                 pass
             else:
                 raise NoViableAltException(self)
 
-            self.state = 146
+            self.state = 150
             self.match(LineGrammarParser.T__7)
         except RecognitionException as re:
             localctx.exception = re
