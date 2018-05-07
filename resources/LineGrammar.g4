@@ -72,12 +72,8 @@ pitch returns [p]
     tone {$tt = $tone.t}
     (':' INT {$reg = $INT.int})? {$p=self.lc.construct_pitch($tt, $reg)};
 
-tone returns [t=None]
-    locals [ltr=None]:
-    ((TONELETTER {$ltr = $TONELETTER.text}
-    | COMMON_TONE_ALTERATION_LETTER {$ltr = $COMMON_TONE_ALTERATION_LETTER.text}))
-    (alter=ALTERATION | alter=COMMON_TONE_ALTERATION_LETTER)? {$t=LineConstructor.construct_tone($ltr, $alter.text if $alter is not None else None)}
-    ;
+tone returns [t=None]:
+    (ltrs=NOTELETTERS {$t=LineConstructor.construct_tone_from_tone_letters($ltrs.text)});
 
 duration returns[d]:
      ( DURATIONLETTER {$d = LineConstructor.construct_duration_by_shorthand($DURATIONLETTER.text) }
@@ -109,13 +105,19 @@ INT : [0-9]+ ;
 LINEBEGIN : '{';
 LINEEND: '}';
 WS : [ \t]+ -> skip ; // toss out whitespace
-COMMON_TONE_ALTERATION_LETTER: 'b';
 COMMON_DURATION_CHORD_NUMERAL_LETTERS: ('I' | 'i' );
 DURATIONLETTER: ('W' | 'w' | 'H' | 'h' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'X' | 'x');
-TONELETTER: ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' );
-ALTERATION: ('b' | 'bb' | '#' | '##');
+ALTERATION: ('bb' | '#' | '##');
 MODALITY: ('Major' | 'Natural' | 'Melodic' | 'Harmonic' | 'Minor');
 CHORDNUMERAL: ('II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii');
 CHORDMODALITY: ('Maj' | 'Min' | 'Aug' | 'Dim') ;
+
+NOTELETTERS: ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b' |
+              'Cb' | 'Db' | 'Eb' | 'Fb' | 'Gb' | 'Ab' | 'Bb' | 'cb' | 'db' | 'eb' | 'fb' | 'gb' | 'ab' | 'bb' |
+              'Cbb' | 'Dbb' | 'Ebb' | 'Fbb' | 'Gbb' | 'Abb' | 'Bbb' | 'cbb' | 'dbb' | 'ebb' | 'fbb' | 'gbb' | 'abb' | 'bbb' |
+              'C#' | 'D#' | 'E#' | 'F#' | 'G#' | 'A#' | 'B#' | 'c#' | 'd#' | 'e#' | 'f#' | 'g#' | 'a#' | 'b#' |
+              'C##' | 'D##' | 'E##' | 'F##' | 'G##' | 'A##' | 'B##' | 'c##' | 'd##' | 'e##' | 'f##' | 'g##' | 'a##' | 'b##'
+
+);
 
 

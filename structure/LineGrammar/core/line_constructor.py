@@ -93,9 +93,8 @@ class LineConstructor(object):
         return note
 
     @staticmethod
-    def construct_tone(letter, alteration):
-        full_tone = letter if alteration is None else letter + alteration
-        return DiatonicToneCache.get_tone(full_tone)
+    def construct_tone_from_tone_letters(letters):
+        return DiatonicToneCache.get_tone(letters)
 
     def construct_pitch(self, tone, partition):
         part = partition if partition is not None else self.current_level.default_register
