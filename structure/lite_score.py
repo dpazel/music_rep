@@ -17,24 +17,24 @@ from timemodel.time_conversion import TimeConversion
 class LiteScore(object):
 
     def __init__(self, line, harmonic_context_track=None, instrument=None, tempo_seq=None, ts_seq=None):
-        self._line = line
-        self._hct = HarmonicContextTrack() if harmonic_context_track is None else harmonic_context_track
-        self._instrument = instrument
+        self.__line = line
+        self.__hct = HarmonicContextTrack() if harmonic_context_track is None else harmonic_context_track
+        self.__instrument = instrument
 
         self.__tempo_sequence = tempo_seq if tempo_seq is not None else TempoEventSequence()
         self.__time_signature_sequence = ts_seq if ts_seq is not None else EventSequence()
 
     @property
     def line(self):
-        return self._line
+        return self.__line
 
     @property
     def hct(self):
-        return self._hct
+        return self.__hct
 
     @property
     def instrument(self):
-        return self._instrument
+        return self.__instrument
 
     @property
     def duration(self):
@@ -55,7 +55,10 @@ class LiteScore(object):
         return max(self.line.duration, self.hct.duration)
 
     def reset_hct(self, new_hct):
-        self._hct = new_hct
+        self.__hct = new_hct
+
+    def reset_line(self, line):
+        self.__line = line
 
     def beat_position(self, position):
         """
