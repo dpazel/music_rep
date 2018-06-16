@@ -48,7 +48,7 @@ class HarmonicContextTrack(object):
     def append(self, harmonic_context):
         """
         Append a harmonic context to the end of the track.
-        It is recommended to use this call to build the track, as the key data memebers are not rebuilt.
+        It is recommended to use this call to build the track, as the key data members are not rebuilt.
 
         :param harmonic_context:
         :return:
@@ -57,6 +57,8 @@ class HarmonicContextTrack(object):
 
         harmonic_context.position = Position(0) if last_hc is None else last_hc.position + last_hc.duration
         self.ordered_map.insert(harmonic_context.position, harmonic_context)
+
+        self._wnt_duration += harmonic_context.duration.duration
 
     def append_first(self, harmonic_context):
         """
@@ -114,6 +116,10 @@ class HarmonicContextTrack(object):
             p += hc.duration
         self.ordered_map = new_ordered_map
         self._wnt_duration = Duration(p.position)
+
+    def clear(self):
+        self.ordered_map = OrderedMap()
+        self._wnt_duration = Duration(0)
 
     def __str__(self):
         l = self.hc_list()

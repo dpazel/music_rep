@@ -56,5 +56,15 @@ class HarmonicContext(object):
     def extent(self):
         return Interval(self.position.position, self.position.position + self.duration.duration)
 
+    def is_equal(self, other):
+        if not other or not isinstance(other, HarmonicContext):
+            return False
+
+        if str(self.tonality) != str(other.tonality) or \
+                str(self.chord) != str(other.chord) or self.duration != other.duration:
+            return False
+
+        return True
+
     def __str__(self):
         return 'h.c.[{0}, {1}, {2}]'.format(self.tonality, self.chord, self.duration)
