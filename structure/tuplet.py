@@ -28,7 +28,7 @@ class Tuplet(AbstractNoteCollective):
         Args:
           unit_duration: a Duration representing a base note value, e.g. quarter note 
           unit_duration_factor: a numeric representing how many of the above the full duration should be.
-          abstract_note_list: a set of abstract notes to append to the tuplet
+          abstract_note_list: a list of abstract notes to append to the tuplet
           
         Note that these factors aggregate multiplicatively through self.contextual_reduction_factor (see rescale())
         """
@@ -64,7 +64,7 @@ class Tuplet(AbstractNoteCollective):
         """
         Append one or a list of notest to the tuplet.
 
-        :param notes:
+        :param notes: List or individual note
         :return:
         """
         if isinstance(notes, list):
