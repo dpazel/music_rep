@@ -1,5 +1,7 @@
 import unittest
 
+from harmonicmodel.secondary_chord_template import SecondaryChordTemplate
+from harmonicmodel.tertian_chord_template import TertianChordTemplate, TertianChordType
 from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from structure.beam import Beam
 from structure.tuplet import Tuplet
@@ -358,6 +360,44 @@ class TestTuplet(unittest.TestCase):
 
         assert Duration(11, 16) == first.duration
         assert Duration(9, 16) == second.duration
+
+    def test_secondary_chord(self):
+        print('----- test_secondary_chord -----')
+        l = LineGrammarExecutor()
+
+        s = '{<C-Major: V/V> F#:4 A D}'
+        line, hct = l.parse(s)
+        print(line)
+        print('-----')
+
+        hclist = hct.hc_list()
+        assert hclist is not None
+        assert len(hclist) == 1
+        first = hclist[0]
+
+        assert 'C-Major' == str(first.tonality)
+        assert isinstance(first.chord.chord_template, SecondaryChordTemplate)
+        assert 5 == first.chord.chord_template.secondary_scale_degree
+        assert 5 == first.chord.chord_template.principal_chord_template.scale_degree
+
+        s = '{<F-Major: IIIDom7/V-Natural> F#:4 A D}'
+        line, hct = l.parse(s)
+        print(line)
+        print('-----')
+
+        hclist = hct.hc_list()
+        assert hclist is not None
+        assert len(hclist) == 1
+        first = hclist[0]
+
+        assert 'F-Major' == str(first.tonality)
+        assert isinstance(first.chord.chord_template, SecondaryChordTemplate)
+        assert 5 == first.chord.chord_template.secondary_scale_degree
+        assert 3 == first.chord.chord_template.principal_chord_template.scale_degree
+        assert isinstance(first.chord.chord_template.principal_chord_template, TertianChordTemplate)
+        assert TertianChordType(TertianChordType.Dom7) == first.chord.chord_template.principal_chord_template.chord_type
+        assert 'C-NaturalMinor' == str(first.chord.secondary_tonality)
+        assert {'Eb', 'G', 'Bb', 'Db'} == {t[0].diatonic_symbol for t in first.chord.tones}
 
 
 
