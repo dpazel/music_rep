@@ -10,6 +10,7 @@ from fractions import Fraction
 from harmoniccontext.harmonic_context import HarmonicContext
 from harmoniccontext.harmonic_context_track import HarmonicContextTrack
 from harmonicmodel.chord_template import ChordTemplate
+from harmonicmodel.secondary_chord_template import SecondaryChordTemplate
 from structure.note import Note
 from structure.line import Line
 from structure.line import Tuplet
@@ -35,6 +36,23 @@ class LineConstructor(object):
         'S': Fraction(1, 16),
         'T': Fraction(1, 32),
         'X': Fraction(1, 64)
+    }
+
+    NUMERAL_MAP = {
+        'i': 1,
+        'I': 1,
+        'ii': 2,
+        'II': 2,
+        'iii': 3,
+        'III': 3,
+        'iv': 4,
+        'IV': 4,
+        'v': 5,
+        'V': 5,
+        'vi': 6,
+        'VI': 6,
+        'vii': 7,
+        'VII': 7
     }
 
     MODALITY_MAP = {
@@ -94,12 +112,16 @@ class LineConstructor(object):
 
     @staticmethod
     def construct_tone_from_tone_letters(letters):
+        if letters =='R' or letters == 'r':
+            return None
         return DiatonicToneCache.get_tone(letters)
 
     def construct_pitch(self, tone, partition):
         part = partition if partition is not None else self.current_level.default_register
         if partition is not None:
             self.current_level.default_register = partition
+        if tone is None:
+            return None
         return DiatonicPitch(part, tone)
 
     @staticmethod
@@ -113,15 +135,24 @@ class LineConstructor(object):
     def construct_duration(numerator, denominator):
         return Duration(numerator, denominator)
 
-    def construct_tonality(self, tone, modality_str):
+    def construct_tonality(self, tone, modality_str, modal_index=0):
         if modality_str not in LineConstructor.MODALITY_MAP:
             raise Exception('\'{0}\' not a valid modality type.'.format(modality_str))
         modality_type = LineConstructor.MODALITY_MAP[modality_str]
-        return Tonality(modality_type, tone)
+        return Tonality(modality_type, tone, modal_index)
 
-    def construct_chord_template(self, tone, chord_type_str):
-        chord_template_str = 't' + (tone.diatonic_symbol + chord_type_str if tone is not None else chord_type_str)
+    def construct_chord_template(self, tone, chord_type_str, chord_modality):
+        if tone:
+            chord_template_str = 't' + tone.diatonic_symbol + (chord_modality if chord_modality else '')
+        else:
+            chord_template_str = 't' + chord_type_str + (chord_modality if chord_modality else '')
         return ChordTemplate.generic_chord_template_parse(chord_template_str)
+
+    def construct_secondary_chord_template(self, primary_template, secondary_numeral_str, secondary_modality):
+        numeral = LineConstructor.NUMERAL_MAP[secondary_numeral_str]
+        modality = ModalityType(LineConstructor.MODALITY_MAP[secondary_modality]) if secondary_modality is not None \
+            else None
+        return SecondaryChordTemplate(primary_template, numeral, modality)
 
     def construct_harmonic_tag(self, tonality, chord_template):
         tonality = tonality if tonality is not None else self.current_tonality
