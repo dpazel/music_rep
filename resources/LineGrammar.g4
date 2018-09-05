@@ -27,6 +27,12 @@ grammar LineGrammar;
 
     Example: '{ <E-Major:iv> C:5 D Eb F (1:8, 2)[C:3 D:4 E] <:v> [i@C#:3 sBb D:4 Fbb]}'
 
+    Secondary chords:
+      General notation for the chord:
+          <NUMERAL>(ChordType)?/(NUMERAL)('-' MODALITY)
+
+      e.g. <F-Minor: IIIDom7/V-Melodic>, <C-Major, V/V>
+
     NOTE: Ties are in the syntax but not supported at this time.
 */
 
@@ -68,7 +74,7 @@ tuplet:
         ;
 
 pitch returns [p]
-    locals [tt=None ,alert=None, reg=None]:
+    locals [tt=None, alert=None, reg=None]:
     tone {$tt = $tone.t}
     (':' INT {$reg = $INT.int})? {$p=self.lc.construct_pitch($tt, $reg)};
 
@@ -83,13 +89,18 @@ duration returns[d]:
 durationFraction returns [f]:
     numerator=INT ':'  denominator=INT {$f = ($numerator.int, $denominator.int)};
 
-tonality returns [tonal]:
-    tone '-' MODALITY {$tonal = self.lc.construct_tonality($tone.t, $MODALITY.text)};
+tonality returns [tonal]
+    locals [modal_index=0]:
+    tone '-' MODALITY ('(' INT {$modal_index = $INT.int}')')? {$tonal = self.lc.construct_tonality($tone.t, $MODALITY.text, $modal_index)};
 
-chordTemplate returns [ctemplate]:
-    (tone '-' CHORDMODALITY {$ctemplate = self.lc.construct_chord_template($tone.t, $CHORDMODALITY.text)})
-    | CHORDNUMERAL {$ctemplate = self.lc.construct_chord_template(None, $CHORDNUMERAL.text)}
-    | COMMON_DURATION_CHORD_NUMERAL_LETTERS {$ctemplate = self.lc.construct_chord_template(None, $COMMON_DURATION_CHORD_NUMERAL_LETTERS.text)}
+chordTemplate returns [ctemplate]
+    locals [cm=None, secondary_numeral=None, secondary_modality=None]:
+    (tone '-' CHORDMODALITY {$ctemplate = self.lc.construct_chord_template($tone.t, None, $CHORDMODALITY.text)})
+    | ((CHORDNUMERAL (CHORDMODALITY {$cm=$CHORDMODALITY.text})? {$ctemplate = self.lc.construct_chord_template(None, $CHORDNUMERAL.text, $cm)}
+    | COMMON_DURATION_CHORD_NUMERAL_LETTERS (CHORDMODALITY {$cm=$CHORDMODALITY.text})? {$ctemplate = self.lc.construct_chord_template(None, $COMMON_DURATION_CHORD_NUMERAL_LETTERS.text, $cm)})
+     ( '/' (CHORDNUMERAL {$secondary_numeral=$CHORDNUMERAL.text} | COMMON_DURATION_CHORD_NUMERAL_LETTERS {$secondary_numeral=$COMMON_DURATION_CHORD_NUMERAL_LETTERS.text})
+     ('-' MODALITY {$secondary_modality=$MODALITY.text})? {$ctemplate = self.lc.construct_secondary_chord_template($ctemplate, $secondary_numeral, $secondary_modality)})?
+    )
     ;
 
 harmonicTag returns[ht]:
@@ -110,13 +121,13 @@ DURATIONLETTER: ('W' | 'w' | 'H' | 'h' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'X'
 ALTERATION: ('bb' | '#' | '##');
 MODALITY: ('Major' | 'Natural' | 'Melodic' | 'Harmonic' | 'Minor');
 CHORDNUMERAL: ('II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii');
-CHORDMODALITY: ('Maj' | 'Min' | 'Aug' | 'Dim') ;
+CHORDMODALITY: ('Maj7' | 'Min7' | 'Dom7' | 'Maj' | 'Min' | 'Aug' | 'Dim' | 'HalfDim7') ;
 
 NOTELETTERS: ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b' |
               'Cb' | 'Db' | 'Eb' | 'Fb' | 'Gb' | 'Ab' | 'Bb' | 'cb' | 'db' | 'eb' | 'fb' | 'gb' | 'ab' | 'bb' |
               'Cbb' | 'Dbb' | 'Ebb' | 'Fbb' | 'Gbb' | 'Abb' | 'Bbb' | 'cbb' | 'dbb' | 'ebb' | 'fbb' | 'gbb' | 'abb' | 'bbb' |
               'C#' | 'D#' | 'E#' | 'F#' | 'G#' | 'A#' | 'B#' | 'c#' | 'd#' | 'e#' | 'f#' | 'g#' | 'a#' | 'b#' |
-              'C##' | 'D##' | 'E##' | 'F##' | 'G##' | 'A##' | 'B##' | 'c##' | 'd##' | 'e##' | 'f##' | 'g##' | 'a##' | 'b##'
+              'C##' | 'D##' | 'E##' | 'F##' | 'G##' | 'A##' | 'B##' | 'c##' | 'd##' | 'e##' | 'f##' | 'g##' | 'a##' | 'b##' | 'R' | 'r'
 
 );
 
