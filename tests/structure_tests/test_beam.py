@@ -187,6 +187,28 @@ class NoteTest(unittest.TestCase):
         assert not a.is_tied_to
         assert not d.is_tied_from
 
+    def test_odd_structure(self):
+        print('test odd structure')
+        n1 = Note(DiatonicPitch(4, 'c'), Duration(1, 24))
+        n2 = Note(DiatonicPitch(4, 'c'), Duration(1, 24))
+        n3 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))
+
+        beam = Beam([n1, n2, n3])
+
+        #AbstractNote.print_structure((beam))
+
+        n1 = Note(DiatonicPitch(4, 'c'), Duration(1, 12))
+        n2 = Note(DiatonicPitch(4, 'c'), Duration(1, 12))
+
+        from structure.tuplet import Tuplet
+        tuplet = Tuplet(Duration(1, 12), 1, [n1, n2])
+
+        n3 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))
+
+        beam = Beam([tuplet, n3])
+        AbstractNote.print_structure(beam)
+
+
     @staticmethod
     def print_all_notes(notes):
         print('----------')
