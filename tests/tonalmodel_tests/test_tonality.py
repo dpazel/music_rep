@@ -35,3 +35,8 @@ class TestTonality(unittest.TestCase):
 
         assert 'E' == tonality.basis_tone.diatonic_symbol
         assert 'F#' == tonality.root_tone.diatonic_symbol
+
+        tonality = Tonality.create_on_basis_tone('G', ModalityType.MelodicMinor, 2)
+
+        assert 'G' == tonality.basis_tone.diatonic_symbol
+        assert 'Bb' == tonality.root_tone.diatonic_symbol
