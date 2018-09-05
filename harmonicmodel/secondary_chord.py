@@ -16,12 +16,17 @@ class SecondaryChord(Chord):
     Represents and instance of a secondary chord.
     """
 
-    def __init__(self, secondary_chord_template, diatonic_tonality):
+    def __init__(self, secondary_chord_template, diatonic_tonality, secondary_tonality=None):
         """
         Constructor.
-        Args:
-          secondary_chord_template: SecondaryChordTemplate
-          diatonic_tonality: DiatonicTonality (used in scale degree chord formation)
+        :param secondary_chord_template: SecondaryChordTemplate
+        :param diatonic_tonality: DiatonicTonality (used in scale degree chord formation)
+        :param secondary_tonality: Used to represent denominator tonality
+        Note: The means for determining the secondary tonality is not necessarily clean. The standard technique
+        involves inferring the modality from the triad built on athe i-th tone of the base modality. However,
+        the actual technique to be used can be a variable.  The secondary_tonality argument is meant for cases where
+        the standard technique does not hold up - and provides a means for specifying the exact secondary tonality
+        when the standard technique does not apply.
         """
         Chord.__init__(self, secondary_chord_template, diatonic_tonality) 
         
@@ -43,7 +48,7 @@ class SecondaryChord(Chord):
         else:
             modality = self.chord_template.secondary_modality.value  
             
-        self.__secondary_tonality = Tonality(modality, diatonic_basis)
+        self.__secondary_tonality = Tonality(modality, diatonic_basis) if not secondary_tonality else secondary_tonality
         
         # Create the principal chord
         self.__primary_chord = self.chord_template.principal_chord_template.create_chord(self.secondary_tonality)
