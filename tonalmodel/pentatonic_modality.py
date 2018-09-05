@@ -7,6 +7,7 @@ Purpose: Defines the PentatonicModality class, defining the range of
 
 """
 from tonalmodel.modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.interval import Interval
 
 
 class PentatonicModality(Modality):
@@ -54,3 +55,20 @@ class PentatonicModality(Modality):
     def pentatonic_modality_types_as_string_array():
         answer = [ModalityType.to_str(t) for t in PentatonicModality.PENTATONIC_MODALITIES]
         return answer
+
+    @staticmethod
+    def find_modality(tones):
+        answers = list()
+        if len(tones) == 5:
+            for t in [ModalityType.MajorPentatonic]:
+                modality_spec = PentatonicModality.MODALITY_DEFINITION_MAP[t]
+
+                p1 = Interval.parse('P:1')
+                for scale_start in range(0, 5):
+                    intervals = [p1] + [Interval.calculate_tone_interval(tones[(scale_start + i) % 5],
+                                                                         tones[(scale_start + i + 1) % 5])
+                                        for i in range(0, len(tones))]
+                    if intervals == modality_spec.incremental_intervals:
+                        answers.append(PentatonicModality(t, (-scale_start) % len(tones)))
+        return answers
+
