@@ -481,8 +481,8 @@ class TertianChordTemplate(ChordTemplate):
                 interval = Interval(int(tension[3]), IntervalType(interval_type))
                 tensions.append(interval)
             
-        logging.info('{0}, {1}, {2}, {3}'.format(diatonic_basis if scale_degree is None else str(scale_degree),
-                                                 str(chord_type) if chord_type else '',
-                                                 ' '.join(str(x) for x in tensions) if tensions else '',
-                                                 inversion if inversion else ''))
+        # logging.info('{0}, {1}, {2}, {3}'.format(diatonic_basis if scale_degree is None else str(scale_degree),
+        #                                         str(chord_type) if chord_type else '',
+        #                                         ' '.join(str(x) for x in tensions) if tensions else '',
+        #                                        inversion if inversion else ''))
         return TertianChordTemplate(diatonic_basis, scale_degree, chord_type, tensions, inversion, inversion_interval)
