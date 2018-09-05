@@ -5,7 +5,7 @@ File: tonality.py
 Purpose: to define the Tonality class.
 
 """
-from tonalmodel.modality import ModalityType
+from tonalmodel.modality import ModalityType, Modality
 from tonalmodel.modality_factory import ModalityFactory
 from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
@@ -18,16 +18,20 @@ class Tonality(object):
 
     def __init__(self, modality_type, diatonic_tone, modal_index=0):
         """
-        Constructor
-        
-        Args:
-          modality_type: ModalityType being used
-          diatonic_tone: DiatonicTone being used
+        Constructor.
+        :param modality_type: ModalityType being used.
+        :param diatonic_tone: DiatonicTone being used as root.
+        :param modal_index: (origin 0), which of the tonality's tone is the actual root_tone.
+
+        Note: (Using E Major as an example)
+              self.basis_tone: is the tonality first tone, as if modal_index==0. (E)
+              self.root_tone: is the tonality first tone with modal+index taken into account. (F#)
         """
         if isinstance(diatonic_tone, str):
             self.__diatonic_tone = DiatonicToneCache.get_tone(diatonic_tone)
         else:
             self.__diatonic_tone = diatonic_tone
+
         self.__modality_type = modality_type
         self.__modality = ModalityFactory.create_modality(
             self.modality_type.value if isinstance(self.modality_type, ModalityType) else modality_type,
@@ -94,3 +98,11 @@ class Tonality(object):
             if tone.diatonic_letter == letter:
                 tones.append(tone)
         return tones
+
+    @staticmethod
+    def find_tonality(tones):
+        modalities = Modality.find_modality(tones)
+        answers = list()
+        for modality in modalities:
+            answers.append(Tonality(modality.modality_type, tones[0], modality.modal_index))
+        return answers
