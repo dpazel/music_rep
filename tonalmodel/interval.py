@@ -446,7 +446,7 @@ class Interval(object):
             if raw_distance != 2 and raw_distance != 3 and raw_distance != 6 and raw_distance != 7:
                 raise Exception('Illegal interval distance for major/minor interval {0}'.format(interval_string))
             
-        # When sign is -1 and interval_distance = 0, we need to flip_tests the interval
+        # When sign is -1 and interval_distance = 0, we need to reflection_tests the interval
         if sign == -1 and interval_distance == 1:
             interval_type = IntervalType.Augmented if interval_type == IntervalType.Diminished else \
                             IntervalType.Diminished if interval_type == IntervalType.Augmented else IntervalType.Perfect
