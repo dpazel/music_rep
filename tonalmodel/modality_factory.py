@@ -41,6 +41,8 @@ class ModalityFactory(object):
             return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.HarmonicMinor:
             return DiatonicModality(modality_type, modal_index)
+        if modality_type == ModalityType.HarmonicMajor:
+            return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Ionian:
             return DiatonicModality(modality_type, modal_index)
         if modality_type == ModalityType.Dorian:
