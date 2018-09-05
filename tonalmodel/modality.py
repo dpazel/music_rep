@@ -11,14 +11,16 @@ from tonalmodel.interval import Interval
 class ModalityType(object):
     """
     Enum class for the quality of musical intervals.
+    Note: HarmonicMajor is 'invented' in this code, and the author does not know it by any standard name.
+          Its invention came by way of transformation code for completion.
     """
-    Major, NaturalMinor, MelodicMinor, HarmonicMinor, \
+    Major, NaturalMinor, MelodicMinor, HarmonicMinor, HarmonicMajor, \
         Ionian, Dorian, Phrygian, Lydian, Myxolydian, Aeolian, Locrian,   \
         WholeTone, \
         MajorPentatonic, EgyptianPentatonic, MinorBluesPentatonic, MajorBluesPentatonic, MinorPentatonic, \
         HWOctatonic, WHOctatonic, \
         MajorBlues, MinorBlues,  \
-        = range(21)
+        = range(22)
     
     def __init__(self, vtype):
         self.value = vtype
@@ -39,6 +41,8 @@ class ModalityType(object):
             return 'MelodicMinor'
         elif value == ModalityType.HarmonicMinor:
             return 'HarmonicMinor'
+        elif value == ModalityType.HarmonicMajor:
+            return 'HarmonicMajor'
         elif value == ModalityType.Ionian:
             return 'Ionian'
         elif value == ModalityType.Dorian:
@@ -87,6 +91,8 @@ class ModalityType(object):
             t = ModalityType.MelodicMinor
         elif t_string == 'HarmonicMinor':
             t = ModalityType.HarmonicMinor
+        elif t_string =='HarmonicMajor':
+            t = ModalityType.HarmonicMajor
         elif t_string == 'Ionian':
             t = ModalityType.Ionian
         elif t_string == 'Dorian':
@@ -280,3 +286,13 @@ class Modality(object):
     def __str__(self):
         return '{0}{1}'.format(str(self.modality_spec),
                                '[{0}]'.format(self.modal_index) if self.modal_index != 0 else '')
+
+    @staticmethod
+    def find_modality(tones):
+        from tonalmodel.diatonic_modality import DiatonicModality
+        answers = list()
+        answers.extend(DiatonicModality.find_modality(tones))
+
+        from tonalmodel.pentatonic_modality import PentatonicModality
+        answers.extend(PentatonicModality.find_modality(tones))
+        return answers
