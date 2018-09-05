@@ -6,6 +6,7 @@ Purpose: Defines the DiatonicModality class, defining the major diatonic scales.
 
 """
 from tonalmodel.modality import Modality, ModalityType, ModalitySpec
+from tonalmodel.interval import Interval
 
 
 class DiatonicModality(Modality):
@@ -18,6 +19,7 @@ class DiatonicModality(Modality):
                            ModalityType.NaturalMinor,
                            ModalityType.MelodicMinor,
                            ModalityType.HarmonicMinor,
+                           ModalityType.HarmonicMajor,
                            ModalityType.Ionian,
                            ModalityType.Dorian,
                            ModalityType.Phrygian,
@@ -34,6 +36,8 @@ class DiatonicModality(Modality):
         ModalityType.MelodicMinor: ModalitySpec(ModalityType.MelodicMinor, ['P:1', 'M:2', 'm:2', 'M:2', 'M:2', 'M:2',
                                                                             'M:2', 'm:2']),
         ModalityType.HarmonicMinor: ModalitySpec(ModalityType.HarmonicMinor, ['P:1', 'M:2', 'm:2', 'M:2', 'M:2', 'm:2',
+                                                                              'A:2', 'm:2']),
+        ModalityType.HarmonicMajor: ModalitySpec(ModalityType.HarmonicMajor, ['P:1', 'M:2', 'M:2', 'm:2', 'M:2', 'm:2',
                                                                               'A:2', 'm:2']),
         ModalityType.Ionian: ModalitySpec(ModalityType.Ionian, ['P:1', 'M:2', 'M:2', 'm:2', 'M:2', 'M:2', 'M:2',
                                                                 'm:2']),
@@ -66,3 +70,20 @@ class DiatonicModality(Modality):
     def diatonic_modality_types_as_string_array():
         answer = [ModalityType.to_str(t) for t in DiatonicModality.DIATONIC_MODALITIES]
         return answer
+
+    @staticmethod
+    def find_modality(tones):
+        answers = list()
+        if len(tones) == 7:
+            for t in [ModalityType.Major, ModalityType.NaturalMinor, ModalityType.MelodicMinor,
+                      ModalityType.HarmonicMinor, ModalityType.HarmonicMajor]:
+                modality_spec = DiatonicModality.MODALITY_DEFINITION_MAP[t]
+
+                p1 = Interval.parse('P:1')
+                for scale_start in range(0, 7):
+                    intervals = [p1] + [Interval.calculate_tone_interval(tones[(scale_start + i) % 7],
+                                                                         tones[(scale_start + i + 1) % 7])
+                                        for i in range(0, len(tones))]
+                    if intervals == modality_spec.incremental_intervals:
+                        answers.append(DiatonicModality(t, (-scale_start) % len(tones)))
+        return answers
