@@ -35,15 +35,15 @@ class Beam(AbstractNoteCollective):
           abstract_note_list: list of notes, beams, and tuplets to add consecutively under the beam.
         """
         AbstractNoteCollective.__init__(self)
-        
-        self.append(abstract_note_list)   
+
+        self.append(abstract_note_list)
         
     @property
     def duration(self):
         """
         This is an override of AbstractNoteCollective.duration.
-        Tuplet and Beam override this to do a simple summation of linearly layed out notes and subnotes.
-                 The reason is that the layout algorithm of these subclasses cannot use the realtive_position
+        Tuplet and Beam override this to do a simple summation of linearly laid out notes and sub-notes.
+                 The reason is that the layout algorithm of these subclasses cannot use the relative_position
                  attribute as the algorithm determines that.
         """
         d = Duration(0)
@@ -62,7 +62,8 @@ class Beam(AbstractNoteCollective):
             for n in notes:
                 self.append(n)
             return
-        self.add(notes, len(self.sub_notes))
+        elif isinstance(notes, Note) or isinstance(notes, AbstractNoteCollective):
+            self.add(notes, len(self.sub_notes))
         
     def add(self, note, index):
         """

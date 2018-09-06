@@ -71,7 +71,8 @@ class Tuplet(AbstractNoteCollective):
             for n in notes:
                 self.append(n)
             return
-        self.add(notes, len(self.sub_notes))
+        elif isinstance(notes, Note) or isinstance(notes, AbstractNoteCollective):
+            self.add(notes, len(self.sub_notes))
         
     def add(self, note, index):
         """
