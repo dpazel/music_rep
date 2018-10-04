@@ -8,9 +8,14 @@ Note: HarmonicContext positions are continually reset when the track is built.  
       will be 0.
 
 """
+from fractions import Fraction
+
+from harmoniccontext.harmonic_context import HarmonicContext
 from misc.ordered_map import OrderedMap
+from timemodel.offset import Offset
 from timemodel.position import Position
 from timemodel.duration import Duration
+from misc.interval import Interval as NumericInterval
 
 
 class HarmonicContextTrack(object):
@@ -124,3 +129,34 @@ class HarmonicContextTrack(object):
     def __str__(self):
         l = self.hc_list()
         return '\n'.join('[{0}] {1}'.format(i, str(l[i])) for i in range(0, len(self)))
+
+    def sub_hct(self, sub_track_interval=None):
+        """
+        Take a sub_track of this hct.
+        :param sub_track_interval: NmericInterval.  If none, the entire hct.
+        :return:
+        """
+        sub_track_interval = NumericInterval(Fraction(0), self.duration.duration) if sub_track_interval is None else \
+            sub_track_interval
+
+        new_track = HarmonicContextTrack()
+        for hc in self.hc_list():
+            hc_interval = NumericInterval(hc.position.position, hc.position.position + hc.duration.duration)
+            hc_intersect = hc_interval.intersection(sub_track_interval)
+            if hc_intersect is not None:
+                new_hc = HarmonicContext(hc.tonality, hc.chord,
+                                          Duration(hc_intersect.length()), Position(hc_intersect.lower))
+                new_track.append(new_hc)
+
+        return new_track
+
+    def reverse(self):
+        new_track = HarmonicContextTrack()
+
+        offset = Position(0)
+        for hc in reversed(self.hc_list()):
+            hs_prime = HarmonicContext(hc.tonality, hc.chord, hc.duration, offset)
+            new_track.append(hs_prime)
+            offset = offset + hc.duration
+
+        return new_track
