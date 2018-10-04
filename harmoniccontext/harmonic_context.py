@@ -66,5 +66,14 @@ class HarmonicContext(object):
 
         return True
 
+    def is_same_harmony(self, other):
+        if not other or not isinstance(other, HarmonicContext):
+            return False
+
+        if str(self.tonality) != str(other.tonality) or str(self.chord) != str(other.chord):
+            return False
+
+        return True
+
     def __str__(self):
         return 'h.c.[{0}, {1}, {2}]'.format(self.tonality, self.chord, self.duration)
