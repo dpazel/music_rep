@@ -91,7 +91,7 @@ class ModalityType(object):
             t = ModalityType.MelodicMinor
         elif t_string == 'HarmonicMinor':
             t = ModalityType.HarmonicMinor
-        elif t_string =='HarmonicMajor':
+        elif t_string == 'HarmonicMajor':
             t = ModalityType.HarmonicMajor
         elif t_string == 'Ionian':
             t = ModalityType.Ionian
@@ -214,8 +214,8 @@ class Modality(object):
                 sumit = sumit + self.modality_spec.incremental_intervals[ri]
                 self.__incremental_intervals.append(self.modality_spec.incremental_intervals[ri])
                 self.__root_intervals.append(sumit)
-        #sumit = None
-        #for interval in self.__modality_spec.incremental_intervals:
+        # sumit = None
+        # for interval in self.__modality_spec.incremental_intervals:
         #    sumit = sumit + interval if sumit is not None else interval
         #    self.__root_intervals.append(sumit)
         
