@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         pass
 
     def test_whole_tone_key(self):
-        whole_tone_modality = WholeToneModality(ModalityType.WholeTone)
+        whole_tone_modality = WholeToneModality.create(ModalityType.WholeTone)
         
         for key in whole_tone_modality.get_valid_root_tones():
             scale = whole_tone_modality.get_tonal_scale(DiatonicTone(key))

@@ -25,7 +25,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
                    'A, B, C MajMin',
                    'B, C, D MinMaj',
                    ]
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         i = 1
         for t in ltrs:
             chord_t = SecundalChordTemplate.parse('s' + t)
@@ -54,20 +54,20 @@ class TestSecundalChordTemplate(unittest.TestCase):
             
             i += 1
             
-        tones = {Tonality(ModalityType.Major, DiatonicTone("C")): (['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+        tones = {Tonality.create(ModalityType.Major, DiatonicTone("C")): (['a', 'b', 'c', 'd', 'e', 'f', 'g'],
                                                                    ['A, B, C MajMin', 'B, C, D MinMaj',
                                                                     'C, D, E MajMaj', 'D, E, F MajMin',
                                                                     'E, F, G MinMaj', 'F, G, A MajMaj',
                                                                     'G, A, B MajMaj']),
-                 Tonality(ModalityType.Major, DiatonicTone("Db")):
+                 Tonality.create(ModalityType.Major, DiatonicTone("Db")):
                      (['ab', 'bb',  'db', 'eb', 'gb'],
                       ['Ab, Bb, C MajMaj', 'Bb, C, Db MajMin', 'Db, Eb, F MajMaj', 'Eb, F, Gb MajMin',
                        'Gb, Ab, Bb MajMaj']),
-                 Tonality(ModalityType.Major, DiatonicTone("B")):
+                 Tonality.create(ModalityType.Major, DiatonicTone("B")):
                      (['a#', 'c#', 'd#', 'f#', 'g#'], ['A#, B, C# MinMaj', 'C#, D#, E MajMin', 'D#, E, F# MinMaj',
                                                        'F#, G#, A# MajMaj', 'G#, A#, B MajMin']),
-                 Tonality(ModalityType.MelodicMinor, DiatonicTone("Ab")): (['Cb'], ['Cb, Db, Eb MajMaj']),
-                 Tonality(ModalityType.Major, DiatonicTone("C#")): (['B#'], ['B#, C#, D# MinMaj'])}
+                 Tonality.create(ModalityType.MelodicMinor, DiatonicTone("Ab")): (['Cb'], ['Cb, Db, Eb MajMaj']),
+                 Tonality.create(ModalityType.Major, DiatonicTone("C#")): (['B#'], ['B#, C#, D# MinMaj'])}
         for tonality, tone_ltrs_answers in list(tones.items()):
             for t, a in zip(tone_ltrs_answers[0], tone_ltrs_answers[1]):
                 chord_t = SecundalChordTemplate.parse('s' + t)
@@ -86,7 +86,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
         print('test_special_chords')
         triads = ['MajMaj', 'MajMin', 'MinMaj', 'MinMin']
         answers = ['C, D, E MajMaj', 'C, D, Eb MajMin', 'C, Db, Eb MinMaj', 'C, Db, Ebb MinMin']
-        tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
+        tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         for triad, a in zip(triads, answers):
             chord_t = SecundalChordTemplate.parse('SC' + triad)
             print(chord_t)
@@ -111,7 +111,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
         chord_types = ['MMM', 'MMm', 'MmM', 'Mmm', 'mMM', 'mMm', 'mmM', 'mmm']
         answers = ['C, D, E, F# MMM', 'C, D, E, F MMm', 'C, D, Eb, F MmM', 'C, D, Eb, Fb Mmm', 'C, Db, Eb, F mMM',
                    'C, Db, Eb, Fb mMm', 'C, Db, Ebb, Fb mmM', 'C, Db, Ebb, Fbb mmm']
-        tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
+        tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         for triad, a in zip(chord_types, answers):
             chord_t = SecundalChordTemplate.parse('SC' + triad)
             print(chord_t)
@@ -127,7 +127,7 @@ class TestSecundalChordTemplate(unittest.TestCase):
         ctype = 'MMM'
         answers = ['C, D, E, F# MMM', 'D, C, E, F# MMM', 'E, C, D, F# MMM', 'F#, C, D, E MMM'
                    ]
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         
         for i, a in zip(range(1, 5), answers):
             template = SecundalChordTemplate.parse('SC' + ctype + '@' + str(i))

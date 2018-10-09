@@ -16,12 +16,11 @@ class Tonality(object):
         tonality would be that, but rooted (first tone) at a given diatonic tone.
     """
 
-    def __init__(self, modality_type, diatonic_tone, modal_index=0):
+    def __init__(self, modality, diatonic_tone):
         """
         Constructor.
         :param modality_type: ModalityType being used.
         :param diatonic_tone: DiatonicTone being used as root.
-        :param modal_index: (origin 0), which of the tonality's tone is the actual root_tone.
 
         Note: (Using E Major as an example)
               self.basis_tone: is the tonality first tone, as if modal_index==0. (E)
@@ -32,23 +31,33 @@ class Tonality(object):
         else:
             self.__diatonic_tone = diatonic_tone
 
-        self.__modality_type = modality_type
-        self.__modality = ModalityFactory.create_modality(
-            self.modality_type.value if isinstance(self.modality_type, ModalityType) else modality_type,
-            modal_index)
+        self.__modality_type = modality.modality_type
+        self.__modality = modality
         self.__annotation = self.modality.get_tonal_scale(self.diatonic_tone)
 
         self.__basis_tone = (self.annotation[:-1])[-self.modal_index]
 
     @staticmethod
-    def create_on_basis_tone(basis_tone, modality_type, modal_index=0):
-        if isinstance(basis_tone, str):
-            diatonic_tone = DiatonicToneCache.get_tone(basis_tone)
+    def create(modality_type, diatonic_tone, modal_index=0):
+        """
+        Constructor.
+        :param modality_type: ModalityType being used.
+        :param diatonic_tone: DiatonicTone being used as root.
+        :param modal_index: (origin 0), which of the tonality's tone is the actual root_tone.
+        """
+        if isinstance(diatonic_tone, str):
+            base_diatonic_tone = DiatonicToneCache.get_tone(diatonic_tone)
         else:
-            diatonic_tone = basis_tone
+            base_diatonic_tone = diatonic_tone
+        return Tonality(ModalityFactory.create_modality(modality_type, modal_index), base_diatonic_tone)
+
+    @staticmethod
+    def create_on_basis_tone(basis_tone, modality_type, modal_index=0):
+        diatonic_tone = DiatonicToneCache.get_tone(basis_tone) if isinstance(basis_tone, str) else basis_tone
+
         raw_modality = ModalityFactory.create_modality(modality_type, 0)
         scale = raw_modality.get_tonal_scale(diatonic_tone)
-        return Tonality(modality_type, scale[modal_index], modal_index)
+        return Tonality.create(modality_type, scale[modal_index], modal_index)
 
     @property
     def modality_type(self):

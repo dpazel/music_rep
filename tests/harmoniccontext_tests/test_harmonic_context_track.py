@@ -21,7 +21,7 @@ class TestInterval(unittest.TestCase):
         pass
 
     def test_append(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
 
@@ -36,7 +36,7 @@ class TestInterval(unittest.TestCase):
         assert hc_track[Position(3, 4)].duration == Duration(1, 3)
 
     def test_append_first(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
 
@@ -51,7 +51,7 @@ class TestInterval(unittest.TestCase):
         assert hc_track[Position(7, 12)].duration == Duration(1, 2)
 
     def test_insert(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
 
@@ -78,7 +78,7 @@ class TestInterval(unittest.TestCase):
         assert len(hc_track) == 3
 
     def test_replace(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
 
@@ -96,7 +96,7 @@ class TestInterval(unittest.TestCase):
         assert hc_track[Position(5, 8)].duration == Duration(1, 3)
 
     def test_remove(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
 

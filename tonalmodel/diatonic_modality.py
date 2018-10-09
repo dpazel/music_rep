@@ -15,7 +15,7 @@ class DiatonicModality(Modality):
     These include Major, Minor, and Modal scales.
     """
     DIATONIC_MODALITIES = [
-                           ModalityType.Major, 
+                           ModalityType.Major,
                            ModalityType.NaturalMinor,
                            ModalityType.MelodicMinor,
                            ModalityType.HarmonicMinor,
@@ -55,20 +55,18 @@ class DiatonicModality(Modality):
                                                                   'M:2']),
     }
 
-    def __init__(self, modality_type, modal_index=0):
-        """
-        Constructor
-        """
-        if not isinstance(modality_type, int):
-            raise Exception('Modality type must be int value of ModalityType')    
+    @staticmethod
+    def create(modality_type, modal_index = 0):
+        if modality_type not in DiatonicModality.DIATONIC_MODALITIES:
+            raise Exception('Type parameter is not diatonic.')
         if modality_type not in DiatonicModality.MODALITY_DEFINITION_MAP:
-            raise Exception('Illegal diatonic modality value: {0}'.format(str(modality_type)))
-        
-        Modality.__init__(self, DiatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
+            raise Exception('Illegal diatonic modality value: {0} - Check Modality_definition_map'.format(
+                str(modality_type)))
+        return Modality(DiatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
 
     @staticmethod
     def diatonic_modality_types_as_string_array():
-        answer = [ModalityType.to_str(t) for t in DiatonicModality.DIATONIC_MODALITIES]
+        answer = [t.name for t in DiatonicModality.DIATONIC_MODALITIES]
         return answer
 
     @staticmethod

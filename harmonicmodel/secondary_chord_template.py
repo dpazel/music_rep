@@ -95,7 +95,7 @@ class SecondaryChordTemplate(ChordTemplate):
         secondary_scale_degree = ChordTemplate.SCALE_DEGREE_MAP[secondary_scale_degree_text]
         
         secondary_modality_text = m.group(SecondaryChordTemplate.DIATONIC_MODALITIES_NAME)
-        secondary_modality = ModalityType.to_type(secondary_modality_text) if secondary_modality_text else None
+        secondary_modality = ModalityType(secondary_modality_text) if secondary_modality_text else None
         
         principal_chord_template = ChordTemplate.generic_chord_template_parse(principal_chord_text)
         if not principal_chord_template:

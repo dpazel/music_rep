@@ -27,17 +27,14 @@ class OctatonicModality(Modality):
                                                                           'm:2', 'M:2', 'm:2']),
         }
 
-    def __init__(self, modality_type, modal_index=0):
-        """
-        Constructor
-        """
-        if not isinstance(modality_type, int):
-            raise Exception('Modality type must be int value of ModalityType')  
-        #  Ensure type given is only for these modalities.
+    @staticmethod
+    def create(modality_type, modal_index = 0):
         if modality_type not in OctatonicModality.OCTATONIC_MODALITIES:
-            raise Exception('Illegal octatonic modality: {0}'.format(modality_type))
-        
-        Modality.__init__(self, OctatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
+            raise Exception('Type parameter is not diatonic.')
+        if modality_type not in OctatonicModality.MODALITY_DEFINITION_MAP:
+            raise Exception('Illegal diatonic modality value: {0} - Check Modality_definition_map'.format(
+                str(modality_type)))
+        return Modality(OctatonicModality.MODALITY_DEFINITION_MAP[modality_type], modal_index)
     
     @staticmethod
     def octatonic_modality_types_as_string_array():

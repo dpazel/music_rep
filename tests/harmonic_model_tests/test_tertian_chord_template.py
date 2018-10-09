@@ -20,7 +20,7 @@ class TestTertianTemplateChord(unittest.TestCase):
 
     def test_chord_parse(self):
         ltrs = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         i = 1
         for t in ltrs:
             chord_t = TertianChordTemplate.parse('t' + t)
@@ -95,7 +95,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                    'It': ['F##', 'A', 'D#'],
                    'N6': ['F', 'Bb', 'D'],
                    }
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
  
         for ctype, value in list(answers.items()):
             template = TertianChordTemplate.parse(ltr + ctype)
@@ -138,7 +138,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                    'It': ['F##', 'A', 'D#'],
                    'N6': ['F', 'Bb', 'D'],
                    }
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
  
         for ctype, value in list(answers.items()):
             template = TertianChordTemplate.parse(scale_degree + ctype)
@@ -155,7 +155,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                   2: ['C#', 'A', 'E', 'G'],
                   3: ['E', 'A', 'C#', 'G'],
                   4: ['G', 'A', 'C#', 'E']}
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         
         for i in range(1, 5):
             template = TertianChordTemplate.parse(ctype + '@' + str(i))
@@ -179,7 +179,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                    '+8': ['Db', 'F', 'Ab', 'Cb', 'Db'],
                    }
         
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("Db"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("Db"))
         for t, value in list(answers.items()):
             template = TertianChordTemplate.parse(c_type + t)
             chord = template.create_chord(diatonic_tonality)
@@ -190,7 +190,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                 'Fail #{0}, {1}'.format(c_type + '+' + t, ', '.join(tone[0].diatonic_symbol for tone in tones))
             
     def test_duplicate(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("Db"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("Db"))
         template = TertianChordTemplate.parse('DbDom7+8')
         chord = template.create_chord(diatonic_tonality)
         print(chord)
@@ -214,7 +214,7 @@ class TestTertianTemplateChord(unittest.TestCase):
             'Fail #{0}, {1}'.format('DbDom7+8', ', '.join(tone[0].diatonic_symbol for tone in tones))
 
     def test_triad_generation(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         ret_types = [TertianChordType.Maj, TertianChordType.Min, TertianChordType.Min, TertianChordType.Maj,
                      TertianChordType.Maj,
                      TertianChordType.Min, TertianChordType.Dim]

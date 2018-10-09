@@ -54,7 +54,7 @@ class TestLiteScore(unittest.TestCase):
         ts_seq.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4), 'sww'), Position(0)))
 
         hc_track = HarmonicContextTrack()
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
         chord = chord_t.create_chord(diatonic_tonality)
         hc_track.append(HarmonicContext(diatonic_tonality, chord, Duration(2)))

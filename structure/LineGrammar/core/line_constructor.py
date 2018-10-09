@@ -20,6 +20,7 @@ from timemodel.position import Position
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 from tonalmodel.modality import ModalityType
+from tonalmodel.modality_factory import ModalityFactory
 from tonalmodel.tonality import Tonality
 
 
@@ -55,8 +56,8 @@ class LineConstructor(object):
         'VII': 7
     }
 
-    MODALITY_MAP = {
-        'Major': ModalityType.Major,
+    # Map short names to actual modalities.
+    MODALITY_SHORT_NAME_MAP = {
         'Minor': ModalityType.MelodicMinor,
         'Natural': ModalityType.NaturalMinor,
         'Harmonic': ModalityType.HarmonicMinor,
@@ -65,7 +66,7 @@ class LineConstructor(object):
 
     DEFAULT_BEAM_DURATION = Duration(1, 8)
     DEFAULT_LINE_DURATION = Duration(1, 4)
-    DEFAULT_TONALITY = Tonality(ModalityType.Major, DiatonicToneCache.get_tone('C'))
+    DEFAULT_TONALITY = Tonality.create(ModalityType.Major, DiatonicToneCache.get_tone('C'))
 
     def __init__(self):
         """
@@ -112,7 +113,7 @@ class LineConstructor(object):
 
     @staticmethod
     def construct_tone_from_tone_letters(letters):
-        if letters =='R' or letters == 'r':
+        if letters == 'R' or letters == 'r':
             return None
         return DiatonicToneCache.get_tone(letters)
 
@@ -136,10 +137,18 @@ class LineConstructor(object):
         return Duration(numerator, denominator)
 
     def construct_tonality(self, tone, modality_str, modal_index=0):
-        if modality_str not in LineConstructor.MODALITY_MAP:
-            raise Exception('\'{0}\' not a valid modality type.'.format(modality_str))
-        modality_type = LineConstructor.MODALITY_MAP[modality_str]
-        return Tonality(modality_type, tone, modal_index)
+        if modality_str[0] == '!':
+            modality_type = ModalityType(modality_str[1:])
+        elif modality_str in LineConstructor.MODALITY_SHORT_NAME_MAP:
+            modality_type = LineConstructor.MODALITY_SHORT_NAME_MAP[modality_str]
+        else:
+            modality_type = ModalityType(modality_str)
+
+        if ModalityFactory.is_registered(modality_type):
+            modality = ModalityFactory.create_modality(modality_type, modal_index)
+            return Tonality(modality, tone)
+        else:
+            raise Exception('Modality \'{0}\' is not registered in ModalityFactory.'.format(modality_str))
 
     def construct_chord_template(self, tone, chord_type_str, chord_modality):
         if tone:
@@ -150,8 +159,17 @@ class LineConstructor(object):
 
     def construct_secondary_chord_template(self, primary_template, secondary_numeral_str, secondary_modality):
         numeral = LineConstructor.NUMERAL_MAP[secondary_numeral_str]
-        modality = ModalityType(LineConstructor.MODALITY_MAP[secondary_modality]) if secondary_modality is not None \
-            else None
+
+        if secondary_modality is not None:
+            if secondary_modality in LineConstructor.MODALITY_SHORT_NAME_MAP:
+                modality = LineConstructor.MODALITY_SHORT_NAME_MAP[secondary_modality]
+            elif secondary_modality[0] == '!':
+                modality = ModalityType(secondary_modality[1:])
+            else:
+                modality = ModalityType(secondary_modality)
+        else:
+            modality = None
+
         return SecondaryChordTemplate(primary_template, numeral, modality)
 
     def construct_harmonic_tag(self, tonality, chord_template):
@@ -172,8 +190,8 @@ class LineConstructor(object):
         for i in range(0, len(self.harmonic_tag_list)):
             harmonic_tag = self.harmonic_tag_list[i]
             duration = (self.harmonic_tag_list[i + 1].first_note.get_absolute_position()
-                        if i < len(self.harmonic_tag_list) - 1 else Position(self.__line.duration)) \
-                        - self.harmonic_tag_list[i].first_note.get_absolute_position()
+                        if i < len(self.harmonic_tag_list) - 1 else Position(self.__line.duration)) - \
+                       self.harmonic_tag_list[i].first_note.get_absolute_position()
             harmonic_context = HarmonicContext(harmonic_tag.tonality, harmonic_tag.chord, duration,
                                                harmonic_tag.first_note.get_absolute_position())
             hct.append(harmonic_context)

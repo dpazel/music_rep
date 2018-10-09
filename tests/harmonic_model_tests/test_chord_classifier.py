@@ -15,7 +15,7 @@ class TestChordClassifier(unittest.TestCase):
         pass
 
     def test_simple_tertian(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_list = ChordClassifier.classify(['e', 'a', 'c', 'g', 'B'], 'a', diatonic_tonality)
 
         assert 2 == len(chord_list)
@@ -28,7 +28,7 @@ class TestChordClassifier(unittest.TestCase):
         assert 2 == len(chord_list)
 
     def test_simple_quartal(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_list = ChordClassifier.classify(['e', 'a', 'd'], 'e', diatonic_tonality)
         assert 1 == len(chord_list)
         assert "PerPer" == str(chord_list[0].chord_type)
@@ -39,7 +39,7 @@ class TestChordClassifier(unittest.TestCase):
         assert 0 == len(chord_list)
 
     def test_simple_secundal(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_list = ChordClassifier.classify(['d', 'c', 'e'], 'c', diatonic_tonality)
         assert 1 == len(chord_list)
         assert "MajMaj" == str(chord_list[0].chord_type)
@@ -52,7 +52,7 @@ class TestChordClassifier(unittest.TestCase):
         assert 0 == len(chord_list)
 
     def test_simple_all_chords(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_list = ChordClassifier.classify_all_roots(['e', 'a', 'c', 'g', 'B'], diatonic_tonality)
 
         TestChordClassifier.print_chord_list('test_simple_all_chords', chord_list)

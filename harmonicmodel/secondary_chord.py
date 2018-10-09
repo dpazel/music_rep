@@ -46,9 +46,9 @@ class SecondaryChord(Chord):
             else:
                 raise Exception('Cannot determine secondary modality for secondary chord')
         else:
-            modality = self.chord_template.secondary_modality.value  
+            modality = self.chord_template.secondary_modality
             
-        self.__secondary_tonality = Tonality(modality, diatonic_basis) if not secondary_tonality else secondary_tonality
+        self.__secondary_tonality = Tonality.create(modality, diatonic_basis) if not secondary_tonality else secondary_tonality
         
         # Create the principal chord
         self.__primary_chord = self.chord_template.principal_chord_template.create_chord(self.secondary_tonality)

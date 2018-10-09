@@ -6,6 +6,8 @@ from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from structure.beam import Beam
 from structure.tuplet import Tuplet
 from timemodel.duration import Duration
+from tonalmodel.modality import ModalityType, ModalitySpec, Modality
+from tonalmodel.modality_factory import ModalityFactory
 
 
 class TestTuplet(unittest.TestCase):
@@ -398,6 +400,23 @@ class TestTuplet(unittest.TestCase):
         assert TertianChordType(TertianChordType.Dom7) == first.chord.chord_template.principal_chord_template.chord_type
         assert 'C-NaturalMinor' == str(first.chord.secondary_tonality)
         assert {'Eb', 'G', 'Bb', 'Db'} == {t[0].diatonic_symbol for t in first.chord.tones}
+
+    def test_user_defined_modality(self):
+        print('----- test_user_defined_modality -----')
+
+        modality_type = ModalityType('MyModality')
+        incremental_interval_strs = [
+            'P:1', 'm:2', 'M:3', 'm:2', 'm:2', 'M:2', 'A:2'
+        ]
+        modality_spec = ModalitySpec(modality_type, incremental_interval_strs)
+        ModalityFactory.register_modality(modality_type, modality_spec)
+
+        l = LineGrammarExecutor()
+
+        s = '{<C-!MyModality: I> F#:4 A D}'
+        line, hct = l.parse(s)
+        print(line)
+        print('-----')
 
 
 

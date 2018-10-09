@@ -19,7 +19,7 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         pass
 
     def test_sample(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         
         template = SecondaryChordTemplate.parse('qVIPPaa/iv[Major]')
         print(template)
@@ -40,7 +40,7 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         assert s == 'Bb, Eb, Ab, D, G#'
         
     def test_standards(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("G"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("G"))
         
         template = SecondaryChordTemplate.parse('V/ii')
         print(template)
@@ -60,7 +60,7 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         print(s)
         assert s == 'G, B, D' 
         
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("G"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("G"))
         template = SecondaryChordTemplate.parse('V/ii')
         print(template)
         t_chord = template.create_chord(diatonic_tonality)
@@ -70,7 +70,7 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         print(s)
         assert s == 'E, G#, B' 
         
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("Bb"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("Bb"))
         template = SecondaryChordTemplate.parse('VI/ii')
         print(template)
         t_chord = template.create_chord(diatonic_tonality)
@@ -81,7 +81,7 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         assert s == 'A, C, Eb' 
         
     def test_interesting(self):
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("F"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("F"))
         
         template = SecondaryChordTemplate.parse('V/V[NaturalMinor]')
         print(template)

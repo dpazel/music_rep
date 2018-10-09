@@ -3,6 +3,7 @@ from tonalmodel.blues_modality import BluesModality
 from tonalmodel.modality import ModalityType
 from tonalmodel.diatonic_tone import DiatonicTone
 from tests.utility import build_incremental_intervals
+from tonalmodel.modality_factory import ModalityFactory
 
 
 class Test(unittest.TestCase):
@@ -14,7 +15,7 @@ class Test(unittest.TestCase):
         pass
 
     def test_major_blues_key(self):
-        blues_modality = BluesModality(ModalityType.MajorBlues)
+        blues_modality = BluesModality.create(ModalityType.MajorBlues)
         
         for key in blues_modality.get_valid_root_tones():
             scale = blues_modality.get_tonal_scale(DiatonicTone(key))
@@ -26,7 +27,7 @@ class Test(unittest.TestCase):
         print('End test_major_blues_key')
             
     def test_minor_blues_key(self):
-        blues_modality = BluesModality(ModalityType.MinorBlues)
+        blues_modality = ModalityFactory.create_modality(ModalityType.MinorBlues)
         
         for key in blues_modality.get_valid_root_tones():
             scale = blues_modality.get_tonal_scale(DiatonicTone(key))

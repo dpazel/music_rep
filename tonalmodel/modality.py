@@ -9,134 +9,100 @@ from tonalmodel.interval import Interval
 
 
 class ModalityType(object):
-    """
-    Enum class for the quality of musical intervals.
-    Note: HarmonicMajor is 'invented' in this code, and the author does not know it by any standard name.
-          Its invention came by way of transformation code for completion.
-    """
-    Major, NaturalMinor, MelodicMinor, HarmonicMinor, HarmonicMajor, \
-        Ionian, Dorian, Phrygian, Lydian, Myxolydian, Aeolian, Locrian,   \
-        WholeTone, \
-        MajorPentatonic, EgyptianPentatonic, MinorBluesPentatonic, MajorBluesPentatonic, MinorPentatonic, \
-        HWOctatonic, WHOctatonic, \
-        MajorBlues, MinorBlues,  \
-        = range(22)
-    
-    def __init__(self, vtype):
-        self.value = vtype
-        
+
+    # System wide known modality types.
+    Major = None
+    NaturalMinor = None
+    MelodicMinor = None
+    HarmonicMinor = None
+    HarmonicMajor = None
+    Ionian = None
+    Dorian = None
+    Phrygian = None
+    Lydian = None
+    Myxolydian = None
+    Aeolian = None
+    Locrian = None
+    WholeTone = None
+    MajorPentatonic = None
+    EgyptianPentatonic = None
+    MinorBluesPentatonic = None
+    MajorBluesPentatonic = None
+    MinorPentatonic = None
+    HWOctatonic = None
+    WHOctatonic = None
+    MajorBlues = None
+    MinorBlues = None
+
+    def __init__(self, name):
+        self.__name = name
+
+    @property
+    def name(self):
+        return self.__name
+
     def __str__(self):
-        return ModalityType.to_str(self.value)
+        return self.name
 
-    def value(self):
-        return self.value
-    
-    @staticmethod
-    def to_str(value):
-        if value == ModalityType.Major:
-            return 'Major'
-        elif value == ModalityType.NaturalMinor:
-            return 'NaturalMinor'
-        elif value == ModalityType.MelodicMinor:
-            return 'MelodicMinor'
-        elif value == ModalityType.HarmonicMinor:
-            return 'HarmonicMinor'
-        elif value == ModalityType.HarmonicMajor:
-            return 'HarmonicMajor'
-        elif value == ModalityType.Ionian:
-            return 'Ionian'
-        elif value == ModalityType.Dorian:
-            return 'Dorian'
-        elif value == ModalityType.Phrygian:
-            return 'Phrygian'
-        elif value == ModalityType.Lydian:
-            return 'Lydian'
-        elif value == ModalityType.Myxolydian:
-            return 'Myxolydian'
-        elif value == ModalityType.Aeolian:
-            return 'Aeolian'
-        elif value == ModalityType.Locrian:
-            return 'Locrian'
-        elif value == ModalityType.WholeTone:
-            return 'WholeTone'
-        elif value == ModalityType.MajorPentatonic:
-            return 'MajorPentatonic'
-        elif value == ModalityType.EgyptianPentatonic:
-            return 'EgyptionPentatonic'
-        elif value == ModalityType.MinorBluesPentatonic:
-            return 'MinorBluesPentatonic'
-        elif value == ModalityType.MajorBluesPentatonic:
-            return 'MajorBluesPentatonic'
-        elif value == ModalityType.MinorPentatonic:
-            return 'MinorPentatonic'
-        elif value == ModalityType.HWOctatonic:
-            return 'HWOctatonic'
-        elif value == ModalityType.WHOctatonic:
-            return 'WHOctatonic'
-        elif value == ModalityType.MajorBlues:
-            return "MajorBlues"
-        elif value == ModalityType.MinorBlues:
-            return "MinorBlues"
-        else:
-            raise Exception('Illegal modality type value: {0}'.format(value))
-        
-    @staticmethod
-    def to_type(t_string):
-        t = None
-        if t_string == 'Major':
-            t = ModalityType.Major
-        elif t_string == 'NaturalMinor':
-            t = ModalityType.NaturalMinor
-        elif t_string == 'MelodicMinor':
-            t = ModalityType.MelodicMinor
-        elif t_string == 'HarmonicMinor':
-            t = ModalityType.HarmonicMinor
-        elif t_string == 'HarmonicMajor':
-            t = ModalityType.HarmonicMajor
-        elif t_string == 'Ionian':
-            t = ModalityType.Ionian
-        elif t_string == 'Dorian':
-            t = ModalityType.Dorian
-        elif t_string == 'Phrygian':
-            t = ModalityType.Phrygian
-        elif t_string == 'Lydian':
-            t = ModalityType.Lydian
-        elif t_string == 'Myxolydian':
-            t = ModalityType.Myxolydian
-        elif t_string == 'Aeolian':
-            t = ModalityType.Aeolian
-        elif t_string == 'Locrian':
-            t = ModalityType.Locrian
-        elif t_string == 'WholeTone':
-            t = ModalityType.WholeTone
-        elif t_string == 'MajorPentatonic':
-            t = ModalityType.MajorPentatonic
-        elif t_string == 'EgyptianPentatonic':
-            t = ModalityType.EgyptianPentatonic
-        elif t_string == 'MinorBluesPentatonic':
-            t = ModalityType.MinorBluesPentatonic
-        elif t_string == 'MajorBluesPentatonic':
-            t = ModalityType.MajorBluesPentatonic
-        elif t_string == 'MinorPentatonic':
-            t = ModalityType.MinorPentatonic
-        elif t_string == 'HWOctatonic':
-            t = ModalityType.HWOctatonic
-        elif t_string == 'WHOctatonic':
-            t = ModalityType.WHOctatonic
-        elif t_string == 'MajorBlues':
-            t = ModalityType.MajorBlues
-        elif t_string == 'MinorBlues':
-            t = ModalityType.MinorBlues
-            
-        return ModalityType(t) if t is not None else None
-        
-    def __eq__(self, y):
-        return self.value == y.value
-    
+    def __eq__(self, other):
+        if other is None or not isinstance(other, ModalityType):
+            raise Exception('Must compare to non-None ModalityType.')
+        return self.name == other.name
+
     def __hash__(self):
-        return self.__str__().__hash__()
+        return self.name.__hash__()
 
-   
+
+# Initialize System-wide modality types.
+ModalityType.Major = ModalityType('Major')
+ModalityType.NaturalMinor = ModalityType('NaturalMinor')
+ModalityType.MelodicMinor = ModalityType('MelodicMinor')
+ModalityType.HarmonicMinor = ModalityType('HarmonicMinor')
+ModalityType.HarmonicMajor = ModalityType('HarmonicMajor')
+ModalityType.Ionian = ModalityType('Ionian')
+ModalityType.Dorian = ModalityType('Dorian')
+ModalityType.Phrygian = ModalityType('Phrygian')
+ModalityType.Lydian = ModalityType('Lydian')
+ModalityType.Myxolydian = ModalityType('Myxolydian')
+ModalityType.Aeolian = ModalityType('Aeolian')
+ModalityType.Locrian = ModalityType('Locrian')
+ModalityType.WholeTone = ModalityType('WholeTone')
+ModalityType.MajorPentatonic = ModalityType('MajorPentatonic')
+ModalityType.EgyptianPentatonic = ModalityType('EgyptianPentatonic')
+ModalityType.MinorBluesPentatonic = ModalityType('MinorBluesPentatonic')
+ModalityType.MajorBluesPentatonic = ModalityType('MajorBluesPentatonic')
+ModalityType.MinorPentatonic = ModalityType('MinorPentatonic')
+ModalityType.HWOctatonic = ModalityType('HWOctatonic')
+ModalityType.WHOctatonic = ModalityType('WHOctatonic')
+ModalityType.MajorBlues = ModalityType('MajorBlues')
+ModalityType.MinorBlues = ModalityType('MinorBlues')
+
+SYSTEM_MODALITIES = [
+    ModalityType.Major,
+    ModalityType.NaturalMinor,
+    ModalityType.MelodicMinor,
+    ModalityType.HarmonicMinor,
+    ModalityType.HarmonicMajor,
+    ModalityType.Ionian,
+    ModalityType.Dorian,
+    ModalityType.Phrygian,
+    ModalityType.Lydian,
+    ModalityType.Myxolydian,
+    ModalityType.Aeolian,
+    ModalityType.Locrian,
+    ModalityType.WholeTone,
+    ModalityType.MajorPentatonic,
+    ModalityType.EgyptianPentatonic,
+    ModalityType.MinorBluesPentatonic,
+    ModalityType.MajorBluesPentatonic,
+    ModalityType.MinorPentatonic,
+    ModalityType.HWOctatonic,
+    ModalityType.WHOctatonic,
+    ModalityType.MajorBlues,
+    ModalityType.MinorBlues,
+]
+
+
 class ModalitySpec(object):
     """
     Class defining a modality specification that is used to initialize the Modality class.
@@ -248,7 +214,7 @@ class Modality(object):
         return self.__root_intervals
       
     def get_number_of_tones(self):
-        return len(self.root_intervals)
+        return len(self.root_intervals) - 1
 
     @staticmethod
     def get_valid_root_tones():

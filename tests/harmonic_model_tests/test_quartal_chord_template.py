@@ -25,7 +25,7 @@ class TestQuartalChordTemplate(unittest.TestCase):
                    'A, D, G PerPer',
                    'B, E, A PerPer',
                    ]
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         i = 1
         for t, a in zip(ltrs, answers):
             chord_t = QuartalChordTemplate.parse('q' + t)
@@ -54,20 +54,20 @@ class TestQuartalChordTemplate(unittest.TestCase):
             
             i += 1
 
-        tones = {Tonality(ModalityType.Major, DiatonicTone("C")): (['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+        tones = {Tonality.create(ModalityType.Major, DiatonicTone("C")): (['a', 'b', 'c', 'd', 'e', 'f', 'g'],
                                                                    ['A, D, G PerPer', 'B, E, A PerPer',
                                                                     'C, F, B PerAug', 'D, G, C PerPer',
                                                                     'E, A, D PerPer', 'F, B, E AugPer',
                                                                     'G, C, F PerPer']),
-                 Tonality(ModalityType.Major, DiatonicTone("Db")): (['ab', 'bb',  'db', 'eb', 'gb'],
+                 Tonality.create(ModalityType.Major, DiatonicTone("Db")): (['ab', 'bb',  'db', 'eb', 'gb'],
                                                                     ['Ab, Db, Gb PerPer', 'Bb, Eb, Ab PerPer',
                                                                      'Db, Gb, C PerAug', 'Eb, Ab, Db PerPer',
                                                                      'Gb, C, F AugPer']),
-                 Tonality(ModalityType.Major, DiatonicTone("B")):
+                 Tonality.create(ModalityType.Major, DiatonicTone("B")):
                      (['a#', 'c#', 'd#', 'f#', 'g#'], ['A#, D#, G# PerPer', 'C#, F#, B PerPer',
                                                        'D#, G#, C# PerPer', 'F#, B, E PerPer', 'G#, C#, F# PerPer']),
-                 Tonality(ModalityType.MelodicMinor, DiatonicTone("Ab")): (['Cb'], ['Cb, F, Bb AugPer']),
-                 Tonality(ModalityType.Major, DiatonicTone("C#")): (['B#'], ['B#, E#, A# PerPer'])}
+                 Tonality.create(ModalityType.MelodicMinor, DiatonicTone("Ab")): (['Cb'], ['Cb, F, Bb AugPer']),
+                 Tonality.create(ModalityType.Major, DiatonicTone("C#")): (['B#'], ['B#, E#, A# PerPer'])}
         for tonality, tone_ltrs_answers in list(tones.items()):
             for t, a in zip(tone_ltrs_answers[0], tone_ltrs_answers[1]):
                 chord_t = QuartalChordTemplate.parse('q' + t)
@@ -86,7 +86,7 @@ class TestQuartalChordTemplate(unittest.TestCase):
         print('test_special_chords')
         triads = ['PerPer', 'AugPer', 'PerAug']
         answers = ['C, F, Bb PerPer', 'C, F#, B AugPer', 'C, F, B PerAug']
-        tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
+        tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         for triad, a in zip(triads, answers):
             chord_t = QuartalChordTemplate.parse('qC' + triad)
             print(chord_t)
@@ -111,7 +111,7 @@ class TestQuartalChordTemplate(unittest.TestCase):
         chord_types = ['PPP', 'PPA', 'PAP', 'PAA', 'APP', 'APA', 'AAP', 'AAA']
         answers = ['C, F, Bb, Eb PPP', 'C, F, Bb, E PPA', 'C, F, B, E PAP', 'C, F, B, E# PAA', 'C, F#, B, E APP',
                    'C, F#, B, E# APA', 'C, F#, B#, E# AAP', 'C, F#, B#, E## AAA']
-        tonality = Tonality(ModalityType.Major, DiatonicTone("C"))  
+        tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         for triad, a in zip(chord_types, answers):
             chord_t = QuartalChordTemplate.parse('qC' + triad)
             print(chord_t)
@@ -127,7 +127,7 @@ class TestQuartalChordTemplate(unittest.TestCase):
         answers = ['C, F, Bb, Eb, Ab PPPP', 'F, C, Bb, Eb, Ab PPPP', 'Bb, C, F, Eb, Ab PPPP', 'Eb, C, F, Bb, Ab PPPP',
                    'Ab, C, F, Bb, Eb PPPP'
                    ]
-        diatonic_tonality = Tonality(ModalityType.Major, DiatonicTone("C"))
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         
         for i, a in zip(range(1, 6), answers):
             template = QuartalChordTemplate.parse('qC' + ctype + '@' + str(i))

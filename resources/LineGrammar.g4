@@ -34,6 +34,10 @@ grammar LineGrammar;
       e.g. <F-Minor: IIIDom7/V-Melodic>, <C-Major, V/V>
 
     NOTE: Ties are in the syntax but not supported at this time.
+
+    In naming a modality - one can user the shorthands Natural, Melodic, Harmonic for minor keys, and 'minor' for
+    MelodicMinor.
+    User named keys must have a '!' prefix, e.g. !MyModality
 */
 
 @header {
@@ -119,7 +123,15 @@ WS : [ \t]+ -> skip ; // toss out whitespace
 COMMON_DURATION_CHORD_NUMERAL_LETTERS: ('I' | 'i' );
 DURATIONLETTER: ('W' | 'w' | 'H' | 'h' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'X' | 'x');
 ALTERATION: ('bb' | '#' | '##');
-MODALITY: ('Major' | 'Natural' | 'Melodic' | 'Harmonic' | 'Minor');
+fragment USER_MODALITY: '!'(('A'..'Z') | ('a'..'z'))+;
+fragment SYSTEM_MODALITIES: ('Major' | 'Natural' | 'Melodic' | 'Harmonic' | 'Minor' |
+                             'NaturalMinor'| 'MelodicMinor'| 'HarmonicMinor' | 'HarmonicMajor' |
+                             'Ionian' | 'Dorian' | 'Phrygian' | 'Lydian' | 'Myxolydian' | 'Aeolian' | 'Locrian' |
+                             'WholeTone' |
+                             'MajorPentatonic' | 'EgyptianPentatonic' | 'MinorBluesPentatonic' | 'MajorBluesPentatonic' | 'MinorPentatonic' |
+                             'HWOctatonic' | 'WHOctatonic' | 'MajorBlues' | 'MinorBlues');
+MODALITY: (SYSTEM_MODALITIES | USER_MODALITY);
+
 CHORDNUMERAL: ('II' | 'III' | 'IV' | 'V' | 'VI' | 'VII' | 'ii' | 'iii' | 'iv' | 'v' | 'vi' | 'vii');
 CHORDMODALITY: ('Maj7' | 'Min7' | 'Dom7' | 'Maj' | 'Min' | 'Aug' | 'Dim' | 'HalfDim7') ;
 

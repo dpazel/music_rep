@@ -1,4 +1,6 @@
 import unittest
+
+from tonalmodel.modality_factory import ModalityFactory
 from tonalmodel.octatonic_modality import OctatonicModality
 from tonalmodel.modality import ModalityType
 from tonalmodel.diatonic_tone import DiatonicTone
@@ -14,7 +16,7 @@ class Test(unittest.TestCase):
         pass
 
     def test_HW_Octatonic_key(self):
-        octatonic_modality = OctatonicModality(ModalityType.HWOctatonic)
+        octatonic_modality = OctatonicModality.create(ModalityType.HWOctatonic)
         
         for key in octatonic_modality.get_valid_root_tones():
             scale = octatonic_modality.get_tonal_scale(DiatonicTone(key))
@@ -26,7 +28,7 @@ class Test(unittest.TestCase):
         print('End test_HWOctatonic_key')
             
     def test_WH_Octatonic_key(self):
-        octatonic_modality = OctatonicModality(ModalityType.WHOctatonic)
+        octatonic_modality = ModalityFactory.create_modality(ModalityType.WHOctatonic)
         
         for key in octatonic_modality.get_valid_root_tones():
             scale = octatonic_modality.get_tonal_scale(DiatonicTone(key))
