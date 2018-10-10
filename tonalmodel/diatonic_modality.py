@@ -83,5 +83,5 @@ class DiatonicModality(Modality):
                                                                          tones[(scale_start + i + 1) % 7])
                                         for i in range(0, len(tones))]
                     if intervals == modality_spec.incremental_intervals:
-                        answers.append(DiatonicModality(t, (-scale_start) % len(tones)))
+                        answers.append(DiatonicModality.create(t, (-scale_start) % len(tones)))
         return answers
