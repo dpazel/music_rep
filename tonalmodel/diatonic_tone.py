@@ -25,7 +25,7 @@ class DiatonicTone(object):
     # Diatonic C scale indices
     DIATONIC_INDEX_MAPPING = {'C': 0, 'D': 1, 'E': 2, 'F': 3, 'G': 4, 'A': 5, 'B': 6}
     # Semitone offsets for all diatonic pitch letters
-    DIATONIC_OFFSETS = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
+    CHROMATIC_OFFSETS = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
     
     # All augmentations in text representation
     AUGMENTATIONS = ('bbb', 'bb', 'b', '', '#', '##', '###')
@@ -68,7 +68,7 @@ class DiatonicTone(object):
         # Full offset from beginning of chromatic partition, this is not the same as placement.
         # Note; This can be < 0 or > 11, , Cb is -1, and B# is 12
         # Note that in DiatonicPitch, this provides the accurate adjustment of chromatic partition (octave) number.
-        self.__tonal_offset = DiatonicTone.DIATONIC_OFFSETS[self.diatonic_letter] + self.augmentation_offset
+        self.__tonal_offset = DiatonicTone.CHROMATIC_OFFSETS[self.diatonic_letter] + self.augmentation_offset
         
         # This is the absolute tone regardless of chromatic partition, e.g.Cb is 11 or B; B# is 0 or C. 
         self.__placement = (self.tonal_offset if self.tonal_offset >= 0 else self.tonal_offset + 12) % 12
