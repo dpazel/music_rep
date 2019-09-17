@@ -113,5 +113,5 @@ class Tonality(object):
         modalities = Modality.find_modality(tones)
         answers = list()
         for modality in modalities:
-            answers.append(Tonality(modality.modality_type, tones[0], modality.modal_index))
+            answers.append(Tonality.create(modality.modality_type, tones[0], modality.modal_index))
         return answers
