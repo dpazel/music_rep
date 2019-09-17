@@ -389,6 +389,9 @@ class Interval(object):
         if not isinstance(diatonic_distance, int) or diatonic_distance <= 0:
             return []
         return Interval.INTERVAL_AVAILABLE_TYPES[(diatonic_distance - 1) % 7 + 1]
+
+    def is_negative(self):
+        return Interval._sign(self.diatonic_distance) == -1
     
     def __str__(self):
         return '{0}{1}:{2}'.format('-' if Interval._sign(self.diatonic_distance) == -1 else '',

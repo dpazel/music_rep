@@ -58,6 +58,15 @@ class TestInterval(unittest.TestCase):
         print(interval)
         assert interval.interval_type == IntervalType(IntervalType.Augmented)
         assert interval.diatonic_distance == 6
+        assert not interval.is_negative()
+
+        pitch_a = DiatonicPitch(5, 'C')
+        pitch_b = DiatonicPitch(4, 'Bb')
+        interval = Interval.create_interval(pitch_a, pitch_b)
+        print(interval)
+        assert interval.interval_type == IntervalType(IntervalType.Major)
+        assert interval.diatonic_distance == -1
+        assert interval.is_negative()
         
         interval = Interval(9, IntervalType(IntervalType.Diminished))
         print(interval)
