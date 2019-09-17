@@ -56,7 +56,7 @@ class DiatonicModality(Modality):
     }
 
     @staticmethod
-    def create(modality_type, modal_index = 0):
+    def create(modality_type, modal_index=0):
         if modality_type not in DiatonicModality.DIATONIC_MODALITIES:
             raise Exception('Type parameter is not diatonic.')
         if modality_type not in DiatonicModality.MODALITY_DEFINITION_MAP:
