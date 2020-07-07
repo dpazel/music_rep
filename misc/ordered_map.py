@@ -128,6 +128,7 @@ class OrderedMap(object):
         return [x[1] for x in self.items()]
 
     def floor(self, key):
+        # return key of od that is highest key less than given key argument.
         key_index = self.floor_calc(key)
         if key_index is None:
             return None
@@ -148,7 +149,6 @@ class OrderedMap(object):
                 return None
         return None if key_index >= len(alist) - 1 else alist[key_index + 1]
 
-        
     #  Think of it as searching on N semi-closed intervals instead of searching on points.
     #  For N points there are N-1 sections., indexed 0 --> N-2,
     #       with the interval being represented by the lower point index.
