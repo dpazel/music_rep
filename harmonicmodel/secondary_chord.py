@@ -23,8 +23,8 @@ class SecondaryChord(Chord):
         :param diatonic_tonality: DiatonicTonality (used in scale degree chord formation)
         :param secondary_tonality: Used to represent denominator tonality
         Note: The means for determining the secondary tonality is not necessarily clean. The standard technique
-        involves inferring the modality from the triad built on athe i-th tone of the base modality. However,
-        the actual technique to be used can be a variable.  The secondary_tonality argument is meant for cases where
+        involves inferring the modality from the triad built on the i-th tone of the base modality. However,
+        the actual technique to be used can be a variable. The secondary_tonality argument is meant for cases where
         the standard technique does not hold up - and provides a means for specifying the exact secondary tonality
         when the standard technique does not apply.
         """
