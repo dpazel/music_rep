@@ -22,9 +22,11 @@ class Tonality(object):
         :param modality_type: ModalityType being used.
         :param diatonic_tone: DiatonicTone being used as root.
 
+        diatonic_tone is the modal_index tone into some tonality based on the given modality.
+
         Note: (Using E Major as an example)
               self.basis_tone: is the tonality first tone, as if modal_index==0. (E)
-              self.root_tone: is the tonality first tone with modal+index taken into account. (F#)
+              self.root_tone: is the tonality first tone with modal_index taken into account. (F#)
         """
         if isinstance(diatonic_tone, str):
             self.__diatonic_tone = DiatonicToneCache.get_tone(diatonic_tone)
