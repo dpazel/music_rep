@@ -10,6 +10,10 @@ from structure.note import Note
 from structure.beam import Beam
 from structure.tuplet import Tuplet
 from timemodel.offset import Offset
+from misc.interval import Interval
+from fractions import Fraction
+
+from timemodel.position import Position
 
 
 class Line(AbstractNoteCollective):
@@ -129,3 +133,48 @@ class Line(AbstractNoteCollective):
     
     def upward_forward_reloc_layout(self, abstract_note):
         pass
+
+    def sub_line(self, sub_line_range=None):
+        """
+        Take a sub-range (time) of this line, and build a new line with notes that begins within that range
+        :param sub_line_range: numeric interval to check for inclusion.
+        :return: (sub-line, onset of original (Position), duration of sub-line)
+
+        Note: The sub_line is not guaranteed to have the same length as the line, as sub_line is constructed only of
+        the notes contained withing sub_line_range, starting with the first note found.
+        """
+        sub_line_range = Interval(Fraction(0), self.duration.duration) if sub_line_range is None else sub_line_range
+
+        new_line = Line(None, self.instrument)
+
+        first_position = None
+        for s in self.sub_notes:
+            s_excluded = Line._all_start_in(s, sub_line_range)
+            if s_excluded == 1:
+                if first_position is not None:
+                    offset = Offset(s.get_absolute_position().position - first_position)
+                else:
+                    first_position = s.get_absolute_position().position
+                    offset = Offset(0)
+                s_prime = s.clone()
+                new_line.pin(s_prime, offset)
+            else:
+                if s_excluded == -1:
+                    raise Exception("Line range {0} must fully enclose sub-structures: {1}.".format(sub_line_range, s))
+
+        return new_line, Position(first_position) if first_position is not None else Position(0), new_line.duration
+
+    @staticmethod
+    def _all_start_in(note_structure, sub_line_range):
+        """
+        See if all notes in note_structure start within range.
+        :param note_structure:
+        :param sub_line_range: Numeric interval to check for inclusion.
+        :return: 1 if covers fully, 0 if fully excluded, -1 if partially excluded
+        """
+        notes = note_structure.get_all_notes()
+        num_notes_excluded = 0
+        for n in notes:
+            if not sub_line_range.contains(n.get_absolute_position().position):
+                num_notes_excluded = num_notes_excluded + 1
+        return 1 if num_notes_excluded == 0 else 0 if num_notes_excluded == len(notes) else -1
