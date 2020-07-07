@@ -192,6 +192,9 @@ class Interval(object):
             pitch_a = DiatonicPitch.parse(pitch_a)
         if isinstance(pitch_b, str):
             pitch_b = DiatonicPitch.parse(pitch_b)
+
+        if pitch_a is None or pitch_b is None:
+            raise Exception('None passed as pitch argument.')
         
         pitch_chromatic_distance = pitch_b.chromatic_distance - pitch_a.chromatic_distance         
         
