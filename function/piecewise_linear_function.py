@@ -12,7 +12,7 @@ from misc.utility import convert_to_numeric
 
 class LinearSegment(object):
     """
-    This class defines a linear segement based on two tuples of coordinates.
+    This class defines a linear segment based on two tuples of coordinates.
     """
     def __init__(self, start_coords, end_coords):
         """
