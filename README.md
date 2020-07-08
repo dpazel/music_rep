@@ -17,3 +17,9 @@ to structure/LineGrammar.  Pycharm users should install antlr plugin.
 
 Make sure to generate the altlr4 parser files.
     
+ ### VST Interface
+ We support link to vst2/3 host as found in 
+    github.com/dpazel/vst23host.
+ The Python support file is found in vstinterface/vst_interface. As currently implemented,
+ libvst23host must be in installed at vstinterface/lib.
+ Examples of how to use this interface are found in test/vstinterface_tests.
