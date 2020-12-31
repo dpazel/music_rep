@@ -5,6 +5,7 @@ Companion software to "Music Representation: A Software Approach" by Donald Paze
 Dependencies:
   - Python: 3.x
   - Mido: https://mido.readthedocs.io/en/latest/installing.html
+  - Python-rtmidi: https://mido.readthedocs.io/en/latest/installing.html
   - Mock: https://pypi.python.org/pypi/mock
   - Antlr4: http://www.antlr.org/download.html
          (pip3 install antlr4-python3-runtime)
