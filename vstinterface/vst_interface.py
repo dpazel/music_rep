@@ -202,7 +202,7 @@ class VstInterfaceApp(QMainWindow):
                         rate=SAMPLE_RATE,
                         output=True)
 
-        sample_number = 0;
+        sample_number = 0
         data_a = bytearray(CHUNK * 2 * 4)
         while sample_number < len(left_audio_buffer):
             num_samples_to_get = min(CHUNK, self.num_samples - sample_number)
