@@ -131,4 +131,4 @@ class ATestInterface(VstAppUserInterface):
         return self.left_buffer, self.right_buffer
 
 
-vst_interface_launch(ATestInterface(), sys.argv)
+# vst_interface_launch(ATestInterface(), sys.argv)
