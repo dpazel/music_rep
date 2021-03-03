@@ -322,12 +322,7 @@ class Interval(object):
         Args:
           interval: 
         """
-        #  The following could throw and exception, that is why it is done.
-        i = self + interval
-        self.__interval_type = i.interval_type
-        self.__chromatic_distance = i.chromatic_distance
-        self.__diatonic_distance = i.diatonic_distance
-        return self
+        return self + interval
     
     def negation(self):
         if self.diatonic_distance == 0:
@@ -448,16 +443,17 @@ class Interval(object):
           combined interval
         Exception: When the combination is impossible, e.g. Dim 2nd + Min 6th
         """
-        diatonic_count = a.diatonic_distance + b.diatonic_distance + 1
+        diatonic_count = a.diatonic_distance + b.diatonic_distance
         chromatic_count = a.chromatic_distance + b.chromatic_distance
         
-        b_dc = (diatonic_count - 1) % 7
-        octaves = (diatonic_count - 1) // 7
+        b_dc = diatonic_count % 7
+        octaves = diatonic_count // 7
         b_ct = chromatic_count - 12 * octaves        
         
         if (b_dc, b_ct) not in Interval.INTERVAL_MAP:
-            raise Exception('Illegal Addition {0} + {1}    ({2}, {3})'.format(a, b, diatonic_count, chromatic_count))
-        return Interval(diatonic_count, Interval.INTERVAL_MAP[(b_dc, b_ct)])
+            raise Exception('Illegal Addition {0} + {1}    ({2}, {3})'.format(a, b, diatonic_count + 1,
+                                                                              chromatic_count))
+        return Interval(diatonic_count + 1, Interval.INTERVAL_MAP[(b_dc, b_ct)])
     
     @staticmethod
     def _compute_octave(d):
@@ -538,4 +534,4 @@ class Interval(object):
             print(s)
 
 
-# Interval._print_interval_table()
+#Interval._print_interval_table()
