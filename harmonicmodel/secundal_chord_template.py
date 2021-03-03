@@ -82,18 +82,18 @@ class SecundalChordTemplate(ChordTemplate):
     """
     
     SECUNDAL_CHORD_TYPE_MAP = {
-        SecundalChordType.MinMin: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                   Interval(2, IntervalType(IntervalType.Minor)),
-                                   Interval(2, IntervalType(IntervalType.Minor))],
-        SecundalChordType.MajMin: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                   Interval(2, IntervalType(IntervalType.Major)),
-                                   Interval(2, IntervalType(IntervalType.Minor))],
-        SecundalChordType.MinMaj: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                   Interval(2, IntervalType(IntervalType.Minor)),
-                                   Interval(2, IntervalType(IntervalType.Major))],
-        SecundalChordType.MajMaj: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                   Interval(2, IntervalType(IntervalType.Major)),
-                                   Interval(2, IntervalType(IntervalType.Major))],
+        SecundalChordType.MinMin: [Interval(1, IntervalType.Perfect),
+                                   Interval(2, IntervalType.Minor),
+                                   Interval(2, IntervalType.Minor)],
+        SecundalChordType.MajMin: [Interval(1, IntervalType.Perfect),
+                                   Interval(2, IntervalType.Major),
+                                   Interval(2, IntervalType.Minor)],
+        SecundalChordType.MinMaj: [Interval(1, IntervalType.Perfect),
+                                   Interval(2, IntervalType.Minor),
+                                   Interval(2, IntervalType.Major)],
+        SecundalChordType.MajMaj: [Interval(1, IntervalType.Perfect),
+                                   Interval(2, IntervalType.Major),
+                                   Interval(2, IntervalType.Major)],
     }
 
     GROUP_BASIS = 'Basis'
@@ -151,9 +151,9 @@ class SecundalChordTemplate(ChordTemplate):
         self.__specified_seconds = specified_seconds
         if specified_seconds:
             intervals = list()
-            intervals.append(Interval(1, IntervalType(IntervalType.Perfect)))
+            intervals.append(Interval(1, IntervalType.Perfect))
             for ltr in specified_seconds:
-                intervals.append(Interval(2, IntervalType(IntervalType.Major if ltr == 'M' else IntervalType.Minor)))
+                intervals.append(Interval(2, IntervalType.Major if ltr == 'M' else IntervalType.Minor))
             self.__base_intervals.extend(intervals)
                  
         # Inversion check - only if chord type was given, not for cases like II
@@ -202,9 +202,9 @@ class SecundalChordTemplate(ChordTemplate):
         # Build a M/m string
         t = ''
         for interval in interval_list[1:]:
-            if interval.interval_type == IntervalType(IntervalType.Major):
+            if interval.interval_type == IntervalType.Major:
                 t += 'M'
-            elif interval.interval_type == IntervalType(IntervalType.Minor):
+            elif interval.interval_type == IntervalType.Minor:
                 t += 'm'
             else:
                 raise Exception('Illegal interval type for secundal {0}'.format(interval))

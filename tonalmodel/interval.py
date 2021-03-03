@@ -10,58 +10,35 @@ from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 from tonalmodel.diatonic_foundation import DiatonicFoundation
 
 import re
+from enum import Enum
 
 
-class IntervalType:
+class IntervalType(Enum):
     """
     Enum class for the quality of musical intervals.
     """
-    Major, Minor, Diminished, Augmented, Perfect = range(5)
-    
-    SHORT_NOTATION_MAP = {
-                          Major: 'M',
-                          Minor: 'm',
-                          Diminished: 'd',
-                          Augmented: 'A',
-                          Perfect: 'P'
-                          }
-    
-    def __init__(self, vtype):
-        self.value = vtype
-        
-    def __str__(self):
-        if self.value == IntervalType.Major:
-            return 'Major'
-        if self.value == IntervalType.Minor:
-            return 'Minor'
-        if self.value == IntervalType.Diminished:
-            return 'Diminished'
-        if self.value == IntervalType.Augmented:
-            return 'Augmented'
-        if self.value == IntervalType.Perfect:
-            return 'Perfect'
-        
+    Major = 1
+    Minor = 2
+    Diminished = 3
+    Augmented = 4
+    Perfect = 5
+
     @staticmethod
     def short_notation(t):
-        if t not in IntervalType.SHORT_NOTATION_MAP.keys():
-            raise Exception('Invalid interval key {0}.'.format(t))
-        return IntervalType.SHORT_NOTATION_MAP[t]
-                
-    @staticmethod
-    def to_type(value):
-        if value == IntervalType.Major or \
-           value == IntervalType.Minor or \
-           value == IntervalType.Diminished or \
-           value == IntervalType.Augmented or \
-           value == IntervalType.Perfect:
-            return IntervalType(value)
-        raise Exception('Illegal interval value type {0}'.format(value))
-        
-    def __eq__(self, y):
-        return self.value == y.value
-    
-    def __hash__(self):
-        return self.__str__().__hash__()
+        if t == IntervalType.Major:
+            return "M"
+        elif t == IntervalType.Minor:
+            return "m"
+        elif t == IntervalType.Diminished:
+            return "d"
+        elif t == IntervalType.Augmented:
+            return "A"
+        elif t == IntervalType.Perfect:
+            return "P"
+        raise Exception('Invalid interval key {0}.'.format(t))
+
+    def __str__(self):
+        return self.name
 
 
 class Interval(object):
@@ -78,34 +55,34 @@ class Interval(object):
     #   Note:  We are excluding 'diminished unison', as it causes consistency issues, and is controversial.
     #          Although 'augmented octave' is valid in itself, due to the above, it's inversion is illegal.
     INTERVAL_MAP = {
-        (0, -1): IntervalType(IntervalType.Diminished),
-        (0, 0): IntervalType(IntervalType.Perfect),
-        (0, 1): IntervalType(IntervalType.Augmented),
-        (1, 0): IntervalType(IntervalType.Diminished),
-        (1, 1): IntervalType(IntervalType.Minor),
-        (1, 2): IntervalType(IntervalType.Major),
-        (1, 3): IntervalType(IntervalType.Augmented),
-        (2, 2): IntervalType(IntervalType.Diminished),
-        (2, 3): IntervalType(IntervalType.Minor),
-        (2, 4): IntervalType(IntervalType.Major),
-        (2, 5): IntervalType(IntervalType.Augmented),
-        (3, 4): IntervalType(IntervalType.Diminished),
-        (3, 5): IntervalType(IntervalType.Perfect),
-        (3, 6): IntervalType(IntervalType.Augmented),
-        (4, 6): IntervalType(IntervalType.Diminished),
-        (4, 7): IntervalType(IntervalType.Perfect),
-        (4, 8): IntervalType(IntervalType.Augmented),
-        (5, 7): IntervalType(IntervalType.Diminished),
-        (5, 8): IntervalType(IntervalType.Minor),
-        (5, 9): IntervalType(IntervalType.Major),
-        (5, 10): IntervalType(IntervalType.Augmented),
-        (6, 9):  IntervalType(IntervalType.Diminished),
-        (6, 10): IntervalType(IntervalType.Minor),
-        (6, 11): IntervalType(IntervalType.Major),
-        (6, 12): IntervalType(IntervalType.Augmented),
-        (7, 11): IntervalType(IntervalType.Diminished),
-        (7, 12): IntervalType(IntervalType.Perfect),
-        (7, 13): IntervalType(IntervalType.Augmented),
+        (0, -1): IntervalType.Diminished,
+        (0, 0): IntervalType.Perfect,
+        (0, 1): IntervalType.Augmented,
+        (1, 0): IntervalType.Diminished,
+        (1, 1): IntervalType.Minor,
+        (1, 2): IntervalType.Major,
+        (1, 3): IntervalType.Augmented,
+        (2, 2): IntervalType.Diminished,
+        (2, 3): IntervalType.Minor,
+        (2, 4): IntervalType.Major,
+        (2, 5): IntervalType.Augmented,
+        (3, 4): IntervalType.Diminished,
+        (3, 5): IntervalType.Perfect,
+        (3, 6): IntervalType.Augmented,
+        (4, 6): IntervalType.Diminished,
+        (4, 7): IntervalType.Perfect,
+        (4, 8): IntervalType.Augmented,
+        (5, 7): IntervalType.Diminished,
+        (5, 8): IntervalType.Minor,
+        (5, 9): IntervalType.Major,
+        (5, 10): IntervalType.Augmented,
+        (6, 9):  IntervalType.Diminished,
+        (6, 10): IntervalType.Minor,
+        (6, 11): IntervalType.Major,
+        (6, 12): IntervalType.Augmented,
+        (7, 11): IntervalType.Diminished,
+        (7, 12): IntervalType.Perfect,
+        (7, 13): IntervalType.Augmented,
     }
     
     INVERSE_INTERVAL_MAP = {(v, k[0]): k[1] for k, v in INTERVAL_MAP.items()}
@@ -120,36 +97,36 @@ class Interval(object):
             7: {-2: IntervalType.Diminished, -1: IntervalType.Minor, 0: IntervalType.Major, 1: IntervalType.Augmented},
     }
     
-    VALID_INTERVALS = set([
-        (0, IntervalType(IntervalType.Diminished)),
-        (0, IntervalType(IntervalType.Perfect)),
-        (0, IntervalType(IntervalType.Augmented)),
-        (1, IntervalType(IntervalType.Diminished)),
-        (1, IntervalType(IntervalType.Minor)),
-        (1, IntervalType(IntervalType.Major)),
-        (1, IntervalType(IntervalType.Augmented)),
-        (2, IntervalType(IntervalType.Diminished)),
-        (2, IntervalType(IntervalType.Minor)),
-        (2, IntervalType(IntervalType.Major)),
-        (2, IntervalType(IntervalType.Augmented)),
-        (3, IntervalType(IntervalType.Diminished)),
-        (3, IntervalType(IntervalType.Perfect)),
-        (3, IntervalType(IntervalType.Augmented)),
-        (4, IntervalType(IntervalType.Diminished)),
-        (4, IntervalType(IntervalType.Perfect)),
-        (4, IntervalType(IntervalType.Augmented)),
-        (5, IntervalType(IntervalType.Diminished)),
-        (5, IntervalType(IntervalType.Minor)),
-        (5, IntervalType(IntervalType.Major)),
-        (5, IntervalType(IntervalType.Augmented)),
-        (6, IntervalType(IntervalType.Diminished)),
-        (6, IntervalType(IntervalType.Minor)),
-        (6, IntervalType(IntervalType.Major)),
-        (6, IntervalType(IntervalType.Augmented)),
-        (7, IntervalType(IntervalType.Diminished)),
-        (7, IntervalType(IntervalType.Perfect)),
-        (7, IntervalType(IntervalType.Augmented)),
-                           ])
+    VALID_INTERVALS = {
+        (0, IntervalType.Diminished),
+        (0, IntervalType.Perfect),
+        (0, IntervalType.Augmented),
+        (1, IntervalType.Diminished),
+        (1, IntervalType.Minor),
+        (1, IntervalType.Major),
+        (1, IntervalType.Augmented),
+        (2, IntervalType.Diminished),
+        (2, IntervalType.Minor),
+        (2, IntervalType.Major),
+        (2, IntervalType.Augmented),
+        (3, IntervalType.Diminished),
+        (3, IntervalType.Perfect),
+        (3, IntervalType.Augmented),
+        (4, IntervalType.Diminished),
+        (4, IntervalType.Perfect),
+        (4, IntervalType.Augmented),
+        (5, IntervalType.Diminished),
+        (5, IntervalType.Minor),
+        (5, IntervalType.Major),
+        (5, IntervalType.Augmented),
+        (6, IntervalType.Diminished),
+        (6, IntervalType.Minor),
+        (6, IntervalType.Major),
+        (6, IntervalType.Augmented),
+        (7, IntervalType.Diminished),
+        (7, IntervalType.Perfect),
+        (7, IntervalType.Augmented),
+    }
 
     def __init__(self, diatonic_distance, interval_type):
         """
@@ -160,7 +137,7 @@ class Interval(object):
           interval_type: see class IntervalType, or one of the values IntervalType.Major, ...
         """
         if isinstance(interval_type, int):
-            interval_type = IntervalType.to_type(interval_type)
+            interval_type = IntervalType(interval_type)
         self.__interval_type = interval_type
         
         self.__diatonic_distance = (abs(diatonic_distance) - 1) * Interval._sign(diatonic_distance)
@@ -354,11 +331,11 @@ class Interval(object):
     
     def negation(self):
         if self.diatonic_distance == 0:
-            interval_type = IntervalType.Perfect if self.interval_type.value == IntervalType.Perfect else \
-                IntervalType.Augmented if self.interval_type.value == IntervalType.Diminished else \
+            interval_type = IntervalType.Perfect if self.interval_type == IntervalType.Perfect else \
+                IntervalType.Augmented if self.interval_type == IntervalType.Diminished else \
                 IntervalType.Diminished
         else:
-            interval_type = self.interval_type.value
+            interval_type = self.interval_type
         d = (abs(self.diatonic_distance) + 1) * (-1 if self.diatonic_distance > 0 else 1)
         return Interval(d, interval_type)
         
@@ -398,7 +375,7 @@ class Interval(object):
     
     def __str__(self):
         return '{0}{1}:{2}'.format('-' if Interval._sign(self.diatonic_distance) == -1 else '',
-                                   IntervalType.short_notation(self.interval_type.value),
+                                   IntervalType.short_notation(self.interval_type),
                                    abs(self.diatonic_distance) + 1)
 
     # Regex used for parsing Interval specification.
@@ -539,3 +516,26 @@ class Interval(object):
             (cc - (tone.placement - end_tone.placement) % 12)
 
         return DiatonicTone.alter_tone_by_augmentation(end_tone, aug)
+
+    @staticmethod
+    def _compute_octave1(d):
+        return ((abs(d) - 1) // 7) * Interval._sign(d)
+
+    @staticmethod
+    def _print_interval_table():
+        i_txt = ["P:1", "M:2", "m:3", "M:3", "d:4", "P:4", "P:5", "M:6", "M:7"]
+        ivls = list()
+        for i in range(0, len(i_txt)):
+            ivls.append(Interval.parse(i_txt[i]))
+        for i in range(0, len(ivls)):
+            s = "[{0}] ".format(i)
+            for j in range(0, len(ivls)):
+                try:
+                    summ = ivls[i] + ivls[j]
+                except Exception as e:
+                    summ = "X"
+                s = s + str(summ) + "  "
+            print(s)
+
+
+# Interval._print_interval_table()

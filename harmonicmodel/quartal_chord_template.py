@@ -69,15 +69,15 @@ class QuartalChordTemplate(ChordTemplate):
     """
     
     QUARTAL_CHORD_TYPE_MAP = {
-        QuartalChordType.PerPer: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                  Interval(4, IntervalType(IntervalType.Perfect)),
-                                  Interval(4, IntervalType(IntervalType.Perfect))],
-        QuartalChordType.PerAug: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                  Interval(4, IntervalType(IntervalType.Perfect)),
-                                  Interval(4, IntervalType(IntervalType.Augmented))],
-        QuartalChordType.AugPer: [Interval(1, IntervalType(IntervalType.Perfect)),
-                                  Interval(4, IntervalType(IntervalType.Augmented)),
-                                  Interval(4, IntervalType(IntervalType.Perfect))],
+        QuartalChordType.PerPer: [Interval(1, IntervalType.Perfect),
+                                  Interval(4, IntervalType.Perfect),
+                                  Interval(4, IntervalType.Perfect)],
+        QuartalChordType.PerAug: [Interval(1, IntervalType.Perfect),
+                                  Interval(4, IntervalType.Perfect),
+                                  Interval(4, IntervalType.Augmented)],
+        QuartalChordType.AugPer: [Interval(1, IntervalType.Perfect),
+                                  Interval(4, IntervalType.Augmented),
+                                  Interval(4, IntervalType.Perfect)],
     }
 
     GROUP_BASIS = 'Basis'
@@ -136,10 +136,10 @@ class QuartalChordTemplate(ChordTemplate):
         self.__specified_fourths = specified_fourths
         if specified_fourths:
             intervals = list()
-            intervals.append(Interval(1, IntervalType(IntervalType.Perfect)))
+            intervals.append(Interval(1, IntervalType.Perfect))
             for ltr in specified_fourths:
-                intervals.append(Interval(4, IntervalType(IntervalType.Perfect if ltr == 'P'or ltr == 'p'
-                                                          else IntervalType.Augmented)))
+                intervals.append(Interval(4, IntervalType.Perfect if ltr == 'P'or ltr == 'p'
+                                                          else IntervalType.Augmented))
             self.__base_intervals.extend(intervals)
                  
         # Inversion check - only if chord type was given, not for cases like II
@@ -188,9 +188,9 @@ class QuartalChordTemplate(ChordTemplate):
         # Build a M/m string
         t = ''
         for interval in interval_list[1:]:
-            if interval.interval_type == IntervalType(IntervalType.Perfect):
+            if interval.interval_type == IntervalType.Perfect:
                 t += 'P'
-            elif interval.interval_type == IntervalType(IntervalType.Augmented):
+            elif interval.interval_type == IntervalType.Augmented:
                 t += 'A'
             else:
                 raise Exception('Illegal interval type for quartal {0}'.format(interval))

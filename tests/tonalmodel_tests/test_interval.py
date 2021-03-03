@@ -11,11 +11,11 @@ from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
 class TestInterval(unittest.TestCase):
     
-    INTERVAL_TYPES = (IntervalType(IntervalType.Diminished),
-                      IntervalType(IntervalType.Minor),
-                      IntervalType(IntervalType.Major),
-                      IntervalType(IntervalType.Perfect),
-                      IntervalType(IntervalType.Augmented))
+    INTERVAL_TYPES = (IntervalType.Diminished,
+                      IntervalType.Minor,
+                      IntervalType.Major,
+                      IntervalType.Perfect,
+                      IntervalType.Augmented)
     
     def setUp(self):
         pass
