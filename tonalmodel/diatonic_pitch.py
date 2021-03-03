@@ -24,12 +24,12 @@ class DiatonicPitch(object):
     # Regex used for parsing diatonic pitch.
     DIATONIC_PATTERN = re.compile(r'([A-Ga-g])(bbb|bb|b|###|##|#)?:?([0-8])')
 
-    def __init__(self, partition, diatonic_tone):
+    def __init__(self, octave, diatonic_tone):
         """
         Constructor
       
         Args:
-          partition:  integer >=0
+          octave:  integer >=0
           diatonic_tone: tone or letter representation of the diatonic tone, e.g. D#
           
           Note: 
@@ -38,13 +38,13 @@ class DiatonicPitch(object):
                 Same with B#4 which is really C:5, we retain the 4.
             So the partition is not the actual partition, but the relative partition number.
         """
-        self.__octave = partition
+        self.__octave = octave
         
         if isinstance(diatonic_tone, DiatonicTone):
             self.__diatonic_tone = diatonic_tone
         else:
             self.__diatonic_tone = DiatonicFoundation.get_tone(diatonic_tone)
-        self.__chromatic_distance = 12 * partition + self.diatonic_tone.tonal_offset
+        self.__chromatic_distance = 12 * octave + self.diatonic_tone.tonal_offset
     
     @property
     def octave(self):

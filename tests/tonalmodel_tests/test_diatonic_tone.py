@@ -1,5 +1,6 @@
 import unittest
 from tonalmodel.diatonic_foundation import DiatonicFoundation
+from tonalmodel.diatonic_tone import DiatonicTone
 
 
 class TestDiatonicTone(unittest.TestCase):
@@ -31,11 +32,29 @@ class TestDiatonicTone(unittest.TestCase):
         augmentations = ('bb', 'b', '', '#', '##')
         for letter in letters:
             for aug in augmentations:
-                l = letter + aug
-                tone = DiatonicFoundation.get_tone(l)
+                tltrs = letter + aug
+                tone = DiatonicFoundation.get_tone(tltrs)
                 enharmonics = tone.enharmonics()
-                print('{0}: {1}'.format(l, enharmonics))
-                assert l in enharmonics
+                print('{0}: {1}'.format(tltrs, enharmonics))
+                assert tltrs in enharmonics
+
+    def test_diatonic_distance(self):
+        letters = list('CDEFGAB')
+        augmentations = ('bb', 'b', '', '#', '##')
+        for letter in letters:
+            for aug in augmentations:
+                tltrs = letter + aug
+                tone1 = DiatonicFoundation.get_tone(tltrs)
+                for letter2 in letters:
+                    for aug2 in augmentations:
+                        tltrs = letter2 + aug2
+                        tone2 = DiatonicFoundation.get_tone(tltrs)
+                        dd = DiatonicTone.calculate_diatonic_distance(tone1, tone2)
+                        calc_dd = tone2.diatonic_index - tone1.diatonic_index \
+                            if tone1.diatonic_index <= tone2.diatonic_index else \
+                            tone2.diatonic_index - tone1.diatonic_index + 7
+                        assert dd == calc_dd
+                        print("{0} {1} {2}".format(tone1.diatonic_symbol, tone2.diatonic_symbol, dd))
 
 if __name__ == "__main__":
     unittest.main()

@@ -240,9 +240,9 @@ class DiatonicTone(object):
     def calculate_diatonic_distance(tone1, tone2):
         """
         Diatonic count from tone1 to tone2 (upwards)
+        :rtype: integer
         :param tone1:
         :param tone2:
-        :return:
+        :return: int diatonic count from tone1 to tone2 which is always positive.
         """
-        return tone2.diatonic_index - tone1.diatonic_index if tone1.diatonic_index <= tone2.diatonic_index else \
-            tone2.diatonic_index - tone1.diatonic_index + 7
+        return (tone2.diatonic_index - tone1.diatonic_index) % 7
