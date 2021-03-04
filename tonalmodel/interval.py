@@ -533,5 +533,3 @@ class Interval(object):
                 s = s + str(summ) + "  "
             print(s)
 
-
-#Interval._print_interval_table()
