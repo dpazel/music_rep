@@ -335,15 +335,15 @@ class Interval(object):
         return Interval(d, interval_type)
         
     def inversion(self):
-        octave = Interval._compute_octave(self.diatonic_distance)
-        octave = octave - 1 if Interval._sign(self.diatonic_distance) == -1 else octave + 1
-        (d, c) = (7 * octave - self.diatonic_distance, 12 * octave - self.chromatic_distance)
+        reduced = self.reduction()
+        sgn = -1 if self.is_negative() else 1
+        (d, c) = (sgn * 7 - reduced.diatonic_distance, sgn * 12 - reduced.chromatic_distance)
         (r, s) = Interval._abs(d, c)
         if not (r, s) in Interval.INTERVAL_MAP:              
             raise Exception('No valid inversion for {0}.'.format(self))        
         return Interval((abs(d) + 1) * (1 if d >= 0 else -1), Interval.INTERVAL_MAP[r, s])
     
-    def reduction(self): 
+    def reduction(self):
         octave = Interval._compute_octave(self.diatonic_distance)  
         (d, c) = (self.diatonic_distance - 7 * octave, self.chromatic_distance - 12 * octave)
         (r, s) = Interval._abs(d, c)
