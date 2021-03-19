@@ -77,15 +77,15 @@ class TestPentatonicModality(unittest.TestCase):
 
     def test_pentatonic_modal_indexed_key(self):
         for i in range(0, 5):
-            diatonic_modality = ModalityFactory.create_modality(ModalityType.MajorPentatonic, i)
+            pentatonic_modality = ModalityFactory.create_modality(ModalityType.MajorPentatonic, i)
 
-            for key in diatonic_modality.get_valid_root_tones():
-                scale = diatonic_modality.get_tonal_scale(DiatonicTone(key))
-                print('{0} scale for {1} is [{2}]'.format(str(diatonic_modality), key,
+            for key in pentatonic_modality.get_valid_root_tones():
+                scale = pentatonic_modality.get_tonal_scale(DiatonicTone(key))
+                print('{0} scale for {1} is [{2}]'.format(str(pentatonic_modality), key,
                                                           ', '.join(dt.diatonic_symbol for dt in scale)))
 
                 incremental_intervals = build_incremental_intervals(scale)
-                assert incremental_intervals == diatonic_modality.incremental_intervals
+                assert incremental_intervals == pentatonic_modality.incremental_intervals
         print('End test_pentatonic_modal_indexed_key')
 
 if __name__ == "__main__":

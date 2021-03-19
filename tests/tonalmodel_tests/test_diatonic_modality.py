@@ -110,7 +110,7 @@ class TestDiatonicModality(unittest.TestCase):
         print('End test_lydian_key')
             
     def test_Myxolydian_key(self):
-        diatonic_modality = DiatonicModality.create(ModalityType.Myxolydian)
+        diatonic_modality = DiatonicModality.create(ModalityType.Mixolydian)
         
         for key in diatonic_modality.get_valid_root_tones():
             scale = diatonic_modality.get_tonal_scale(DiatonicTone(key))
