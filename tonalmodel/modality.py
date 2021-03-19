@@ -1,8 +1,8 @@
 """
-File: modality.py
 
-Purpose: Defines a generic sense of modality on the chromatic scale.
-  All legal modalities must be defined in ModalityType, which serves as a input parameter.
+File: _modality.py
+
+Purpose: Defines classes ModalityType, ModalitySpec, and Modality.
 
 """
 from tonalmodel.interval import Interval
@@ -20,7 +20,7 @@ class ModalityType(object):
     Dorian = None
     Phrygian = None
     Lydian = None
-    Myxolydian = None
+    Mixolydian = None
     Aeolian = None
     Locrian = None
     WholeTone = None
@@ -63,7 +63,7 @@ ModalityType.Ionian = ModalityType('Ionian')
 ModalityType.Dorian = ModalityType('Dorian')
 ModalityType.Phrygian = ModalityType('Phrygian')
 ModalityType.Lydian = ModalityType('Lydian')
-ModalityType.Myxolydian = ModalityType('Myxolydian')
+ModalityType.Mixolydian = ModalityType('Mixolydian')
 ModalityType.Aeolian = ModalityType('Aeolian')
 ModalityType.Locrian = ModalityType('Locrian')
 ModalityType.WholeTone = ModalityType('WholeTone')
@@ -87,7 +87,7 @@ SYSTEM_MODALITIES = [
     ModalityType.Dorian,
     ModalityType.Phrygian,
     ModalityType.Lydian,
-    ModalityType.Myxolydian,
+    ModalityType.Mixolydian,
     ModalityType.Aeolian,
     ModalityType.Locrian,
     ModalityType.WholeTone,
@@ -157,9 +157,6 @@ class Modality(object):
                     'C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#']
     
     DIATONIC_TONE_LETTERS = list('CDEFGAB')
-    KEY_PLACEMENT = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11,
-                     'Bb': 10, 'Eb': 3, 'Ab': 8, 'Db': 1, 'Gb': 6, 'Cb': 11,
-                     'C#': 1, 'D#': 3, 'F#': 6, 'G#': 8, 'A#': 10, 'Fb': 4, 'B#': 0, 'E#': 5}
     
     def __init__(self, modality_spec, modal_index=0):
         self.__modality_spec = modality_spec
@@ -180,10 +177,6 @@ class Modality(object):
                 sumit = sumit + self.modality_spec.incremental_intervals[ri]
                 self.__incremental_intervals.append(self.modality_spec.incremental_intervals[ri])
                 self.__root_intervals.append(sumit)
-        # sumit = None
-        # for interval in self.__modality_spec.incremental_intervals:
-        #    sumit = sumit + interval if sumit is not None else interval
-        #    self.__root_intervals.append(sumit)
         
         last_interval = self.__root_intervals[len(self.__root_intervals) - 1]    
         if str(last_interval) != 'P:8':
@@ -219,34 +212,22 @@ class Modality(object):
     @staticmethod
     def get_valid_root_tones():
         return Modality.COMMON_ROOTS
-    
+
     def get_tonal_scale(self, diatonic_tone):
         """
         Given a tone root, compute the tonal scale for this modality.
         Treat this as a protected static method.
-        
-        Method:
-          To simplify, we treat chromatic placement non-circularly, but linearly, and keep
-          adding as we move along, running_placement.  
-          We also do a linear calculation based on scale letter creation, starting at 0
-          As we move scale letter to next, if we rollover (b-->C), we add 12 to 
-          So. letter_placement is a linear sum of 12*rollovers + the letter's displacement.
-          So letter_placement - running_placement are in sync and provides the ajustment calculation
-          the make the new letter a scale key.
-        
+
         Args:
           diatonic_tone: DiatonicTone for the root.
         Returns:
-          List of DiatonicTone's in scale order for the input tone.  The starting and end tone are the same.
+          List of DiatonicTone's in scale order for the input tone. The starting and end tone are the same.
         """
-        from tonalmodel.diatonic_pitch import DiatonicPitch
-        root_pitch = DiatonicPitch(4, diatonic_tone)
         tones = []
-        
+
         for interval in self.root_intervals:
-            p = interval.get_end_pitch(root_pitch)
-            tones.append(p.diatonic_tone)
-            
+            tones.append(interval.get_end_tone(diatonic_tone))
+
         return tones
     
     def __str__(self):

@@ -22,4 +22,3 @@ class WholeToneModality(Modality):
         if modality_type != ModalityType.WholeTone:
             raise Exception('Type parameter is not WholeTone.')
         return Modality(WholeToneModality.WHOLE_TONE_SPEC, modal_index)
-

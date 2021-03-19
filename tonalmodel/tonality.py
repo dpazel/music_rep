@@ -24,7 +24,7 @@ class Tonality(object):
 
         diatonic_tone is the modal_index tone into some tonality based on the given modality.
 
-        Note: (Using E Major as an example)
+        Note: (Using E Major, modal+index=1 as an example)
               self.basis_tone: is the tonality first tone, as if modal_index==0. (E)
               self.root_tone: is the tonality first tone with modal_index taken into account. (F#)
         """
@@ -102,7 +102,7 @@ class Tonality(object):
         root_info = ' {0}({1})'.format(self.root_tone.diatonic_symbol, self.modal_index) \
             if self.modal_index != 0 else ''
         return '{0}-{1}{2}'.format(self.basis_tone.diatonic_symbol, self.modality.modality_type, root_info)
-    
+
     def get_tone_by_letter(self, letter):
         tones = []
         for tone in self.annotation:

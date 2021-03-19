@@ -24,7 +24,7 @@ class DiatonicModality(Modality):
                            ModalityType.Dorian,
                            ModalityType.Phrygian,
                            ModalityType.Lydian,
-                           ModalityType.Myxolydian,
+                           ModalityType.Mixolydian,
                            ModalityType.Aeolian,
                            ModalityType.Locrian,
                            ]
@@ -47,7 +47,7 @@ class DiatonicModality(Modality):
                                                                     'M:2']),
         ModalityType.Lydian: ModalitySpec(ModalityType.Lydian, ['P:1', 'M:2', 'M:2', 'M:2', 'm:2', 'M:2', 'M:2',
                                                                 'm:2']),
-        ModalityType.Myxolydian: ModalitySpec(ModalityType.Myxolydian, ['P:1', 'M:2', 'M:2', 'm:2', 'M:2', 'M:2',
+        ModalityType.Mixolydian: ModalitySpec(ModalityType.Mixolydian, ['P:1', 'M:2', 'M:2', 'm:2', 'M:2', 'M:2',
                                                                         'm:2', 'M:2']),
         ModalityType.Aeolian: ModalitySpec(ModalityType.Aeolian, ['P:1', 'M:2', 'm:2', 'M:2', 'M:2', 'm:2', 'M:2',
                                                                   'M:2']),
@@ -85,3 +85,4 @@ class DiatonicModality(Modality):
                     if intervals == modality_spec.incremental_intervals:
                         answers.append(DiatonicModality.create(t, (-scale_start) % len(tones)))
         return answers
+

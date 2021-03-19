@@ -37,7 +37,7 @@ class PentatonicModality(Modality):
     }
 
     @staticmethod
-    def create(modality_type, modal_index = 0):
+    def create(modality_type, modal_index=0):
         if modality_type not in PentatonicModality.PENTATONIC_MODALITIES:
             raise Exception('Type parameter is not diatonic.')
         if modality_type not in PentatonicModality.MODALITY_DEFINITION_MAP:
@@ -47,7 +47,7 @@ class PentatonicModality(Modality):
 
     @staticmethod
     def pentatonic_modality_types_as_string_array():
-        answer = [ModalityType.to_str(t) for t in PentatonicModality.PENTATONIC_MODALITIES]
+        answer = [str(t) for t in PentatonicModality.PENTATONIC_MODALITIES]
         return answer
 
     @staticmethod
@@ -65,4 +65,3 @@ class PentatonicModality(Modality):
                     if intervals == modality_spec.incremental_intervals:
                         answers.append(PentatonicModality.create(t, (-scale_start) % len(tones)))
         return answers
-
