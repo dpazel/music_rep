@@ -3,8 +3,8 @@
 File: time_conversion.py
 
 Purpose: To define a set of time-based conversion methods including:
-   music time --> actual time
-   actual time --> music time
+   whole time --> actual time
+   actual time --> whole time
 
 """
 from misc.ordered_map import OrderedMap
@@ -57,8 +57,8 @@ class Element(object):
 class TimeConversion(object):
     """
     Time conversion algorithms.
-    1) Music Time --> actual time
-    2) actual time --> Music Time
+    1) Whole Time --> actual time
+    2) actual time --> Wholec Time
     """
 
     def __init__(self, tempo_line, ts_line, max_position, pickup=Duration(0, 1)):
@@ -182,10 +182,10 @@ class TimeConversion(object):
 
     def position_to_actual_time(self, position):
         """
-        Convert a music time position to it's time (in ms) from the beginning.
+        Convert a whole time position to it's actual time (in ms) from the beginning.
         
         Args:
-          position: a Position in music time.
+          position: a Position in whole time.
         Returns:
           The actual time in ms for the position relative to the beginning.
           
@@ -200,7 +200,7 @@ class TimeConversion(object):
         start_mt = max(tempo_mt_floor, ts_mt_floor)
         start_time = max(tempo_time, ts_time)
         # at this point, we have:
-        #  start_mt: a music time to start from
+        #  start_mt: a whole time to start from
         #  start_time: the actual time to start from
         #  tempo_element: the current Tempo
         #  ts_element: the current TimeSignature
@@ -215,7 +215,7 @@ class TimeConversion(object):
      
     def actual_time_to_position(self, actual_time):  
         """
-        Convert from an actual time (ms) position to a music time Position
+        Convert from an actual time (ms) position to a whole time Position
         
         Args:
           actual_time: the actual time (ms) of a position in the music
@@ -232,7 +232,7 @@ class TimeConversion(object):
         start_mt = max(tempo_mt, ts_mt)
         start_time = max(tempo_time_floor, ts_time_floor)
         # at this point, we have:
-        #  start_mt: a music time to start from
+        #  start_mt: a whole note time to start from
         #  start_time: the actual time to measure from
         #  tempo_element: the current Tempo
         #  ts_element: the current TimeSignature
