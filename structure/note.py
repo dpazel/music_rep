@@ -37,7 +37,6 @@ class Note(AbstractNote):
         AbstractNote.__init__(self)
         
         self.__diatonic_pitch = diatonic_pitch
-        self.__is_rest = self.diatonic_pitch is None
         self.__num_dots = num_dots
         if type(base_duration) == Duration:
             self.__base_duration = base_duration
@@ -46,7 +45,7 @@ class Note(AbstractNote):
                 self.__base_duration = Note.STANDARD_NOTES[base_duration.upper()]
             else:
                 raise Exception('Base duration can only be a Duration or string in key set [w, h, q, e, s, t. x]')
-        self.__duration = base_duration.apply_dots(num_dots)
+        self.__duration = self.base_duration.apply_dots(num_dots)
         
         self.__tied_to = None
         self.__tied_from = None
