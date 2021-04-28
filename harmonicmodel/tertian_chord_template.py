@@ -367,8 +367,14 @@ class TertianChordTemplate(ChordTemplate):
         self.__tension_intervals = deduped_tension_intervals
         
         # Inversion check - only if chord type was given, not for cases like II
-        if self.chord_type and self.inversion > len(self.base_intervals) + len(self.tension_intervals):
+        if self.chord_type and (self.inversion is not None) and \
+                self.inversion > len(self.base_intervals) + len(self.tension_intervals):
             raise Exception('Illegal inversion {0} for {1}'.format(self.inversion, self.__str__()))
+
+        if self.inversion_interval is not None and \
+            self.inversion_interval not in self.base_intervals and \
+            self.inversion_interval not in self.tension_intervals:
+            raise Exception('Illegal inversion_interval {0}'.format(self.inversion_interval))
         
     @property
     def diatonic_basis(self):
@@ -420,12 +426,17 @@ class TertianChordTemplate(ChordTemplate):
         return TertianChord(self, diatonic_tonality)  
         
     def __str__(self):
+        inv = ''
+        if self.inversion is not None and self.inversion != 1:
+            inv = '@' + str(self.inversion)
+        elif self.inversion_interval is not None:
+            inv = '@(' + str(self.inversion_interval) + ')'
         return 'T{0}{1}{2}{3}'.format(
             self.diatonic_basis.diatonic_symbol if self.diatonic_basis else
             (str(ChordTemplate.SCALE_DEGREE_REVERSE_MAP[self.scale_degree])),
             self.chord_type if self.chord_type else '',
             ' '.join(str(w) for w in self.tension_intervals),
-            '@' + str(self.inversion) if self.inversion != 1 else '')
+            inv)
         
     @staticmethod   
     def parse(chord_string):

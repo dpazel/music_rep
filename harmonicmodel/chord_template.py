@@ -39,8 +39,13 @@ class ChordTemplate(object):
         """
 
     @abstractmethod
-    def create_chord(self, diatonic_modality):
-        raise NotImplementedError('users must define create_chord to use this base class')   
+    def create_chord(self, diatonic_tonality=None):
+        raise NotImplementedError('users must define create_chord to use this base class')
+
+    @staticmethod
+    @abstractmethod
+    def parse(chord_string):
+        raise NotImplementedError('users must define parse to use this base class')
     
     @staticmethod
     def generic_chord_template_parse(chord_txt):

@@ -42,7 +42,10 @@ class TertianChord(Chord):
         self.__root_tone = self.chord_template.diatonic_basis
         
         if self.chord_template.diatonic_basis:
-            self.__create_chord_on_diatonic(self.root_tone)
+            if self.chord_type:
+                self.__create_chord_on_diatonic(self.root_tone)
+            else:
+                self.__create_chord_on_diatonic_without_type(self.root_tone)
         else:
             if not self.diatonic_tonality:
                 raise Exception(
@@ -65,7 +68,32 @@ class TertianChord(Chord):
             self.__tones.append((tone, interval))
             
         self.__set_inversion()
-        
+
+    def __create_chord_on_diatonic_without_type(self, diatonic_tone):
+        from tonalmodel.tonality import Tonality
+        from tonalmodel.modality import ModalityType
+        from harmonicmodel.tertian_chord_template import TertianChordTemplate
+        diatonic_tonality = Tonality.create(ModalityType.Major, diatonic_tone)
+        tone_scale = diatonic_tonality.annotation
+
+        self.chord_basis = []
+        base_tone = None
+        for i in range(0, 3):
+            tone = tone_scale[(2 * i) % (len(tone_scale) - 1)]
+            if i == 0:
+                base_tone = tone
+
+            pitch_a = DiatonicPitch(1, diatonic_tone)
+            b_octave = 2 if base_tone.diatonic_index > tone.diatonic_index else 1
+            pitch_b = DiatonicPitch(b_octave, tone.diatonic_symbol)
+            interval = Interval.create_interval(pitch_a, pitch_b)
+            self.chord_basis.append(interval)
+
+            self.__tones.append((tone, interval))
+        self.__set_inversion()
+
+        self.__chord_type = TertianChordTemplate.get_chord_type(self.chord_basis)
+
     def __create_chord_on_scale_degree(self):
         from harmonicmodel.tertian_chord_template import TertianChordTemplate
         root_index = self.chord_template.scale_degree - 1
@@ -109,7 +137,7 @@ class TertianChord(Chord):
                 if self.chord_basis[i].is_same(self.chord_template.inversion_interval):
                     invert_id = i + 1
                     break
-            if invert_id != -1 and self.chord_template.tension_intervals:
+            if invert_id == -1 and self.chord_template.tension_intervals:
                 for i in range(0, len(self.chord_template.tension_intervals)):
                     if self.chord_template.tension_intervals[i] == self.chord_template.inversion_interval:
                         invert_id = i + 1 + len(self.chord_basis)

@@ -90,7 +90,39 @@ class TestSecondaryChordTemplate(unittest.TestCase):
         
         s = ', '.join(str(tone[0].diatonic_symbol) for tone in t_chord.tones)
         print(s)
-        assert s == 'G, Bb, D'             
+        assert s == 'G, Bb, D'
+
+    def test_book_examples(self):
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("A"))
+
+        template = SecondaryChordTemplate.parse('V/V')
+        if template:
+            print('succeeded')
+            chord = template.create_chord(diatonic_tonality)
+            print(chord)
+        else:
+            print("failed")
+
+        template = SecondaryChordTemplate.parse('III/II')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecondaryChordTemplate.parse('CMaj7/II')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecondaryChordTemplate.parse('V/V[NaturalMinor]')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecondaryChordTemplate.parse('V/V[Phrygian]')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecondaryChordTemplate.parse('QVIPPAP@2/V')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
 
 
 if __name__ == "__main__":

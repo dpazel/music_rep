@@ -98,7 +98,7 @@ class SecundalChordTemplate(ChordTemplate):
 
     GROUP_BASIS = 'Basis'
     GROUP_BASIS_TAG = '?P<' + GROUP_BASIS + '>'
-    P1_BASIS = '(' + GROUP_BASIS_TAG + 'S|s)'
+    P1_BASIS = '(' + GROUP_BASIS_TAG + 'S|s)?'
     
     SCALE_DEGREE = 'III|II|IV|VII|VI|V|I|iii|ii|iv|vii|vi|v|i'
     GROUP_SCALE_DEGREE = 'ScaleDegree'
@@ -184,7 +184,7 @@ class SecundalChordTemplate(ChordTemplate):
     def specified_seconds(self):
         return self.__specified_seconds
         
-    def create_chord(self, diatonic_tonality):
+    def create_chord(self, diatonic_tonality=None):
         return SecundalChord(self, diatonic_tonality) 
     
     @staticmethod

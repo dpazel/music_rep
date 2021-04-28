@@ -82,7 +82,7 @@ class QuartalChordTemplate(ChordTemplate):
 
     GROUP_BASIS = 'Basis'
     GROUP_BASIS_TAG = '?P<' + GROUP_BASIS + '>'
-    P1_BASIS = '(' + GROUP_BASIS_TAG + 'Q|q)'
+    P1_BASIS = '(' + GROUP_BASIS_TAG + 'Q|q)?'
     
     SCALE_DEGREE = 'III|II|IV|VII|VI|V|I|iii|ii|iv|vii|vi|v|i'
     GROUP_SCALE_DEGREE = 'ScaleDegree'
@@ -170,7 +170,7 @@ class QuartalChordTemplate(ChordTemplate):
     def specified_fourths(self):
         return self.__specified_fourths
         
-    def create_chord(self, diatonic_tonality):
+    def create_chord(self, diatonic_tonality=None):
         return QuartalChord(self, diatonic_tonality) 
     
     @staticmethod

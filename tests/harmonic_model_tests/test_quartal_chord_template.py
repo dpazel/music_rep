@@ -17,10 +17,10 @@ class TestQuartalChordTemplate(unittest.TestCase):
     def test_simple_triads(self):
         print('test_simple_triads')
         ltrs = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
-        answers = ['C, F, B PerAug',
+        answers = ['C, F, Bb PerPer',
                    'D, G, C PerPer',
                    'E, A, D PerPer',
-                   'F, B, E AugPer',
+                   'F, Bb, Eb PerPer',
                    'G, C, F PerPer',
                    'A, D, G PerPer',
                    'B, E, A PerPer',
@@ -137,7 +137,38 @@ class TestQuartalChordTemplate(unittest.TestCase):
             tones = chord.tones
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
             print(s)
-            assert s == a, '{0} != {1}'.format(s, a) 
+            assert s == a, '{0} != {1}'.format(s, a)
+
+    def test_book_examples(self):
+        template = QuartalChordTemplate.parse('GPerAug')
+        if template:
+            print('succeeded')
+            chord = template.create_chord()
+            print(chord)
+        else:
+            print("failed")
+
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("Bb"))
+        template = QuartalChordTemplate.parse('IIPerPer@2')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = QuartalChordTemplate.parse('GPPAAPP')
+        chord = template.create_chord()
+        print(chord)
+
+        template = QuartalChordTemplate.parse('IIIPAPAA@3')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = QuartalChordTemplate.parse('C')
+        chord = template.create_chord()
+        print(chord)
+
+        template = QuartalChordTemplate.parse('IV')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
 
 if __name__ == "__main__":
     unittest.main()

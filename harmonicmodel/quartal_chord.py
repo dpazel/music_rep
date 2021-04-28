@@ -6,7 +6,7 @@ Purpose: Representing an instance of a quartal chord.
 
 """
 from harmonicmodel.chord import Chord
-from tonalmodel.interval import Interval
+from tonalmodel.interval import Interval, IntervalType
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
 
@@ -34,7 +34,10 @@ class QuartalChord(Chord):
             if len(self.chord_template.base_intervals) != 0:
                 self.__create_chord_on_diatonic(self.root_tone)
             else:
-                self.__create_chord_on_diatonic_tonality(self.root_tone, self.diatonic_tonality)
+                if self.diatonic_tonality is None:
+                    self.__create_chord_on_root_no_base_intervals(self.root_tone)
+                else:
+                    self.__create_chord_on_diatonic_tonality(self.root_tone, self.diatonic_tonality)
         else:
             if not self.diatonic_tonality:
                 raise Exception('Diatonic tonality must be specified for chords based on scale degree: {0}'.
@@ -69,6 +72,19 @@ class QuartalChord(Chord):
             self.__tones.append((tone, interval))
             self.chord_basis.append(interval)
             current_tone = tone
+
+    def __create_chord_on_root_no_base_intervals(self, diatonic_tone):
+        # Assume MM or MajMaj
+        self.chord_basis = []
+        current_tone = diatonic_tone
+        intervals = [Interval(1, IntervalType.Perfect),
+                     Interval(4, IntervalType.Perfect),
+                     Interval(4, IntervalType.Perfect)]
+        for i in range(0, 3):
+            tone = intervals[i].get_end_tone(current_tone)
+            self.__tones.append((tone, intervals[i]))
+            self.chord_basis.append(intervals[i])
+            current_tone = tone
                     
     def __create_chord_on_diatonic_tonality(self, diatonic_tone, diatonic_tonality):
         if not diatonic_tonality:
@@ -102,19 +118,8 @@ class QuartalChord(Chord):
         tone_scale = self.diatonic_tonality.annotation
         
         basis_tone = tone_scale[root_index]
-        
-        self.chord_basis = []
-        for i in range(0, 3):
-            tone = tone_scale[(root_index + 3 * i) % (len(tone_scale) - 1)] if i != 0 else basis_tone
-                       
-            pitch_a = DiatonicPitch(1, basis_tone.diatonic_symbol)
-            b_octave = 2 if basis_tone.diatonic_index > tone.diatonic_index else 1
-            pitch_b = DiatonicPitch(b_octave, tone.diatonic_symbol)
-            interval = Interval.create_interval(pitch_a, pitch_b)
-            self.chord_basis.append(interval)
-            
-            self.__tones.append((tone, interval))
-            basis_tone = tone           
+
+        self.__create_chord_on_root_no_base_intervals(basis_tone)
         
     def __create_chord_on_scale_degree_with_chord_type(self):
         root_index = self.chord_template.scale_degree - 1

@@ -18,12 +18,12 @@ class TestSecundalChordTemplate(unittest.TestCase):
         print('test_simple_triads')
         ltrs = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
         answers = ['C, D, E MajMaj',
-                   'D, E, F MajMin',
-                   'E, F, G MinMaj',
+                   'D, E, F# MajMaj',
+                   'E, F#, G# MajMaj',
                    'F, G, A MajMaj',
                    'G, A, B MajMaj',
-                   'A, B, C MajMin',
-                   'B, C, D MinMaj',
+                   'A, B, C# MajMaj',
+                   'B, C#, D# MajMaj',
                    ]
         diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         i = 1
@@ -137,7 +137,36 @@ class TestSecundalChordTemplate(unittest.TestCase):
             s = '{0} {1}'.format(', '.join(tone[0].diatonic_symbol for tone in tones), chord.chord_type)
             print(s)
             assert s == a, '{0} != {1}'.format(s, a)
-            
+
+    def test_book_examples(self):
+        template = SecundalChordTemplate.parse('CMinMaj')
+        if template:
+            print('succeeded')
+            chord = template.create_chord()
+            print(chord)
+        else:
+            print("failed")
+
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("G"))
+        template = SecundalChordTemplate.parse('IIMajMaj@2')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecundalChordTemplate.parse('GMMmmM')
+        chord = template.create_chord()
+        print(chord)
+
+        template = SecundalChordTemplate.parse('IIMMmmM@3')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = SecundalChordTemplate.parse('C')
+        chord = template.create_chord()
+        print(chord)
+
+        template = SecundalChordTemplate.parse('III')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
 
 if __name__ == "__main__":
     unittest.main()

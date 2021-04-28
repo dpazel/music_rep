@@ -5,7 +5,7 @@ File: chord.py
 Purpose: Defines an abstract class to represent a chord
 
 """
-from abc import ABCMeta, abstractproperty
+from abc import ABCMeta, abstractproperty, abstractmethod
 
 
 class Chord(object):
@@ -39,14 +39,17 @@ class Chord(object):
     def diatonic_tonality(self):
         return self.__diatonic_tonality
     
-    @abstractproperty
+    @property
+    @abstractmethod
     def chord_type(self):
         raise Exception('Chord type subclass needs chord_type property') 
     
-    @abstractproperty
+    @property
+    @abstractmethod
     def root_tone(self):
         raise Exception('Chord type subclass needs root_tone property')
     
-    @abstractproperty
+    @property
+    @abstractmethod
     def tones(self):
         raise Exception('Chord type subclass needs tones property')

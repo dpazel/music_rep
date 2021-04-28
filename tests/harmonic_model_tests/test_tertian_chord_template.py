@@ -222,6 +222,70 @@ class TestTertianTemplateChord(unittest.TestCase):
             chord = TertianChordTemplate.get_triad(diatonic_tonality, i)       
             print(chord)
             assert chord.chord_type.value == ret_types[i - 1]
+
+    def test_inversion_pattern(self):
+        ctxt = 'CMaj+9@(9)'
+        template = TertianChordTemplate.parse(ctxt)
+        if template:
+            print('succeeded')
+            chord = template.create_chord()
+            print(chord)
+        else:
+            print("failed")
+
+        # Another way to do the same
+        from tonalmodel.interval import Interval, IntervalType
+        from tonalmodel.diatonic_tone_cache import DiatonicToneCache
+        template = TertianChordTemplate(DiatonicToneCache.get_cache().get_tone('C'),
+                                        None,
+                                        TertianChordType.to_type('Maj'),
+                                        [Interval(9, IntervalType.Major)],
+                                        None,
+                                        Interval(9, IntervalType.Major))
+        chord = template.create_chord()
+        print(chord)
+
+        # reuse
+        template = TertianChordTemplate.parse('IVMin')
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicToneCache.get_cache().get_tone("Db"))
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicToneCache.get_cache().get_tone("F"))
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+        diatonic_tonality = Tonality.create(ModalityType.HarmonicMinor, DiatonicToneCache.get_cache().get_tone("C"))
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+    def test_book_examples(self):
+        template = TertianChordTemplate.parse('CN6')
+        if template:
+            print('succeeded')
+            chord = template.create_chord()
+            print(chord)
+        else:
+            print("failed")
+
+        diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("F"))
+        template = TertianChordTemplate.parse('IVDom7@2')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
+
+        template = TertianChordTemplate.parse('EbDimMaj7+9')
+        chord = template.create_chord()
+        print(chord)
+
+        template = TertianChordTemplate.parse('EbDimMaj7+9@(9)')
+        chord = template.create_chord()
+        print(chord)
+
+        template = TertianChordTemplate.parse('C')
+        chord = template.create_chord()
+        print(chord)
+
+        template = TertianChordTemplate.parse('VI')
+        chord = template.create_chord(diatonic_tonality)
+        print(chord)
             
     @staticmethod
     def verify(tones, answer):
