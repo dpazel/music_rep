@@ -264,5 +264,46 @@ class TestTuplet(unittest.TestCase):
         
         print('end test dilation')
 
+    def test_book_example(self):
+        print("test_book_example")
+        a = Note(DiatonicPitch(3, 'a'), Duration(1, 8))
+        b = Note(DiatonicPitch(3, 'b'), Duration(1, 8))
+        c = Note(DiatonicPitch(3, 'c'), Duration(1, 8))
+        d = Note(DiatonicPitch(3, 'd'), Duration(1, 8))
+        e = Note(DiatonicPitch(3, 'e'), Duration(1, 8))
+
+        tuplet = Tuplet(Duration(1, 8), 2, [b, c, d])
+
+        beam = Beam([a, tuplet, e])
+        print(beam)
+
+        a1 = Note(DiatonicPitch(3, 'a'), Duration(1, 8))
+        b1 = Note(DiatonicPitch(3, 'b'), Duration(1, 8))
+        c1 = Note(DiatonicPitch(3, 'c'), Duration(1, 8))
+        d1 = Note(DiatonicPitch(3, 'd'), Duration(1, 8))
+        e1 = Note(DiatonicPitch(3, 'e'), Duration(1, 8))
+
+        tuplet1 = Tuplet(Duration(1, 8), 2, [b1, c1, d1])
+
+        beam1 = Beam([tuplet1])
+
+        final_beam = Beam([a1, beam1, e1])
+
+        print(final_beam)
+
+        a2 = Note(DiatonicPitch(3, 'a'), Duration(1, 8))
+        b2 = Note(DiatonicPitch(3, 'b'), Duration(1, 8))
+        c2 = Note(DiatonicPitch(3, 'c'), Duration(1, 8))
+        d2 = Note(DiatonicPitch(3, 'd'), Duration(1, 8))
+        e2 = Note(DiatonicPitch(3, 'e'), Duration(1, 8))
+
+        beam2 = Beam([b2, c2, d2])
+        tuplet2 = Tuplet(Duration(1, 16), 2, [beam2])
+        final_beam2 = Beam([a2, tuplet2, e2])
+
+        print(final_beam2)
+
+        print("end test_book_example")
+
 if __name__ == "__main__":
     unittest.main()

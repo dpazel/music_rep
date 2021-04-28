@@ -35,6 +35,13 @@ class Test(unittest.TestCase):
         assert note.duration == Duration(7, 16)
         assert str(note.diatonic_pitch) == 'C:4'
         assert not note.is_rest
+
+        note = Note(DiatonicPitch(5, 'f#'), 'Q', 2)
+        print(note)
+        assert note.base_duration == Duration(1, 4)
+        assert note.duration == Duration(7, 16)
+        assert str(note.diatonic_pitch) == 'F#:5'
+        assert not note.is_rest
         
     def test_next_prior_note(self):
         print('test_next_note')

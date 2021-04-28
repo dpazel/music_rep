@@ -208,6 +208,22 @@ class NoteTest(unittest.TestCase):
         beam = Beam([tuplet, n3])
         AbstractNote.print_structure(beam)
 
+    def test_add_post_beam_note(self):
+        print('test add post beam note.')
+
+        note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
+        note2 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))
+        note3 = Note(DiatonicPitch(4, 'e'), Duration(1, 16))
+        sub_beam = Beam([note1, note2, note3])
+
+        parent_beam = Beam()
+        parent_beam.append(Note(DiatonicPitch(4, 'f'), Duration(1, 8)))
+        parent_beam.append(sub_beam)
+        print(parent_beam)
+
+        note4 = Note(DiatonicPitch(4, 'e'), Duration(1, 16))
+        sub_beam.append(note4)
+        print(parent_beam)
 
     @staticmethod
     def print_all_notes(notes):
