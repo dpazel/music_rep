@@ -57,7 +57,7 @@ class AbstractNote(object):
                 
     @property
     def duration(self):
-        raise NotImplementedError('users must define duration to use this base class')
+        raise NotImplementedError('define duration in subclass to use this base class')
     
     def reverse(self):
         raise NotImplementedError('users must define reverse() to use this base class')
