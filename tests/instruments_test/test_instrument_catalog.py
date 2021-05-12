@@ -1,5 +1,5 @@
 import unittest
-from instruments.instrument_catalog import InstrumentCatalog
+from instruments.instrument_catalog import InstrumentCatalog, InstrumentClass, InstrumentFamily, Instrument
 from tonalmodel.interval import Interval, IntervalType
 import logging
 
@@ -26,16 +26,19 @@ class TestInstrumentCatalog(unittest.TestCase):
         inst = c.get_instrument("vIOlin")
         assert inst is not None
         assert inst.name.startswith('Violin')
+        print(inst)
         
         instf = c.get_instruments("vIOLin")
         assert instf is not None
         assert len(instf) >= 1
         assert instf[0].name.startswith('Violin')
+        print('[{0}]'.format(','.join(str(s) for s in instf)))
         
         instf = c.get_instruments("Clarinet")
         assert instf is not None
         assert len(instf) > 1
         assert instf[0].name.startswith('Clarinet')
+        print('[{0}]'.format(','.join(str(s) for s in instf)))
 
     def test_transpose(self):
         c = InstrumentCatalog.instance()
@@ -47,7 +50,7 @@ class TestInstrumentCatalog(unittest.TestCase):
                 break
         assert bflatclarinet is not None
         interval = Interval.create_interval(bflatclarinet.sounding_high, bflatclarinet.written_high)
-        assert interval.interval_type.value == IntervalType.Major
+        assert interval.interval_type == IntervalType.Major
         assert interval.diatonic_distance == 1
         
     def test_articulations(self):
@@ -59,7 +62,29 @@ class TestInstrumentCatalog(unittest.TestCase):
             print(artic.name)
         assert 'Arco' in [a.name for a in articulations]
         assert 'Legato' in [a.name for a in articulations]
-        
+
+    def test_manual_create_catalog(self):
+        catalog = InstrumentCatalog(xml_file='')
+
+        inst_class = InstrumentClass("Strings")
+        catalog.add_instrument_class(inst_class)
+
+        inst_family = InstrumentFamily("Violins")
+        inst_class.add_family(inst_family)
+
+        instrument = Instrument("My Violin", 'C', 'C:3', 'C:7', None, None)
+        inst_family.add_instrument(instrument)
+
+        catalog.print_catalog()
+
+    def test1_open_outside(self):
+        catalog = InstrumentCatalog.instance(xml_file='/Users/.../my_instruments.xml')
+
+        c1 = InstrumentCatalog.instance()
+
+        assert c1 == catalog
+
+
     def test_print_catalog(self):
         c = InstrumentCatalog.instance()
         c.print_catalog()

@@ -34,12 +34,20 @@ class InstrumentCatalog(InstrumentBase, Singleton):
     # Name of the file sound in ./data
     INSTRUMENT_FILE = 'instruments.xml'
 
-    def __init__(self):
+    def __init__(self, *args,  **kwargs ):
  
         InstrumentBase.__init__(self, '', None)
-        this_dir, this_filename = os.path.split(__file__)
-        data_path = os.path.join(this_dir, InstrumentCatalog.DATA_DIRECTORY)
-        tree = ET.parse(os.path.join(data_path, InstrumentCatalog.INSTRUMENT_FILE))
+
+        xml_file = kwargs.get('xml_file', None)
+
+        if xml_file is None:
+            this_dir, this_filename = os.path.split(__file__)
+            data_path = os.path.join(this_dir, InstrumentCatalog.DATA_DIRECTORY)
+            tree = ET.parse(os.path.join(data_path, InstrumentCatalog.INSTRUMENT_FILE))
+        elif isinstance(xml_file, str):
+            if len(xml_file) != 0:
+                dir, fn = os.path.split(xml_file)
+                tree = ET.parse(os.path.join(dir, fn))
         
         self.inst_classes = []
         
@@ -50,11 +58,12 @@ class InstrumentCatalog(InstrumentBase, Singleton):
         
         # maps instrument family name to a list of all the instrument members of that family.
         self.instrument_family_map = {}
+
+        if xml_file is None or len(xml_file) != 0:
+            root = tree.getroot()
+            self._parse_structure(root)
         
-        root = tree.getroot()
-        self._parse_structure(root)
-        
-        self._build_maps()
+            self._build_maps()
         
     def _parse_structure(self, root):
         for child in root:
@@ -121,6 +130,9 @@ class InstrumentCatalog(InstrumentBase, Singleton):
         return instrument
     
     def _build_maps(self):
+        self.instrument_map = {}
+        self.instrument_family_map = {}
+
         for inst_class in self.inst_classes:
             families = inst_class.families
             for family in families:
@@ -137,6 +149,10 @@ class InstrumentCatalog(InstrumentBase, Singleton):
     
     def instrument_classes(self):
         return list(self.inst_classes)
+
+    def add_instrument_class(self, instrument_class):
+        self.inst_classes.append(instrument_class)
+        self._build_maps()
 
     def print_catalog(self):
         for inst_class in self.inst_classes:
