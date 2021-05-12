@@ -77,7 +77,7 @@ class TestInstrumentCatalog(unittest.TestCase):
 
         catalog.print_catalog()
 
-    def test1_open_outside(self):
+    def atest1_open_outside(self):
         catalog = InstrumentCatalog.instance(xml_file='/Users/.../my_instruments.xml')
 
         c1 = InstrumentCatalog.instance()
