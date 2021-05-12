@@ -1,11 +1,3 @@
-"""
-
-File: singleton.py
-
-Purpose: Defines a class whose subclasses will act like the singleton pattern.
-
-"""
-
 
 class Singleton(object):
     """
@@ -17,12 +9,15 @@ class Singleton(object):
     The technique is simply to build a map of classes to their unique instances.
     The first time called for some particular
     class the class is mapped to the instance.  On other class to the same class, the mapped instance is returned.
+    Classes that use this must:
+    1) Add Singleton as a superclass.
+    2) Have this signature for the constructor: __init__(self, *args, **kwargs)
     """
     _instances = {}
 
     @classmethod
-    def instance(cls):
+    def instance(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls]  = cls()
+            cls._instances[cls]  = cls(*args, **kwargs)
         return cls._instances[cls]
 
