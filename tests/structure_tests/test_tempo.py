@@ -13,14 +13,14 @@ class TempoTest(unittest.TestCase):
         pass
 
     def test_tempo_type(self):
-        ty = TempoType(TempoType.Grave)
-        print(ty)
+        ty = TempoType.Grave
+        print(str(ty))
         print(ty.get_range())
         self.assertTrue(str(ty) == 'Grave')
         self.assertTrue(ty.get_range().start_index == 25)
         self.assertTrue(ty.get_range().end_index == 45)
         
-        ty = TempoType(TempoType.Lento)
+        ty = TempoType.Lento
         print(ty)
         print(ty.get_range())
         self.assertTrue(str(ty) == 'Lento')
@@ -42,7 +42,7 @@ class TempoTest(unittest.TestCase):
         tempo = Tempo(34)
         self.assertTrue(tempo.tempo == 34)
         
-        tempo = Tempo(TempoType(TempoType.Adagio))
+        tempo = Tempo(TempoType.Adagio)
         r = TempoType.get_range_for(TempoType.Adagio)
         self.assertTrue(r.end_index >= tempo.tempo >= r.start_index)
         

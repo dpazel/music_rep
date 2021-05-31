@@ -7,6 +7,7 @@ from structure.note import Note
 from timemodel.duration import Duration
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from timemodel.position import Position
+from timemodel.offset import Offset
 from misc.interval import Interval
 
 from timemodel.time_signature_event import TimeSignatureEvent
@@ -76,6 +77,7 @@ class TestScore(unittest.TestCase):
         score.add_instrument_voice(clarinet_instrument_voice)
         
         # Add notes to the score
+        x = [Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'abcdef']
         vnote0 = Note(DiatonicPitch(4, 'a'), Duration(1, 8))
         vnote1 = Note(DiatonicPitch(4, 'b'), Duration(1, 8))
         vnote2 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))     
@@ -100,9 +102,9 @@ class TestScore(unittest.TestCase):
         voice_note_map = score.get_notes_by_wnt_interval(Interval(Position(1, 4), Position(3, 4)))
         assert voice_note_map
         for (k, v) in voice_note_map.items():
-            print(k)
+            print('InstrumentVoice {0}:'.format(k))
             for (k1, v1) in v.items():
-                print('{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1)))
+                print('     {0} --> [{1}]'.format(k1.instrument, ', '.join(str(n) for n in v1)))
                 
         cvoice_map = voice_note_map.get(clarinet_instrument_voice)
         cvoices = list(cvoice_map.keys())
@@ -126,9 +128,9 @@ class TestScore(unittest.TestCase):
         voice_note_map = score.get_notes_starting_in_wnt_interval(Interval(Position(3, 8), Position(3, 4)))
         assert voice_note_map
         for (k, v) in voice_note_map.items():
-            print(k)
+            print('InstrumentVoice {0}:'.format(k))
             for (k1, v1) in v.items():
-                print('{0} --> [{1}]'.format(k1, ', '.join(str(n) for n in v1)))
+                print('    {0} --> [{1}]'.format(k1.instrument, ', '.join(str(n) for n in v1)))
                 
         cvoice_map = voice_note_map.get(clarinet_instrument_voice)
         cvoices = list(cvoice_map.keys())
@@ -180,6 +182,68 @@ class TestScore(unittest.TestCase):
             if n.diatonic_pitch == pitch:
                 return True
         return False
+
+    def test_adding_notes(self):
+        score = Score()
+
+        # set up 3 instrument voices: 2 violins, 1 trumpet, 1 clarinet
+        catalogue = InstrumentCatalog.instance()
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("violin"), 2))
+
+        #  1 beat == 1 sec, 3/4 TS + 60 beats per minute,
+        score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))
+        score.time_signature_sequence.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4)), Position(0)))
+
+        violin_voice = score.get_instrument_voice("violin")[0]
+
+        line = Line([Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'afd'])
+        violin_voice.voice(0).pin(line)
+
+        notes = violin_voice.get_all_notes()
+        for n in notes:
+            print(n)
+
+        line.append(Note(DiatonicPitch(4, 'g'), Duration(1, 8)))
+        notes = violin_voice.get_all_notes()
+        for n in notes:
+            print(n)
+
+    def test_book_example(self):
+
+        score = Score()
+
+        # set up 3 instrument voices: 2 violins, 1 trumpet, 1 clarinet
+        catalogue = InstrumentCatalog.instance()
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("violin"), 2))
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("trumpet")))
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("clarinet")))
+
+        #  1 beat == 1 sec, 3/4 TS + 60 beats per minute,
+        score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))
+        score.time_signature_sequence.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4)), Position(0)))
+
+        # set up some notes in the two violins
+        violin_voice = score.get_instrument_voice("violin")[0]
+        violin_voice.voice(0).pin(Line([Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'afdecd']))
+        violin_voice.voice(0).pin(Line([Note(DiatonicPitch(4, y), Duration(1, 4)) for y in 'cdc']))
+
+    def test_add_notes_to_two_level_line(self):
+        score = Score()
+
+        catalogue = InstrumentCatalog.instance()
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("violin")))
+
+        #  1 beat == 1 sec, 3/4 TS + 60 beats per minute,
+        score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))
+        score.time_signature_sequence.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4)), Position(0)))
+
+        violin_voice = score.get_instrument_voice("violin")[0]
+        top_line = Line([Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'afdecd'])
+        violin_voice.voice(0).pin(top_line, Offset(0))
+        level1_line = Line([Note(DiatonicPitch(5, y), Duration(1, 8)) for y in 'af'])
+        top_line.pin(level1_line, Offset(2))
+        level2_line = Line([Note(DiatonicPitch(6, y), Duration(1, 8)) for y in 'de'])
+        level1_line.pin(level2_line, Offset(1))
 
 
 if __name__ == "__main__":
