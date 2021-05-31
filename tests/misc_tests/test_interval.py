@@ -65,7 +65,18 @@ class TestInterval(unittest.TestCase):
         interval = Interval(1, 5, BoundaryPolicy.Closed).intersection(Interval(4, 6, BoundaryPolicy.Open))
         logging.info('{0}'.format(interval))
         assert interval.policy == BoundaryPolicy.LO_Open
-    
+
+    def test_book_example(self):
+        # Default is HI_Open
+        f_interval = Interval(Fraction(1, 4), Fraction(3, 5))
+        print(f_interval)
+        assert f_interval.contains(Fraction(1, 4))
+        assert not f_interval.contains(Fraction(3, 5))
+
+        # Intervals can be constructed with integer ranges. Note the resulting boundary policy.
+        interval = Interval(1, 5, BoundaryPolicy.Closed).intersection(Interval(4, 6, BoundaryPolicy.Open))
+        assert interval.policy == BoundaryPolicy.LO_Open
+        print(interval)
 
 if __name__ == "__main__":
     unittest.main()
