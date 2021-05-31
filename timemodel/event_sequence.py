@@ -167,12 +167,14 @@ class EventSequence(object):
         
     def clear(self):
         self.ordered_map.clear()
+        self._successor.clear()
+        self._predecessor.clear()
         
     def successor(self, event):
-        return self._successor[event]
+        return self._successor[event] if event in self._successor else None
     
     def predecessor(self, event):
-        return self._predecessor[event]
+        return self._predecessor[event] if event in self._predecessor else None
         
     def __str__(self):
         return ', '.join(str(x) for x in self.sequence_list)
