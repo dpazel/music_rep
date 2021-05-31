@@ -10,7 +10,7 @@ from function.stepwise_function import StepwiseFunction
 from timemodel.dynamics_event import DynamicsEvent
 
 
-class Test(unittest.TestCase):
+class TestDynamicsEventSequence(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -25,30 +25,30 @@ class Test(unittest.TestCase):
                   DynamicsFunctionEvent(Dynamics.FF, Position(1)), 
                   DynamicsFunctionEvent(Dynamics.FFF, Position(3, 2)) 
                   ]
-        des = DynamicsEventSequence(events)
+        seq = DynamicsEventSequence(events)
         
-        assert des.velocity(Position(0)) == Dynamics.P
-        assert des.velocity(Position(1, 4)) == Dynamics.P
-        assert des.velocity(Position(1, 2)) == Dynamics.F
-        assert des.velocity(Position(5, 8)) == Dynamics.F
-        assert des.velocity(Position(3, 4)) == Dynamics.PP
-        assert des.velocity(Position(1)) == Dynamics.FF
-        assert des.velocity(Position(3, 2)) == Dynamics.FFF
+        assert seq.velocity(Position(0)) == Dynamics.P.velocity
+        assert seq.velocity(Position(1, 4)) == Dynamics.P.velocity
+        assert seq.velocity(Position(1, 2)) == Dynamics.F.velocity
+        assert seq.velocity(Position(5, 8)) == Dynamics.F.velocity
+        assert seq.velocity(Position(3, 4)) == Dynamics.PP.velocity
+        assert seq.velocity(Position(1)) == Dynamics.FF.velocity
+        assert seq.velocity(Position(3, 2)) == Dynamics.FFF.velocity
         
-        print(des)
+        print(seq)
         
     def test_crescendo_decrescendo_velocity(self):
-        v_lo_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.P] 
+        v_lo_steady = Dynamics.P.velocity
         event0 = DynamicsFunctionEvent(v_lo_steady, Position(0))
         
-        v_low = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.P]
-        v_hi = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FF]
+        v_low = Dynamics.P.velocity
+        v_hi = Dynamics.FF.velocity
         array = [(Position(0), v_low),
                  (Position(1, 2), v_hi)]
         f = PiecewiseLinearFunction(array)
         event1 = DynamicsFunctionEvent(f, Position(1))
         
-        v_hi_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FF]
+        v_hi_steady = Dynamics.FF.velocity
         event2 = DynamicsFunctionEvent(v_hi_steady, Position(2))
 
         des = DynamicsEventSequence([event0, event1, event2])
@@ -62,17 +62,17 @@ class Test(unittest.TestCase):
         assert des.velocity(Position(2)) == v_hi
         assert des.velocity(Position(3)) == v_hi_steady
         
-        v_hi_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.F] 
+        v_hi_steady = Dynamics.F.velocity
         event0 = DynamicsFunctionEvent(v_hi_steady, Position(0))
         
-        v_hi = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.F]
-        v_low = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.PP]
+        v_hi = Dynamics.F.velocity
+        v_low = Dynamics.PP.velocity
         array = [(Position(0), v_hi),
                  (Position(1, 3), v_low)]
         f = PiecewiseLinearFunction(array)
         event1 = DynamicsFunctionEvent(f, Position(1))
         
-        v_lo_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.PP]
+        v_lo_steady = Dynamics.PP.velocity
         event2 = DynamicsFunctionEvent(v_lo_steady, Position(2))
                 
         des = DynamicsEventSequence([event0, event1, event2])
@@ -88,13 +88,13 @@ class Test(unittest.TestCase):
         assert des.velocity(Position(3)) == v_lo_steady
         
     def test_step_wise_velocity(self):
-        v_lo_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.P]
-        event0 = DynamicsEvent(Dynamics(Dynamics.P), Position(0))
+        v_lo_steady = Dynamics.P.velocity
+        event0 = DynamicsEvent(Dynamics.P, Position(0))
         
-        v_0 = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.P]
-        v_1 = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.F]
-        v_2 = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FFF]
-        v_3 = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FF]
+        v_0 = Dynamics.P.velocity
+        v_1 = Dynamics.F.velocity
+        v_2 = Dynamics.FFF.velocity
+        v_3 = Dynamics.FF.velocity
         steps = [(Position(1), v_0),
                  (Position(3, 2), v_1), 
                  (Position(7, 4), v_2),
@@ -103,7 +103,7 @@ class Test(unittest.TestCase):
         f = StepwiseFunction(steps)
         event1 = DynamicsFunctionEvent(f, Position(1))
         
-        v_hi_steady = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FF]
+        v_hi_steady = Dynamics.FF.velocity
         event2 = DynamicsFunctionEvent(v_hi_steady, Position(2))
         
         des = DynamicsEventSequence([event0, event1, event2]) 

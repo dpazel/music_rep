@@ -18,11 +18,11 @@ class TestTempoEventSequence(unittest.TestCase):
         pass
 
     def test_basic_sequence(self):
-        settings = [Tempo(TempoType(TempoType.Grave)),
-                    Tempo(TempoType(TempoType.Allegrissimo)),
-                    Tempo(TempoType(TempoType.Moderato)),
-                    Tempo(TempoType(TempoType.Largo)),
-                    Tempo(TempoType(TempoType.Vivace))
+        settings = [Tempo(TempoType.Grave),
+                    Tempo(TempoType.Allegrissimo),
+                    Tempo(TempoType.Moderato),
+                    Tempo(TempoType.Largo),
+                    Tempo(TempoType.Vivace),
                     ]
         events = [TempoFunctionEvent(settings[0], Position(0)), 
                   TempoFunctionEvent(settings[1], Position(10)), 
@@ -43,10 +43,10 @@ class TestTempoEventSequence(unittest.TestCase):
         assert tes.tempo(Position(45)) == settings[3].tempo
         
     def test_accel_decel_sequence(self):
-        t_low = Tempo(TempoType(TempoType.Moderato))
+        t_low = Tempo(TempoType.Moderato)
         event0 = TempoFunctionEvent(t_low, Position(0))
         
-        t_hi = Tempo(TempoType(TempoType.Vivace))
+        t_hi = Tempo(TempoType.Vivace)
         array = [(Position(10), t_low.tempo),
                  (Position(30), t_hi.tempo)
                  ]
@@ -67,8 +67,8 @@ class TestTempoEventSequence(unittest.TestCase):
         
         assert tes.tempo(Position(50)) == t_hi.tempo
         
-        t_hi = Tempo(TempoType(TempoType.Vivace))
-        t_low = Tempo(TempoType(TempoType.Moderato))        
+        t_hi = Tempo(TempoType.Vivace)
+        t_low = Tempo(TempoType.Moderato)
         event0 = TempoFunctionEvent(t_hi, Position(0))
         
         array = [(Position(10), t_hi.tempo),
@@ -91,14 +91,14 @@ class TestTempoEventSequence(unittest.TestCase):
         assert tes.tempo(Position(50)) == t_low.tempo        
         
     def test_step_wise_tempo(self):
-        t_lo_steady = Tempo(TempoType(TempoType.Grave)) 
+        t_lo_steady = Tempo(TempoType.Grave)
         event0 = TempoEvent(t_lo_steady, Position(0))
         
-        settings = [Tempo(TempoType(TempoType.Grave)),
-                    Tempo(TempoType(TempoType.Allegrissimo)),
-                    Tempo(TempoType(TempoType.Moderato)),
-                    Tempo(TempoType(TempoType.Largo)),
-                    Tempo(TempoType(TempoType.Vivace))
+        settings = [Tempo(TempoType.Grave),
+                    Tempo(TempoType.Allegrissimo),
+                    Tempo(TempoType.Moderato),
+                    Tempo(TempoType.Largo),
+                    Tempo(TempoType.Vivace)
                     ]
         
         steps = [(Position(0), settings[0].tempo),
@@ -123,7 +123,24 @@ class TestTempoEventSequence(unittest.TestCase):
         assert tes.tempo(Position(30)) == settings[2].tempo
         assert tes.tempo(Position(40)) == settings[3].tempo
         assert tes.tempo(Position(50)) == settings[4].tempo 
-        assert tes.tempo(Position(60)) == t_hi_steady.tempo     
+        assert tes.tempo(Position(60)) == t_hi_steady.tempo
+
+    def test_book_tempo_sequence(self):
+        print('----- test_book_tempo_sequence -----')
+
+        seq = TempoEventSequence()
+        seq.add(TempoEvent(Tempo(TempoType.Grave), Position(0)))
+        seq.add(TempoEvent(Tempo(TempoType.Moderato), Position(10)))
+        seq.add(TempoEvent(Tempo(TempoType.Vivace), Position(25)))
+        seq.add(TempoEvent(Tempo(TempoType.Largo), Position(50)))
+
+        event = seq.first
+        while event is not None:
+            print(event)
+            event = seq.successor(event)
+
+        print('----- End test_book_tempo_sequence -----')
+
         
 if __name__ == "__main__":
     unittest.main()
