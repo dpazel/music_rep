@@ -1,34 +1,46 @@
-"""
-
-File: tempo.py
-
-Purpose: Defines classes for Tempo and TempoType
-
-"""
 from tonalmodel.range import Range
 from timemodel.duration import Duration
 from fractions import Fraction
 
+from enum import Enum
 
-class TempoType:
-    """
-    Enum class for the quality of musical intervals.
-    """
-    Larghissimo, Grave, Lento, Largo, Larghetto,\
-        Adagio, Adagietto, Andantino, Andante, AndanteModerato,\
-        MarciaModerato, Moderato, AllegroModerato, Allegretto, Allegro,\
-        Vivace, Vivacissimo, Allegrissimo, Presto, Prestissimo = range(20)
 
-    NAME_MAP = None
-    
+# The following are global variables used by TempoType, as we could not define these
+# inside TempoType.
+class TempoTypeHelper:
     RANGE_MAP = None
-    
     ALL_TYPES = None
-        
-    def __init__(self, vtype):
-        self.value = vtype
-    
-    @staticmethod   
+
+
+class TempoType(Enum):
+    """
+    Enum class for the quality of tempo names.
+    """
+    Larghissimo = 1
+    Grave = 2
+    Lento = 3
+    Largo = 4
+    Larghetto = 5
+    Adagio = 6
+    Adagietto = 7
+    Andantino = 8
+    Andante = 9
+    AndanteModerato = 10
+    MarciaModerato = 11
+    Moderato = 12
+    AllegroModerato = 13
+    Allegretto = 14
+    Allegro = 15
+    Vivace = 16
+    Vivacissimo = 17
+    Allegrissimo = 18
+    Presto = 19
+    Prestissimo = 20
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
     def class_init():
         """
         This method is a class initializer.  It is called outside the class before 
@@ -37,90 +49,61 @@ class TempoType:
         2) RANGE_MAP: map TempoType to BPM range.
         3) ALL_TYPES: list of all TempoTypes
         """
-        TempoType.NAME_MAP = {
-            TempoType(TempoType.Larghissimo): 'Larghissimo',
-            TempoType(TempoType.Grave): 'Grave',
-            TempoType(TempoType.Lento): 'Lento',
-            TempoType(TempoType.Largo): 'Largo',
-            TempoType(TempoType.Larghetto): 'Larghetto',
-            TempoType(TempoType.Adagio): 'Adagio',
-            TempoType(TempoType.Adagietto): 'Adagietto',
-            TempoType(TempoType.Andantino): 'Andantino',
-            TempoType(TempoType.Andante): 'Andante',
-            TempoType(TempoType.AndanteModerato): 'AndanteMaoerato',
-            TempoType(TempoType.MarciaModerato): 'MarciaModerato',
-            TempoType(TempoType.Moderato): 'Moderato',
-            TempoType(TempoType.AllegroModerato): 'AllegroModerato',
-            TempoType(TempoType.Allegretto): 'Allegretto',
-            TempoType(TempoType.Allegro): 'Allegro',
-            TempoType(TempoType.Vivace): 'Vivace',
-            TempoType(TempoType.Vivacissimo): 'Vivacissimo',
-            TempoType(TempoType.Allegrissimo): 'Allegrissimo',
-            TempoType(TempoType.Presto): 'Presto',
-            TempoType(TempoType.Prestissimo): 'Prestissimo',
+        if TempoTypeHelper.RANGE_MAP is not None:
+            return
+
+        TempoTypeHelper.RANGE_MAP = {
+            TempoType.Larghissimo: Range(0, 24),
+            TempoType.Grave: Range(25, 45),
+            TempoType.Lento: Range(45, 60),
+            TempoType.Largo: Range(40, 60),
+            TempoType.Larghetto: Range(60, 66),
+            TempoType.Adagio: Range(66, 76),
+            TempoType.Adagietto: Range(72, 76),
+            TempoType.Andantino: Range(80, 108),
+            TempoType.Andante: Range(76, 108),
+            TempoType.AndanteModerato: Range(92, 112),
+            TempoType.MarciaModerato: Range(83, 85),
+            TempoType.Moderato: Range(108, 120),
+            TempoType.AllegroModerato: Range(116, 120),
+            TempoType.Allegretto: Range(112, 120),
+            TempoType.Allegro: Range(120, 168),
+            TempoType.Vivace: Range(168, 176),
+            TempoType.Vivacissimo: Range(172, 176),
+            TempoType.Allegrissimo: Range(172, 176),
+            TempoType.Presto: Range(168, 200),
+            TempoType.Prestissimo: Range(200, 10000)
         }
-        
-        TempoType.RANGE_MAP = {
-            TempoType(TempoType.Larghissimo): Range(0, 24),
-            TempoType(TempoType.Grave): Range(25, 45),
-            TempoType(TempoType.Lento): Range(45, 60),
-            TempoType(TempoType.Largo): Range(40, 60),
-            TempoType(TempoType.Larghetto): Range(60, 66),
-            TempoType(TempoType.Adagio): Range(66, 76),
-            TempoType(TempoType.Adagietto): Range(72, 76),
-            TempoType(TempoType.Andantino): Range(80, 108),
-            TempoType(TempoType.Andante): Range(76, 108),
-            TempoType(TempoType.AndanteModerato): Range(92, 112),
-            TempoType(TempoType.MarciaModerato): Range(83, 85),
-            TempoType(TempoType.Moderato): Range(108, 120),
-            TempoType(TempoType.AllegroModerato): Range(116, 120),
-            TempoType(TempoType.Allegretto): Range(112, 120),
-            TempoType(TempoType.Allegro): Range(120, 168),
-            TempoType(TempoType.Vivace): Range(168, 176),
-            TempoType(TempoType.Vivacissimo): Range(172, 176),
-            TempoType(TempoType.Allegrissimo): Range(172, 176),
-            TempoType(TempoType.Presto): Range(168, 200),
-            TempoType(TempoType.Prestissimo): Range(200, 10000),
-        }
-        
-        TempoType.ALL_TYPES = [
-            TempoType(TempoType.Larghissimo),
-            TempoType(TempoType.Grave),
-            TempoType(TempoType.Lento),
-            TempoType(TempoType.Largo),
-            TempoType(TempoType.Larghetto),            
-            TempoType(TempoType.Adagio),   
-            TempoType(TempoType.Adagietto), 
-            TempoType(TempoType.Andantino),  
-            TempoType(TempoType.Andante),
-            TempoType(TempoType.AndanteModerato),
-            TempoType(TempoType.MarciaModerato),
-            TempoType(TempoType.Moderato),
-            TempoType(TempoType.AllegroModerato),
-            TempoType(TempoType.Allegretto),
-            TempoType(TempoType.Allegro),
-            TempoType(TempoType.Vivace),
-            TempoType(TempoType.Vivacissimo),
-            TempoType(TempoType.Allegrissimo),
-            TempoType(TempoType.Presto),
-            TempoType(TempoType.Prestissimo),
+
+        TempoTypeHelper.ALL_TYPES = [
+            TempoType.Larghissimo,
+            TempoType.Grave,
+            TempoType.Lento,
+            TempoType.Largo,
+            TempoType.Larghetto,
+            TempoType.Adagio,
+            TempoType.Adagietto,
+            TempoType.Andantino,
+            TempoType.Andante,
+            TempoType.AndanteModerato,
+            TempoType.MarciaModerato,
+            TempoType.Moderato,
+            TempoType.AllegroModerato,
+            TempoType.Allegretto,
+            TempoType.Allegro,
+            TempoType.Vivace,
+            TempoType.Vivacissimo,
+            TempoType.Allegrissimo,
+            TempoType.Presto,
+            TempoType.Prestissimo,
         ]
-       
-    def __str__(self):
-        return TempoType.NAME_MAP[self]
-        
-    def __eq__(self, y):
-        return self.value == y.value
-    
-    def __hash__(self):
-        return hash(self.value)
     
     def get_range(self):
-        return TempoType.RANGE_MAP[self]
+        return TempoTypeHelper.RANGE_MAP[self]
     
     @staticmethod
     def get_types():
-        return TempoType.ALL_TYPES
+        return TempoTypeHelper.ALL_TYPES
     
     @staticmethod
     def get_range_for(tempo_type):
@@ -136,7 +119,7 @@ class TempoType:
             tempo_type = TempoType(tempo_type)
         elif not isinstance(tempo_type, TempoType):
             raise Exception('Illegal argument type for get_range_for {0}'.format(type(tempo_type)))
-        return TempoType.RANGE_MAP[tempo_type]
+        return TempoType.get_range(tempo_type)
 
 # Initialize the static tables in the TempoType class.   
 TempoType.class_init()
@@ -187,3 +170,6 @@ class Tempo(object):
     @property
     def tempo(self):
         return self.__tempo
+
+    def __str__(self):
+        return str(self.tempo)

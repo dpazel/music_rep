@@ -1,74 +1,89 @@
-"""
-
-File: dynamics.py
-
-Purpose: Defines class for Dynamics
-
-"""
 from misc.ordered_map import OrderedMap
+from enum import Enum
 
 
-class Dynamics(object):
+# The following are global variables used by Dynamics, as we could not define these
+# inside TempoType.
+class DynamicsHelper:
+    NAME_MAP = None
+    DYNAMICS_VALUE_MAP = None
+    DEFAULT_DYNAMICS = None
+    DEFAULT_DYNAMICS_VELOCITY = None
+    REVERSE_DYNAMICS_VELOCITY_MAP = None
+    DYNAMICS_LIST = None
+
+
+class Dynamics(Enum):
     """
     Class representing music dynamics.  We use PPPP through FFFF.
     Velocity values have been assigned based on 0-127 midi range.
     """
-    PPPP, PPP, PP, P, MP, MF, F, FF, FFF, FFFF = range(10)
-    
-    NAME_MAP = {
-            PPPP:  'pianissississimo',
-            PPP:   'pianississimo0',
-            PP:    'pianissimo',
-            P:     'piano',
-            MP:    'mezzo piano',
-            MF:    'messo forte',
-            F:     'forte',
-            FF:    'fortissimo',
-            FFF:   'fortississimo',
-            FFFF:  'fortissississimo',
-        }
-    
-    DYNAMICS_VALUE_MAP = {
-            PPPP:  16,
-            PPP:   24,
-            PP:    33,
-            P:     49,
-            MP:    64,
-            MF:    80,
-            F:     96,
-            FF:    112,
-            FFF:   120,
-            FFFF:  127,
-        }
-    
-    DEFAULT_DYNAMICS = MP
-    DEFAULT_DYNAMICS_VELOCITY = DYNAMICS_VALUE_MAP[DEFAULT_DYNAMICS]
-    REVERSE_DYNAMICS_VELOCITY_MAP = OrderedMap({value: key for (key, value) in DYNAMICS_VALUE_MAP.items()})
+    PPPP = 1
+    PPP = 2
+    PP = 3
+    P = 4
+    MP = 5
+    MF = 6
+    F = 7
+    FF = 8
+    FFF = 9
+    FFFF = 10
 
-    def __init__(self, type_value):
-        """
-        Constructor.
-        
-        Args:
-          type_value: One of PPPP, ... FFFF
-        """
-        if type_value < Dynamics.PPPP or type_value > Dynamics.FFFF:
-            raise Exception('Illegal value {0} for Dynamics'.format(type_value))
-        self.__value = type_value 
-        self.__name = Dynamics.NAME_MAP[self.__value]
-        self.__velocity = Dynamics.DYNAMICS_VALUE_MAP[self.__value]
-        
-    @property
-    def value(self):
-        return self.__value
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def class_init():
+        if DynamicsHelper.NAME_MAP is not None:
+            return
     
-    @property
-    def name(self):
-        return self.__name
+        DynamicsHelper.NAME_MAP = {
+            Dynamics.PPPP:  'pianissississimo',
+            Dynamics.PPP:   'pianississimo0',
+            Dynamics.PP:    'pianissimo',
+            Dynamics.P:     'piano',
+            Dynamics.MP:    'mezzo piano',
+            Dynamics.MF:    'messo forte',
+            Dynamics.F:     'forte',
+            Dynamics.FF:    'fortissimo',
+            Dynamics.FFF:   'fortississimo',
+            Dynamics.FFFF:  'fortissississimo',
+        }
     
+        DynamicsHelper.DYNAMICS_VALUE_MAP = {
+            Dynamics.PPPP:  16,
+            Dynamics.PPP:   24,
+            Dynamics.PP:    33,
+            Dynamics.P:     49,
+            Dynamics.MP:    64,
+            Dynamics.MF:    80,
+            Dynamics.F:     96,
+            Dynamics.FF:    112,
+            Dynamics.FFF:   120,
+            Dynamics.FFFF:  127,
+        }
+
+        DynamicsHelper.DYNAMICS_LIST = [
+            Dynamics.PPPP,
+            Dynamics.PPP,
+            Dynamics.PP,
+            Dynamics.P,
+            Dynamics.MP,
+            Dynamics.MF,
+            Dynamics.F,
+            Dynamics.FF,
+            Dynamics.FFF,
+            Dynamics.FFFF,
+        ]
+    
+        DynamicsHelper.DEFAULT_DYNAMICS = Dynamics.MP
+        DynamicsHelper.DEFAULT_DYNAMICS_VELOCITY = DynamicsHelper.DYNAMICS_VALUE_MAP[DynamicsHelper.DEFAULT_DYNAMICS]
+        DynamicsHelper.REVERSE_DYNAMICS_VELOCITY_MAP = OrderedMap({value: key for (key, value) in
+                                                                   DynamicsHelper.DYNAMICS_VALUE_MAP.items()})
+
     @property
     def velocity(self):
-        return self.__velocity
+        return DynamicsHelper.DYNAMICS_VALUE_MAP[self]
     
     @staticmethod
     def nearest_dynamics(value):
@@ -87,10 +102,7 @@ class Dynamics(object):
         next_d = d.keys()[d.keys().index(d) + 1]
         return Dynamics(Dynamics.REVERSE_DYNAMICS_VELOCITY_MAP[d] if value <= (d + next_d)/2 else
                         Dynamics.REVERSE_DYNAMICS_VELOCITY_MAP[next_d])
-               
-    def __str__(self):
-        return self.name
-        
+
     def __eq__(self, y):
         return self.value == y.value
     
@@ -99,7 +111,11 @@ class Dynamics(object):
     
     @staticmethod
     def get_types():
-        return [Dynamics(x) for x in range(Dynamics.PPPP, Dynamics.FFFF + 1)]
+        return [DynamicsHelper.DYNAMICS_LIST]
+
+    @staticmethod
+    def DEFAULT_DYNAMICS_VELOCITY():
+        return DynamicsHelper.DEFAULT_DYNAMICS_VELOCITY
     
     @staticmethod
     def get_velocity_for(dynamics):
@@ -112,7 +128,13 @@ class Dynamics(object):
         Exception: on bad argument type.
         """
         if isinstance(dynamics, int):
-            dynamics = Dynamics(dynamics)
+            if dynamics < 1 or dynamics > len(DynamicsHelper.DYNAMICS_LIST):
+                raise Exception('Out of range int for get_velocity_for {0}'.format(type(dynamics)))
+            dynamics = DynamicsHelper.DYNAMICS_LIST[dynamics - 1]
         elif not isinstance(dynamics, Dynamics):
             raise Exception('Illegal argument type for get_velocity_for {0}'.format(type(dynamics)))
         return dynamics.velocity
+
+
+# Initialize the static tables in the Dynamics class.
+Dynamics.class_init()

@@ -8,7 +8,7 @@ Purpose: Class representing a score, consisting of a number of instrument voices
 """
 
 from timemodel.tempo_event_sequence import TempoEventSequence
-from timemodel.event_sequence import EventSequence
+from timemodel.time_signature_event_sequence import TimeSignatureEventSequence
 from timemodel.time_conversion import TimeConversion
 from timemodel.duration import Duration
 from timemodel.position import Position
@@ -35,7 +35,7 @@ class Score(object):
         self.name_class_map = dict()
         
         self.__tempo_sequence = TempoEventSequence()
-        self.__time_signature_sequence = EventSequence()
+        self.__time_signature_sequence = TimeSignatureEventSequence()
         
     @property
     def tempo_sequence(self):
@@ -77,6 +77,13 @@ class Score(object):
     @property
     def instrument_classes(self):
         return [k for (k, _) in self.class_map.items()]
+
+    def get_instrument_voice(self, instrument_name):
+        answer = []
+        for inst_voice in self.__instrument_voices:
+            if inst_voice.instrument.name.upper() == instrument_name.upper():
+                answer.append(inst_voice)
+        return answer
     
     def remove_instrument_voice(self, instrument_voice):
         if instrument_voice not in self.__instrument_voices:

@@ -84,7 +84,7 @@ class Voice(Observer):
     def get_velocity(self, position):
         dynamics_event = self.dynamics_sequence.floor_event(position)
         if not dynamics_event:
-            return Dynamics.DEFAULT_DYNAMICS_VELOCITY
+            return Dynamics.DEFAULT_DYNAMICS_VELOCITY()
         if isinstance(dynamics_event, DynamicsEvent):
             return dynamics_event.velocity()
         else:

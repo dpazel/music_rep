@@ -217,5 +217,8 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
         self.update(AbstractNote.NOTES_ADDED_EVENT, None, note_list)
              
     def notification(self,  observable, message_type, message=None, data=None):
+        from structure.line import Line
         if message_type == AbstractNote.NOTES_ADDED_EVENT:
             self.update(AbstractNote.NOTES_ADDED_EVENT, None, data)
+        elif message_type == Line.LINE_NOTES_ADDED_EVENT:
+            self.update(Line.LINE_NOTES_ADDED_EVENT, None, data)
