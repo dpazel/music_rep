@@ -15,6 +15,7 @@ from timemodel.position import Position
 from misc.interval import Interval
 
 from structure.instrument_voice import InstrumentVoice
+from harmoniccontext.harmonic_context_track import HarmonicContextTrack
 
 
 class Score(object):
@@ -33,6 +34,8 @@ class Score(object):
         self.class_map = dict()
         # map instrument class name to InstrumentClass
         self.name_class_map = dict()
+        # HCT not utilized, TODO
+        self.__hct = HarmonicContextTrack()
         
         self.__tempo_sequence = TempoEventSequence()
         self.__time_signature_sequence = TimeSignatureEventSequence()
@@ -44,6 +47,10 @@ class Score(object):
     @property
     def time_signature_sequence(self):
         return self.__time_signature_sequence
+
+    @property
+    def hct(self):
+        return self.__hct
         
     def add_instrument_voice(self, instrument_voice):
         if not isinstance(instrument_voice, InstrumentVoice):
