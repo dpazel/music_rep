@@ -11,18 +11,27 @@ from harmoniccontext.harmonic_context_track import HarmonicContextTrack
 from timemodel.position import Position
 
 from timemodel.tempo_event_sequence import TempoEventSequence
+from timemodel.time_signature_event_sequence import TimeSignatureEventSequence
 from timemodel.time_conversion import TimeConversion
 
 
 class LiteScore(object):
 
     def __init__(self, line, harmonic_context_track=None, instrument=None, tempo_seq=None, ts_seq=None):
+        """
+        LiteScore constructor.
+        :param line: Used as the single voice of the score.
+        :param harmonic_context_track: provides the harmony for the line.
+        :param instrument: Optionally an Instrument for the line
+        :param tempo_seq: Optionally, a TempoEventSequence
+        :param ts_seq: Optionally, a TimeSignatureEventSequence
+        """
         self.__line = line
         self.__hct = HarmonicContextTrack() if harmonic_context_track is None else harmonic_context_track
         self.__instrument = instrument
 
         self.__tempo_sequence = tempo_seq if tempo_seq is not None else TempoEventSequence()
-        self.__time_signature_sequence = ts_seq if ts_seq is not None else EventSequence()
+        self.__time_signature_sequence = ts_seq if ts_seq is not None else TimeSignatureEventSequence()
 
     @property
     def line(self):
