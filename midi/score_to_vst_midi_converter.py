@@ -390,7 +390,7 @@ class NoteMessage(MidiMessage):
     NOTE_ON = 0x90
     NOTE_OFF = 0x80
 
-    def __init__(self, msg_type, channel, note_value, abs_frame_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY):
+    def __init__(self, msg_type, channel, note_value, abs_frame_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY()):
         MidiMessage.__init__(self, msg_type, channel, abs_frame_time)
         self.__note_value = note_value
         self.__velocity = velocity
@@ -425,7 +425,7 @@ class MetaMessage(MidiMessage):
 
 class ExpressionVelocityMessage(MidiMessage):
 
-    def __init__(self, channel, abs_frame_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY):
+    def __init__(self, channel, abs_frame_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY()):
         MidiMessage.__init__(self, 0xB0, channel, abs_frame_time)
         self.__velocity = velocity
 
