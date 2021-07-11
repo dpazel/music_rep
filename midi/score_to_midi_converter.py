@@ -71,7 +71,7 @@ class ScoreToMidiConverter(object):
         self.fine_tempo_sequence = None
         self.time_conversion = None
         
-    def create(self, filename):
+    def create(self, filename, trace=False):
         """
         Create a midi file from the score, with midi filename provided.
         
@@ -79,6 +79,7 @@ class ScoreToMidiConverter(object):
           filename - String filename.  Can include path, should have filetype '.mid'.
         """
         self.__filename = filename
+        self.__trace = trace
         
         self.mid = MidiFile(type=1)
         
@@ -122,7 +123,7 @@ class ScoreToMidiConverter(object):
         
     @staticmethod 
     def convert_line(line, filename, tempo=Tempo(60, Duration(1, 4)),
-                     time_signature=TimeSignature(4, Duration(1, 4))):
+                     time_signature=TimeSignature(4, Duration(1, 4)), instrument_name='piano'):
         """
         Static method to convert a Line to a midi file
         
@@ -131,6 +132,7 @@ class ScoreToMidiConverter(object):
           filename: The name of the midi file, should have filetype .mid
           tempo: Tempo for playback, default is 60 BPM tempo beat = quarter note
           time_signature: TimeSiganture on playback, default is 4 quarter notes
+          instrument_name: Name of instrument ot use for playback.
         """
         score = Score()
         tempo_sequence = score.tempo_sequence
@@ -140,14 +142,17 @@ class ScoreToMidiConverter(object):
         ts_sequence.add(TimeSignatureEvent(time_signature, Position(0)))
         
         c = InstrumentCatalog.instance() 
-        piano = c.get_instrument("piano")
-        
-        piano_instrument_voice = InstrumentVoice(piano, 1)
-        piano_voice = piano_instrument_voice.voice(0)
+        instrument = c.get_instrument(instrument_name)
+        if instrument is None:
+            print('Error: instrument {0} cannnot be found'.format(instrument_name))
+            return
+
+        instrument_voice = InstrumentVoice(instrument, 1)
+        piano_voice = instrument_voice.voice(0)
         
         piano_voice.pin(line, Offset(0))
               
-        score.add_instrument_voice(piano_instrument_voice)
+        score.add_instrument_voice(instrument_voice)
         ScoreToMidiConverter.convert_score(score, filename)
     
     def _assign_voices_tracks(self):
@@ -207,6 +212,8 @@ class ScoreToMidiConverter(object):
                 # We default to channel 1 for all tracks.
                 track.append(m.to_midi_message(ticks_value))
                 prior_tick = m.abs_tick_time
+                if self.__trace:
+                    print('{0}/{1}'.format(ticks_value, m))
             
     def _gen_velocity_msgs(self, voice, channel):
         """
@@ -370,7 +377,7 @@ class MidiMessage(object):
 
 class NoteMessage(MidiMessage):
     
-    def __init__(self, msg_type, channel, note_value, abs_tick_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY):
+    def __init__(self, msg_type, channel, note_value, abs_tick_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY()):
         MidiMessage.__init__(self, msg_type, channel, abs_tick_time)
         self.__note_value = note_value
         self.__velocity = velocity
@@ -388,13 +395,13 @@ class NoteMessage(MidiMessage):
                        channel=self.channel)
     
     def __str__(self):
-        return '{0} {1}/{2}({3}, {4})'.format(self.abs_tick_time, self.msg_type, self.channel, self.note_value,
+        return '{0} {1}[{2}]:pv=({3}, {4})'.format(self.abs_tick_time, self.msg_type, self.channel, self.note_value,
                                               self.velocity)
 
 
 class ExpressionVelocityMessage(MidiMessage):
     
-    def __init__(self, channel, abs_tick_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY):
+    def __init__(self, channel, abs_tick_time, velocity=Dynamics.DEFAULT_DYNAMICS_VELOCITY()):
         MidiMessage.__init__(self, 'control_change', channel, abs_tick_time)
         self.__velocity = velocity
     
