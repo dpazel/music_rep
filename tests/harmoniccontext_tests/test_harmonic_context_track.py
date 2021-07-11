@@ -23,17 +23,23 @@ class TestInterval(unittest.TestCase):
     def test_append(self):
         diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
         chord_t = TertianChordTemplate.parse('tIV')
-        chord = chord_t.create_chord(diatonic_tonality)
+        chord1 = chord_t.create_chord(diatonic_tonality)
+        chord_t = TertianChordTemplate.parse('tV')
+        chord2 = chord_t.create_chord(diatonic_tonality)
+        chord_t = TertianChordTemplate.parse('tVI')
+        chord3 = chord_t.create_chord(diatonic_tonality)
 
         hc_track = HarmonicContextTrack()
-        hc_track.append(HarmonicContext(diatonic_tonality, chord, Duration(1, 2)))
-        hc_track.append(HarmonicContext(diatonic_tonality, chord, Duration(1, 4)))
-        hc_track.append(HarmonicContext(diatonic_tonality, chord, Duration(1, 3)))
+        hc_track.append(HarmonicContext(diatonic_tonality, chord1, Duration(1, 2)))
+        hc_track.append(HarmonicContext(diatonic_tonality, chord2, Duration(1, 4)))
+        hc_track.append(HarmonicContext(diatonic_tonality, chord3, Duration(1, 3)))
 
         assert len(hc_track) == 3
         assert hc_track[Position(0)].duration == Duration(1, 2)
         assert hc_track[Position(1, 2)].duration == Duration(1, 4)
         assert hc_track[Position(3, 4)].duration == Duration(1, 3)
+
+        print(hc_track)
 
     def test_append_first(self):
         diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
