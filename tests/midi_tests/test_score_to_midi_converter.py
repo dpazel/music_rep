@@ -167,8 +167,8 @@ class TestScoreToMidiConverter(unittest.TestCase):
         
         # create a crescendo
         
-        v_low = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.PPP]
-        v_hi = Dynamics.DYNAMICS_VALUE_MAP[Dynamics.FFFF]
+        v_low = Dynamics.PPP.velocity
+        v_hi = Dynamics.FFFF.velocity
         array = [(Position(0), v_low),
                  (Position(3, 2), v_hi)
                  ]
@@ -286,6 +286,32 @@ class TestScoreToMidiConverter(unittest.TestCase):
                 print(message)
     
         print('Exiting read_midi_file {0} length {1} seconds'.format(filename, mid.length))
+
+    def test_score_book_example(self):
+        score = Score()
+
+        catalogue = InstrumentCatalog.instance()
+        score.add_instrument_voice(InstrumentVoice(catalogue.get_instrument("violin")))
+
+        score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))
+        score.time_signature_sequence.add(TimeSignatureEvent(TimeSignature(4, Duration(1, 4)), Position(0)))
+
+        violin_voice = score.get_instrument_voice("violin")[0]
+        note_1 = Note(DiatonicPitch(4, 'A'), Duration(1, 4))
+        note_2 = Note(DiatonicPitch(5, 'C'), Duration(1, 8))
+        note_3 = Note(DiatonicPitch(5, 'B'), Duration(1, 8))
+        note_4 = Note(DiatonicPitch(5, 'D'), Duration(1, 4))
+        note_5 = Note(DiatonicPitch(5, 'E'), Duration(1, 8))
+        note_6 = Note(DiatonicPitch(5, 'D'), Duration(1, 8))
+        note_7 = Note(DiatonicPitch(4, 'G'), Duration(1, 4))
+        note_8 = Note(DiatonicPitch(4, 'C'), Duration(1, 4))
+        line = Line([note_1, note_2, note_3, note_4, note_5, note_6, note_7, note_8])
+        violin_voice.voice(0).pin(line)
+
+        smc = ScoreToMidiConverter(score)
+        smc.create('book_example_midi_file.mid', True)
+
+        ScoreToMidiConverter.convert_line(line, 'line_example_midi_file.mid', Tempo(90, Duration(1, 8)), instrument_name='violin')
 
 
 if __name__ == "__main__":
