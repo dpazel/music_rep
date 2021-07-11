@@ -24,6 +24,8 @@ from tonalmodel.tonality import Tonality
 
 from fractions import Fraction
 
+from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
+
 
 class TestLiteScore(unittest.TestCase):
 
@@ -83,3 +85,10 @@ class TestLiteScore(unittest.TestCase):
         tse = score.time_signature_sequence.floor_event(Position(1, 16))
         print(tse.object.beat_type(bp.beat))
         assert tse.object.beat_type(bp.beat) == BeatType.Strong
+
+    def test_using_syntax(self):
+
+        line, hct = LineGrammarExecutor().parse('{<C-Major:I> C:4 [E:5 F [G:4 A B A] B]}')
+        lite_score = LiteScore(line, hct, InstrumentCatalog.instance().get_instrument("violin"))
+
+        print(lite_score.line)
