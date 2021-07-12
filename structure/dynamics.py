@@ -17,7 +17,6 @@ class Dynamics(Enum):
     """
     Class representing music dynamics.  We use PPPP through FFFF.
     Velocity values have been assigned based on 0-127 midi range.
-
     """
     PPPP = 1
     PPP = 2
