@@ -20,7 +20,7 @@ class FixedToneConstraint(AbstractConstraint):
     def __init__(self, actor_note, tone):
         """
         Constructor.
-        :param actor_note: ContextualNote
+        :param actor_note: Note
         :param tone:
         """
 
@@ -69,7 +69,7 @@ class FixedToneConstraint(AbstractConstraint):
         for i in range(start_partition, end_partition + 1):
             pitch = DiatonicPitch(i, tone)
             if pitch_range.is_pitch_inbounds(pitch):
-                note = Note(pitch, self.actor_note.note.base_duration, self.actor_note.note.num_dots)
+                note = Note(pitch, self.actor_note.base_duration, self.actor_note.num_dots)
                 valid_set.add(note)
 
         return valid_set

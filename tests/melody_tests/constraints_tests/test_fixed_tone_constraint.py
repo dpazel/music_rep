@@ -28,16 +28,16 @@ class TestFixedToneConstraint(unittest.TestCase):
 
     def test_simple_fixed_tone(self):
         logging.debug('Start test_simple_fixed_tone')
-        upper_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('C'), 'tIV',
+        note = Note(DiatonicPitch.parse("C:5"), Duration(1, 4))
+        lower_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('C'), 'tIV',
                                                                   'C:2', 'C:8')
-        upper_contextual_note = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse("C:5"), Duration(1, 4)))
 
-        policy = FixedToneConstraint(upper_contextual_note, DiatonicToneCache.get_tone("Ab"))
+        policy = FixedToneConstraint(note, DiatonicToneCache.get_tone("Ab"))
 
-        lower_contextual_note = ContextualNote(upper_policy_context)
-        m = dict([(upper_contextual_note, lower_contextual_note)])
+        lower_contextual_note = ContextualNote(lower_policy_context)
+        m = dict([(note, lower_contextual_note)])
 
-        v_result = policy.values(m, upper_contextual_note)
+        v_result = policy.values(m, note)
 
         assert len(v_result) == 6
         for note in v_result:
@@ -57,18 +57,16 @@ class TestFixedToneConstraint(unittest.TestCase):
 
     def test_enharmonic_fixed_tone(self):
         logging.debug('Start test_enharmonic_fixed_tone')
-        upper_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('C'), 'tIV',
-                                                                  'C:2', 'C:8')
-        upper_contextual_note = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse("C:5"), Duration(1, 4)))
+        note = Note(DiatonicPitch.parse("C:5"), Duration(1, 4))
 
-        policy = FixedToneConstraint(upper_contextual_note, DiatonicToneCache.get_tone("Bbb"))
+        policy = FixedToneConstraint(note, DiatonicToneCache.get_tone("Bbb"))
 
         lower_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
                                                                   'C:2', 'C:8')
         lower_contextual_note = ContextualNote(lower_policy_context)
-        m = dict([(upper_contextual_note, lower_contextual_note)])
+        m = dict([(note, lower_contextual_note)])
 
-        v_result = policy.values(m, upper_contextual_note)
+        v_result = policy.values(m, note)
 
         assert len(v_result) == 6
         for note in v_result:
