@@ -108,6 +108,27 @@ class TestPMap(unittest.TestCase):
         for i in range(1, len(all_notes) - 1):
             assert str(all_notes[i].diatonic_pitch) == answers[i - 1]
 
+    def test_create(self):
+        l = '{<Ab-Major:I> qC:4 D E F <Db-Major:IV> iDb:4 Eb F Gb <C-Major:IV> qE:4 F G A }'
+        pr = PitchRange.create('Ab:3', 'C:5')
+        pm = PMap.create(l, pr)
+        assert pm is not None
+        assert len(pm.keys()) == 12
+        assert pm.actors[11].diatonic_pitch is not None
+        assert str(pm.actors[11].diatonic_pitch) == 'A:4'
+        assert pm[pm.actors[11]] is not None
+        assert pm[pm.actors[11]].policy_context is not None
+        assert pm[pm.actors[11]].policy_context.harmonic_context is not None
+        assert pm[pm.actors[11]].policy_context.harmonic_context.tonality is not None
+        assert str(pm[pm.actors[11]].policy_context.harmonic_context.tonality) == 'C-Major'
+
+        target_harmonic_list = [('A-Melodic:iv', 1),
+                                ('A-Natural:i', Duration(1, 4)),
+                                ('A-Melodic:V', 1)]
+        pm = PMap.create(l, pr, target_harmonic_list)
+        assert pm is not None
+        assert len(pm.keys()) == 12
+
     @staticmethod
     def policy_creator(modality_type, modality_tone, tertian_chord_txt, low_pitch_txt, hi_pitch_txt):
         diatonic_tonality = Tonality.create(modality_type, modality_tone)
