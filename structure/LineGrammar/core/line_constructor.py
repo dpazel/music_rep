@@ -145,8 +145,7 @@ class LineConstructor(object):
             modality_type = ModalityType(modality_str)
 
         if ModalityFactory.is_registered(modality_type):
-            modality = ModalityFactory.create_modality(modality_type, modal_index)
-            return Tonality(modality, tone)
+            return Tonality.create_on_basis_tone(tone, modality_type, modal_index)
         else:
             raise Exception('Modality \'{0}\' is not registered in ModalityFactory.'.format(modality_str))
 
