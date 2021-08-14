@@ -107,7 +107,7 @@ class RelativeScalarStepConstraint(AbstractConstraint):
 
         if arg_contextual_note.note is None:
             pitches = p_map.all_tonal_pitches(v_note)
-            return {Note(p, v_note.note.base_duration, v_note.note.num_dots) for p in pitches}
+            return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
 
         return self.compute_result(arg_contextual_note, target_contextual_note, down_steps, up_steps)
 
@@ -120,7 +120,7 @@ class RelativeScalarStepConstraint(AbstractConstraint):
             down_steps,
             up_steps)
 
-        result = {Note(pitch, self.note_two.note.base_duration, self.note_two.note.num_dots)
+        result = {Note(pitch, self.note_two.base_duration, self.note_two.num_dots)
                   for pitch in pitches}
 
         return result
