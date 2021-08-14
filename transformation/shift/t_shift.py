@@ -72,7 +72,7 @@ class TShift(Transformation):
     def create(source_expression, default_root_shift_interval=None, default_range_modality_type=None):
         lge = LineGrammarExecutor()
         source_line, source_hct = lge.parse(source_expression)
-        return TShift(source_line, source_hct, default_root_shift_interval)
+        return TShift(source_line, source_hct, default_root_shift_interval, default_range_modality_type)
 
     @staticmethod
     def create_intervallic_shift(source_line, source_hct, interval, modal_index):
@@ -113,6 +113,7 @@ class TShift(Transformation):
         """
         Apply transform to a temporal extent.
         :param temporal_extent: numerical interval indicating start/end offsets on line to apply shift.
+                                Interval from misc.interval
         :param root_shift_interval: root tone shift.
         :param modal_index: modal index for the new key.
         :param range_modality_type: modality type for the new key.
@@ -211,7 +212,7 @@ class TShift(Transformation):
         return new_hct
 
     def _build_shift_function(self, hc):
-        if hc in self.hc_pitch_function_map.keys():
+        if hc in self.hc_pitch_function_map.keys():   # reuse
             return self.hc_pitch_function_map[hc]
 
         if not isinstance(hc.chord, SecondaryChord):
@@ -231,10 +232,15 @@ class TShift(Transformation):
                 range_tonality = hc.tonality
 
 
+            # Range tone is the tone from the denominator, e.g. the ii in V/ii.
             range_tone = range_tonality.annotation[hc.chord.chord_template.secondary_scale_degree - 1]
-            root_tone_interval = TShift.calculate_interval(hc.chord.secondary_tonality.root_tone,
-                                                           range_tone,
-                                                           self.root_shift_interval)
+            #root_tone_interval = TShift.calculate_interval(hc.chord.secondary_tonality.root_tone,
+            #                                               range_tone,
+            #                                               self.root_shift_interval)
+
+            root_tone_interval = TonalInterval.calculate_tone_interval(hc.chord.secondary_tonality.root_tone, range_tone) \
+                                     if not TonalInterval.is_negative(self.root_shift_interval) else  \
+                                 -TonalInterval.calculate_tone_interval(range_tone, hc.chord.secondary_tonality.root_tone)
 
             f = CrossTonalityShiftPitchFunction(hc.chord.secondary_tonality,
                                                 self.domain_pitch_range,
@@ -250,7 +256,8 @@ class TShift(Transformation):
         The purpose of this method is to find a transform interval close to 'near_interval'.  This is used
         to determine the transform interval for secondary chords, wherein the obvious jump does not match
         transform interval (e.g. major to minor scale), and as well must be adjusted for the number and sign of
-        octaves nearest interval may have.  See test cases.
+        octaves nearest interval may have.  See test cases: test_modal_secondary_tonality where best_interval == d:4
+        and near_interval == P:4 E-MM to Ab-MM using V/III chord.
         :param tone_1:
         :param tone_2:
         :param near_interval:
