@@ -22,10 +22,11 @@ class PitchConstraintSolver(object):
         
         :param policies: non-null set of policies
         """
-        if policies is None or (not isinstance(policies, set) and not isinstance(policies, list)):
+        if policies is None or (not isinstance(policies, set) and not isinstance(policies, list) and \
+                                not isinstance(policies, OrderedSet)):
             raise Exception('Policies must be non-null and a Set')
 
-        self._policies = set(policies)
+        self._policies = OrderedSet(policies)    #set(policies)
 
         self.v_policy_map = dict()
         self._build_v_policy_map()
@@ -216,12 +217,20 @@ class PitchConstraintSolver(object):
         for p in self.v_policy_map[v_note]:
             p_values = p.values(p_map, v_note)
             if p_values is None:
-                returned_pitches = set()   # None means p cannot be satisfied!
+                returned_pitches = OrderedSet()    # None means p cannot be satisfied!
             else:
-                returned_pitches = {n.diatonic_pitch for n in p_values}
+                returned_pitches = OrderedSet()
+                for n in p_values:
+                    returned_pitches.add(n.diatonic_pitch)
+                #returned_pitches = {n.diatonic_pitch for n in p_values}
             pitches = returned_pitches if pitches is None else pitches.intersection(returned_pitches)
 
-        return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
+
+        retset = OrderedSet()
+        for p in pitches:
+            retset.add(Note(p, v_note.base_duration, v_note.num_dots))
+        return retset
+        #return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
 
     def _candidate_closure(self, p_map, v_note):
         """
@@ -232,7 +241,7 @@ class PitchConstraintSolver(object):
         :return: 
         """
         policies = self.v_policy_map[v_note]
-        candidates = set()
+        candidates = OrderedSet()
         for p in policies:
             candidates = candidates.union(p_map.unassigned_actors(p))
         return candidates
