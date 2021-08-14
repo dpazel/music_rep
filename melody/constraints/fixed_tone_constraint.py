@@ -21,7 +21,7 @@ class FixedToneConstraint(AbstractConstraint):
         """
         Constructor.
         :param actor_note: Note
-        :param tone:
+        :param tone: DiatonicTone
         """
 
         AbstractConstraint.__init__(self, [actor_note])
