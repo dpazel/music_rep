@@ -73,7 +73,7 @@ class NotEqualPitchConstraint(AbstractConstraint):
 
         pitches = [p for p in pitches if p not in del_set]
 
-        return [Note(p, v_note.note.base_duration, v_note.note.num_dots) for p in pitches]
+        return [Note(p, v_note.base_duration, v_note.num_dots) for p in pitches]
 
     @staticmethod
     def validity_check(note_list):
