@@ -181,3 +181,11 @@ class PMap(object):
             d[note] = contextual_note
 
         return PMap(d)
+
+    def __hash__(self):
+        return hash(len(self.actors))
+
+    def __eq__(self, other):
+        if not isinstance(other,PMap):
+            return NotImplemented
+        return self is other
