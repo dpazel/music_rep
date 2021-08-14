@@ -106,14 +106,14 @@ def shift_change_modal_index():
     print_line(t_shift.source_line)
     print()
 
-    print('Shift to modal index 4 (mixolydian)')
+    print('Shift to modal index 4 (Mixolydian)')
     target_line, target_hct = t_shift.apply(modal_index=4)
 
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    print('Shift to modal index 3 (lydion) on a melodic minor scale')
+    print('Shift to C as modal index 3 (lydian) on a melodic minor scale (G)')
     target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.MelodicMinor, modal_index=3)
     print_line(target_line)
     print_hct(target_hct)
@@ -148,23 +148,24 @@ def shift_change_modal_index_modality_and_shift():
 
 
 def example():
-    print('----- Book example of shifted tonality -----')
-    source_expression = '{<D-Major(1): I> iC:4 }'
+    print('----- Book example of shifted tonality on modal not 0 -----')
+    source_expression = '{<D-Major(1): I> iE:4 F# G A qE B}'
 
     t_shift = TShift.create(source_expression,
                             TonalInterval.parse('P:4'))
     target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.MelodicMinor, modal_index=2)
     print(t_shift.source_hct)
+    print(target_line)
     print(target_hct)
 
 def example1():
-    print('----- Book example of shifted secondary tonality tonality -----')
-    source_expression = '{<C-Major: V/ii> iC:4 }'
+    print('----- Book example of shifted secondary tonality  -----')
+    source_expression = '{<C-Major: V/iii> iD#:4 F# G A qD#:5 B:4}'
 
-    t_shift = TShift.create(source_expression,
-                            TonalInterval.parse('M:3'))
-    target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.Major, modal_index=0)
+    t_shift = TShift.create(source_expression, TonalInterval.parse('P:5'))
+    target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.MelodicMinor)
     print(t_shift.source_hct)
+    print(target_line)
     print(target_hct)
 
 def example2():
@@ -173,8 +174,6 @@ def example2():
     # example tonality with modal index
     # Create a harmonic minor tonality of some basis root which as Mixolydian has F as the root.
     #       The answer is Bb-HarmonicMinor F(4)
-    t = Tonality.create(ModalityType.HarmonicMinor, 'F', 4);
-    print(t)
 
     source_expression = '{<C-Major: I> iC:4}'
 
@@ -183,15 +182,15 @@ def example2():
     print_line(t_shift.source_line)
     print()
 
-    print('Shift to modal index 4 (mixolydian)')
-    # This makes C the mixolydian of F-Major
+    print('Shift to modal index 4 (Mixolydian)')
+    # This makes C the Mixolydian of F-Major
     target_line, target_hct = t_shift.apply(modal_index=4)
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    # if you wanted G mixolydian based on C
-    print('Shift as if moving tomodal index 4 (mixolydian) in C')
+    # if you wanted G Mixolydian based on C
+    print('Shift as if moving tomodal index 4 (Mixolydian) in C')
     target_line, target_hct = t_shift.apply(
            root_shift_interval=TonalInterval.parse('P:5'), modal_index=4)
 
@@ -200,8 +199,9 @@ def example2():
     print()
 
 
-simple_shift_example()
-shift_change_modality()
+#simple_shift_example()
+#shift_change_modality()
 shift_change_modal_index()
-shift_change_modal_index_modality_and_shift()
-example2()
+#shift_change_modal_index_modality_and_shift()
+#example2()
+#example1()
