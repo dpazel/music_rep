@@ -50,3 +50,11 @@ class AbstractConstraint(object):
         :return: The set of all possible values for v_note's target.
         Note: The return value is a set!
         """
+
+    def __hash__(self):
+        return hash(len(self.actors))
+
+    def __eq__(self, other):
+        if not isinstance(other, AbstractConstraint):
+            return NotImplemented
+        return self is other
