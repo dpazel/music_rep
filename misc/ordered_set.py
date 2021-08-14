@@ -41,6 +41,12 @@ class OrderedSet(collections.abc.MutableSet):
             s |= iterable
         return s
 
+    def intersection(self, iterable):
+        s = self.copy()
+        if iterable is not None:
+            s &= iterable
+        return s
+
     def __repr__(self):
         return str(self)
 
