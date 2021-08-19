@@ -41,12 +41,27 @@ class ChordClassifier(object):
         chords.extend(self.find_secundal_chords())
         return chords
 
+    @staticmethod
+    def chord_type_value_function(chord):
+        # TODO: this needs expansion to return better results.
+        str_type = str(chord.chord_type)
+        if str_type.startswith('Dom7'):
+            return 1
+        if str_type.startswith('Maj7') or str_type.startswith("Min7"):
+            return 2
+        if str_type.startswith('Dim7'):
+            return 3
+        if str_type.startswith('Maj') or str_type.startswith("Min"):
+            return 4
+        return 10
+
     def classify_tones_as_chord_all_roots(self):
         chords = list()
         for tone in self.chord_tones:
             self._root_tone = tone
             chords.extend(self.classify_tones_as_chord())
-        return chords
+
+        return sorted(chords, key=ChordClassifier.chord_type_value_function)
 
     @property
     def chord_tones(self):
