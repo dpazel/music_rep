@@ -43,6 +43,9 @@ class FunctionPitchRange(object):
     def eval_as_chromatic_distance(self, v):
         return self.univariate_function.eval(v)
 
+    def eval(self, v):
+        return self.univariate_function.eval(v)
+
     def eval_as_frequency(self, v):
         cd = self.eval_as_chromatic_distance(v)
 
