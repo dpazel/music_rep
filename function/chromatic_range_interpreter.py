@@ -92,6 +92,10 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
         return candidates[1]
 
     def value_for(self, diatonic_pitch):
+        if isinstance(diatonic_pitch, str):
+            diatonic_pitch = DiatonicPitch.parse(diatonic_pitch)
+            if diatonic_pitch is None:
+                return None
         if diatonic_pitch not in self.pitch_to_value:
             enharmonics = diatonic_pitch.enharmonics()
             found = False
