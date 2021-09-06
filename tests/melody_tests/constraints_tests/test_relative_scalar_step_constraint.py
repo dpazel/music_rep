@@ -222,24 +222,21 @@ class TestRelativeScalarStepConstraint(unittest.TestCase):
 
     def test_basic_policy(self):
         logging.debug('Start test_basic_policy')
-        upper_policy_context = TestRelativeScalarStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'),
-                                                                               'tIV',
-                                                                               'C:2', 'C:8')
         lower_policy_context = TestRelativeScalarStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
                                                                                'tV',
                                                                                'C:2', 'C:8')
-        upper_note_1 = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('C:5'), Duration(1, 8)))
-        upper_note_2 = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('D:5'), Duration(1, 8)))
+        note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
+        note2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
         lower_note_1 = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:5'), Duration(1, 8)))
         lower_note_2 = ContextualNote(lower_policy_context)
 
-        p_map = dict([(upper_note_1, lower_note_1),
-                      (upper_note_2, lower_note_2)])
+        p_map = dict([(note1, lower_note_1),
+                      (note2, lower_note_2)])
 
         # F#:5 --> G Major two below and 3 above
-        policy = RelativeScalarStepConstraint(upper_note_1, upper_note_2, -2, 3)
+        policy = RelativeScalarStepConstraint(note1, note2, -2, 3)
 
-        v_result = policy.values(p_map, upper_note_2)
+        v_result = policy.values(p_map, note2)
         pitches = [n.diatonic_pitch for n in v_result]
         assert len(pitches) == 6
         for s in ['D:5', 'E:5', 'F#:5', 'G:5', 'A:5', 'B:5']:
@@ -257,24 +254,21 @@ class TestRelativeScalarStepConstraint(unittest.TestCase):
 
     def test_reversal_on_policy(self):
         logging.debug('Start test_reversal_on_policy')
-        upper_policy_context = TestRelativeScalarStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'),
-                                                                               'tIV',
-                                                                               'C:2', 'C:8')
         lower_policy_context = TestRelativeScalarStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
                                                                                'tV',
                                                                                'C:2', 'C:8')
-        upper_note_1 = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('C:5'), Duration(1, 8)))
-        upper_note_2 = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('D:5'), Duration(1, 8)))
+        note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
+        note2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
         lower_note_1 = ContextualNote(lower_policy_context)
         lower_note_2 = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('C:5'), Duration(1, 8)))
 
-        p_map = dict([(upper_note_1, lower_note_1),
-                      (upper_note_2, lower_note_2)])
+        p_map = dict([(note1, lower_note_1),
+                      (note2, lower_note_2)])
 
         # F#:5 --> G Major two below and 3 above
-        policy = RelativeScalarStepConstraint(upper_note_1, upper_note_2, -2, 3)
+        policy = RelativeScalarStepConstraint(note1, note2, -2, 3)
 
-        result = policy.values(p_map, upper_note_1)
+        result = policy.values(p_map, note1)
         pitches = [n.diatonic_pitch for n in result]
 
         for pitch in pitches:
