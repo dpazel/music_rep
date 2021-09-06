@@ -80,6 +80,10 @@ class ScalarRangeInterpreter(PitchRangeInterpreter):
         return candidates[1]
 
     def value_for(self, diatonic_pitch):
+        if isinstance(diatonic_pitch, str):
+            diatonic_pitch = DiatonicPitch.parse(diatonic_pitch)
+            if diatonic_pitch is None:
+                return None
         return self.pitch_to_value[diatonic_pitch] if diatonic_pitch in self.pitch_to_value else None
 
     def eval_as_pitch(self, v):
