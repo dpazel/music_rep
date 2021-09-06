@@ -31,8 +31,7 @@ class TestNotEqualPitchConstraint(unittest.TestCase):
         logging.debug('Start test_is_not_equal')
         upper_policy_context = TestNotEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
                                                                       'C:2', 'C:8')
-        upper_context_note_a = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('C:5'),
-                                                                         Duration(1, 8)))
+        note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
         lower_policy_context = TestNotEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
                                                                       'C:2', 'C:8')
@@ -41,22 +40,23 @@ class TestNotEqualPitchConstraint(unittest.TestCase):
                                                                          Duration(1, 8)))
 
         p_map = PMap()
-        p_map[upper_context_note_a] = lower_context_note_a
+        p_map[note1] = lower_context_note_a
 
         other_source = []
         for tone in ['B:5', 'D:5', 'E:5']:
+            n = Note(DiatonicPitch.parse(tone), Duration(1, 8))
             upper_context_note = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse(tone),
                                                                            Duration(1, 8)))
             lower_context_note = ContextualNote(lower_policy_context)
-            p_map[upper_context_note] = lower_context_note
-            other_source.append(upper_context_note)
+            p_map[n] = lower_context_note
+            other_source.append(n)
 
-        params = list([upper_context_note_a])
+        params = list([note1])
         params.extend(other_source)
         policy = NotEqualPitchConstraint(params)
 
         for c_note in p_map.unassigned_actors(policy):
-            print(c_note.note)
+            print(c_note)
             v_result = policy.values(p_map, c_note)
             assert v_result is not None
 
@@ -64,7 +64,7 @@ class TestNotEqualPitchConstraint(unittest.TestCase):
 
         p_map[other_source[1]].note = Note(DiatonicPitch.parse('E:6'), Duration(1, 8))
         for c_note in p_map.unassigned_actors(policy):
-            print(c_note.note)
+            print(c_note)
             v_result = policy.values(p_map, c_note)
             assert v_result is not None
             ret_pitches = {n.diatonic_pitch for n in v_result}
