@@ -157,18 +157,18 @@ class TestTShift(unittest.TestCase):
         notes = score_line.get_all_notes()
         assert 14 == len(notes)
         assert 'G:4' == str(notes[4].diatonic_pitch)
-        assert 'Bb:4' == str(notes[5].diatonic_pitch)
-        assert 'C:5' == str(notes[6].diatonic_pitch)
+        assert 'B:4' == str(notes[5].diatonic_pitch)
+        assert 'Cb:5' == str(notes[6].diatonic_pitch)
         assert 'D:5' == str(notes[7].diatonic_pitch)
 
         hc_list = score_hct.hc_list()
         assert len(hc_list) == 4
         assert hc_list[0].chord.chord_template.scale_degree == 1
-        assert {t[0].diatonic_symbol for t in hc_list[0].chord.tones} == {'D', 'F', 'A'}
+        assert {t[0].diatonic_symbol for t in hc_list[0].chord.tones} == {'E', 'G', 'B'}
         assert hc_list[0].chord.chord_template.inversion == 1
         assert hc_list[0].tonality.modal_index == 2
-        assert hc_list[0].tonality.basis_tone.diatonic_symbol == 'Bb'
-        assert hc_list[0].tonality.root_tone.diatonic_symbol == 'D'
+        assert hc_list[0].tonality.basis_tone.diatonic_symbol == 'C'
+        assert hc_list[0].tonality.root_tone.diatonic_symbol == 'E'
         assert hc_list[0].tonality.modality_type == ModalityType.Major
         assert hc_list[0].chord.chord_type.value == TertianChordType.Min
 
