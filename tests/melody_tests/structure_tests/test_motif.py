@@ -170,3 +170,41 @@ class TestMotif(unittest.TestCase):
         assert 'F#:3' == str(c_actors[3].diatonic_pitch)
 
         print(c_motif)
+
+    def test_motif_book_example(self):
+
+        s = Beam()
+        s.append(Note(DiatonicPitch.parse('C:4'), Duration(1, 8)))
+        s.append(Note(DiatonicPitch.parse('D:4'), Duration(1, 8)))
+        s.append(Note(DiatonicPitch.parse('E:4'), Duration(1, 8)))
+        s.append(Note(DiatonicPitch.parse('F#:4'), Duration(1, 8)))
+        notes = s.get_all_notes()
+
+        c = [
+            EqualPitchConstraint([notes[0], notes[2]]),
+            NotEqualPitchConstraint([notes[1], notes[3]])
+        ]
+
+        m = Motif(s, c, 'A')
+        cs = Beam()
+
+        cs.append(Note(DiatonicPitch.parse('C:3'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('D:3'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('E:3'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('F#:3'), Duration(1, 8)))
+
+        c_motif = m.copy_to(cs.get_all_notes()[0])
+
+        assert 'A' == c_motif.name
+        assert len(c_motif.actors) == len(notes)
+        assert len(c_motif.constraints) == len(c)
+
+        assert isinstance(c_motif.constraints[0], EqualPitchConstraint)
+        assert c_motif.constraints[0].actors[0] == c_motif.actors[0]
+        assert c_motif.constraints[0].actors[1] == c_motif.actors[2]
+
+        assert isinstance(c_motif.constraints[1], NotEqualPitchConstraint)
+        assert c_motif.constraints[1].actors[0] == c_motif.actors[1]
+        assert c_motif.constraints[1].actors[1] == c_motif.actors[3]
+
+
