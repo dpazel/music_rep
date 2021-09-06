@@ -31,9 +31,9 @@ class TestEqualPitchConstraint(unittest.TestCase):
     def test_is_equal(self):
         logging.debug('Start test_is_equal')
 
-        upper_context_note_a = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
+        note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
-        upper_context_note_b = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
+        note2 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
                                                                    'C:2', 'C:8')
@@ -43,13 +43,13 @@ class TestEqualPitchConstraint(unittest.TestCase):
 
         lower_context_note_b = ContextualNote(lower_policy_context)
 
-        parameter_map = dict([(upper_context_note_a, lower_context_note_a),
-                              (upper_context_note_b, lower_context_note_b)])
+        parameter_map = dict([(note1, lower_context_note_a),
+                              (note2, lower_context_note_b)])
         parameter_map = PMap(parameter_map)
 
-        policy = EqualPitchConstraint([upper_context_note_a, upper_context_note_b])
+        policy = EqualPitchConstraint([note1, note2])
 
-        result = policy.values(parameter_map, upper_context_note_b)
+        result = policy.values(parameter_map, note2)
 
         actual_note = next(iter(result))
         print('test_is_equal; note = {0}'.format(actual_note))
@@ -57,7 +57,7 @@ class TestEqualPitchConstraint(unittest.TestCase):
         assert actual_note.diatonic_pitch == DiatonicPitch.parse("F#:6")
         assert actual_note.base_duration == Duration(1, 8)
 
-        parameter_map[upper_context_note_b].note = actual_note
+        parameter_map[note2].note = actual_note
 
         assert policy.verify(parameter_map) is True
 
@@ -65,14 +65,10 @@ class TestEqualPitchConstraint(unittest.TestCase):
 
     def test_is_not_equal(self):
         logging.debug('Start test_is_not_equal')
-        upper_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                   'C:2', 'C:8')
 
-        upper_context_note_a = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('C:5'),
-                                                                         Duration(1, 8)))
+        note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
-        upper_context_note_b = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse('C:5'),
-                                                                         Duration(1, 8)))
+        note2 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
                                                                    'C:2', 'C:8')
@@ -83,10 +79,10 @@ class TestEqualPitchConstraint(unittest.TestCase):
         lower_context_note_b = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('G:6'),
                                                                          Duration(1, 8)))
 
-        parameter_map = dict([(upper_context_note_a, lower_context_note_a),
-                              (upper_context_note_b, lower_context_note_b)])
+        parameter_map = dict([(note1, lower_context_note_a),
+                              (note2, lower_context_note_b)])
 
-        policy = EqualPitchConstraint([upper_context_note_a, upper_context_note_b])
+        policy = EqualPitchConstraint([note1, note2])
 
         assert policy.verify(parameter_map) is False
 
@@ -95,8 +91,6 @@ class TestEqualPitchConstraint(unittest.TestCase):
     def test_more_than_two(self):
         logging.debug('Start test_more_than_two')
 
-        upper_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                   'C:2', 'C:8')
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
                                                                    'C:2', 'C:8')
 
