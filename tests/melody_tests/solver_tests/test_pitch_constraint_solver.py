@@ -18,6 +18,9 @@ from melody.constraints.equal_pitch_constraint import EqualPitchConstraint
 from melody.constraints.relative_diatonic_constraint import RelativeDiatonicConstraint
 from melody.constraints.chordal_pitch_constraint import ChordalPitchConstraint
 from tonalmodel.interval import IntervalType, Interval
+from melody.solver.p_map import PMap
+
+from misc.ordered_set import OrderedSet
 
 from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from melody.constraints.step_sequence_constraint import StepSequenceConstraint
@@ -38,8 +41,8 @@ class TestPitchConstraintSolver(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_for_book_example_1(self):
-        print('----- test for book example 1 -----')
+    def test_for_book_example_2(self):
+        print('----- test for book example 2 -----')
 
         source_instance_expression = '{<A-Major:i> [sA:4 A A A] qA:4 [iA:4 A] <:iv> qA:4 [sA:4 A A A] qA:4}'
         target_instance_expression = '{<G-Major:i> wA:4 <:iv> wA:4}'
@@ -57,15 +60,13 @@ class TestPitchConstraintSolver(unittest.TestCase):
             print("{0}".format(hc))
 
         pitch_range = PitchRange(DiatonicPitch.parse('C:4').chromatic_distance,
-                                    DiatonicPitch.parse('C:6').chromatic_distance)
-        p_map = OrderedDict()
-        for i in range(len(actors)):
-            a = actors[i]
-            pc = PolicyContext(target_hcs[0] if i < 7 else target_hcs[1], pitch_range)
-            lower_cn = ContextualNote(pc)
-            p_map[a] = lower_cn
+                                 DiatonicPitch.parse('C:6').chromatic_distance)
 
-        policies = set()
+        p_map = PMap.create(source_instance_expression, pitch_range, [('G-Major:I', Duration(3, 4)), ('G-Major:IV', Duration(3, 4))])
+
+        actors = p_map.actors
+
+        policies = OrderedSet()
         policies.add(StepSequenceConstraint([actors[0], actors[1], actors[2], actors[3]], [1, 1, 1]))
         policies.add(ChordalPitchConstraint(actors[0]))
         policies.add(ChordalPitchConstraint(actors[4]))
@@ -76,42 +77,37 @@ class TestPitchConstraintSolver(unittest.TestCase):
         policies.add(RelativeDiatonicConstraint(actors[4], actors[5], Interval(3, IntervalType.Major), Interval(1, IntervalType.Perfect)))
         policies.add(StepSequenceConstraint([actors[5], actors[6]], [-1]))
 
+        # policies.add(ChordalPitchConstraint(actors[7]))
+
         solver = PitchConstraintSolver(policies)
 
         full_results, partial_results = solver.solve(p_map)
         print('Results has {0} results.'.format(len(full_results)))
 
         for pm in full_results:
-            print("{0}".format(pm))
+            if str(pm[actors[7]].note.diatonic_pitch) == 'D:4' and str(pm[actors[0]].note.diatonic_pitch) == 'G:4':
+                print("{0}".format(pm))
 
-    def test_for_book_example_2(self):
-        print('----- test for book example 2 -----')
+    def test_for_book_example_1(self):
+        print('----- test for book example 1 -----')
 
         source_instance_expression = '{<C-Major:IV> [sC:5 B:4 A G] qF:4 [sA:4 B C:5 D] qD:5}'
         target_instance_expression = '{<G-Major:V> wA:4}'
 
         lge = LineGrammarExecutor()
 
-        source_instance_line, source_instance_hct = lge.parse(source_instance_expression)
-
-        actors = source_instance_line.get_all_notes()
-        for a in actors:
-            print("{0}".format(a))
-
         target_instance_line, target_instance_hct = lge.parse(target_instance_expression)
         target_hcs = target_instance_hct.hc_list()
         for hc in target_hcs:
             print("{0}".format(hc))
 
-        pitch_range = PitchRange(DiatonicPitch.parse('C:2').chromatic_distance,
-                                DiatonicPitch.parse('C:8').chromatic_distance)
+        pitch_range = PitchRange.create('C:2', 'C:8')
 
-        p_map = OrderedDict()
-        for i in range(len(actors)):
-            a = actors[i]
-            pc = PolicyContext(target_hcs[0], pitch_range)
-            lower_cn = ContextualNote(pc)
-            p_map[a] = lower_cn
+        p_map = PMap.create(source_instance_expression, pitch_range, [('G-Major:V', 1)])
+
+        actors = p_map.actors
+        for a in actors:
+            print("{0}".format(a))
 
         policies = set()
         policies.add(PitchStepConstraint(actors[0], actors[1], 1, PitchStepConstraint.Down))
@@ -129,7 +125,7 @@ class TestPitchConstraintSolver(unittest.TestCase):
 
         solver = PitchConstraintSolver(policies)
 
-        full_results, partial_results = solver.solve(p_map)
+        full_results, _ = solver.solve(p_map)
         print('Results has {0} results.'.format(len(full_results)))
 
         for pm in full_results:
