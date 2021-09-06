@@ -36,3 +36,6 @@ class Phrase(AbstractMotif):
         copy_constraints = [x.clone([note_map[a] for a in x.actors]) for x in self.constraints]
 
         return Phrase(new_actors, copy_constraints, self.name)
+
+    def __str__(self):
+        return '.'.join([str(m) for m in self.actors])
