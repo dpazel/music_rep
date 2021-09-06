@@ -19,8 +19,10 @@ def duration_ltr(duration):
         return 'i@'
     elif duration.duration == Fraction(1, 8):
         return 'i'
-    elif duration.duration == Fraction(3, 8):
+    elif duration.duration == Fraction(3, 4):
         return 'q@'
+    elif duration.duration == Fraction(3, 8):
+        return 'i@'
     elif duration.duration == Fraction(1, 4):
         return 'q'
     elif duration.duration == Fraction(1, 2):
@@ -176,6 +178,20 @@ def chromatic_reflection():
     print_line(final_line)
     print_hct(final_hct)
 
-simple_flip_example()
-cue_examples()
-chromatic_reflection()
+def chromatic_book_example():
+    print('Chromatic_Reflection')
+    source_expression = '{<C-NaturalMinor: I> qC:4 ieb f g ab <:V> Bb ab gc f eb d <:IV> q@f ig eb d ' \
+                        '<:VI> q@Eb id eb d <:I> h@c }'
+
+    t_flip = TChromaticReflection.create(source_expression, DiatonicPitch.parse('Ab:4'))
+    target_line, target_hct = t_flip.apply()
+
+    print_line(target_line)
+    print_hct(target_hct)
+    print()
+
+
+#simple_flip_example()
+#cue_examples()
+#chromatic_reflection()
+chromatic_book_example()
