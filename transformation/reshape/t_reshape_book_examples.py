@@ -125,7 +125,8 @@ def simple_reshape_cpf():
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'E:4')),
     }
 
-    motif = Motif(score.line, constraints, 'A')
+    # motif = Motif(score.line, constraints, 'A')
+    motif = Motif([all_notes[0], all_notes[8], all_notes[11], all_notes[14]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, Range(0, 3), melodic_form, True)
 
@@ -165,7 +166,8 @@ def reshape_with_spf():
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'E:4')),
     }
 
-    motif = Motif(score.line, constraints, 'A')
+    #motif = Motif(score.line, constraints, 'A')
+    motif = Motif([all_notes[0], all_notes[8], all_notes[11], all_notes[14]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, Range(0, 3), melodic_form, True)
 
@@ -233,7 +235,8 @@ def reshape_to_scale():
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'G:4')),
     }
 
-    motif = Motif(score.line, constraints, 'A')
+    #motif = Motif(score.line, constraints, 'A')
+    motif = Motif([all_notes[0]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, time_range, melodic_form, False)
 
