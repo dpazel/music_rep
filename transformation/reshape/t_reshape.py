@@ -99,8 +99,7 @@ class TReshape(Transformation):
                                if isinstance(constraint, OnBeatConstraint)]
         beat_score_results = self._build_on_beat_solution(on_beat_constraints) if len(on_beat_constraints) > 0 else None
 
-        pitch_constraints = {constraint for constraint in constraints
-                             if not isinstance(constraint, OnBeatConstraint)}
+        pitch_constraints = {constraint for constraint in constraints if not isinstance(constraint, OnBeatConstraint)}
 
         if self.optimize:
             pitch_constraints = pitch_constraints.union(self._reshape_optimize(pitch_constraints, self.score))
@@ -136,7 +135,13 @@ class TReshape(Transformation):
         return note_to_pitch_map
 
     def _get_melodic_form_constraints(self):
+        """
+        Limit the constraints to those whose actors are in the input score.
+        :return:  List of constraints
+        """
         constraints = list()
+        if not self.melodic_form:
+            return constraints
         all_notes = self.score.line.get_all_notes()
         for constraint in self.melodic_form.constraints:
             invalid_constraint = False
@@ -272,6 +277,7 @@ class TReshape(Transformation):
         return d
 
     def _reshape_optimize(self, pitch_constraints, score):
+        # constraint_map maps actos to constraints on which they are the first actor.
         constraint_map = TReshape._build_v_constraint_map(pitch_constraints)
         new_constraints = set()
         for note in score.line.get_all_notes():
@@ -296,6 +302,7 @@ class TReshape(Transformation):
         domain = set()
         first = True
         for constraint in constraints:
+            # build a pmap for all actor in the constraint
             pmap = PMap()
             for n in constraint.actors:
                 hc = score.hct.get_hc_by_position(n.get_absolute_position())
@@ -303,6 +310,8 @@ class TReshape(Transformation):
                                                        score.instrument.sounding_pitch_range()
                                                        if score.instrument is not None else
                                                        PitchRange.create('A:0', 'C:8')))
+            # Get all possible pitch values for note in this constraint.
+            # domain will hold all the values that match across all constraints
             values = {n.diatonic_pitch for n in constraint.values(pmap, note)}
             if first:
                 domain = values
@@ -318,11 +327,13 @@ class TReshape(Transformation):
             # Find 2 pitches in domain that are closest to the curve fit
             valuation = self.pitch_function.eval_as_nearest_pitch(note.get_absolute_position().position)
             candidates = [(p, abs(p.chromatic_distance - valuation.chromatic_distance)) for p in domain]
-            candidates = sorted(candidates, key=lambda candidate: candidate[1])
-            pitch_list = [candidates[0][0], candidates[1][0]]
+            candidates = sorted(candidates, key=lambda candidate: candidate[1])  # sort on chromatic distance.
+            pitch_list = [candidates[0][0], candidates[1][0]]   # Take the top to
 
         if len(pitch_list) == 1:
             return {FixedPitchConstraint(note, pitch_list[0])}
+
+        #  set first as best, second as next best.
         (first, second) = (pitch_list[0], pitch_list[1]) if pitch_list[0].chromatic_distance <= \
             pitch_list[1].chromatic_distance else \
             (pitch_list[1], pitch_list[0])
@@ -338,7 +349,7 @@ class TReshape(Transformation):
         """
         constraint_map = dict()
         for p in constraints:
-            v_note = p.actors[0]
+            v_note = p.actors_by_position()[0]
             if v_note not in constraint_map:
                 constraint_map[v_note] = []
             constraint_map[v_note].append(p)
