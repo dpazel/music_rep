@@ -120,6 +120,27 @@ class TestTonalFunction(unittest.TestCase):
         assert DiatonicToneCache.get_tone('G#') == f['Gb']
         assert f['F#'] is None
 
+    def test_simplified_adapted_function(self):
+        t_domain = Tonality.create(ModalityType.Major, DiatonicTone('F'))
+        t_range = Tonality.create(ModalityType.MelodicMinor, DiatonicTone('G'))
+
+        f = TonalFunction(t_domain, t_range)
+
+        nt_domain = Tonality.create(ModalityType.Major, DiatonicTone('Ab'))
+        nt_range = Tonality.create(ModalityType.MelodicMinor, DiatonicTone('e'))
+
+        pf = f.create_adapted_function(nt_domain, nt_range)
+
+        assert DiatonicToneCache.get_tone('E') == pf['Ab']
+        assert DiatonicToneCache.get_tone('F#') == pf['Bb']
+        assert DiatonicToneCache.get_tone('G') == pf['C']
+        assert DiatonicToneCache.get_tone('A') == pf['Db']
+        assert DiatonicToneCache.get_tone('B') == pf['Eb']
+        assert DiatonicToneCache.get_tone('C#') == pf['F']
+        assert DiatonicToneCache.get_tone('D#') == pf['G']
+
+
+
     def test_adapted_function(self):
         t_domain = Tonality.create(ModalityType.Major, DiatonicTone('F'))
         t_range = Tonality.create(ModalityType.MelodicMinor, DiatonicTone('G'))
