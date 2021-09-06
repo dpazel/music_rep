@@ -75,3 +75,24 @@ class TestPermutation(unittest.TestCase):
         assert 3 == id[3]
         assert 4 == id[4]
 
+    def test_book_example(self):
+        domain = {1, 2, 3, 4, 5, 6, 7}
+        p_cycles = [[1, 3, 4, 2], [6, 5, 7]]
+        p = Permutation(domain, p_cycles)
+        print(p)
+
+        q_cycles = [[1, 3], [2, 4], [5, 7]]
+        q = Permutation(domain, q_cycles)
+        print(q)
+
+        p3 = p * q
+        print('p * q = {0}'.format(p3))
+
+        p3 = q * p
+        print('q * p = {0}'.format(p3))
+
+        i = p.inverse()
+        print(i)
+        print('p * i = {0}'.format(p * i))
+        print('i * p = {0}'.format(i * p))
+
