@@ -20,7 +20,7 @@ class Form(AbstractMotif):
         Constructor
         :param components: A list of Motif's or Forms, positioned sequentially.
         :param constraints: Constraints within or across mentioned motifs
-        Note: constraints must specify actors from motifs, for actor belonging to multiple motifs, results are
+        Note: constraints must specify actors from motifs, for actors belonging to multiple motifs, results are
               unreliable.
         """
         self.__components = components if isinstance(components, list) else [components]
