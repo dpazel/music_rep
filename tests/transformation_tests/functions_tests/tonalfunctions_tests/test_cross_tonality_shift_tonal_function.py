@@ -98,6 +98,20 @@ class TestCrossTonalityShiftTonalFunction(unittest.TestCase):
 
         TestCrossTonalityShiftTonalFunction.print_function(f)
 
+    def test_pentatonic_tonal_function_book(self):
+        t_domain = Tonality.create(ModalityType.MajorPentatonic, DiatonicTone('C'))
+
+        f = CrossTonalityShiftTonalFunction(t_domain, "G#", 2)
+        # C, D, E, G. A ==> G#, B, C#, E, F#
+        assert 'G#' == f['C'].diatonic_symbol
+        assert 'B' == f['D'].diatonic_symbol
+        assert 'C#' == f['E'].diatonic_symbol
+        assert 'E' == f['G'].diatonic_symbol
+        assert 'F#' == f['A'].diatonic_symbol
+
+        assert 'G' == f['B'].diatonic_symbol
+        assert 'D' == f['F'].diatonic_symbol
+
     def print_function(f):
         domain_tonality = f.domain_tonality
         tones = domain_tonality.annotation[:len(domain_tonality.annotation) - 1]
