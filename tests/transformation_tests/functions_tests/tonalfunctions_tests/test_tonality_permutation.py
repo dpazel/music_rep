@@ -21,9 +21,7 @@ class TestTonalityPermutation(unittest.TestCase):
     def test_simple_tonal_permutation(self):
         t_domain = Tonality.create(ModalityType.Major, DiatonicTone('E'))
         cycles = [['E', 'G#', 'A', 'B'], ('F#', 'G#')]
-
         p = TonalityPermutation(t_domain, cycles)
-        print(p)
 
         assert DiatonicToneCache.get_tone('G#') == p['E']
         assert DiatonicToneCache.get_tone('A') == p['F#']
