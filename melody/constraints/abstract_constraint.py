@@ -58,3 +58,6 @@ class AbstractConstraint(object):
         if not isinstance(other, AbstractConstraint):
             return NotImplemented
         return self is other
+
+    def actors_by_position(self):
+        return sorted(self.actors, key=lambda actor: actor.get_absolute_position())
