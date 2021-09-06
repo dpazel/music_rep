@@ -4,9 +4,13 @@ from fractions import Fraction
 import math
 
 from function.generic_univariate_pitch_function import GenericUnivariatePitchFunction
+from function.chromatic_range_interpreter import ChromaticRangeInterpreter
 from timemodel.position import Position
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
+
+def local_sin(v):
+    return math.sin(2 * math.pi * v)
 
 class TestGenericUnivariatePitchFunction(unittest.TestCase):
 
@@ -48,6 +52,17 @@ class TestGenericUnivariatePitchFunction(unittest.TestCase):
             return '({0})'.format(choices)
         else:
             return '({0}, {1})'.format(choices[0], choices[1])
+
+    def test_book_example(self):
+        # Interpreter 0__.C:4 and each step of 1/12 maps to noew chromatic
+        interpreter = ChromaticRangeInterpreter(DiatonicPitch.parse('C:4'), 0, Fraction(1, 12))
+
+        # local_sin maps 0->0 .25->1 .5->0 .75->-1 1->0 and so on.
+        f = GenericUnivariatePitchFunction(local_sin, Position(0), Position(2), False, interpreter)
+
+        for i in range(0, 9):
+            p = f.eval_as_nearest_pitch(i * 0.25)
+            print('[{0}] {1}'.format((i * 0.25), str(p)))
 
 
 if __name__ == "__main__":
