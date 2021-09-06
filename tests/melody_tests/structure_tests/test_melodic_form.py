@@ -5,6 +5,7 @@ import sys
 
 from melody.constraints.equal_pitch_constraint import EqualPitchConstraint
 from melody.constraints.not_equal_pitch_constraint import NotEqualPitchConstraint
+from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from melody.structure.melodic_form import MelodicForm
 from melody.structure.motif import Motif
 from melody.structure.phrase import Phrase
@@ -124,3 +125,39 @@ class TestMelodicForm(unittest.TestCase):
         assert phs is not None
         assert len(phs) == 1
         assert phs[0].actors[0] == notes[10]
+
+    def test_book_example(self):
+        line_str = '{<C-Major: I> iC:4 D E F G A B qC iC:3 D E F G A B qC}'
+        lge = LineGrammarExecutor()
+        target_line, _ = lge.parse(line_str)
+        notes = target_line.get_all_notes()
+
+        ca = [
+            EqualPitchConstraint([notes[0], notes[2]]),
+            NotEqualPitchConstraint([notes[1], notes[3]])
+        ]
+
+        cb = [
+            NotEqualPitchConstraint([notes[4], notes[5]]),
+            EqualPitchConstraint([notes[6], notes[7]])
+        ]
+
+        a = Motif([notes[0], notes[1], notes[2], notes[3]], ca, 'A')
+        b = Motif([notes[4], notes[5], notes[6], notes[7]], cb, 'B')
+
+        phrase_constraints = [
+            EqualPitchConstraint([notes[4], notes[5]]),
+        ]
+        phrase = Phrase([notes[2], notes[3], notes[4], notes[5]], phrase_constraints, 'P1')
+
+        mf_constraints = [
+            EqualPitchConstraint([notes[2], notes[5]]),
+        ]
+
+        mf = MelodicForm([a, b], [phrase], mf_constraints, 'MF1')
+        print('[{0}]'.format(','.join([str(n.diatonic_pitch) for n in mf.actors])))
+
+
+        mf_dup = mf.copy_to(notes[8])
+        print('[{0}]'.format(','.join([str(n.diatonic_pitch) for n in mf_dup.actors])))
+
