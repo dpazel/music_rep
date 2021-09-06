@@ -19,6 +19,7 @@ class TestTonalPermutation(unittest.TestCase):
         domain = {'C', 'D', 'Eb', 'F#'}
         cycles = [['C', 'D'], ['Eb', 'F#']]
         p = TonalPermutation(cycles, domain)
+        print(p)
 
         assert DiatonicToneCache.get_tone('C') in p.tone_domain
         assert DiatonicToneCache.get_tone('D') in p.tone_domain
