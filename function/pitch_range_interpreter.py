@@ -40,7 +40,7 @@ class PitchRangeInterpreter(ABC):
     def eval_as_pitch(self, v):
         """
         For numeric v, find what it maps to.  In some cases, there may be multiple answers if say v's values is
-        between 2 nearest keys.
+        between 2 nearest pitches.
         :param v:
         :return: A list of nearest pitches.
         """
@@ -49,7 +49,7 @@ class PitchRangeInterpreter(ABC):
     @abstractmethod
     def eval_as_accurate_chromatic_distance(self, v):
         """
-        For numeric v, find a 'precisise' chromatic distance to which it maps.  'Precise' is an interpretation of
+        For numeric v, find a 'precise' chromatic distance to which it maps.  'Precise' is an interpretation of
         the implementation class, however it usually means that v is a value in some function range, and we want
         precisely what it maps to in the pitch range. The result can be a real value.
         :param v:
