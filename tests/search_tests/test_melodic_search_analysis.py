@@ -34,39 +34,39 @@ class TestMelodicSearchAnalysis(unittest.TestCase):
         assert Duration(1, 2) == hct_annotation[0].span
         assert Duration(1, 2) == hct_annotation[1].span
 
-        for item in hct_annotation:
-            print(item)
+        for na in hct_annotation:
+            print(na)
 
-        note_annotation = analysis.note_annotation
-        assert note_annotation is not None
+        note_annotation_list = analysis.note_annotation
+        assert note_annotation_list is not None
 
-        for item in note_annotation:
-            print(item)
+        for na in note_annotation_list:
+            print(na)
 
-        assert 6 == len(note_annotation)
-        assert note_annotation[0].is_scalar
-        assert note_annotation[0].is_chordal
-        assert note_annotation[1].is_scalar
-        assert not note_annotation[1].is_chordal
-        assert not note_annotation[2].is_scalar
-        assert not note_annotation[2].is_chordal
-        assert not note_annotation[3].is_scalar
-        assert not note_annotation[3].is_chordal
-        assert note_annotation[4].is_scalar
-        assert note_annotation[4].is_chordal
-        assert note_annotation[5].is_scalar
-        assert not note_annotation[5].is_chordal
-        assert 4 == note_annotation[5].scale_degree
+        assert 6 == len(note_annotation_list)
+        assert note_annotation_list[0].is_scalar
+        assert note_annotation_list[0].is_chordal
+        assert note_annotation_list[1].is_scalar
+        assert not note_annotation_list[1].is_chordal
+        assert not note_annotation_list[2].is_scalar
+        assert not note_annotation_list[2].is_chordal
+        assert not note_annotation_list[3].is_scalar
+        assert not note_annotation_list[3].is_chordal
+        assert note_annotation_list[4].is_scalar
+        assert note_annotation_list[4].is_chordal
+        assert note_annotation_list[5].is_scalar
+        assert not note_annotation_list[5].is_chordal
+        assert 4 == note_annotation_list[5].scale_degree
 
-        note_pair_annotation = analysis.note_pair_annotation
-        assert note_pair_annotation is not None
+        note_pair_annotation_list = analysis.note_pair_annotation
+        assert note_pair_annotation_list is not None
 
-        for npa in note_pair_annotation:
+        for npa in note_pair_annotation_list:
             print(npa)
 
-        assert 5 == len(note_pair_annotation)
-        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation[0].relationship)
-        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation[1].relationship)
-        assert '>' == NotePairInformation.rel_pair_symbol(note_pair_annotation[2].relationship)
-        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation[3].relationship)
-        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation[4].relationship)
+        assert 5 == len(note_pair_annotation_list)
+        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation_list[0].relationship)
+        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation_list[1].relationship)
+        assert '>' == NotePairInformation.rel_pair_symbol(note_pair_annotation_list[2].relationship)
+        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation_list[3].relationship)
+        assert '<' == NotePairInformation.rel_pair_symbol(note_pair_annotation_list[4].relationship)
