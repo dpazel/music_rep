@@ -55,11 +55,11 @@ class THarmonicTranscription(Transformation):
         Transformation.__init__(self)
 
     @staticmethod
-    def create(source_expression, source_melodic_form=None):
+    def create(source_expression):
         lge = LineGrammarExecutor()
 
         source_line, source_hct = lge.parse(source_expression)
-        return THarmonicTranscription(source_line, source_hct, source_melodic_form)
+        return THarmonicTranscription(source_line, source_hct)
 
     @property
     def source_line(self):
