@@ -28,7 +28,7 @@ class MelodicConstraintSolver(object):
         :param tempo_event_sequence:
         :param ts_event_sequence:
         :param hct:
-        :param pitch_range:
+        :param pitch_range:MelodicConstraintSolver
         :param constraints:
         """
         self.__line = line
