@@ -90,7 +90,7 @@ def simple_melodic_reversal():
     # Keep harmony
     print('--- No harmonic reversal - original harmony ---')
     # melody is reversed, harmony is not; so, we refit melody to harmony.
-    reversed_line, hct = trans.apply(False)
+    reversed_line, hct = trans.apply(False, results_sample_size=500)
 
     print('Without Harmonic Reversal {0}'.format(str_line(reversed_line)))
     print(str(hct))
