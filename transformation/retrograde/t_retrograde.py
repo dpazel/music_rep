@@ -73,11 +73,15 @@ class TRetrograde(Transformation):
         reduced_reversed_hct = reduced_hct.reverse()
 
         # If reversing harmony OR if reversing harmony and not doing transposition
+        # These cases do not require transcription:
+        #  a) reverse harmony and no transcription - return reversed line + reversed harmony
+        #  b) no reverse harmony and no transcription - return reversed_line + original hct
+        #  c) reverse harmony and transcription - return reversed_line and reversed harmony.
         if reverse_harmony or not transcription:
             return reduced_reversed_line, reduced_reversed_hct if reverse_harmony else reduced_hct
 
         # Case: not reversing harmony AND requiring a transposition
-        # Must specify reversed line here, but analyze against reversed_hct, which is the original harmony
+        # Must specify reversed line here, but ANALYZE against reversed_hct, which is the original harmony
         # making the correct analysis of the original melody.
         t_ht = THarmonicTranscription(reduced_reversed_line, reduced_reversed_hct)
 
