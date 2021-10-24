@@ -131,6 +131,8 @@ class TimeSignature(object):
                 if bt != TimeSignature.S and bt != TimeSignature.W:
                     raise Exception('Beat pattern must only contain \'S\' or \'W\'')
             self.__beat_pattern = bp
+        else:
+            self.__beat_pattern = None
         
     @property
     def beats_per_measure(self):
