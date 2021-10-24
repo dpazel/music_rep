@@ -141,7 +141,7 @@ class Tempo(object):
     """
     
     def __init__(self, tempo, beat_duration=Duration(1, 4)):
-        if isinstance(tempo, int) or isinstance(tempo, float):
+        if isinstance(tempo, int) or isinstance(tempo, float) or isinstance(tempo, Fraction):
             self.__tempo = tempo
         elif isinstance(tempo, TempoType):
             r = tempo.get_range()
