@@ -64,7 +64,7 @@ def explanation_pattern_example():
 
     tag_map = {0: DiatonicPitch.parse('D:5')}
 
-    results, replacement_instance_hct = t_pat_sub.apply(replacement_instance_line, replacement_instance_hct, 'C:4', tag_map, t_pat_sub.target_height + 5, 200)
+    results, replacement_instance_hct = t_pat_sub.apply(replacement_instance_line, replacement_instance_hct, 'C:4', tag_map, t_pat_sub.target_height, 200)
 
     filter = MinContourFilter(t_pat_sub.substitution_pattern.target_pattern_line, results.pitch_results)
     scored_filtered_results = filter.scored_results
@@ -115,6 +115,6 @@ def example_pattern_example():
 
 
 
-explanation_pattern_example()
-#example_pattern_example()
+#explanation_pattern_example()
+example_pattern_example()
 
