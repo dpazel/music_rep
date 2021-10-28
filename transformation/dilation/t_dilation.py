@@ -64,6 +64,8 @@ class TDilation(Transformation):
         if dilation_factor is None or not (isinstance(dilation_factor, Fraction) or
                                            not isinstance(dilation_factor, int)):
             raise Exception('Illegal dilation factor - must be Fraction or int')
+        if dilation_factor <= 0:
+            raise Exception("Dilation factor must be positive.")
 
         self.__dilation_factor = dilation_factor
         self.__apply_to_bpm = apply_to_bpm
@@ -81,7 +83,7 @@ class TDilation(Transformation):
 
         for hc in hct.hc_list():
             new_hc = HarmonicContext(hc.tonality, hc.chord,
-                                     hc.duration if not self.apply_to_notes else hc.duration * self.dilation_factor)
+                                     hc.duration * self.dilation_factor if self.apply_to_notes else hc.duration)
             new_hct.append(new_hc)
 
         return new_hct
