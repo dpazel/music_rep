@@ -41,16 +41,17 @@ def mozart_example():
 
     # I MM 1-4 6/8 T.S. 42-46==dotted half  p.46 Bach text
     title = 'Mozart, Sonata in A KV331, I, MM 1-4 6/8 T.S. 60==eighth f=1/2 (True, False)'
-    mozart_line = '{<A-Major:I>iC#:5@ sD iC# qE iE <:VDom7> iB:4@ sC#:5 iB:4 qD:5 iD <:viMin7> qA:4 iA <:V>qD:5 iD' \
-                  '<:I> qC#:4 <:VDom7>sE D <:I>aC# <:V>iB:4}'
-    lite_score = create_score(mozart_line, 'piano', (60, Duration(1, 8)), (6, Duration(1, 8)))
+    mozart_line = '{<A-Major:I>i@C#:5 sD iC# qE iE <:VDom7> i@B:4 sC#:5 iB:4 qD:5 iD <:viMin7> qA:4 iA <:V>qB:4 iB' \
+                  '<:I> qC#:5 sE D qC# <:V>iB:4}'
+    lite_score = create_score(mozart_line, 'piano', (60, Duration(3, 8)), (6, Duration(1, 8)))
+    print_score(title, lite_score)
     trans = TDilation(lite_score)
 
-    #  case 0: apply_to_tempo=True stabilize=False
+    #  case 0: apply_to_bpm=True apply_to_notes=False
     new_score = trans.apply(Fraction(1, 2), True, False)
     print_score(title, new_score)
 
-    #  case 0: apply_to_tempo=True stabilize=True
+    #  case 0: apply_to_bpm=True apply_to_notes=True
     title = 'Mozart, Sonata in A KV331, I, MM 1-4 6/8 T.S. 60==eighth f=1/2 (True, True)'
     new_score = trans.apply(Fraction(1, 2), True, True)
     print_score(title, new_score)
@@ -162,6 +163,6 @@ def create_score(line_text, instrument, tmpo, ts):
 
 
 #bach_example()
-#mozart_example()
+mozart_example()
 #crazy_example()
-crazy_example_1()
+#crazy_example_1()
