@@ -222,6 +222,21 @@ class TestTDilation(unittest.TestCase):
         print(line)
         print(new_score.line)
 
+    def test_beam_structures(self):
+        print('----- test beam structures -----')
+        source_instance_expression = '{<C-Major:I> [[iC:4 D]]} }'
+        lge = LineGrammarExecutor()
+        source_instance_line, source_instance_hct = lge.parse(source_instance_expression)
+
+        lite_score = TestTDilation.create_score_1(source_instance_line, source_instance_hct, 'piano', (4, 4, 'swww'))
+
+        trans = TDilation(lite_score)
+        new_score = trans.apply(Fraction(2), True, True)
+        line = new_score.line
+        notes = line.get_all_notes()
+        print()
+
+
     @staticmethod
     def create_score(line_expression, instrument, ts):
         lge = LineGrammarExecutor()
