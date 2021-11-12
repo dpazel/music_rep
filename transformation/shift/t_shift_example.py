@@ -7,7 +7,8 @@ from fractions import Fraction
 from tonalmodel.interval import Interval as TonalInterval
 from tonalmodel.modality import ModalityType
 from transformation.shift.t_shift import TShift
-from tonalmodel.tonality import Tonality
+from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
+
 
 def duration_ltr(duration):
     if duration.duration == Fraction(1, 8):
@@ -20,7 +21,14 @@ def duration_ltr(duration):
         return 'w'
     return '>'
 
+
 def print_line(line):
+    notes = line.get_all_notes()
+    for i in range(0, len(notes)):
+        note = notes[i]
+        print('[{0}]  {1}({2})'.format(i, note.diatonic_pitch, note.duration))
+
+'''        
     notes = line.get_all_notes()
     prior_octave = None
     prior_duration = None
@@ -39,14 +47,23 @@ def print_line(line):
         note_annotations.append(annotation)
     s = ' '.join(annotation for annotation in note_annotations)
     print(s)
+'''
+
 
 def print_hct(hct):
+    hcs = hct.hc_list()
+    count = 0
+    for hc in hcs:
+        print('[{0}] HC({1}, {2}, {3}, {4})'.format(count, hc.tonality, hc.chord, hc.duration, hc.position))
+
+'''        
     hc_annotations = list()
     for hc in hct.hc_list():
         s = '<{0}: {1}>({2})'.format(hc.tonality, hc.chord, hc.duration)
         hc_annotations.append(s)
     hcs = ' '.join(hc_str for hc_str in hc_annotations)
     print(hcs)
+'''
 
 
 def simple_shift_example():
@@ -74,6 +91,7 @@ def simple_shift_example():
     print_hct(target_hct)
     print()
 
+
 def shift_change_modality():
     print('----- Shift Change Modality Example -----')
     source_expression = '{<C-Major: I> iC:4 C qD E <:IV> iF G hA <:V> ig b qf g <:VI> ie e qd ic d <:i> h@c}'
@@ -97,6 +115,7 @@ def shift_change_modality():
     print_hct(target_hct)
     print()
 
+
 def shift_change_modal_index():
     print('----- Shift Change Modal Index Example -----')
     source_expression = '{<C-Major: I> iC:4 C qD E <:IV> iF G hA <:V> ig b qf g <:VI> ie e qd ic d <:i> h@c}'
@@ -118,6 +137,7 @@ def shift_change_modal_index():
     print_line(target_line)
     print_hct(target_hct)
     print()
+
 
 def shift_change_modal_index_modality_and_shift():
     print('----- Shift Change Modal Index, modality, shift Example -----')
@@ -146,7 +166,6 @@ def shift_change_modal_index_modality_and_shift():
     print()
 
 
-
 def example():
     print('----- Book example of shifted tonality on modal not 0 -----')
     source_expression = '{<D-Major(1): I> iE:4 F# G A qE B}'
@@ -158,6 +177,7 @@ def example():
     print(target_line)
     print(target_hct)
 
+
 def example1():
     print('----- Book example of shifted secondary tonality  -----')
     source_expression = '{<C-Major: V/iii> iD#:4 F# G A qD#:5 B:4}'
@@ -167,6 +187,7 @@ def example1():
     print(t_shift.source_hct)
     print(target_line)
     print(target_hct)
+
 
 def example2():
     print('----- Debug meaning of modal index change and hct -----')
@@ -199,9 +220,62 @@ def example2():
     print()
 
 
-#simple_shift_example()
-#shift_change_modality()
-shift_change_modal_index()
-#shift_change_modal_index_modality_and_shift()
-#example2()
-#example1()
+def shift_sequence_tonal_example():
+    print('----- Shift sequence tonal example -----')
+
+    source_expression = '{<C-Major: IV> qf:4 a b C:5 <:V/ii> a:4 e:5 id C# <:ii> qd c b:4 a}'
+
+    lge = LineGrammarExecutor()
+    source_instance_line, source_instance_hct = lge.parse(source_expression)
+    print_score('\n[0]: ', source_instance_line, source_instance_hct)
+
+    t_shift = TShift.create(source_expression)
+    target_line, target_hct = t_shift.apply(root_shift_interval=TonalInterval.parse('M:2'),
+                                            range_modality_type=ModalityType.MelodicMinor)
+    print(target_line)
+    print(target_hct)
+    print()
+
+    t_shift = TShift(target_line, target_hct)
+    target_line, target_hct = t_shift.apply(root_shift_interval=TonalInterval.parse('M:2'),
+                                            range_modality_type=ModalityType.MelodicMinor)
+    print(target_line)
+    print(target_hct)
+    print()
+
+
+def shift_sequence_standard_example():
+    print('----- Shift sequence standard example -----')
+
+    source_expression = '{<C-Major: IV> sf:4 a b C:5 <:V/ii> sa:4 e:5 tc# b:4 sC#:5 <:ii> sd tc a:4 sb:4 a}'
+
+    lge = LineGrammarExecutor()
+    source_instance_line, source_instance_hct = lge.parse(source_expression)
+    print_score('\n[0]: ', source_instance_line, source_instance_hct)
+
+    t_shift = TShift.create(source_expression)
+    target_line, target_hct = t_shift.apply(root_shift_interval=TonalInterval.parse('M:2'),
+                                            range_modality_type=ModalityType.Major)
+    print_score('\n[1]: ', target_line, target_hct)
+
+    t_shift = TShift(target_line, target_hct)
+    target_line, target_hct = t_shift.apply(root_shift_interval=TonalInterval.parse('M:2'),
+                                            range_modality_type=ModalityType.Major)
+    print_score('\n[2]: ', target_line, target_hct)
+
+
+def print_score(separator, line, hct):
+    print(separator)
+    print_line(line)
+    print_hct(hct)
+    print()
+
+
+# simple_shift_example()
+# shift_change_modality()
+# shift_change_modal_index()
+# shift_change_modal_index_modality_and_shift()
+# example2()
+# example1()
+# shift_sequence_tonal_example()
+shift_sequence_standard_example()
