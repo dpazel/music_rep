@@ -92,7 +92,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                    'Min6': ['A', 'C', 'E', 'F#'],
                    'Fr': ['F##', 'A', 'B', 'D#'],
                    'Ger': ['F##', 'A', 'C', 'D#'],
-                   'It': ['F##', 'A', 'D#'],
+                   'It': ['F', 'A', 'D#'],
                    'N6': ['F', 'Bb', 'D'],
                    }
         diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
@@ -135,7 +135,7 @@ class TestTertianTemplateChord(unittest.TestCase):
                    'Min6': ['A', 'C', 'E', 'F#'],
                    'Fr': ['F##', 'A', 'B', 'D#'],
                    'Ger': ['F##', 'A', 'C', 'D#'],
-                   'It': ['F##', 'A', 'D#'],
+                   'It': ['F', 'A', 'D#'],
                    'N6': ['F', 'Bb', 'D'],
                    }
         diatonic_tonality = Tonality.create(ModalityType.Major, DiatonicTone("C"))
