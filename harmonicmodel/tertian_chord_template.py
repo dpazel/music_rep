@@ -277,7 +277,7 @@ class TertianChordTemplate(ChordTemplate):
                                Interval(1, IntervalType.Perfect),
                                Interval(3, IntervalType.Minor),
                                Interval(4, IntervalType.Augmented)],
-        TertianChordType.It: [Interval(6, IntervalType.Augmented),
+        TertianChordType.It: [Interval(6, IntervalType.Minor),
                               Interval(1, IntervalType.Perfect),
                               Interval(4, IntervalType.Augmented)],
         TertianChordType.N6: [Interval(6, IntervalType.Minor),
