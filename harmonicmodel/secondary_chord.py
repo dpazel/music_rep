@@ -39,8 +39,8 @@ class SecondaryChord(Chord):
         if not self.chord_template.secondary_modality:
             triad = TertianChordTemplate.get_triad(diatonic_tonality, self.chord_template.secondary_scale_degree)
             if triad:
-                modality = ModalityType.Major if triad.chord_type.value == TertianChordType.Maj else \
-                    ModalityType.MelodicMinor if triad.chord_type.value == TertianChordType.Min else None
+                modality = ModalityType.Major if triad.chord_type.value == TertianChordType.Maj or triad.chord_type.value == TertianChordType.Aug else \
+                    ModalityType.MelodicMinor if triad.chord_type.value == TertianChordType.Min or triad.chord_type.value == TertianChordType.Dim else None
                 if modality is None:
                     raise Exception('Illegal secondary modality for secondary chord')
             else:
