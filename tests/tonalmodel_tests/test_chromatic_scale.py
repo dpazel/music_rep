@@ -50,6 +50,13 @@ class TestChromaticScale(unittest.TestCase):
         assert is_close(scale[ChromaticScale.location_to_index((4, 0)) - start], 261.625565301), \
             "Error C:4 = {0} should be 261.625565301".format(scale[ChromaticScale.location_to_index((4, 0)) - start])
 
+    def test_book_example(self):
+        location = ChromaticScale.parse_notation("4:9")
+        print(location)
+        index  = ChromaticScale.location_to_index(location)
+        print(index)
+        loc = ChromaticScale.index_to_location(index)
+        print(loc)
 
 def is_close(value_a, value_b):
     return abs(value_a - value_b) < 0.0001
@@ -57,6 +64,7 @@ def is_close(value_a, value_b):
 
 def is_close_in_bounds(value_a, value_b, tolerance):
     return abs(value_a - value_b) < tolerance
+
 
 if __name__ == "__main__":
     unittest.main()
