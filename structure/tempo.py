@@ -172,4 +172,5 @@ class Tempo(object):
         return self.__tempo
 
     def __str__(self):
-        return str(self.tempo)
+        # return str(self.tempo)
+        return 'Tempo[{0}, {1}]'.format(self.tempo, self.beat_duration)
