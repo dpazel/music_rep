@@ -8,55 +8,35 @@ Purpose: Defines TimeSignature and TSBeatType
 from fractions import Fraction
 from enum import Enum
 
+class TSBeatType(Enum):
+    Whole = 1
+    Half = 2
+    Quarter = 3
+    Eighth = 4
+    Sixteenth = 5
 
-class TSBeatType:
-    """
-    Enum class for standard beat types/durations.
-    Standard duration notes are Whole, Half, Quarter, Eighth, Sixteenth
-    """
-    Whole, Half, Quarter, Eighth, Sixteenth = range(5)
-    
-    def __init__(self, btype):
-        self.value = btype
-        
     def __str__(self):
-        if self.value == TSBeatType.Whole:
-            return 'Whole'
-        if self.value == TSBeatType.Half:
-            return 'Half'
-        if self.value == TSBeatType.Quarter:
-            return 'Quarter'
-        if self.value == TSBeatType.Eighth:
-            return 'Eighth'
-        if self.value == TSBeatType.Sixteenth:
-            return 'Sixteenth'
-    
-    # convert to fractional value.    
+        return self.name
+
     def to_fraction(self):
-        if self.value == TSBeatType.Whole:
+        if self == TSBeatType.Whole:
             return Fraction(1, 1)
-        if self.value == TSBeatType.Half:
+        if self == TSBeatType.Half:
             return Fraction(1, 2)
-        if self.value == TSBeatType.Quarter:
+        if self == TSBeatType.Quarter:
             return Fraction(1, 4)
-        if self.value == TSBeatType.Eighth:
+        if self == TSBeatType.Eighth:
             return Fraction(1, 8)
-        if self.value == TSBeatType.Sixteenth:
+        if self == TSBeatType.Sixteenth:
             return Fraction(1, 16)
-        
-    def __eq__(self, y):
-        return self.value == y.value
-    
-    def __hash__(self):
-        return self.__str__().__hash__()
-    
+
     @staticmethod
     def get_fraction_for(ts_beat_type):
         """
         Static method to get beat fraction value for a ts beat type.
         Args:
           ts_beat_type: if integer, turned into TSBeatType based on int.  Otherwise must be a TSBeatType.
-          
+
         Returns: Range for type.
         Exception: on bad argument type.
         """
