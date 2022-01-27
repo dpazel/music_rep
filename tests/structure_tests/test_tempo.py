@@ -73,6 +73,9 @@ class TempoTest(unittest.TestCase):
         print(translate)
         self.assertTrue(translate == 61)
 
+        tempo = Tempo(TempoType.Adagio, Duration(1, 4))
+        print(tempo)
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test_tempo_type']
     unittest.main()
