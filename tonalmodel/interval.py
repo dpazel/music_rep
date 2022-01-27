@@ -314,7 +314,10 @@ class Interval(object):
     
     def __add__(self, interval):
         return Interval.add_intervals(self, interval)
-    
+
+    def __sub__(self, interval):
+        return Interval.add_intervals(self, interval.negation())
+
     def __iadd__(self, interval):
         """
         Override s += y
@@ -323,6 +326,15 @@ class Interval(object):
           interval: 
         """
         return self + interval
+
+    def __isub__(self, interval):
+        """
+        Override s += y
+
+        Args:
+          interval:
+        """
+        return self - interval
     
     def negation(self):
         if self.diatonic_distance == 0:
