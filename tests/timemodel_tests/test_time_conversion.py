@@ -43,9 +43,9 @@ class TestTimeConversion(unittest.TestCase):
         # 2 eighth notes @ 20 (effective 40) with 1/8 beat  = 3000
         self.assertTrue(actual_time == 10000, 'actual time = {0} should be 10000'.format(actual_time))
         
-        position = conversion.actual_time_to_position(13000)
+        position = conversion.actual_time_to_position(10000)
         print(position)
-        self.assertTrue(position, Position(6, 4))
+        self.assertEquals(position, Position(6, 4))
         
     def test_bp_to_position(self):
         tempo_line = EventSequence([TempoEvent(Tempo(60), Position(0))])
