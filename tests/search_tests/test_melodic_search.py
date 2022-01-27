@@ -139,7 +139,8 @@ class TestMelodicSearch(unittest.TestCase):
         print('----- test_structural_match -----')
         lge = LineGrammarExecutor()
 
-        pattern = '{<C-Major: I> [iC:4 G F A] <G-Major: I> qB:4 (I, 2)[iE:5 G C]}'
+        # Used in book
+        pattern = '{<C-Major: I> [iC:4 G F A] <G-Major: I> qB:4 (I, 2)[iE:5 F# C]}'
         target = '{<F-Minor: v> qF:4 C:5 <F-Major: I> [iF:4 C:5 Bb:4 D:5] <C-Major: I> qE:5 (I, 2)[iA:5 C:6 F:5]}'
         target_line, target_hct = lge.parse(target)
 
@@ -173,11 +174,11 @@ class TestMelodicSearch(unittest.TestCase):
         assert 0 == len(answers)
 
     def test_hct_match_tonality_key_tone(self):
-        print('----- test_hct_match_tonality_key_tone -----')
+        print('----- test_hct_match_tonality_key_tone book -----')
         lge = LineGrammarExecutor()
 
         # hct_match_tonality_key_tone=True, and pattern/target are different keys.
-        pattern = '{<C-Major: I> [iC:4 G F A] <G-Major: I> qB:4 (I, 2)[iE:5 G C]}'
+        pattern = '{<C-Major: I> [iC:4 G F A] <G-Major: I> qB:4 (I, 2)[iE:5 F# C]}'
         target = '{<F-Minor: v> qF:4 C:5 <F-Major: I> [iF:4 C:5 Bb:4 D:5] <C-Major: I> qE:5 (I, 2)[iA:6 C:7 F:6]}'
         target_line, target_hct = lge.parse(target)
 
@@ -187,8 +188,9 @@ class TestMelodicSearch(unittest.TestCase):
         assert answers is not None
         assert 0 == len(answers)
 
+        # Used in book
         # hct_match_tonality_key_tone=True, and pattern/target are same keys.
-        target = '{<F-Minor: v> qF:4 C:5 <C-Major: I> [iF:4 C:5 B:4 D:5] <G-Major: I> qE:5 (I, 2)[iA:6 C:7 F#:6]}'
+        target = '{<F-Minor: I> qF:4 C:5 <C-Major: I> [iF:4 C:5 B:4 D:5] <G-Major: I> qE:5 (I, 2)[iA:6 C:7 F#:6]}'
         target_line, target_hct = lge.parse(target)
 
         search = MelodicSearch.create(pattern)
