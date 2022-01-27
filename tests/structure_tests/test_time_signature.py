@@ -34,9 +34,12 @@ class TSTest(unittest.TestCase):
         self.assertTrue(ts.beats_per_measure == 4)
         self.assertTrue(ts.beat_duration == Fraction(6, 1))
         
-        ts = TimeSignature(3, TSBeatType(TSBeatType.Quarter))
+        ts = TimeSignature(3, TSBeatType.Quarter)
+        print(ts)
         self.assertTrue(ts.beats_per_measure == 3)
+        print(ts.beats_per_measure == 3)
         self.assertTrue(ts.beat_duration == Fraction(1, 4))
+        print(ts.beat_duration == Fraction(1, 4))
         
         ts = TimeSignature(7, Duration(8, 9))
         self.assertTrue(ts.beats_per_measure == 7)
