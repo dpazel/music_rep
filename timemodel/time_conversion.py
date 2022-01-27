@@ -241,7 +241,9 @@ class TimeConversion(object):
         if not isinstance(delta_time, Fraction):
             delta_time = Fraction.from_float(delta_time)
         # musicTime = time * tempo * beat_duration
-        delta_mt = (delta_time * tempo_element.tempo * ts_element.beat_duration.duration / (60 * 1000)) \
+        # Translate tempo using the time signature beat.
+        translated_tempo = tempo_element.effective_tempo(ts_element.beat_duration)
+        delta_mt = (delta_time * translated_tempo * ts_element.beat_duration.duration / (60 * 1000)) \
             if delta_time > 0 else 0
         
         return start_mt + delta_mt
