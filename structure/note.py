@@ -65,6 +65,11 @@ class Note(AbstractNote):
     @property 
     def base_duration(self):
         return self.__base_duration
+
+    @base_duration.setter
+    def base_duration(self, base_duration):
+        self.__base_duration = base_duration
+        self.__duration = self.base_duration.apply_dots(self.num_dots)
     
     @property
     def num_dots(self):
