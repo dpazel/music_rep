@@ -77,10 +77,16 @@ class Beam(AbstractNoteCollective):
             raise Exception('add note, index {0} not in range[0, {1}]'.format(index, len(self.sub_notes)))
 
         if isinstance(note, Note):
+            '''
+            For standard notation, the following test should be made.
+            However, the structure is quite general and can support other durations.
+            For that reason, we opt to take out this check, which could be returned of only standard classic
+            durations are supported.
             if note.base_duration >= Duration(1, 4):
                 raise Exception(
                     "Attempt to add note with duration {0} greater than or equal to {1}".
                     format(note.duration, Beam.NOTE_QUALIFIER_DURATION))
+            '''
             new_factor = self.contextual_reduction_factor
         elif isinstance(note, Beam):
             new_factor = self.contextual_reduction_factor * Beam.FACTOR
