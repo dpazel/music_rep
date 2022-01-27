@@ -71,5 +71,12 @@ class TestTonalScale(unittest.TestCase):
 
                 scale_check(pitch_scale, tonality)
 
+    def test_book_example(self):
+        pitch_range = PitchRange.create("c:4", "c:6")
+        tonality = Tonality.create(ModalityType.MelodicMinor, 'D')
+        pitch_scale = PitchScale(tonality, pitch_range)
+        print('Scale = [{0}]'.format(', '.join(str(pitch) for pitch in  pitch_scale.pitch_scale)))
+
+
 if __name__ == "__main__":
     unittest.main()
