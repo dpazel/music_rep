@@ -657,6 +657,34 @@ class TestInterval(unittest.TestCase):
             print('{0}   -->   {1}'.format(incrementals, results))
         print('end of test')
 
+    def test_book_examples(self):
+        # Interval Creation
+        interval = Interval(5, IntervalType.Perfect)
+        print(interval)
+        interval = Interval.parse("m:10")
+        print(interval)
+        interval = Interval.create_interval(DiatonicPitch.parse("a:3"), DiatonicPitch.parse("f#:4"))
+        print(interval)
+
+        # Interval Addition/Subtraction
+        i1 = Interval(5, IntervalType.Perfect)
+        i2 = Interval.parse("M:3")
+        interval = i1 + i2
+        print(interval)
+        interval = i1 - i2
+        print(interval)
+        interval += i2
+        print(interval)
+        interval -= i2
+        print(interval)
+
+        # compute end and start
+        interval = Interval(5, IntervalType.Perfect)
+        pitch = interval.get_end_pitch(DiatonicPitch.parse("F#:5"))
+        print(pitch)
+        pitch = interval.get_start_pitch(DiatonicPitch.parse("C:5"))
+        print(pitch)
+
     @staticmethod
     def print_table(row_len, result):
         rows = len(result) // row_len
