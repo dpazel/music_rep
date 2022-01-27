@@ -250,7 +250,7 @@ class TestInterval(unittest.TestCase):
         assert tree.root.max == 40
         
     def test_match_interval(self):
-        print('Test match interval')
+        print('Test match interval - book')
         
         tree = IntervalTree()
         tree.put(Interval(15, 30), MyObject(1))
@@ -268,6 +268,25 @@ class TestInterval(unittest.TestCase):
         
         assert result[0].interval == Interval(16, 30)   
         
+        print(tree)
+
+    def test_match_interval_book(self):
+        print('Test match interval - book')
+
+        tree = IntervalTree()
+        tree.put(Interval(15, 30), MyObject(1))
+        tree.put(Interval(16, 30), MyObject(3))
+        tree.put(Interval(18, 25), MyObject(5))
+        tree.put(Interval(20, 40), MyObject(4))
+        tree.put(Interval(23, 50), MyObject(6))
+        tree.put(Interval(5, 10), MyObject(2))
+
+        result = tree.find_exact_interval(Interval(16, 30))
+        assert result is not None
+        assert len(result) == 1
+
+        assert result[0].interval == Interval(16, 30)
+
         print(tree)
 
 
