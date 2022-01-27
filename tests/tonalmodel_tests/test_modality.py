@@ -2,7 +2,7 @@ import unittest
 from tonalmodel.modality import ModalityType, ModalitySpec, Modality
 
 
-class TestDiatonicModality(unittest.TestCase):
+class TestModality(unittest.TestCase):
 
     def setUp(self):
         pass
