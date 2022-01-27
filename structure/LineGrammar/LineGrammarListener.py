@@ -1,4 +1,4 @@
-# Generated from /Users/dpazel/PycharmProjects/music_rep_melody/resources/LineGrammar.g4 by ANTLR 4.7
+# Generated from /Users/dpazel/PycharmProjects/music_rep_melody/resources/LineGrammar.g4 by ANTLR 4.9.1
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .LineGrammarParser import LineGrammarParser
@@ -120,3 +120,5 @@ class LineGrammarListener(ParseTreeListener):
         pass
 
 
+
+del LineGrammarParser

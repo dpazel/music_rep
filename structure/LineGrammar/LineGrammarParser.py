@@ -1,13 +1,17 @@
-# Generated from /Users/dpazel/PycharmProjects/music_rep_melody/resources/LineGrammar.g4 by ANTLR 4.7
+# Generated from /Users/dpazel/PycharmProjects/music_rep_melody/resources/LineGrammar.g4 by ANTLR 4.9.1
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
-from typing.io import TextIO
 import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
 
 
 from structure.LineGrammar.core.line_constructor import LineConstructor
 import sys
+
 
 def serializedATN():
     with StringIO() as buf:
@@ -144,7 +148,7 @@ class LineGrammarParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.7")
+        self.checkVersion("4.9.1")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -154,7 +158,9 @@ class LineGrammarParser ( Parser ):
         self._notelist = list()
 
 
+
     class MotifContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -218,7 +224,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class MotificElementContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -301,7 +309,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class PrimitiveNoteContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -391,7 +401,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class BeamContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -451,7 +463,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class TupletContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -530,7 +544,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class PitchContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -593,7 +609,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ToneContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -635,7 +653,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class DurationContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -708,7 +728,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class DurationFractionContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -758,7 +780,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class TonalityContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -772,6 +796,9 @@ class LineGrammarParser ( Parser ):
         def tone(self):
             return self.getTypedRuleContext(LineGrammarParser.ToneContext,0)
 
+
+        def TIE(self):
+            return self.getToken(LineGrammarParser.TIE, 0)
 
         def MODALITY(self):
             return self.getToken(LineGrammarParser.MODALITY, 0)
@@ -828,7 +855,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ChordTemplateContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -846,6 +875,9 @@ class LineGrammarParser ( Parser ):
         def tone(self):
             return self.getTypedRuleContext(LineGrammarParser.ToneContext,0)
 
+
+        def TIE(self):
+            return self.getToken(LineGrammarParser.TIE, 0)
 
         def CHORDMODALITY(self):
             return self.getToken(LineGrammarParser.CHORDMODALITY, 0)
@@ -982,7 +1014,9 @@ class LineGrammarParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class HarmonicTagContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
