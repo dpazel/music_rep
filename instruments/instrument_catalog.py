@@ -119,7 +119,7 @@ class InstrumentCatalog(InstrumentBase, Singleton):
                 if updown_txt != 'up' and updown_txt != 'down':
                     raise Exception(
                         'Illegal transpose up/down must be \'up\' or \'down\'  now \'{0}\''.format(updown_txt))
-                up_down = updown_txt is True
+                up_down = updown_txt == 'up'
                 transpose_interval = Interval.parse(c.get('interval'))
             elif c.tag == 'Articulations':
                 articulations = InstrumentCatalog._parse_articulations(c)
