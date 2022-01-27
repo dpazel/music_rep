@@ -38,7 +38,7 @@ class TestInstrumentCatalog(unittest.TestCase):
         assert instf is not None
         assert len(instf) > 1
         assert instf[0].name.startswith('Clarinet')
-        print('[{0}]'.format(','.join(str(s) for s in instf)))
+        print('[{0}]'.format(', '.join(str(inst) for inst in instf)))
 
     def test_transpose(self):
         c = InstrumentCatalog.instance()
