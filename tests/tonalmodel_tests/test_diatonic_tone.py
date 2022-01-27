@@ -56,5 +56,19 @@ class TestDiatonicTone(unittest.TestCase):
                         assert dd == calc_dd
                         print("{0} {1} {2}".format(tone1.diatonic_symbol, tone2.diatonic_symbol, dd))
 
+    def test_chromatic_extension(self):
+        inc = 2
+        tone = DiatonicFoundation.get_tone('E')
+        results = set()
+        for i in range(tone.diatonic_index, tone.diatonic_index + inc):
+            ltr = DiatonicTone.DIATONIC_LETTERS[i % len(DiatonicTone.DIATONIC_LETTERS)]
+            ltr_tone = DiatonicFoundation.get_tone(ltr)
+            for a in range(-2, 3):
+                t = DiatonicTone.alter_tone_by_augmentation(ltr_tone, a)
+                dist = t.placement - tone.placement if t.placement > tone.placement else t.placement - tone.placement + 12
+                if dist == inc:
+                    print(t)
+
+
 if __name__ == "__main__":
     unittest.main()
