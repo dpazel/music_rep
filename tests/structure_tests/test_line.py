@@ -8,6 +8,7 @@ from structure.note import Note
 from timemodel.duration import Duration
 from timemodel.offset import Offset
 from tonalmodel.diatonic_pitch import DiatonicPitch
+from structure.abstract_note import AbstractNote
 
 
 class TestLine(unittest.TestCase):
@@ -89,3 +90,12 @@ class TestLine(unittest.TestCase):
         print ('... end pinned notes ...')
 
         print('End test_pin')
+
+    def test_another_book_example(self):
+        # Creating a simple line of 2 eighth notes a quarter note and a half note.
+        vnote0 = Note(DiatonicPitch(4, 'a'), Duration(1, 8))
+        vnote1 = Note(DiatonicPitch(4, 'b'), Duration(1, 8))
+        vnote2 = Note(DiatonicPitch(4, 'c'), Duration(1, 4))
+        vnote3 = Note(DiatonicPitch(4, 'd'), Duration(1, 2))
+        line = Line([vnote0, vnote1, vnote2, vnote3])
+        AbstractNote.print_structure(line)
