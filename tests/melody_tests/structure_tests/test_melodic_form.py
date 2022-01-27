@@ -127,7 +127,7 @@ class TestMelodicForm(unittest.TestCase):
         assert phs[0].actors[0] == notes[10]
 
     def test_book_example(self):
-        line_str = '{<C-Major: I> iC:4 D E F G A B qC iC:3 D E F G A B qC}'
+        line_str = '{<C-Major: I> iC:4 D C F F A G A iC:5 D C F f A G A}'
         lge = LineGrammarExecutor()
         target_line, _ = lge.parse(line_str)
         notes = target_line.get_all_notes()
@@ -139,19 +139,19 @@ class TestMelodicForm(unittest.TestCase):
 
         cb = [
             NotEqualPitchConstraint([notes[4], notes[5]]),
-            EqualPitchConstraint([notes[6], notes[7]])
+            EqualPitchConstraint([notes[5], notes[7]])
         ]
 
         a = Motif([notes[0], notes[1], notes[2], notes[3]], ca, 'A')
         b = Motif([notes[4], notes[5], notes[6], notes[7]], cb, 'B')
 
         phrase_constraints = [
-            EqualPitchConstraint([notes[4], notes[5]]),
+            EqualPitchConstraint([notes[3], notes[4]]),
         ]
         phrase = Phrase([notes[2], notes[3], notes[4], notes[5]], phrase_constraints, 'P1')
 
         mf_constraints = [
-            EqualPitchConstraint([notes[2], notes[5]]),
+            NotEqualPitchConstraint([notes[2], notes[5]]),
         ]
 
         mf = MelodicForm([a, b], [phrase], mf_constraints, 'MF1')
