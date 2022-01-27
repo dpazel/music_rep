@@ -25,7 +25,7 @@ class TempoEvent(Event):
         if not isinstance(time, Position):
            raise Exception('time argument to TempoEvent must be Position not \'{0}\'.'.format(type(time)))
         Event.__init__(self, tempo, time)
-        
+
     def tempo(self):
         return self.object.tempo
     
