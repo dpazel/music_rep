@@ -108,5 +108,14 @@ class Test(unittest.TestCase):
         with self.assertRaises(Exception):
             c.tie()
 
+    def test_from_book(self):
+        # Quarter note at C:4
+        note = Note(DiatonicPitch(4, 'c'), Duration(1, 4))
+        print('{0} duration={1}'.format(note.diatonic_pitch, note.duration))
+        # Double dotted quarter not at F#:5
+        note = Note(DiatonicPitch(5, 'f#'), 'Q', 2)
+        print('{0} duration={1}'.format(note.diatonic_pitch, note.duration))
+
+
 if __name__ == "__main__":
     unittest.main()
