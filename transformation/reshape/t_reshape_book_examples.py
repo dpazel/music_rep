@@ -160,14 +160,14 @@ def reshape_with_spf():
     # The first note should have one of 3 values, C:4, E:4, G:4
     constraints = {
         ChordalPitchConstraint(all_notes[0]),
-        ChordalPitchConstraint(all_notes[8]),
-        ChordalPitchConstraint(all_notes[11]),
-        ChordalPitchConstraint(all_notes[14]),
+        ChordalPitchConstraint(all_notes[6]),
+        ChordalPitchConstraint(all_notes[9]),
+        ChordalPitchConstraint(all_notes[12]),
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'E:4')),
     }
 
     #motif = Motif(score.line, constraints, 'A')
-    motif = Motif([all_notes[0], all_notes[8], all_notes[11], all_notes[14]], constraints, 'A')
+    motif = Motif([all_notes[0], all_notes[6], all_notes[9], all_notes[12]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, Range(0, 3), melodic_form, True)
 
@@ -283,6 +283,6 @@ def motif_example():
 
 
 #simple_reshape_cpf()
-#reshape_with_spf()
+reshape_with_spf()
 #reshape_to_scale()
-motif_example()
+#motif_example()
