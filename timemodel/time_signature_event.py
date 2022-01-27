@@ -26,5 +26,8 @@ class TimeSignatureEvent(Event):
            raise Exception('time argument to TimeSignatureEvent must be Position not \'{0}\'.'.format(type(time)))
         Event.__init__(self, time_signature, time)
 
+    def time_signature(self):
+        return self.object.time_signature
+
     def __str__(self):
         return '[{0}, TimeSignature({1})]'.format(self.time, self.object)
