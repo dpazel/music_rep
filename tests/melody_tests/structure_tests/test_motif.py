@@ -176,7 +176,7 @@ class TestMotif(unittest.TestCase):
         s = Beam()
         s.append(Note(DiatonicPitch.parse('C:4'), Duration(1, 8)))
         s.append(Note(DiatonicPitch.parse('D:4'), Duration(1, 8)))
-        s.append(Note(DiatonicPitch.parse('E:4'), Duration(1, 8)))
+        s.append(Note(DiatonicPitch.parse('C:4'), Duration(1, 8)))
         s.append(Note(DiatonicPitch.parse('F#:4'), Duration(1, 8)))
         notes = s.get_all_notes()
 
@@ -188,10 +188,10 @@ class TestMotif(unittest.TestCase):
         m = Motif(s, c, 'A')
         cs = Beam()
 
-        cs.append(Note(DiatonicPitch.parse('C:3'), Duration(1, 8)))
-        cs.append(Note(DiatonicPitch.parse('D:3'), Duration(1, 8)))
-        cs.append(Note(DiatonicPitch.parse('E:3'), Duration(1, 8)))
-        cs.append(Note(DiatonicPitch.parse('F#:3'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('C:5'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('D:5'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('C:5'), Duration(1, 8)))
+        cs.append(Note(DiatonicPitch.parse('F#:5'), Duration(1, 8)))
 
         c_motif = m.copy_to(cs.get_all_notes()[0])
 
