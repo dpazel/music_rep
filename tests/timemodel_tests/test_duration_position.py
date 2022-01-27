@@ -250,6 +250,19 @@ class DurationPositionTest(unittest.TestCase):
         d2 = d.apply_dots(2)
         assert d2.duration == Fraction(7, 8)
 
+    def test_book_examples(self):
+        p = Position(13, 8)
+        d = Duration(3, 4)
+        p0 = p + d
+        p1 = p - d
+        print('{0} = {1} + {2}'.format(p0, p, d))
+        print('{0} = {1} - {2}'.format(p1, p, d))
+        p += Duration(1, 8)
+        print('p={0}'.format(p))
+        d = Duration(1, 4) + d
+        print('d={0}'.format(d))
+
+
 
 if __name__ == "__main__":
     unittest.main()
