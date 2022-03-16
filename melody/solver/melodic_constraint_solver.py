@@ -14,6 +14,7 @@ from melody.solver.msc_results import MCSResults
 from melody.solver.pitch_constraint_solver import PitchConstraintSolver
 
 from collections import OrderedDict
+from misc.ordered_set import OrderedSet
 
 from structure.note import Note
 from tonalmodel.diatonic_pitch import DiatonicPitch
@@ -101,7 +102,7 @@ class MelodicConstraintSolver(object):
                           full_results)
 
     def _build_p_map_dict(self, partial_pitch_results=None):
-        actors = set()
+        actors = OrderedSet()
         for p in self.pitch_constraints:
             actors = actors.union(p.actors)
 
