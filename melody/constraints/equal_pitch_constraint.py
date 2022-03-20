@@ -8,6 +8,7 @@ Purpose: Defines a two note policy where the second note's pitch must equal firs
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.pitch_scale import PitchScale
+from misc.ordered_set import OrderedSet
 
 
 class EqualPitchConstraint(AbstractConstraint):
@@ -80,7 +81,7 @@ class EqualPitchConstraint(AbstractConstraint):
                     break
 
         actual_note = Note(pitch, unassigned_note.base_duration, unassigned_note.num_dots)
-        return {actual_note}
+        return OrderedSet([actual_note])
 
     def __str__(self):
         note_str = ','.join([str(x) for x in self.actors])

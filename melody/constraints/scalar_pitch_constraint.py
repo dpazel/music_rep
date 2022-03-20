@@ -2,6 +2,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.chromatic_scale import ChromaticScale
 from tonalmodel.diatonic_pitch import DiatonicPitch
+from misc.ordered_set import OrderedSet
 
 
 class ScalarPitchConstraint(AbstractConstraint):
@@ -54,14 +55,14 @@ class ScalarPitchConstraint(AbstractConstraint):
             tones = [tones[i] for i in self.scalar_roles]
         if p_map[v_note].note is not None:
             tone = p_map[v_note].note.diatonic_pitch.diatonic_tone
-            return {self.actor_note} if tone in tones else None
+            return OrderedSet([self.actor_note]) if tone in tones else None
 
         pitch_range = policy_context.pitch_range
         start_partition = max(ChromaticScale.index_to_location(pitch_range.start_index)[0] - 1, 0)
         end_partition = min(ChromaticScale.index_to_location(pitch_range.end_index)[0] + 1,
                             ChromaticScale.CHROMATIC_END[0])
 
-        valid_set = set()
+        valid_set = OrderedSet()
 
         for tone in tones:
             for j in range(start_partition, end_partition + 1):

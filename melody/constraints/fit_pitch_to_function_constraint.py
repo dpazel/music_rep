@@ -9,6 +9,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from structure.time_signature import BeatType
 from timemodel.time_conversion import TimeConversion
+from misc.ordered_set import OrderedSet
 
 '''
 Notes on FitPitchToFunctionConstraint:
@@ -110,7 +111,7 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
             self.candidate_pitches.append((e, True) if e is not None else (p, False))
 
         if len(self.candidate_pitches) == 0:
-            return set()
+            return OrderedSet()
 
         v_note_beat_position = self._get_beat_position(v_note.get_absolute_position())
 
@@ -118,14 +119,14 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
         if len(self.candidate_pitches) == 1:
             # if is scalar, use it
             if self.candidate_pitches[0][1]:
-                return {Note(self.candidate_pitches[0][0], v_note.base_duration, v_note.num_dots)}
+                return OrderedSet([Note(self.candidate_pitches[0][0], v_note.base_duration, v_note.num_dots)])
             # non-scalar
             # if on beat and half step off from chord tone, do not use
             if v_note_beat_position is not None and v_note_beat_position == BeatType.Strong:
                 if FitPitchToFunctionConstraint._pitch_is_halfstep_off_chord(self.candidate_pitches[0][0], hc):
                     return set()
             # otherwise use
-            return {Note(self.candidate_pitches[0][0], v_note.base_duration, v_note.num_dots)}
+            return OrderedSet([Note(self.candidate_pitches[0][0], v_note.base_duration, v_note.num_dots)])
 
         # if 2 pitch solution
         if len(self.candidate_pitches) == 2:
@@ -134,16 +135,16 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
                 interp = self.pitch_function.pitch_range_interpreter
                 index = min(enumerate(self.candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]   # CHECK ERROR
                 # return pitch closest to curve value
-                return {Note(self.candidate_pitches[index][0], v_note.base_duration, v_note.num_dots)}
+                return OrderedSet([Note(self.candidate_pitches[index][0], v_note.base_duration, v_note.num_dots)])
             elif not self.candidate_pitches[0][1] and not self.candidate_pitches[1][1]:
                 index = min(enumerate(self.candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]
                 pitch = self.candidate_pitches[index]
                 # if on beat and half step off from chord tone, do not use
                 if v_note_beat_position is not None:
-                    if FitPitchToFunctionConstraint._pitch_is_halfstep_off_chord(pitch, hc):
-                        return set()
+                    if FitPitchToFunctionConstraint._pitch_is_halfstep_off_chord(pitch[0], hc):
+                        return OrderedSet()
                 # otherwise use
-                return {Note(pitch, v_note.base_duration, v_note.num_dots)}
+                return OrderedSet([Note(pitch[0], v_note.base_duration, v_note.num_dots)])
             else:
                 scalar_pitch = self.candidate_pitches[0][0] if self.candidate_pitches[0][1] \
                     else self.candidate_pitches[1][0]
@@ -152,9 +153,9 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
                 scalar_bias = (scalar_pitch.chromatic_distance - self.function_value) /\
                     abs(scalar_pitch.chromatic_distance - nonscalar_pitch.chromatic_distance)
                 if v_note_beat_position is not None or scalar_bias <= FitPitchToFunctionConstraint.SCALAR_BIAS_WEIGHT:
-                    return {Note(scalar_pitch, v_note.base_duration, v_note.num_dots)}
+                    return OrderedSet([Note(scalar_pitch, v_note.base_duration, v_note.num_dots)])
                 else:
-                    return {Note(nonscalar_pitch, v_note.base_duration, v_note.num_dots)}
+                    return OrderedSet([Note(nonscalar_pitch, v_note.base_duration, v_note.num_dots)])
         else:
             raise Exception('Internal error - more than 2 candidate pitches.')
 

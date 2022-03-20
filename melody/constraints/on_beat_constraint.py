@@ -9,6 +9,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.time_signature import BeatType
 from timemodel.position import Position
 from timemodel.time_conversion import TimeConversion
+from misc.ordered_set import OrderedSet
 
 
 class OnBeatConstraint(AbstractConstraint):
@@ -75,7 +76,8 @@ class OnBeatConstraint(AbstractConstraint):
         beat_index = (beat_position.beat + 1) % ts.beats_per_measure
         delta_t = ts.beat_duration if beat_position.beat_fraction == 0 else \
             ts.beat_duration * (1 - beat_position.beat_fraction)
-        deltas = set()
+
+        deltas = OrderedSet()
         for i in range(0, num_beats):
             if (self.beat_ids is not None and beat_index in self.beat_ids) or \
                (self.beat_type is not None and self.beat_type == ts.beat_type(beat_index)):

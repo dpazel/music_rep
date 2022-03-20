@@ -8,6 +8,7 @@ Purpose: Constraint that computes a second pitch from the first based on relativ
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.pitch_scale import PitchScale
+from misc.ordered_set import OrderedSet
 
 
 class RelativeScalarStepConstraint(AbstractConstraint):
@@ -100,14 +101,17 @@ class RelativeScalarStepConstraint(AbstractConstraint):
             raise Exception('v_note specification does not match any v_note in constraints.')
 
         if p_map[target].note is not None:
-            return {p_map[target].note}
+            return OrderedSet([p_map[target].note])
 
         arg_contextual_note = p_map[source]
         target_contextual_note = p_map[target]
 
         if arg_contextual_note.note is None:
             pitches = p_map.all_tonal_pitches(v_note)
-            return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
+            answer = OrderedSet()
+            for p in pitches:
+                answer.add(Note(p, v_note.base_duration, v_note.num_dots))
+            return answer
 
         return self.compute_result(arg_contextual_note, target_contextual_note, down_steps, up_steps)
 
@@ -120,7 +124,8 @@ class RelativeScalarStepConstraint(AbstractConstraint):
             down_steps,
             up_steps)
 
-        result = {Note(pitch, self.note_two.base_duration, self.note_two.num_dots)
-                  for pitch in pitches}
+        result = OrderedSet()
+        for pitch in pitches:
+            result.add(Note(pitch, self.note_two.base_duration, self.note_two.num_dots))
 
         return result

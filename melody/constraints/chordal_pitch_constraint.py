@@ -8,6 +8,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.chromatic_scale import ChromaticScale
+from misc.ordered_set import OrderedSet
 
 
 class ChordalPitchConstraint(AbstractConstraint):
@@ -75,7 +76,7 @@ class ChordalPitchConstraint(AbstractConstraint):
         end_partition = min(ChromaticScale.index_to_location(pitch_range.end_index)[0] + 1,
                             ChromaticScale.CHROMATIC_END[0])
 
-        valid_set = set()
+        valid_set = OrderedSet()
         for tone in tones:
             for i in range(start_partition, end_partition + 1):
                 pitch = DiatonicPitch(i, tone[0])

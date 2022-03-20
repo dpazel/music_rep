@@ -7,6 +7,7 @@ Purpose: Constraint that affirms a single note must comply to have a specified p
 """
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
+from misc.ordered_set import OrderedSet
 
 
 class FixedPitchConstraint(AbstractConstraint):
@@ -49,7 +50,7 @@ class FixedPitchConstraint(AbstractConstraint):
             raise Exception("Illegal v_note {0} for constraint".format(v_note))
         if p_map[v_note].note is not None:
             if p_map[v_note].note.diatonic_pitch.chromatic_distance == self.pitch.chromatic_distance:
-                return {p_map[v_note].note}
+                return OrderedSet([p_map[v_note].note])
             raise Exception('Fixed Pitch Constraint Violated has {0} should be {1}'.format(
                 p_map[v_note].note.diatonic_pitch, self.pitch))
 
@@ -62,4 +63,4 @@ class FixedPitchConstraint(AbstractConstraint):
                 break
 
         actual_note = Note(pitch, self.actor_note.base_duration, self.actor_note.num_dots)
-        return {actual_note}
+        return OrderedSet([actual_note])

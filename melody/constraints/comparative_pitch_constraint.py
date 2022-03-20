@@ -10,6 +10,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.pitch_range import PitchRange
 from tonalmodel.pitch_scale import PitchScale
+from misc.ordered_set import OrderedSet
 
 
 class ComparativePitchConstraint(AbstractConstraint):
@@ -144,4 +145,8 @@ class ComparativePitchConstraint(AbstractConstraint):
                 source_pitch.chromatic_distance == pitches[0].chromatic_distance:
             del pitches[0]
 
-        return {Note(pitch, target.base_duration, target.num_dots) for pitch in pitches}
+        answer = OrderedSet()
+        for pitch in pitches:
+            answer.add(Note(pitch, target.base_duration, target.num_dots))
+        return answer
+

@@ -8,6 +8,7 @@ Purpose: Constraint that compute a second pitch from the first based on a number
 from melody.constraints.abstract_constraint import AbstractConstraint
 from tonalmodel.pitch_scale import PitchScale
 from structure.note import Note
+from misc.ordered_set import OrderedSet
 
 
 class PitchStepConstraint(AbstractConstraint):
@@ -96,14 +97,18 @@ class PitchStepConstraint(AbstractConstraint):
             raise Exception('v_note specification does not match any v_note in constraints.')
 
         if p_map[v_target_note].note is not None:
-            return {p_map[v_target_note].note}
+            return OrderedSet([p_map[v_target_note].note])
 
         arg_contextual_note = p_map[v_source_note]
         target_contextual_note = p_map[v_target_note]
 
         if arg_contextual_note.note is None:
             pitches = p_map.all_tonal_pitches(v_target_note)
-            return {Note(p, v_target_note.base_duration, v_target_note.num_dots) for p in pitches}
+            result = OrderedSet()
+            for p in pitches:
+                result.add(Note(p, v_target_note.base_duration, v_target_note.num_dots))
+            return result
+            #return {Note(p, v_target_note.base_duration, v_target_note.num_dots) for p in pitches}
 
         return self.compute_result(arg_contextual_note, target_contextual_note, up_down)
 
@@ -134,4 +139,4 @@ class PitchStepConstraint(AbstractConstraint):
             return None
 
         end_pitch = scale[end_index]
-        return {Note(end_pitch, self.note_two.base_duration, self.note_two.num_dots)}
+        return OrderedSet([Note(end_pitch, self.note_two.base_duration, self.note_two.num_dots)])

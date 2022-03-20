@@ -8,6 +8,7 @@ Purpose: Ordered list of notes that vary by a number of diatonic steps.
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.pitch_scale import PitchScale
+from misc.ordered_set import OrderedSet
 
 
 class StepSequenceConstraint(AbstractConstraint):
@@ -71,7 +72,7 @@ class StepSequenceConstraint(AbstractConstraint):
             raise Exception('Cannot find v_note in constraints actors')
 
         if p_map[v_note].note is not None:
-            return {p_map[v_note].note}
+            return OrderedSet([p_map[v_note].note])
 
         # find the first assigned note
         assigned_index = None
@@ -82,7 +83,7 @@ class StepSequenceConstraint(AbstractConstraint):
 
         if assigned_index is None:
             pitches = p_map.all_tonal_pitches(v_note)
-            return [Note(p, v_note.base_duration, v_note.num_dots) for p in pitches]
+            return OrderedSet([Note(p, v_note.base_duration, v_note.num_dots) for p in pitches])
 
         known_note = p_map[self.actors[assigned_index]].note
         if assigned_index < index:
@@ -101,12 +102,12 @@ class StepSequenceConstraint(AbstractConstraint):
                 pitch_index = self.variance_list[i - 1] + (len(pitches) - 1 if self.variance_list[i - 1] < 0 else 0)
                 if pitch_index < 0 or pitch_index >= len(pitches):
                     if pitches is None or len(pitches) == 0:
-                       return {}
+                       return OrderedSet()
                     pitch = pitches[0] if pitch_index < 0 else pitches[len(pitches) - 1]
                 else:
                     pitch = pitches[pitch_index]
                 known_note = Note(pitch, self.actors[i].base_duration, self.actors[i].num_dots)
-            return {known_note}
+            return OrderedSet([known_note])
 
         for i in range(assigned_index - 1, index - 1, -1):
             unknown_contextual_note = p_map[self.actors[i]]
@@ -127,4 +128,4 @@ class StepSequenceConstraint(AbstractConstraint):
                 pitch_index = len(pitches) - 1
             pitch = pitches[pitch_index]
             known_note = Note(pitch, self.actors[i].base_duration, self.actors[i].num_dots)
-        return {known_note}
+        return OrderedSet([known_note])

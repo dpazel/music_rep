@@ -8,6 +8,7 @@ Purpose: An N-note constraint directing that actor notes fall within a specific 
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.pitch_scale import PitchScale
+from misc.ordered_set import OrderedSet
 
 
 class PitchRangeConstraint(AbstractConstraint):
@@ -47,10 +48,14 @@ class PitchRangeConstraint(AbstractConstraint):
         if v_note in unassigned:
             tonality = p_map[v_note].policy_context.harmonic_context.tonality
             pitches = PitchScale.compute_tonal_pitches(tonality, self.pitch_range)
-            return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
+            answer = OrderedSet()
+            for p in pitches:
+                answer.add(Note(p, v_note.base_duration, v_note.num_dots))
+            return answer
+            # return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
 
         if v_note in assigned:
-            return {p_map[v_note].note}
+            return OrderedSet([p_map[v_note].note])
 
         raise Exception('{0} is not in actor list for pitch range constraints.'.format(v_note.note))
 

@@ -9,6 +9,7 @@ from melody.constraints.abstract_constraint import AbstractConstraint
 from tonalmodel.pitch_scale import PitchScale
 from tonalmodel.pitch_range import PitchRange
 from structure.note import Note
+from misc.ordered_set import OrderedSet
 
 
 class RelativeDiatonicConstraint(AbstractConstraint):
@@ -95,14 +96,18 @@ class RelativeDiatonicConstraint(AbstractConstraint):
             raise Exception('v_note specification does not match any v_note in constraints.')
 
         if p_map[target].note is not None:
-            return {p_map[target].note}
+            return OrderedSet([p_map[target].note])
 
         arg_contextual_note = p_map[source]
         target_contextual_note = p_map[target]
 
         if arg_contextual_note.note is None:
             pitches = p_map.all_tonal_pitches(v_note)
-            return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
+            result = OrderedSet()
+            for p in pitches:
+                result.add(Note(p, v_note.base_duration, v_note.num_dots))
+            return result
+            # return {Note(p, v_note.base_duration, v_note.num_dots) for p in pitches}
 
         return self.compute_result(arg_contextual_note, target_contextual_note, up_intvl, down_intvl)
 
@@ -124,12 +129,15 @@ class RelativeDiatonicConstraint(AbstractConstraint):
         r_end = min(chromatic_distance_end, target_contextual_note.policy_context.pitch_range.end_index)
 
         if r_start > r_end:
-            return {}
+            return OrderedSet()
 
         pitch_range = PitchRange(r_start, r_end)
         pitch_scale = PitchScale(target_contextual_note.policy_context.harmonic_context.tonality, pitch_range)
 
-        v_result = {Note(pitch, self.note_two.base_duration, self.note_two.num_dots)
-                    for pitch in pitch_scale.pitch_scale}
+        result = OrderedSet()
+        for pitch in pitch_scale.pitch_scale:
+            result.add(Note(pitch, self.note_two.base_duration, self.note_two.num_dots))
+        # v_result = {Note(pitch, self.note_two.base_duration, self.note_two.num_dots)
+        #             for pitch in pitch_scale.pitch_scale}
 
-        return v_result
+        return result

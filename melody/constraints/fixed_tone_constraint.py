@@ -10,6 +10,7 @@ from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 from tonalmodel.pitch_scale import PitchScale
 from tonalmodel.chromatic_scale import ChromaticScale
+from misc.ordered_set import OrderedSet
 
 
 class FixedToneConstraint(AbstractConstraint):
@@ -65,7 +66,7 @@ class FixedToneConstraint(AbstractConstraint):
                     tone = t
                     break
 
-        valid_set = set()
+        valid_set = OrderedSet()
         for i in range(start_partition, end_partition + 1):
             pitch = DiatonicPitch(i, tone)
             if pitch_range.is_pitch_inbounds(pitch):

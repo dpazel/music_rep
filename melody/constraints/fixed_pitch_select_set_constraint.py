@@ -7,6 +7,7 @@ Purpose: Constraint that fixes choice of pitches for a note from a specific set 
 """
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
+from misc.ordered_set import OrderedSet
 
 
 class FixedPitchSelectSetConstraint(AbstractConstraint):
@@ -53,9 +54,9 @@ class FixedPitchSelectSetConstraint(AbstractConstraint):
             raise Exception("Illegal v_note {0} for constraint".format(v_note))
         if p_map[v_note].note is not None:
             if p_map[v_note].note.diatonic_pitch.chromatic_distance in (p.chromatic_distance for p in self.pitches):
-                return {p_map[v_note].note}
-            raise Exception('Fixed Pitch Select Set Constraint Violated has {0} should be {1}'.format(
-                p_map[v_note].note.diatonic_pitch, self.pitch))
+                return OrderedSet[p_map[v_note].note]
+            raise Exception('Fixed Pitch Select Set Constraint Violated has {0} not in pitch set'.format(
+                p_map[v_note].note.diatonic_pitch))
 
         # Return all pitches (self.pitches) except though, for each
         # select a representation closest to the target tonality, if it exists.
@@ -69,4 +70,8 @@ class FixedPitchSelectSetConstraint(AbstractConstraint):
                     break
             result_pitches.append(found_pitch)
 
-        return {Note(p, self.actor_note.base_duration, self.actor_note.num_dots) for p in result_pitches}
+        result = OrderedSet()
+        for p in result_pitches:
+            result.add(Note(p, self.actor_note.base_duration, self.actor_note.num_dots))
+        return result
+        # return {Note(p, self.actor_note.base_duration, self.actor_note.num_dots) for p in result_pitches}

@@ -7,6 +7,7 @@ Purpose: Defines a two note constraint where the second note's pitch must equal 
 """
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
+from misc.ordered_set import OrderedSet
 
 
 class NotEqualPitchConstraint(AbstractConstraint):
@@ -56,7 +57,7 @@ class NotEqualPitchConstraint(AbstractConstraint):
         if v_note not in unassigned:
             raise Exception('{0} is not in actor list of not equal pitch constraints.'.format(v_note.note))
 
-        e_set = set()
+        e_set = OrderedSet()
         for v in assigned:
             e_set.add(p_map[v].note)
 
@@ -66,14 +67,14 @@ class NotEqualPitchConstraint(AbstractConstraint):
     def compute_full_result(p_map, v_note, e_set):
         pitches = p_map.all_tonal_pitches(v_note)
         e_chrm_list = [n.diatonic_pitch.chromatic_distance for n in e_set]
-        del_set = set()
+        del_set = OrderedSet()
         for p in pitches:
             if p.chromatic_distance in e_chrm_list:
                 del_set.add(p)
 
         pitches = [p for p in pitches if p not in del_set]
 
-        return [Note(p, v_note.base_duration, v_note.num_dots) for p in pitches]
+        return OrderedSet([Note(p, v_note.base_duration, v_note.num_dots) for p in pitches])
 
     @staticmethod
     def validity_check(note_list):
