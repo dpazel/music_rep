@@ -1,4 +1,6 @@
-
+"""
+Example for Dilation in book.
+"""
 from transformation.dilation.t_dilation import TDilation
 from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from timemodel.position import Position
@@ -15,8 +17,8 @@ from instruments.instrument_catalog import InstrumentCatalog
 from fractions import Fraction
 
 
-def bach_example():
-    print('----- Bach example French Suite II BWV 813 -----')
+def bach_french_suite_II_BWV813():
+    print('----- Bach French Suite II BWV 813 -----')
 
     # Minuet MM 1-4 3/4 T.S. 42-46==dotted half  p.46 Bach text
     title = 'Bach, French Suite II BWV 813, MM 1-4 3/4 T.S. 42-46==dotted half f=2 (False, False)'
@@ -36,7 +38,7 @@ def bach_example():
     print_score(title, new_score)
 
 
-def mozart_example():
+def mozart_sonata_in_a_KV331():
     print('----- Mozart example Sonata in A KV331 -----')
 
     # I MM 1-4 6/8 T.S. 42-46==dotted half  p.46 Bach text
@@ -57,23 +59,8 @@ def mozart_example():
     print_score(title, new_score)
 
 
-def crazy_example():
-    print('----- Simple example with odd factor -----')
-
-    title = 'Simple example, 4/4 T.S. 60==eighth f=1/4 (True, False)'
-    simple_line = '{<C-Major:i>qG:4 E:5 C B:4 <:IV> iA G B C:5 D E F E <:V> qD C iB:4 A B A <:I> wE}'
-    lite_score = create_score(simple_line, 'piano', (60, Duration(1, 4)), (4, Duration(1, 4)))
-    trans = TDilation(lite_score)
-
-    new_score = trans.apply(Fraction(4, 7), True, False)
-    print_score(title, new_score)
-
-    title = 'Simple example, 4/4 T.S. 60==eighth f=1/4 (True, True)'
-    new_score = trans.apply(Fraction(4, 7), True, True)
-    print_score(title, new_score)
-
-def crazy_example_1():
-    print('----- Second Simple example with odd factor used in book -----')
+def odd_factor_example():
+    print('----- Example with odd factor used in book -----')
 
     title = 'Simple example, 4/4 T.S. 60==eighth f=1/4 (True, False)'
     simple_line = '{<F-Major:i>qF:4 F ig a g Bb <:V> qC:5 C E D <:VI> id c d c a:4 g a f <:V> hG}'
@@ -161,8 +148,9 @@ def create_score(line_text, instrument, tmpo, ts):
 
     return LiteScore(source_instance_line, source_instance_hct, instrument, tempo_seq, ts_seq)
 
+# in text
+# odd_factor_example()
 
-#bach_example()
-mozart_example()
-#crazy_example()
-#crazy_example_1()
+# Examples
+# bach_french_suite_II_BWV813()
+# mozart_sonata_in_a_KV331()

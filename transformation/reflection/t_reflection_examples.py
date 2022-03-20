@@ -62,7 +62,8 @@ def print_hct(hct):
     print(hcs)
 
 
-def simple_flip_example():
+def simple_reflection_example():
+    print('-------------- Simple reflection  --------------------------')
     source_expression = '{<C-Major: I> iC:4 C qD E <:IV> iF G hA <:V> ig b qf g <:VI> ie e qd ic d <:I> h@c}'
 
     t_flip = TDiatonicReflection.create(source_expression, DiatonicPitch.parse('F:4'))
@@ -72,7 +73,7 @@ def simple_flip_example():
     print_hct(t_flip.source_hct)
     print()
 
-    print('Flip on F:4')
+    print('Flip on F:4 (Figure 16.9)')
     target_line, target_hct = t_flip.apply()
 
     print_line(target_line)
@@ -83,13 +84,14 @@ def simple_flip_example():
 
     target_line, target_hct = t_reflect.apply()
 
-    print('Flip on A:4')
+    print('Flip on A:4 (Figure 16.10)')
     print_line(target_line)
     print_hct(target_hct)
     print()
 
 
 def cue_examples():
+    print('--------------  Cue examples  --------------------------')
     source_expression = '{<Bb-Major: I> sBb:4 A G F qEb D sF g iA i@Bb sF <:IVMaj7> ' \
                         'ir Eb sEb F G A iBb sEb:5 F i@Eb C ' \
                         '<:IIIMin7> sR F:5 Eb D C Bb:4 C:5 D i@Eb sC sr G:4 A G <:I> sG:5 F Eb D D C Bb:4 A ir q@G}'
@@ -100,18 +102,19 @@ def cue_examples():
     print_hct(t_flip.source_hct)
     print()
 
-    print('Flip on Eb:4')
+    print('Flip on Eb:4 (Figure 16.12)')
     target_line, target_hct = t_flip.apply()
 
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    print('Shift up an octave:')
+    print('Shift up an octave (Figure 16.13)')
     t_shift = TShift(target_line, target_hct, TonalInterval.parse('P:8'))
     final_line, final_hct = t_shift.apply()
     print_line(final_line)
     print_hct(final_hct)
+
 
 def chromatic_reflection():
     print('Chromatic_Reflection')
@@ -125,14 +128,14 @@ def chromatic_reflection():
     print_hct(t_flip.source_hct)
     print()
 
-    print('Flip on G:4')
+    print('Flip on G:4  ')
     target_line, target_hct = t_flip.apply()
 
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    print('Shift up an octave:')
+    print('Shift up an octave (Figure 16.16)')
     t_shift = TShift(target_line, target_hct, TonalInterval.parse('P:8'))
     final_line, final_hct = t_shift.apply()
     print_line(final_line)
@@ -145,27 +148,27 @@ def chromatic_reflection():
     print_hct(t_flip.source_hct)
     print()
 
-    print('Upper Flip on G:4')
+    print('Upper Flip on G:4 ')
     target_line, target_hct = t_flip.apply()
 
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    print('Shift up an octave:')
+    print('Shift up an octave (Figure 16.17)')
     t_shift = TShift(target_line, target_hct, TonalInterval.parse('P:8'))
     final_line, final_hct = t_shift.apply()
     print_line(final_line)
     print_hct(final_hct)
 
-   # Center-Tone to lower
+    # Center-Tone to lower
     t_flip = TChromaticReflection.create(source_expression, DiatonicPitch.parse('G:4'), FlipType.LowerNeighborOfPair)
     print('Flip examples based on:')
     print_line(t_flip.source_line)
     print_hct(t_flip.source_hct)
     print()
 
-    print('Lower Flip on G:4')
+    print('Lower Flip on G:4 (Figure 16.18)')
     target_line, target_hct = t_flip.apply()
 
     print_line(target_line)
@@ -178,20 +181,23 @@ def chromatic_reflection():
     print_line(final_line)
     print_hct(final_hct)
 
+
 def chromatic_book_example():
-    print('Chromatic_Reflection')
+    print('Chromatic_Reflection (Figure 16.20)')
     source_expression = '{<C-NaturalMinor: I> qC:4 ieb f g ab <:V> Bb ab gc f eb d <:IV> q@f ig eb d ' \
                         '<:VI> q@Eb id eb d <:I> h@c }'
 
     t_flip = TChromaticReflection.create(source_expression, DiatonicPitch.parse('Ab:4'))
     target_line, target_hct = t_flip.apply()
 
+    # The key Bbb-Major but we use A-Major
+
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-
-#simple_flip_example()
-#cue_examples()
-#chromatic_reflection()
-chromatic_book_example()
+# In Text and Examples
+# simple_reflection_example()
+# cue_examples()
+# chromatic_reflection()
+# chromatic_book_example()

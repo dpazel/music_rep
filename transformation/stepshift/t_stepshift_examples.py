@@ -1,10 +1,12 @@
+"""
+Examples from StepShift in book.
+"""
 from transformation.stepshift.t_stepshift import TStepShift, SecondaryShiftType
 from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 
 
-
 def simple_sequence_example():
-    print('----- Simple Sequence Example -----')
+    print('----- Simple Sequence Example (Figure 22.4) -----')
 
     line_text = '{<E-Major:I>iE:5 f# G# F# E f# }'
     lge = LineGrammarExecutor()
@@ -22,8 +24,9 @@ def simple_sequence_example():
     new_line, new_hct = trans.apply(-3)
     print_score('\n[3]: ', new_line, new_hct)
 
+
 def standard_modulation_example():
-    print('----- Standard Modulation Example -----')
+    print('----- Standard Modulation Example (Figure 22.5) -----')
 
     line_text = '{<C-Major:I> (i, 2)[iC:5 E D] <:V/ii> c#:5 b:4 c#:5 e <:ii> f d b:4 a}'
     lge = LineGrammarExecutor()
@@ -37,10 +40,10 @@ def standard_modulation_example():
     new_line, new_hct = trans.apply(2)
     print_score('\n[2]: ', new_line, new_hct)
 
-def tonal_modulation_example():
-    print('----- Tonal Modulation Example -----')
 
-    #line_text = '{<C-Major:I> (i, 2)[iC:5 E D] <:V/ii> c# b c# e <:ii> f d b:4 a}'
+def tonal_modulation_example():
+    print('----- Tonal Modulation Example (Figure 22.6)  -----')
+
     line_text = '{<C-Major:I> (i, 2)[iC:5 E D] <:V/ii> c#:5 b:4 c#:5 e <:ii> f d b:4 a}'
 
     lge = LineGrammarExecutor()
@@ -54,10 +57,9 @@ def tonal_modulation_example():
     new_line, new_hct = trans.apply(2)
     print_score('\n[2]: ', new_line, new_hct)
 
-def tonal_modulation_CMinor_Tonal_example():
-    print('----- Tonal Modulation C-Minor Tonal Example -----')
 
-    #line_text = '{<C-MelodicMinor:I>qC:4 Eb G <:V/ii> a c# e <:ii> d f a}'
+def tonal_modulation_CMinor_tonal_example():
+    print('----- Tonal Modulation C-Minor Tonal Example (Figure 22.7) -----')
 
     line_text = '{<C-MelodicMinor:I> (i, 2)[iC:5 Eb D] <:V/ii> c# b c# e <:ii> f d b:4 a}'
 
@@ -72,10 +74,9 @@ def tonal_modulation_CMinor_Tonal_example():
     new_line, new_hct = trans.apply(2)
     print_score('\n[2]: ', new_line, new_hct)
 
-def tonal_modulation_CNaturalMinor_Tonal_example():
-    print('----- Tonal Modulation C-NaturalMinor Tonal Example -----')
 
-    # line_text = '{<C-MelodicMinor:I>qC:4 Eb G <:V/ii> a c# e <:ii> d f a}'
+def tonal_modulation_CNaturalMinor_tonal_example():
+    print('----- Tonal Modulation C-NaturalMinor Tonal Example (Figure 22.8) -----')
 
     line_text = '{<C-NaturalMinor:I> (i, 2)[iC:5 Eb D] <:V/ii> c#:5 B:4 c#:5 e <:ii> f d Bb:4 Ab}'
 
@@ -90,10 +91,8 @@ def tonal_modulation_CNaturalMinor_Tonal_example():
     new_line, new_hct = trans.apply(2)
     print_score('\n[2]: ', new_line, new_hct)
 
-def tonal_modulation_All_NaturalMinor_Tonal_example():
+def tonal_modulation_all_NaturalMinor_tonal_example():
     print('----- Tonal Modulation C-NaturalMinor Tonal Example -----')
-
-    # line_text = '{<C-MelodicMinor:I>qC:4 Eb G <:V/ii> a c# e <:ii> d f a}'
 
     line_text = '{<C-NaturalMinor:I> (i, 2)[iC:5 Eb D] <:V/ii-Natural> c:5 Bb:4 c:5 e <:ii> f d Bb:4 Ab}'
 
@@ -126,9 +125,11 @@ def print_hct(hct):
     for hc in hcs:
         print('[{0}] HC({1}, {2}, {3}, {4})'.format(count, hc.tonality, hc.chord, hc.duration, hc.position))
 
-#simple_sequence_example()
-#standard_modulation_example()
-#tonal_modulation_example()
-#tonal_modulation_CMinor_Tonal_example()
-#tonal_modulation_CNaturalMinor_Tonal_example()
-tonal_modulation_All_NaturalMinor_Tonal_example()
+
+# Examples
+# simple_sequence_example()
+# standard_modulation_example()
+# tonal_modulation_example()
+# tonal_modulation_CMinor_tonal_example()
+# tonal_modulation_CNaturalMinor_tonal_example()
+# tonal_modulation_all_NaturalMinor_tonal_example()

@@ -1,4 +1,16 @@
-import logging
+"""
+Example for retrograde as found in book.
+
+ Why don't the results match those in the book?
+ At the time of writing the book, the constraint engine had a bug wherein correct results were generated randomly. This
+ was a result of using Python sets which do not have a stable iteration property (successiver iterations on the same
+ set can be different). To stabilize the constraint, all usages of set() were replaced with OrderedSet() which is
+ stable on iteration. Consequently, searches over large spaces result in different answers, wherein prior, the searches
+ could/would start at random places in the search space, and potentially provide better answers that are in the book.
+
+ A proposal is to add futher constraints to contour analysis that deal with successive intervals and not just
+ comparative notes.
+"""
 from fractions import Fraction
 
 from instruments.instrument_catalog import InstrumentCatalog
@@ -13,7 +25,6 @@ from timemodel.tempo_event import TempoEvent
 from timemodel.tempo_event_sequence import TempoEventSequence
 from timemodel.time_signature_event import TimeSignatureEvent
 from transformation.retrograde.t_retrograde import TRetrograde
-from misc.interval import Interval as NumericInterval, BoundaryPolicy
 
 
 def create_score(line_expression, instrument, ts):
@@ -29,6 +40,7 @@ def create_score(line_expression, instrument, ts):
     instrument = c.get_instrument(instrument)
 
     return LiteScore(source_instance_line, source_instance_hct, instrument, tempo_seq, ts_seq)
+
 
 def duration_ltr(duration):
     if duration.duration == Fraction(1, 16):
@@ -46,6 +58,7 @@ def duration_ltr(duration):
     elif duration.duration == Fraction(1):
         return 'w'
     return '>'
+
 
 def str_line(line):
     notes = line.get_all_notes()
@@ -97,10 +110,12 @@ def simple_melodic_reversal():
 
     print()
 
+
 def mozart_kv238_m8_9():
     print('----- test mozart kv238 G-Major reversal -----')
 
-    source_instance_expression = '{<G-Major:I> sD:5 E F# G A B C:6 D <:IV> C B:5 A G <:VDom7> sF# E D C <:I> B:4 D:5 B:4 G <:VDom7> A C:5 A:4 F# }'
+    source_instance_expression = '{<G-Major:I> sD:5 E F# G A B C:6 D <:IV> C B:5 A G <:VDom7> sF# E D C <:I>' \
+                                 ' B:4 D:5 B:4 G <:VDom7> A C:5 A:4 F# }'
 
     lite_score = create_score(source_instance_expression, 'piano', (3, 4, 'sww'))
 
@@ -129,6 +144,6 @@ def mozart_kv238_m8_9():
 
     print()
 
-
-simple_melodic_reversal()
-mozart_kv238_m8_9()
+# examples
+# simple_melodic_reversal()
+# mozart_kv238_m8_9()

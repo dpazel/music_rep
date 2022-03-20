@@ -86,8 +86,10 @@ def str_line(line):
     s = ' '.join(annotation for annotation in note_annotations)
     return s
 
+
 def print_line(line):
     print(str_line(line))
+
 
 def sinasoidal(v):
     """
@@ -104,7 +106,7 @@ def three_sin(v):
 
 
 def simple_reshape_cpf():
-    print('----- test_simple_reshape_cpf -----')
+    print('----- test_simple_reshape_cpf (Fgure 17.21) -----')
 
     line_str = '{<C-Major: I> iE:4 E E E E E E E <:IV> qE ie e <:V> qe ie e <:VI>  qE E iE E E E}'
     score = create_score(line_str, 'violin', (3, 4, 'sww'))
@@ -132,18 +134,18 @@ def simple_reshape_cpf():
 
     results = t_reshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    filters = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(filters.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(filters.scored_results))):
+        result = filters.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
 
     print('Chords: {0}'.format(','.join([str(c) for c in score.hct.hc_list()])))
 
 
 def reshape_with_spf():
-    print('----- test_reshape_with_spf -----')
+    print('----- test_reshape_with_spf (Fgure 17.22) -----')
 
     line_str = '{<C-Major: I> iE:4 E E E E q@E <:IV> qE ie e <:V> qe ie e <:VI>  qE E iE E E E}'
 
@@ -166,20 +168,18 @@ def reshape_with_spf():
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'E:4')),
     }
 
-    #motif = Motif(score.line, constraints, 'A')
     motif = Motif([all_notes[0], all_notes[6], all_notes[9], all_notes[12]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, Range(0, 3), melodic_form, True)
 
     results = t_reshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    filters = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(filters.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(filters.scored_results))):
+        result = filters.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
-
 
     constraints = {
         ChordalPitchConstraint(all_notes[0]),
@@ -189,11 +189,6 @@ def reshape_with_spf():
         ChordalPitchConstraint(all_notes[12]),
         ChordalPitchConstraint(all_notes[14]),
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'G:4')),
-        #PitchRangeConstraint([all_notes[4]], PitchRange.create('E:5', 'G:5')),
-        #PitchRangeConstraint([all_notes[6]], PitchRange.create('C:5', 'G:5')),
-        #PitchRangeConstraint([all_notes[8]], PitchRange.create('C:4', 'G:4')),
-        #PitchRangeConstraint([all_notes[12]], PitchRange.create('E:2', 'A:2')),
-        #PitchRangeConstraint([all_notes[14]], PitchRange.create('E:2', 'G:2')),
     }
 
     motif = Motif(score.line, constraints, 'A')
@@ -202,15 +197,16 @@ def reshape_with_spf():
 
     results = t_reshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    filters = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(filters.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(filters.scored_results))):
+        result = filters.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
 
+
 def reshape_to_scale():
-    print('----- test_reshape_to_scale -----')
+    print('----- test_reshape_to_scale (Fgure 17.24) -----')
 
     line_str = '{<C-Major: I> iE:4 E E E E E E E E E E E E E E E E E E E E E E E wE}'
 
@@ -235,22 +231,22 @@ def reshape_to_scale():
         PitchRangeConstraint([all_notes[0]], PitchRange.create('C:4', 'G:4')),
     }
 
-    #motif = Motif(score.line, constraints, 'A')
     motif = Motif([all_notes[0]], constraints, 'A')
     melodic_form = MelodicForm([motif])
     t_reshape = TReshape(score, pitch_function, time_range, melodic_form, False)
 
     results = t_reshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    filters = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(filters.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(filters.scored_results))):
+        result = filters.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
 
+
 def motif_example():
-    print('----- motif_example -----')
+    print('----- motif_example (Fgure 17.25) -----')
 
     line_str = '{<C-Major: I> iC:4 D E D E E E E C D E D E E E E C D E D E E E E wE}'
 
@@ -274,15 +270,15 @@ def motif_example():
 
     results = t_reshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    filters = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(filters.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(filters.scored_results))):
+        result = filters.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
 
-
-#simple_reshape_cpf()
-reshape_with_spf()
-#reshape_to_scale()
-#motif_example()
+# Examples
+# simple_reshape_cpf()
+# reshape_with_spf()
+# reshape_to_scale()
+# motif_example()

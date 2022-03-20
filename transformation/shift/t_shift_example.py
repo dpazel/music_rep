@@ -28,42 +28,12 @@ def print_line(line):
         note = notes[i]
         print('[{0}]  {1}({2})'.format(i, note.diatonic_pitch, note.duration))
 
-'''        
-    notes = line.get_all_notes()
-    prior_octave = None
-    prior_duration = None
-    note_annotations = list()
-    for note in notes:
-        annotation = ''
-        d = duration_ltr(note.duration)
-        if d != prior_duration:
-            annotation += d
-            prior_duration = d
-        annotation += str(note.diatonic_pitch.diatonic_tone.diatonic_symbol)
-        o = note.diatonic_pitch.octave
-        if o != prior_octave:
-            annotation += ":" + str(o)
-            prior_octave = o
-        note_annotations.append(annotation)
-    s = ' '.join(annotation for annotation in note_annotations)
-    print(s)
-'''
-
 
 def print_hct(hct):
     hcs = hct.hc_list()
     count = 0
     for hc in hcs:
         print('[{0}] HC({1}, {2}, {3}, {4})'.format(count, hc.tonality, hc.chord, hc.duration, hc.position))
-
-'''        
-    hc_annotations = list()
-    for hc in hct.hc_list():
-        s = '<{0}: {1}>({2})'.format(hc.tonality, hc.chord, hc.duration)
-        hc_annotations.append(s)
-    hcs = ' '.join(hc_str for hc_str in hc_annotations)
-    print(hcs)
-'''
 
 
 def simple_shift_example():
@@ -75,7 +45,7 @@ def simple_shift_example():
     print_line(t_shift.source_line)
     print()
 
-    print('Shift up M:3')
+    print('Shift up M:3 (Figure 15.8)')
     target_line, target_hct = t_shift.apply()
 
     print_line(target_line)
@@ -86,7 +56,7 @@ def simple_shift_example():
 
     target_line, target_hct = t_shift.apply()
 
-    print('Shift down m:2')
+    print('Shift down m:2 (Figure 15.9)')
     print_line(target_line)
     print_hct(target_hct)
     print()
@@ -101,14 +71,14 @@ def shift_change_modality():
     print_line(t_shift.source_line)
     print()
 
-    print('Shift up P:4, modality MelodicMinor')
+    print('Shift up P:4, modality MelodicMinor (Figure 5.10)')
     target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.MelodicMinor)
 
     print_line(target_line)
     print_hct(target_hct)
     print()
 
-    print('Shift up P:4, modality NaturalMinor')
+    print('Shift up P:4, modality NaturalMinor (Figure 15.11)')
     target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.NaturalMinor)
 
     print_line(target_line)
@@ -125,7 +95,7 @@ def shift_change_modal_index():
     print_line(t_shift.source_line)
     print()
 
-    print('Shift to modal index 4 (Mixolydian)')
+    print('Shift to modal index 4 (Mixolydian) (Figure 15.12)')
     target_line, target_hct = t_shift.apply(modal_index=4)
 
     print_line(target_line)
@@ -166,8 +136,8 @@ def shift_change_modal_index_modality_and_shift():
     print()
 
 
-def example():
-    print('----- Book example of shifted tonality on modal not 0 -----')
+def tonality_mode_change():
+    print('----- Book example of shifted tonality on modal not 0 (Figure 15.5) -----')
     source_expression = '{<D-Major(1): I> iE:4 F# G A qE B}'
 
     t_shift = TShift.create(source_expression,
@@ -178,11 +148,11 @@ def example():
     print(target_hct)
 
 
-def example1():
-    print('----- Book example of shifted secondary tonality  -----')
+def shift_details_on_secondary_chord():
+    print('----- Book example of shifted secondary tonality (Figure 15.6) -----')
     source_expression = '{<C-Major: V/iii> iD#:4 F# G A qD#:5 B:4}'
 
-    t_shift = TShift.create(source_expression, TonalInterval.parse('P:5'))
+    t_shift = TShift.create(source_expression, TonalInterval.parse('M:3'))
     target_line, target_hct = t_shift.apply(range_modality_type=ModalityType.MelodicMinor)
     print(t_shift.source_hct)
     print(target_line)
@@ -211,7 +181,7 @@ def example2():
     print()
 
     # if you wanted G Mixolydian based on C
-    print('Shift as if moving tomodal index 4 (Mixolydian) in C')
+    print('Shift as if moving to modal index 4 (Mixolydian) in C')
     target_line, target_hct = t_shift.apply(
            root_shift_interval=TonalInterval.parse('P:5'), modal_index=4)
 
@@ -244,8 +214,8 @@ def shift_sequence_tonal_example():
     print()
 
 
-def shift_sequence_standard_example():
-    print('----- Shift sequence standard example -----')
+def shift_modulating_sequence_example():
+    print('----- Shift sequence standard example (Figure 15.14) -----')
 
     source_expression = '{<C-Major: IV> sf:4 a b C:5 <:V/ii> sa:4 e:5 tc# b:4 sC#:5 <:ii> sd tc a:4 sb:4 a}'
 
@@ -271,11 +241,14 @@ def print_score(separator, line, hct):
     print()
 
 
+# In Text
+# tonality_mode_change()
+# shift_details_on_secondary_chord()
+
+# Examples
 # simple_shift_example()
 # shift_change_modality()
 # shift_change_modal_index()
 # shift_change_modal_index_modality_and_shift()
-# example2()
-# example1()
 # shift_sequence_tonal_example()
-shift_sequence_standard_example()
+# shift_modulating_sequence_example()
