@@ -286,7 +286,14 @@ class TestTertianTemplateChord(unittest.TestCase):
         template = TertianChordTemplate.parse('VI')
         chord = template.create_chord(diatonic_tonality)
         print(chord)
-            
+
+        # Create a template for CMajM9, with the M9 as root
+        template = TertianChordTemplate.parse('CMaj+9@(9)')
+        if template:
+            print('succeeded')
+            chord = template.create_chord()
+            print(chord)  # CMajM:9@(M:9) [D, C, E, G]
+
     @staticmethod
     def verify(tones, answer):
         if len(tones) != len(answer):
