@@ -1,7 +1,19 @@
+"""
+ Examples of pattern substitution as found in book.
+
+ Why don't the results match those in the book?
+ At the time of writing the book, the constraint engine had a bug wherein correct results were generated randomly. This
+ was a result of using Python sets which do not have a stable iteration property (successiver iterations on the same
+ set can be different). To stabilize the constraint, all usages of set() were replaced with OrderedSet() which is
+ stable on iteration. Consequently, searches over large spaces result in different answers, wherein prior, the searches
+ could/would start at random places in the search space, and potentially provide better answers that are in the book.
+
+ A proposal is to add futher constraints to contour analysis that deal with successive intervals and not just
+ comparative notes.
+"""
 from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from transformation.patsub.min_contour_filter import MinContourFilter
-from transformation.patsub.substitution_pattern import SubstitutionPattern
 from transformation.patsub.t_patsub import TPatSub
 
 
@@ -10,6 +22,7 @@ def print_hct(hct):
 
     for i in range(0, len(hc_list)):
         print('[{0}] {1}'.format(i, hc_list[i]))
+
 
 def comp(p1, p2):
     p1_d = p1.chromatic_distance
@@ -39,11 +52,10 @@ def print_results(results, pattern_line):
         print('[{0}]   {1}  score({2})'.format(i, t, results[i - 1][1]))
 
 
-def explanation_pattern_example():
+def first_pattern_example():
     print('----- test explanation pattern example -----')
 
     pattern_expression = '{<Bb-Major: i> qBb:3 Bb:4 ia sg eb qf <:iv> qEb:4 Eb:5 iD sEb F i@G sG <:iv> sF:5 Eb D C:4 D:5 C:4 G A <:i> hBb}'
-    #replacement_expression = '{<Bb-Major: i> qBb:4 Bb:3 <:vi> iD:4 sEb G qf <:v> qF:5 F:4 <:i> iF:5 sEb D i@Bb:4 sG:5}'
     replacement_expression = '{<Bb-Major: i> qBb:4 Bb:3 <:vi> iD:4 sEb G qf <:v> qF:5 F:4 <:i> iF:5 sEb D i@Bb:4 sG:5 <:iv> sEb:4 Eb:5 D C Bb:4 A G F <:I> hBb:3}'
 
     replacement_hc_expressions = [
@@ -73,12 +85,15 @@ def explanation_pattern_example():
 
     print_results(scored_filtered_results, replacement_instance_line)
 
-def example_pattern_example():
+
+def second_pattern_example():
     print('----- test explanation pattern example -----')
 
-    source_expression = '{<C-Major: i> iC:4 C E F hE <:v> iD:4 D G A hB <:VI> iC:5 C B:4 A <:IV> iA:4 A G F <:II> iF:4 F E D <:I> hC:4}'
+    source_expression = '{<C-Major: i> iC:4 C E F hE <:v> iD:4 D G A hB <:VI> iC:5 C B:4 A <:IV> iA:4 A G F <:II> ' \
+                        'iF:4 F E D <:I> hC:4}'
 
-    replacement_expression = '{<C-Major: i> q@C:4 iD qE <:iv> q@F:4 iG qA <:v> qG:4 D F <G-Melodic:i> q@G:4 iA qBb <:V> qD:5 E F# ' \
+    replacement_expression = '{<C-Major: i> q@C:4 iD qE <:iv> q@F:4 iG qA <:v> qG:4 D F ' \
+                             '<G-Melodic:i> q@G:4 iA qBb <:V> qD:5 E F# ' \
                         '<G-Natural:IV> qG:5 Eb C <C-Major:V> q@B:4 iA qG <:VI> q@a iG qE <:IV> qC:4 F D <:I> h@C}'
 
     replacement_hc_expressions = [
@@ -96,7 +111,8 @@ def example_pattern_example():
 
     t_pat_sub = TPatSub.create(source_expression, replacement_expression, replacement_hc_expressions)
 
-    source_instance_expression = '{<F-Major: i> iF:4 F G A hG <:VDom7> iG:4 G A Bb hC <:I> iF:5 F D C <:III> iC:5 C Bb:4 A <:I> iA:4 A G F <:VI> hD:4}'
+    source_instance_expression = '{<F-Major: i> iF:4 F G A hG <:VDom7> iG:4 G A Bb hC <:I> iF:5 F D C <:III> ' \
+                                 'iC:5 C Bb:4 A <:I> iA:4 A G F <:VI> hD:4}'
 
     lge = LineGrammarExecutor()
     source_instance_line, source_instance_hct = lge.parse(source_instance_expression)
@@ -113,8 +129,7 @@ def example_pattern_example():
     print_results(scored_filtered_results, source_instance_line)
 
 
-
-
-#explanation_pattern_example()
-example_pattern_example()
+# Examples
+first_pattern_example()
+#second_pattern_example()
 
