@@ -132,7 +132,7 @@ class NoteInformation(object):
         return Interval.calculate_tone_interval(self.hc.tonality.root_tone, self.note.diatonic_pitch.diatonic_tone)
 
     def compute_chord_interval(self):
-        tones = self.hc.chord.tones
+        tones = self.hc.chord.tones   # List of ordered pairs, (chord tone, chord interval)
         if self.note.diatonic_pitch is None:
             return None
         for tone in tones:
@@ -191,7 +191,7 @@ class NotePairInformation(object):
             '<' if relationship == NotePairInformation.Relationship.LT else '=='
 
     def __str__(self):
-        return '{0} {1} {2}'.format(self.first_note, NotePairInformation.rel_pair_symbol(self.relationship),
+        return '{0} \"{1} {2}\"'.format(self.first_note, NotePairInformation.rel_pair_symbol(self.relationship),
                                     self.second_note)
 
 
