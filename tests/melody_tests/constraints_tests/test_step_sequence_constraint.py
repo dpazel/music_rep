@@ -56,8 +56,12 @@ class TestStepSequenceConstraint(unittest.TestCase):
         print('-----')
 
         assert len(notes) == 7 * 6 + 1
-        assert str(notes[0].diatonic_pitch) == 'C:2'
-        assert str(notes[-1].diatonic_pitch) == 'C:8'
+        assert str(next(iter(notes)).diatonic_pitch) == 'C:2'
+        note = None
+        for n in notes:
+            note = n
+        assert note is not None
+        assert str(note.diatonic_pitch) == 'C:8'
 
         p_map[actors[0]].note = Note(DiatonicPitch.parse('F#:4'), Duration(1, 8))
         answers = ['F#:4', 'G:4', 'A:4', 'C:5', 'E:5', 'F#:5', 'E:5', 'C:5', 'A:4', 'G:4', 'F#:4', 'F#:4']
