@@ -416,14 +416,25 @@ class MelodicSearch(object):
             return False
 
         pattern_to_target_dict = dict()
+        ref_map = dict()
         for pattern_note, target_note in zip(pattern_notes, target_notes):
-            if not MelodicSearch.note_structural_check(pattern_note, target_note, pattern_to_target_dict):
+            if not MelodicSearch.note_structural_check(pattern_note, target_note, pattern_to_target_dict, ref_map):
                 return False
 
         return True
 
     @staticmethod
-    def note_structural_check(pattern_note, target_note, pattern_to_target_dict):
+    def note_structural_check(pattern_note, target_note, pattern_to_target_dict, ref_map):
+        """
+        Check that pattern and target notes are nested equally.
+        :param pattern_note:
+        :param target_note:
+        :param pattern_to_target_dict: pattern to target map, developed over processing. created/set/managed
+                                       by caller over sequence of calls. Assumed empty on first usage.
+        :param ref_map: maintains beam/tuplet/etc correspondences to track across note pairs, created/set/managed
+                        by caller over sequence of calls. Assumed empty on first usage.
+        :return:
+        """
         pattern_note_parent = pattern_note.parent
         target_note_parent = target_note.parent
         while True:
@@ -435,6 +446,17 @@ class MelodicSearch(object):
                 return isinstance(pattern_note_parent, Line)
             if type(pattern_note_parent) != type(target_note_parent):
                 return False
+            else:
+                A = pattern_note_parent in ref_map
+                B = target_note_parent in ref_map
+                if not A and not B:
+                    ref_map[A] = B
+                    ref_map[B] = A
+                elif A and B:
+                    if ref_map[A] != B or ref_map[B] != A:
+                        return False
+                else:
+                    return False
             if isinstance(pattern_note_parent, Line):
                 return True
             if pattern_note_parent in pattern_to_target_dict:
