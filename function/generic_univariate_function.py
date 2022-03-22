@@ -19,7 +19,7 @@ class GenericUnivariateFunction(UnivariateFunction):
         Constructor.
         
         Args:
-        f: Function user-defined that is univariate, but not necessarily a subclass of UnivariateFunction.
+        f: User-defined univariate function, but not necessarily a subclass of UnivariateFunction.
         domain_start: numeric-like that defines the start of a domain (first point)
         domain_end: numeric_like tat defines the end of a domain (last point)
         restrict_domain: boolean meaning to throw exception for evaluations outside the domain

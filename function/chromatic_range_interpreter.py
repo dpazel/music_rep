@@ -44,12 +44,6 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
 
         PitchRangeInterpreter.__init__(self)
 
-    def aeval_as_nearest_pitch(self, v):
-        return DiatonicFoundation.map_to_diatonic_scale(round(v))[0]
-
-    def avalue_for(self, diatonic_pitch):
-        return diatonic_pitch.chromatic_distance
-
     @property
     def anchor_pitch(self):
         return self.__anchor_pitch
@@ -61,25 +55,6 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
     @property
     def pitch_unit(self):
         return self.__pitch_unit
-
-    def aeval_as_pitch(self, v):
-        """
-        Evaluate a chromatic distance to a pitch. If v is between two integers, there are 2 answers
-            (for floor and ceil).
-        :param v: Numeric representing a chromatic distance.
-        :return: one or 2 pitches represented by the chromatic distance v.
-        """
-        d = math.floor(v)
-        e = math.ceil(v)
-        if d == e:
-            return [DiatonicFoundation.map_to_diatonic_scale(d)[0]]
-        else:
-            return [DiatonicFoundation.map_to_diatonic_scale(d)[0], DiatonicFoundation.map_to_diatonic_scale(e)[0]]
-
-    def aeval_as_accurate_chromatic_distance(self, v):
-        return v
-
-    # copied in
 
     def eval_as_nearest_pitch(self, v):
         candidates = self.eval_as_pitch(v)
@@ -117,12 +92,6 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
             p1 = self.value_to_pitch[floor_value]
             p2 = self.value_to_pitch[ceil_value]
             return [p1, p2]
-        #low_pitch = self.value_to_pitch[floor_value]
-        #index = low_pitch.chromatic_distance
-
-        #if index > ChromaticScale.chromatic_end_index() or math.isclose(v, floor_value):
-        #    return [low_pitch]
-        #return [low_pitch, DiatonicFoundation.map_to_diatonic_scale(index + 1)[0]]
 
     def eval_as_accurate_chromatic_distance(self, v):
         floor_value = self.value_to_pitch.floor(v)
@@ -131,7 +100,7 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
 
         if index >= ChromaticScale.chromatic_end_index() or math.isclose(v, floor_value):
             return low_pitch.chromatic_distance
-        high_pitch =  DiatonicFoundation.map_to_diatonic_scale(index + 1)[0]
+        high_pitch = DiatonicFoundation.map_to_diatonic_scale(index + 1)[0]
         return low_pitch.chromatic_distance + \
-               ((v - floor_value) / (self.pitch_unit)) * \
+               ((v - floor_value) / self.pitch_unit) * \
                (high_pitch.chromatic_distance - low_pitch.chromatic_distance)

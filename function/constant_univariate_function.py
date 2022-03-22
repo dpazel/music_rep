@@ -49,4 +49,3 @@ class ConstantUnivariateFunction(UnivariateFunction):
     
     def __str__(self):
         return 'Function(cst, {0})'.format(self.value)
-        

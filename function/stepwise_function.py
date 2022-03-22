@@ -20,7 +20,7 @@ class StepwiseFunction(UnivariateFunction):
     if restrict_domain is specified (True), evaluation points must be within domain bounds.
     """
 
-    def __init__(self, transition_points=list(), restrict_domain=False):
+    def __init__(self, transition_points=None, restrict_domain=False):
         """
         Constructor.
         
@@ -29,6 +29,8 @@ class StepwiseFunction(UnivariateFunction):
         restrict_domain: boolean indicating if evaluation points must be in defined domain of transition points.
                          default is False.
         """
+        if transition_points is None:
+            transition_points = list()
         if transition_points is None or not isinstance(transition_points, list):
             assert Exception('Illegal argument to SetwiseLinearFunction {0}'.format(transition_points))
         self.__restrict_domain = restrict_domain

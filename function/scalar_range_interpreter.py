@@ -102,7 +102,7 @@ class ScalarRangeInterpreter(PitchRangeInterpreter):
 
         if index >= len(self.pitch_scale) - 1 or math.isclose(v, floor_value):
             return low_pitch.chromatic_distance
-        high_pitch =  self.pitch_scale[index + 1]
+        high_pitch = self.pitch_scale[index + 1]
         return low_pitch.chromatic_distance + \
                ((v - floor_value) / (self.pitch_unit)) * \
                (high_pitch.chromatic_distance - low_pitch.chromatic_distance)

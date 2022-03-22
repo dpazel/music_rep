@@ -39,7 +39,6 @@ class FunctionPitchRange(object):
     def pitch_range_interpreter(self):
         return self.__pitch_range_interpreter
 
-    # should be renamed, this is f(v) where f is the univariate function.
     def eval_as_chromatic_distance(self, v):
         return self.univariate_function.eval(v)
 
@@ -48,7 +47,6 @@ class FunctionPitchRange(object):
 
     def eval_as_frequency(self, v):
         cd = self.eval_as_chromatic_distance(v)
-
         exponent = cd - ChromaticScale.CHROMATIC_START[1]
         return ChromaticScale.A0 * pow(ChromaticScale.SEMITONE_RATIO, exponent)
 
@@ -63,6 +61,3 @@ class FunctionPitchRange(object):
 
     def eval_as_accurate_chromatic_distance(self, v):
         return self.pitch_range_interpreter.eval_as_accurate_chromatic_distance(self.eval_as_chromatic_distance(v))
-
-
-

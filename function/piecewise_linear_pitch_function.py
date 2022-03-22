@@ -5,7 +5,9 @@ from tonalmodel.diatonic_pitch import DiatonicPitch
 
 class PiecewiseLinearPitchFunction(PiecewiseLinearFunction, FunctionPitchRange):
 
-    def __init__(self, transition_points=list(), restrict_domain=False):
+    def __init__(self, transition_points=None, restrict_domain=False):
+        if transition_points is None:
+            transition_points = list()
         tp = PiecewiseLinearPitchFunction._translate_transition_points(transition_points)
 
         PiecewiseLinearFunction.__init__(self, tp, restrict_domain)
@@ -25,7 +27,3 @@ class PiecewiseLinearPitchFunction(PiecewiseLinearFunction, FunctionPitchRange):
             tps.append((tp[0], diatonic_pitch.chromatic_distance))
 
         return tps
-
-
-
-
