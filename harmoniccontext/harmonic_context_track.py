@@ -12,7 +12,6 @@ from fractions import Fraction
 
 from harmoniccontext.harmonic_context import HarmonicContext
 from misc.ordered_map import OrderedMap
-from timemodel.offset import Offset
 from timemodel.position import Position
 from timemodel.duration import Duration
 from misc.interval import Interval as NumericInterval
