@@ -7,7 +7,7 @@ Purpose: Defines the lead node of a catalog instrument tree.
          populated by reading an 'instruments.xml' file.
 
 """
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ElementTree
 import os
 import logging
 
@@ -34,20 +34,21 @@ class InstrumentCatalog(InstrumentBase, Singleton):
     # Name of the file sound in ./data
     INSTRUMENT_FILE = 'instruments.xml'
 
-    def __init__(self, *args,  **kwargs ):
+    def __init__(self, *args,  **kwargs):
  
         InstrumentBase.__init__(self, '', None)
 
         xml_file = kwargs.get('xml_file', None)
 
+        tree = None
         if xml_file is None:
             this_dir, this_filename = os.path.split(__file__)
             data_path = os.path.join(this_dir, InstrumentCatalog.DATA_DIRECTORY)
-            tree = ET.parse(os.path.join(data_path, InstrumentCatalog.INSTRUMENT_FILE))
+            tree = ElementTree.parse(os.path.join(data_path, InstrumentCatalog.INSTRUMENT_FILE))
         elif isinstance(xml_file, str):
             if len(xml_file) != 0:
-                dir, fn = os.path.split(xml_file)
-                tree = ET.parse(os.path.join(dir, fn))
+                dirr, fn = os.path.split(xml_file)
+                tree = ElementTree.parse(os.path.join(dirr, fn))
         
         self.inst_classes = []
         
@@ -59,7 +60,7 @@ class InstrumentCatalog(InstrumentBase, Singleton):
         # maps instrument family name to a list of all the instrument members of that family.
         self.instrument_family_map = {}
 
-        if xml_file is None or len(xml_file) != 0:
+        if tree is not None and (xml_file is None or len(xml_file) != 0):
             root = tree.getroot()
             self._parse_structure(root)
         
