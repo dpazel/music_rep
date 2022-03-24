@@ -14,6 +14,11 @@ import re
 import logging
 
 
+class QuartalChordException(Exception):
+    def __init__(self, reason):
+        Exception.__init__(self, reason)
+
+
 class QuartalChordType:
     """
     Enum class defining some significant quartal chord varieties.  There are 3 cases
@@ -104,7 +109,7 @@ class QuartalChordTemplate(ChordTemplate):
     INVERSION = '[1-9]([0-9]*)'
     GROUP_INVERSION = 'Inversion'
     GROUP_INVERSION_TAG = '?P<' + GROUP_INVERSION + '>'
-    INVERSIONS = '(\@(' + GROUP_INVERSION_TAG + INVERSION + '))?'
+    INVERSIONS = '(\\@(' + GROUP_INVERSION_TAG + INVERSION + '))?'
     
     # full parse string and accompanying pattern for the secundal chord grammar.
     QUARTAL_PARSE_STRING = P1_BASIS + ROOT + CHORDS + INVERSIONS + '$'
@@ -138,8 +143,8 @@ class QuartalChordTemplate(ChordTemplate):
             intervals = list()
             intervals.append(Interval(1, IntervalType.Perfect))
             for ltr in specified_fourths:
-                intervals.append(Interval(4, IntervalType.Perfect if ltr == 'P'or ltr == 'p'
-                                                          else IntervalType.Augmented))
+                intervals.append(Interval(4, IntervalType.Perfect if ltr == 'P' or ltr == 'p'
+                                          else IntervalType.Augmented))
             self.__base_intervals.extend(intervals)
                  
         # Inversion check - only if chord type was given, not for cases like II
@@ -215,10 +220,10 @@ class QuartalChordTemplate(ChordTemplate):
           QuartalChordTemplate       
         """
         if not chord_string:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
+            raise QuartalChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
         m = QuartalChordTemplate.QUARTAL_PATTERN.match(chord_string)
         if not m:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
+            raise QuartalChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
         
         scale_degree = m.group(QuartalChordTemplate.GROUP_SCALE_DEGREE)
         if scale_degree:

@@ -60,27 +60,27 @@ class ChordTemplate(object):
 
         #  Try parsing chord text through known chord templates.
         #  If all fail, just return None.
-        from harmonicmodel.secondary_chord_template import SecondaryChordTemplate
+        from harmonicmodel.secondary_chord_template import SecondaryChordTemplate, SecondaryChordException
         try:
             chord_template = SecondaryChordTemplate.parse(chord_txt)
             return chord_template
-        except Exception as e:
+        except SecondaryChordException:
             pass
-        from harmonicmodel.tertian_chord_template import TertianChordTemplate
+        from harmonicmodel.tertian_chord_template import TertianChordTemplate, TertianChordException
         try:
             chord_template = TertianChordTemplate.parse(chord_txt)
             return chord_template
-        except Exception:
+        except TertianChordException:
             pass
-        from harmonicmodel.secundal_chord_template import SecundalChordTemplate
+        from harmonicmodel.secundal_chord_template import SecundalChordTemplate, SecundalChordException
         try:
             chord_template = SecundalChordTemplate.parse(chord_txt)
             return chord_template
-        except Exception:
+        except SecundalChordException:
             pass
         from harmonicmodel.quartal_chord_template import QuartalChordTemplate
         try:
             chord_template = QuartalChordTemplate.parse(chord_txt)
             return chord_template
-        except Exception:
+        except QuartalChordTemplate:
             return None     

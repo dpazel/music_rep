@@ -5,7 +5,7 @@ File: chord.py
 Purpose: Defines an abstract class to represent a chord
 
 """
-from abc import ABCMeta, abstractproperty, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 
 class Chord(object):

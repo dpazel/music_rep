@@ -92,7 +92,7 @@ class SecundalChord(Chord):
         # Assume MM or MajMaj
         self.chord_basis = []
         current_tone = diatonic_tone
-        intervals = [Interval(1,IntervalType.Perfect),
+        intervals = [Interval(1, IntervalType.Perfect),
                      Interval(2, IntervalType.Major),
                      Interval(2, IntervalType.Major)]
         for i in range(0, 3):
@@ -141,20 +141,6 @@ class SecundalChord(Chord):
         basis_tone = tone_scale[root_index]
 
         self.__create_chord_on_root_no_base_intervals(basis_tone)
-        '''
-        self.chord_basis = []
-        for i in range(0, 3):
-            tone = tone_scale[(root_index + i) % (len(tone_scale) - 1)] if i != 0 else basis_tone
-                       
-            pitch_a = DiatonicPitch(1, basis_tone.diatonic_symbol)
-            b_octave = 2 if basis_tone.diatonic_index > tone.diatonic_index else 1
-            pitch_b = DiatonicPitch(b_octave, tone.diatonic_symbol)
-            interval = Interval.create_interval(pitch_a, pitch_b)
-            self.chord_basis.append(interval)
-            
-            self.__tones.append((tone, interval))
-            basis_tone = tone
-        '''
         
     def __create_chord_on_scale_degree_with_chord_type(self):
         root_index = self.chord_template.scale_degree - 1

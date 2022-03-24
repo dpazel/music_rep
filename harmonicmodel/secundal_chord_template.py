@@ -14,6 +14,11 @@ import re
 import logging
 
 
+class SecundalChordException(Exception):
+    def __init__(self, reason):
+        Exception.__init__(self, reason)
+
+
 class SecundalChordType:
     """
     Enum class defining some significant secundal chord varieties.  There are 4 cases
@@ -120,7 +125,7 @@ class SecundalChordTemplate(ChordTemplate):
     INVERSION = '[1-9]([0-9]*)'
     GROUP_INVERSION = 'Inversion'
     GROUP_INVERSION_TAG = '?P<' + GROUP_INVERSION + '>'
-    INVERSIONS = '(\@(' + GROUP_INVERSION_TAG + INVERSION + '))?'
+    INVERSIONS = '(\\@(' + GROUP_INVERSION_TAG + INVERSION + '))?'
     
     # full parse string and accompanying pattern for the secundal chord grammar.
     SECUNDAL_PARSE_STRING = P1_BASIS + ROOT + CHORDS + INVERSIONS + '$'
@@ -229,10 +234,10 @@ class SecundalChordTemplate(ChordTemplate):
           SecundalChordTemplate       
         """
         if not chord_string:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
+            raise SecundalChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
         m = SecundalChordTemplate.SECUNDAL_PATTERN.match(chord_string)
         if not m:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
+            raise SecundalChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
         
         scale_degree = m.group(SecundalChordTemplate.GROUP_SCALE_DEGREE)
         if scale_degree:

@@ -13,16 +13,21 @@ import re
 import logging
 
 
+class TertianChordException(Exception):
+    def __init__(self, reason):
+        Exception.__init__(self, reason)
+
+
 class TertianChordType:
     """
     Enum class defining all the tertian chord varieties.
     """
-    Maj6, Maj, Min6, Min, Dim, Aug, MajSus2, MajSus4, MajSus, Maj7, Maj7Sus4, Maj7Sus2, Maj7Sus, Min7, Dom7, Dom7Sus4,\
-        Dom7Sus2, Dom7Sus, Dim7, HalfDim7, MinMaj7, AugMaj7, Aug7, DimMaj7, Dom7Flat5, Fr, Ger, It, N6 = range(29)
-    
+    Maj6, Maj, Min6, Min, Dim, Aug, MajSus2, MajSus4, MajSus, Maj7, Maj7Sus4, Maj7Sus2, Maj7Sus, Min7, Dom7, Dom7Sus4, \
+    Dom7Sus2, Dom7Sus, Dim7, HalfDim7, MinMaj7, AugMaj7, Aug7, DimMaj7, Dom7Flat5, Fr, Ger, It, N6 = range(29)
+
     def __init__(self, ctype):
         self.value = ctype
-        
+
     def __str__(self):
         if self.value == TertianChordType.Maj:
             return 'Maj'
@@ -82,7 +87,7 @@ class TertianChordType:
             return 'It'
         if self.value == TertianChordType.N6:
             return 'N6'
-        
+
     @staticmethod
     def to_type(t_string):
         t = None
@@ -144,11 +149,11 @@ class TertianChordType:
             t = TertianChordType.It
         elif t_string == 'N6':
             t = TertianChordType.N6
-        return TertianChordType(t) if t is not None else None 
-        
+        return TertianChordType(t) if t is not None else None
+
     def __eq__(self, y):
         return self.value == y.value
-    
+
     def __hash__(self):
         return self.__str__().__hash__()
 
@@ -174,7 +179,7 @@ class TertianChordTemplate(ChordTemplate):
           which at this point cannot be found.  So we are not allowing this notation unless a solid theoretical
           solution appears.
     """
-    
+
     TERTIAN_CHORD_TYPE_MAP = {
         TertianChordType.Maj: [Interval(1, IntervalType.Perfect),
                                Interval(3, IntervalType.Major),
@@ -284,51 +289,51 @@ class TertianChordTemplate(ChordTemplate):
                               Interval(2, IntervalType.Minor),
                               Interval(4, IntervalType.Perfect)],
     }
-    
+
     # Note that augmented 6th chords and the neopolitan have the sixth as the root.  This is the normal position.
     # And inversions specified alter that order.  So, root position would be inversion == 2.
-      
+
     GROUP_BASIS = 'Basis'
     GROUP_BASIS_TAG = '?P<' + GROUP_BASIS + '>'
     P1_BASIS = '(' + GROUP_BASIS_TAG + 'T|t)?'
-    
+
     SCALE_DEGREE = 'III|II|IV|VII|VI|V|I|iii|ii|iv|vii|vi|v|i'
     GROUP_SCALE_DEGREE = 'ScaleDegree'
-    GROUP_SCALE_DEGREE_TAG = '?P<' + GROUP_SCALE_DEGREE + '>'    
-    
+    GROUP_SCALE_DEGREE_TAG = '?P<' + GROUP_SCALE_DEGREE + '>'
+
     GROUP_DIATONIC_TONE = 'DiatonicTone'
-    GROUP_DIATONIC_TONE_NAME = '?P<' + GROUP_DIATONIC_TONE + '>' 
+    GROUP_DIATONIC_TONE_NAME = '?P<' + GROUP_DIATONIC_TONE + '>'
     ROOT = '((' + GROUP_DIATONIC_TONE_NAME + DiatonicTone.DIATONIC_PATTERN_STRING + ')|' + \
            '(' + GROUP_SCALE_DEGREE_TAG + SCALE_DEGREE + '))'
-    
+
     TENSION_RANGE = '(10|11|12|13|14|15|9|8|7|6|5|4|3|2|1)'
-    TENSION = '((\+)' + '(bb|b|##|#)?' + TENSION_RANGE + ')'
+    TENSION = '((\\+)' + '(bb|b|##|#)?' + TENSION_RANGE + ')'
     GROUP_TENSIONS = 'Tensions'
     GROUP_TENSIONS_TAG = '?P<' + GROUP_TENSIONS + '>'
-    TERTIAN_TENSIONS = '(' + GROUP_TENSIONS_TAG + TENSION + '*)'    
-        
+    TERTIAN_TENSIONS = '(' + GROUP_TENSIONS_TAG + TENSION + '*)'
+
     CHORD_NAMES = 'Maj7Sus4|Maj7Sus2|Maj7Sus|Maj7|MajSus4|MajSus2|MajSus|Maj6|Maj|Min7|MinMaj7|Min6|Min|DimMaj7|' \
                   'Dom7Flat5|Dim7|Dim|AugMaj7|Aug7|Aug|Dom7Sus4|Dom7Sus2|Dom7Sus|Dom7|HalfDim7|Fr|Ger|It|N6'
 
     GROUP_CHORD = 'Chord'
-    GROUP_CHORD_TAG = '?P<' + GROUP_CHORD + '>'   
+    GROUP_CHORD_TAG = '?P<' + GROUP_CHORD + '>'
     CHORDS = '(' + GROUP_CHORD_TAG + CHORD_NAMES + ')?'
-    
+
     INVERSION = '[1-7]'
     GROUP_INVERSION = 'Inversion'
     GROUP_INVERSION_TAG = '?P<' + GROUP_INVERSION + '>'
     # INVERSIONS = '(\@(' + GROUP_INVERSION_TAG + INVERSION + '))?'
- 
+
     INVERSION_TENSION = 'InvTension'
     INVERSION_TENSION_TAG = '?P<' + INVERSION_TENSION + '>'
-    INVERSION_TENSION_STRUCT = '\(' + '(bb|b|##|#)?' + TENSION_RANGE + '\)'
-    INVERSION_TENSION_PATTERN = '(' + INVERSION_TENSION_TAG + INVERSION_TENSION_STRUCT + ')' 
-    INVERSIONS = '(\@(' + GROUP_INVERSION_TAG + INVERSION + '|' + INVERSION_TENSION_PATTERN + '))?'
-    
+    INVERSION_TENSION_STRUCT = '\\(' + '(bb|b|##|#)?' + TENSION_RANGE + '\\)'
+    INVERSION_TENSION_PATTERN = '(' + INVERSION_TENSION_TAG + INVERSION_TENSION_STRUCT + ')'
+    INVERSIONS = '(\\@(' + GROUP_INVERSION_TAG + INVERSION + '|' + INVERSION_TENSION_PATTERN + '))?'
+
     # full parse string and accompanying pattern for the tertian chord grammar.
     TERTIAN_PARSE_STRING = P1_BASIS + ROOT + CHORDS + TERTIAN_TENSIONS + INVERSIONS + '$'
     TERTIAN_PATTERN = re.compile(TERTIAN_PARSE_STRING)
-    
+
     TENSION_PATTERN = re.compile(TENSION)
     INVERSE_TENSION_PATTERN = re.compile(INVERSION_TENSION_STRUCT)
 
@@ -346,64 +351,64 @@ class TertianChordTemplate(ChordTemplate):
           (both this in interval cannot be non-null.)
         """
         ChordTemplate.__init__(self)
-        self.__diatonic_basis = diatonic_basis   # DiatonicTone
-        
-        self.__scale_degree = scale_degree   
-        
-        self.__chord_type = chord_type  
-        self.__tension_intervals = tension_intervals      # list of [number, augmentation] representing intervals
-        self.__inversion = inversion    # which tone of n is the bass
+        self.__diatonic_basis = diatonic_basis  # DiatonicTone
+
+        self.__scale_degree = scale_degree
+
+        self.__chord_type = chord_type
+        self.__tension_intervals = tension_intervals  # list of [number, augmentation] representing intervals
+        self.__inversion = inversion  # which tone of n is the bass
         self.__inversion_interval = inversion_interval
-        
+
         self.__base_intervals = []
         if chord_type:
             self.__base_intervals.extend(TertianChordTemplate.TERTIAN_CHORD_TYPE_MAP[self.chord_type.value])
-         
+
         # Remove duplicate tensions
         seen = set()
         seen_add = seen.add
         deduped_tension_intervals = [tension for tension in self.tension_intervals
                                      if not (tension.semitones() in seen or seen_add(tension.semitones()))]
         self.__tension_intervals = deduped_tension_intervals
-        
+
         # Inversion check - only if chord type was given, not for cases like II
         if self.chord_type and (self.inversion is not None) and \
                 self.inversion > len(self.base_intervals) + len(self.tension_intervals):
             raise Exception('Illegal inversion {0} for {1}'.format(self.inversion, self.__str__()))
 
         if self.inversion_interval is not None and \
-            self.inversion_interval not in self.base_intervals and \
-            self.inversion_interval not in self.tension_intervals:
+                self.inversion_interval not in self.base_intervals and \
+                self.inversion_interval not in self.tension_intervals:
             raise Exception('Illegal inversion_interval {0}'.format(self.inversion_interval))
-        
+
     @property
     def diatonic_basis(self):
         return self.__diatonic_basis
-     
-    @property   
+
+    @property
     def scale_degree(self):
         return self.__scale_degree
-    
+
     @property
     def chord_type(self):
         return self.__chord_type
-    
+
     @property
     def base_intervals(self):
         return self.__base_intervals
-    
+
     @property
     def tension_intervals(self):
         return self.__tension_intervals
-    
+
     @property
     def inversion(self):
         return self.__inversion
-    
+
     @property
     def inversion_interval(self):
         return self.__inversion_interval
-    
+
     @staticmethod
     def get_chord_type(interval_list):
         for k, v in list(TertianChordTemplate.TERTIAN_CHORD_TYPE_MAP.items()):
@@ -416,15 +421,15 @@ class TertianChordTemplate(ChordTemplate):
                 if same:
                     return TertianChordType(k)
         return None
-    
-    @staticmethod   
+
+    @staticmethod
     def get_triad(diatonic_tonality, scale_degree):
         return TertianChordTemplate.parse('t{0}'.format(
             ChordTemplate.SCALE_DEGREE_REVERSE_MAP[scale_degree])).create_chord(diatonic_tonality)
-    
+
     def create_chord(self, diatonic_tonality=None):
-        return TertianChord(self, diatonic_tonality)  
-        
+        return TertianChord(self, diatonic_tonality)
+
     def __str__(self):
         inv = ''
         if self.inversion is not None and self.inversion != 1:
@@ -437,8 +442,8 @@ class TertianChordTemplate(ChordTemplate):
             self.chord_type if self.chord_type else '',
             ' '.join(str(w) for w in self.tension_intervals),
             inv)
-        
-    @staticmethod   
+
+    @staticmethod
     def parse(chord_string):
         """
         Parse an input string into a TertialChordTemplate.
@@ -449,11 +454,11 @@ class TertianChordTemplate(ChordTemplate):
           TertianChordTemplate       
         """
         if not chord_string:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
+            raise TertianChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
         m = TertianChordTemplate.TERTIAN_PATTERN.match(chord_string)
         if not m:
-            raise Exception('Unable to parse chord string to completion: {0}'.format(chord_string))
-        
+            raise TertianChordException('Unable to parse chord string to completion: {0}'.format(chord_string))
+
         scale_degree = m.group(TertianChordTemplate.GROUP_SCALE_DEGREE)
         if scale_degree:
             scale_degree = ChordTemplate.SCALE_DEGREE_MAP[scale_degree]
@@ -471,7 +476,7 @@ class TertianChordTemplate(ChordTemplate):
         inversion = None
         if inversion_tension:
             tensions_parse = TertianChordTemplate.INVERSE_TENSION_PATTERN.findall(inversion_tension)
-            for tension in tensions_parse:   # should only be 1
+            for tension in tensions_parse:  # should only be 1
                 aug = DiatonicTone.AUGMENTATION_OFFSET_MAPPING[tension[0]]
                 interval_type = Interval.available_types(int(tension[1]))[aug]
                 inversion_interval = Interval(int(tension[1]), interval_type)
@@ -480,18 +485,18 @@ class TertianChordTemplate(ChordTemplate):
             inversion = int(inversion_text)
         else:
             inversion = 1
-        
+
         tensions = []
         if m.group(TertianChordTemplate.GROUP_TENSIONS):
             tensions_parse = TertianChordTemplate.TENSION_PATTERN.findall(m.group(TertianChordTemplate.GROUP_TENSIONS))
             for tension in tensions_parse:
                 aug = DiatonicTone.AUGMENTATION_OFFSET_MAPPING[tension[2]]
                 if aug not in Interval.available_types(int(tension[3])):
-                    raise Exception('Invalid interval specification for tension \'{0}\''.format(tension[0]))
+                    raise TertianChordException('Invalid interval specification for tension \'{0}\''.format(tension[0]))
                 interval_type = Interval.available_types(int(tension[3]))[aug]
                 interval = Interval(int(tension[3]), interval_type)
                 tensions.append(interval)
-            
+
         # logging.info('{0}, {1}, {2}, {3}'.format(diatonic_basis if scale_degree is None else str(scale_degree),
         #                                         str(chord_type) if chord_type else '',
         #                                         ' '.join(str(x) for x in tensions) if tensions else '',

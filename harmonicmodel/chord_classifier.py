@@ -36,7 +36,8 @@ class ChordClassifier(object):
                 self._root_tone, ', '.join(str(v.diatonic_symbol) for v in self.chord_tones)))
 
     def classify_tones_as_chord(self):
-        chords = self.find_tertian_chords()
+        chords = list()
+        chords.extend(self.find_tertian_chords())
         chords.extend(self.find_quartal_chords())
         chords.extend(self.find_secundal_chords())
         return chords
