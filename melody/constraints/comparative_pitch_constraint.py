@@ -149,4 +149,3 @@ class ComparativePitchConstraint(AbstractConstraint):
         for pitch in pitches:
             answer.add(Note(pitch, target.base_duration, target.num_dots))
         return answer
-

@@ -21,7 +21,7 @@ class FixedPitchSelectSetConstraint(AbstractConstraint):
         """
         Constructor.
         :param actor_note:  note as actor for this constraint.
-        :param pitch: list of pitches
+        :param pitches: list of pitches
         """
         AbstractConstraint.__init__(self, [actor_note])
 

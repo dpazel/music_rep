@@ -11,24 +11,6 @@ from structure.time_signature import BeatType
 from timemodel.time_conversion import TimeConversion
 from misc.ordered_set import OrderedSet
 
-'''
-Notes on FitPitchToFunctionConstraint:
-
-The key for the new constraint is the call to 'eval_as_pitch', which returns one or two pitches nearest to the 
-reshape curve.
-
-Case 1: Exactly one pitch.
-If pitch is scalar, use
-If pitch is non-scalar - if on-beat and pitch is 1/2 step from any chordal tone, do not use, else use
-
-Case 2: Two notes
-If both are scalar, use the closest to the curve.
-If both are non-scalar, use the nearest to curve, and apply as in case 1   (example, A, Bb in C-)
-If one is scalar and the other not:
-   If the scalar is on-beat or is within the scalar bias weight, use it
-   Otherwise use the non-scalar
-'''
-
 
 class FitPitchToFunctionConstraint(AbstractConstraint):
     """
@@ -104,6 +86,28 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
         return self._compute_values(v_note, p_map[v_note].policy_context.harmonic_context)
 
     def _compute_values(self, v_note, hc):
+        """
+        The core pitch computation used in the values() method.
+        :param v_note:
+        :param hc:
+        :return:
+
+        Notes:
+
+        The key for the new constraint is the call to 'eval_as_pitch', which returns one or two pitches nearest to the
+        reshape curve.
+
+        Case 1: Exactly one pitch.
+        If pitch is scalar, use
+        If pitch is non-scalar - if on-beat and pitch is 1/2 step from any chordal tone, do not use, else use
+
+        Case 2: Two notes
+        If both are scalar, use the closest to the curve.
+        If both are non-scalar, use the nearest to curve, and apply as in case 1   (example, A, Bb in C-)
+        If one is scalar and the other not:
+           If the scalar is on-beat or is within the scalar bias weight, use it
+           Otherwise use the non-scalar
+        """
 
         self.candidate_pitches = list()
         for p in self.pitch_function.eval_as_pitch(self.note_position.position):
@@ -133,11 +137,13 @@ class FitPitchToFunctionConstraint(AbstractConstraint):
             # If both scalar
             if self.candidate_pitches[0][1] and self.candidate_pitches[1][1]:
                 interp = self.pitch_function.pitch_range_interpreter
-                index = min(enumerate(self.candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]   # CHECK ERROR
+                index = min(enumerate(self.candidate_pitches),
+                            key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]
                 # return pitch closest to curve value
                 return OrderedSet([Note(self.candidate_pitches[index][0], v_note.base_duration, v_note.num_dots)])
             elif not self.candidate_pitches[0][1] and not self.candidate_pitches[1][1]:
-                index = min(enumerate(self.candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]
+                index = min(enumerate(self.candidate_pitches),
+                            key=lambda x: abs(interp.value_for(x[1][0]) - self.function_value))[0]
                 pitch = self.candidate_pitches[index]
                 # if on beat and half step off from chord tone, do not use
                 if v_note_beat_position is not None:

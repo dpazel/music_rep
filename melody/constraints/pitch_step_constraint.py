@@ -108,7 +108,6 @@ class PitchStepConstraint(AbstractConstraint):
             for p in pitches:
                 result.add(Note(p, v_target_note.base_duration, v_target_note.num_dots))
             return result
-            #return {Note(p, v_target_note.base_duration, v_target_note.num_dots) for p in pitches}
 
         return self.compute_result(arg_contextual_note, target_contextual_note, up_down)
 

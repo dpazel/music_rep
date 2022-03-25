@@ -1,3 +1,10 @@
+"""
+
+File: scalar_pitch_constraint.py
+
+Purpose: Constraint to ensure that some note must be scale to the contextual tonality.
+
+"""
 from melody.constraints.abstract_constraint import AbstractConstraint
 from structure.note import Note
 from tonalmodel.chromatic_scale import ChromaticScale
@@ -11,13 +18,15 @@ class ScalarPitchConstraint(AbstractConstraint):
     some subset of tones of the tonality.
     """
 
-    def __init__(self, note, scalar_roles=list()):
+    def __init__(self, note, scalar_roles=None):
         '''
         Constraint constuctor.
         :param note: Actor affected by constraint.
         :param scalar_roles: List of integer indices to tones in the current tonality, to which the actor must conform.
         '''
         AbstractConstraint.__init__(self, [note])
+        if scalar_roles is None:
+            scalar_roles = list()
 
         self.__scalar_notes = list(scalar_roles)
 

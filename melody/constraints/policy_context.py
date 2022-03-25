@@ -1,8 +1,10 @@
 """
 
+File: policy_context.py
+
+Purpose: Used by pmap to hold the appropriate harmonic context and pitch range.
+
 """
-from harmoniccontext.harmonic_context import HarmonicContext
-from tonalmodel.pitch_range import PitchRange
 
 
 class PolicyContext(object):
@@ -25,7 +27,7 @@ class PolicyContext(object):
         return str(self) == str(other)
 
     def __hash__(self):
-        return str(self).hash()
+        return hash(str(self))
 
     def __str__(self):
         return 'p.c.[{0}, {1}]'.format(self.harmonic_context, self.pitch_range)
