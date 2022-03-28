@@ -65,6 +65,7 @@ class ScoreToMidiConverter(object):
         
         self.__score = score
         self.__filename = ''
+        self.__trace = False
         self.mid = None
         self.inst_voice_channel = {}
         self.channel_assignment = 1
@@ -396,7 +397,7 @@ class NoteMessage(MidiMessage):
     
     def __str__(self):
         return '{0} {1}[{2}]:pv=({3}, {4})'.format(self.abs_tick_time, self.msg_type, self.channel, self.note_value,
-                                              self.velocity)
+                                                   self.velocity)
 
 
 class ExpressionVelocityMessage(MidiMessage):

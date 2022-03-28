@@ -71,6 +71,7 @@ class ScoreToVstMidiConverter(object):
         self.time_conversion = None
         self.tracks = None
         self.channel_assignment = 0
+        self.used_channels = None
 
         (self.fine_tempo_sequence, self.time_conversion) = self._build_time_conversion()
 
@@ -109,7 +110,8 @@ class ScoreToVstMidiConverter(object):
 
         Args:
           score: Class Score object
-          filename: The name of the midi file, should have filetype .mid
+          channel_assignments: maps 0, 1,,, as track id to channel assignment.
+          fps: frames per second
         Returns:
             meta_track: list of tempo and time sig events
             tracks: list of tracks, each a list of vst midi events, ref. MidiMessage below.
@@ -124,10 +126,12 @@ class ScoreToVstMidiConverter(object):
         Static method to convert a Line to a midi file
 
         Args:
-          line: Class Line object
-          filename: The name of the midi file, should have filetype .mid
-          tempo: Tempo for playback, default is 60 BPM tempo beat = quarter note
-          time_signature: TimeSiganture on playback, default is 4 quarter notes
+          :param line: Class Line object
+          :param tempo: Tempo for playback, default is 60 BPM tempo beat = quarter note
+          :param time_signature: TimeSiganture on playback, default is 4 quarter notes
+          :param channel_assignments:
+          :param fps: frames per second setting
+
         """
         score = Score()
         tempo_sequence = score.tempo_sequence
@@ -249,7 +253,7 @@ class ScoreToVstMidiConverter(object):
                     wnt = tc.actual_time_to_position(t1)
                     frames = self._wnt_to_fps(wnt)
                     velocity = int(event.velocity(wnt, next_event.time if next_event is not None else
-                                                       Position(voice_len.duration)))
+                                                  Position(voice_len.duration)))
                     msgs.append(ExpressionVelocityMessage(channel, frames, velocity))
                     t1 += ScoreToVstMidiConverter.VOLUME_EVENT_DURATION_MS
 
@@ -288,7 +292,8 @@ class ScoreToVstMidiConverter(object):
                 t2 = next_event.time if next_event is not None else Position(score_len.duration)
                 while t1 < t2:
                     tempo = int(tempo_event.tempo(t1, next_event.time if next_event is not None
-                                                                      else Position(score_len)))
+                                else Position(score_len)))
+
                     delta_wnt = (tempo * ScoreToVstMidiConverter.TEMPO_EVENT_DURATION_MS * beat_duration.duration) / \
                                 (60.0 * 1000.0)
 
@@ -308,7 +313,7 @@ class ScoreToVstMidiConverter(object):
 
     def _wnt_to_fps(self, wnt):
         # Convert whole note time to fps.
-        return int((self.time_conversion.position_to_actual_time(wnt) * self.fps)/ 1000.0)
+        return int((self.time_conversion.position_to_actual_time(wnt) * self.fps) / 1000.0)
 
     def _build_time_conversion(self):
         event_list = self.score.tempo_sequence.sequence_list
@@ -405,8 +410,7 @@ class NoteMessage(MidiMessage):
 
     def __str__(self):
         return '{0}/{1} {2}[{3}]({4}, {5})'.format(self.abs_frame_time, self.rel_frame_time, self.msg_type,
-                                                  self.channel, self.note_value,
-                                                  self.velocity)
+                                                   self.channel, self.note_value, self.velocity)
 
 
 class MetaMessage(MidiMessage):
