@@ -79,10 +79,10 @@ class PitchConstraintSolver(object):
                 if p_map[v_node] is None or p_map[v_node].note is None:
                     visit_results = self._visit(p_map, v_node)
                     if len(visit_results) == 0:
-                        if accept_partials:   # if accept partials, keep in partial results.
+                        if accept_partials:  # if accept partials, keep in partial results.
                             results_prime.append(p_map)
                     else:
-                        results_prime.extend(visit_results)   # note: contains possible extensions of pmap
+                        results_prime.extend(visit_results)  # note: contains possible extensions of pmap
                 else:  # v_note already filled, keep it in partial_results.
                     results_prime.append(p_map)
             partial_results = results_prime
@@ -155,7 +155,7 @@ class PitchConstraintSolver(object):
                     if len(value_results) == 0:  # first time through this loop per value, visit with p_map!
                         value_results = self._visit(p_map, c_note)
                         if len(value_results) == 0:  # Indicates failure to assign c_note, move to next value.
-                            break                    # If one peer fails, they all will, for this 'value'!
+                            break  # If one peer fails, they all will, for this 'value'!
                     else:
                         value_results_copy = value_results.copy()
                         # for peer c_note, if all r below fails (len(cand_results) == 0) should we also move on to
@@ -167,10 +167,10 @@ class PitchConstraintSolver(object):
                                 if len(cand_results) != 0:
                                     value_results = value_results.union(cand_results)
                                     found = True
-                                value_results.remove(r)     # r has no c_note assigned, what was returned did!
-                                                            # If not, r's peers cannot be assigned!
+                                value_results.remove(r)  # r has no c_note assigned, what was returned did!
+                                # If not, r's peers cannot be assigned!
                         if found is False:  # Same as if part, if c_note produces no results, it cannot be assigned.
-                            break           # If one peer fails, they all will!
+                            break  # If one peer fails, they all will!
             results = results.union(value_results)
 
         p_map[v_note].note = None
@@ -192,7 +192,7 @@ class PitchConstraintSolver(object):
         :param v_notes: list/set of ContextualNote sources to PMap
         :return: list of tuples (v_note, {solution to v_note's policies})
         """
-        ranked_list = list()   # A list of tuples (v_note, {solution values})
+        ranked_list = list()  # A list of tuples (v_note, {solution values})
         for v_note in v_notes:
             if p_map[v_note] is not None and p_map[v_note].note is not None:
                 continue
@@ -217,7 +217,7 @@ class PitchConstraintSolver(object):
         for p in self.v_policy_map[v_note]:
             p_values = p.values(p_map, v_note)
             if p_values is None:
-                returned_pitches = OrderedSet()    # None means p cannot be satisfied!
+                returned_pitches = OrderedSet()  # None means p cannot be satisfied!
             else:
                 returned_pitches = OrderedSet()
                 for n in p_values:

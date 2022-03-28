@@ -2,9 +2,10 @@
 
 File: msc_results.py
 
-Purpose: Provides results from MelodicConstraintSolver.solve().
+Purpose: Maintains results from MelodicConstraintSolver.solve().
 
 """
+
 
 class MCSResults(object):
 

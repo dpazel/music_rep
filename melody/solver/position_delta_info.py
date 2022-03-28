@@ -23,7 +23,7 @@ class PositionDeltaInfo(object):
     """
     This class hold information about the movement of various note structures in a line that in sum
     make all the OnBeat constraints work. This class not only records those movements, but is able to either
-    create an image of the orignal line with movements made, or alter the original with the movements.
+    create an image of the original line with movements made, or alter the original with the movements.
     """
 
     def __init__(self, coverage_node_list, tempo_seq, ts_seq, hct, line):

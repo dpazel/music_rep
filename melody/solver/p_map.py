@@ -47,7 +47,7 @@ class PMap(object):
     def assigned_actors(self, abstract_policy):
         """
         Return a list of constraints actors that have assigned target notes.
-        :param p_map:
+        :param abstract_policy:
         :return:
         """
         return [actor for actor in abstract_policy.actors if self[actor].note is not None]
@@ -55,7 +55,7 @@ class PMap(object):
     def unassigned_actors(self, abstract_policy):
         """
         Return a list of constraints actors that do not have assigned target notes.
-        :param p_map:
+        :param abstract_policy:
         :return:
         """
         return [actor for actor in abstract_policy.actors if self[actor].note is None]
@@ -82,9 +82,6 @@ class PMap(object):
 
     def __setitem__(self, key, value):
         self._p_map[key] = value
-
-    def __hash__(self):
-        return id(self)
 
     def __str__(self):
         s = list()
@@ -117,14 +114,15 @@ class PMap(object):
         """
         target_line = line.clone() if line_copy else line
         note_map = dict()
-        for l, t in zip(line.get_all_notes(), target_line.get_all_notes()):
-            note_map[l] = t
+        for line_note, t in zip(line.get_all_notes(), target_line.get_all_notes()):
+            note_map[line_note] = t
 
-        for l in line.get_all_notes():
-            if l in note_map:
-                t = note_map[l]
-                if l in self.keys():
-                    t.diatonic_pitch = self[l].note.diatonic_pitch if self[l].note is not None else t.diatonic_pitch
+        for l_note in line.get_all_notes():
+            if l_note in note_map:
+                t = note_map[l_note]
+                if l_note in self.keys():
+                    t.diatonic_pitch = self[l_note].note.diatonic_pitch if self[l_note].note is not None \
+                        else t.diatonic_pitch
 
         return target_line
 
@@ -186,6 +184,6 @@ class PMap(object):
         return hash(len(self.actors))
 
     def __eq__(self, other):
-        if not isinstance(other,PMap):
+        if not isinstance(other, PMap):
             return NotImplemented
         return self is other

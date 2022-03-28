@@ -166,7 +166,13 @@ class BeatConstraintSolver(object):
             reverse_coverage_map[c].append(n)
 
         return coverage_map, reverse_coverage_map, coverage_node_list
-
+'''
     def apply(self, pdi, line_copy=True):
+        """
+        Apply a position delta info to a the pdi's line.
+        :param pdi: PositionDeltaInfo
+        :param line_copy: True - make a copy of the line; False - apply directly to line.
+        :return:
+        """
         return pdi.apply(line_copy)
-
+        '''
