@@ -1,3 +1,10 @@
+"""
+
+File: ordered_set.py
+
+Purpose: Defines a set whose ordered by order of insertion. This allows for stable iteration over all elements.
+
+"""
 import collections.abc
 from collections import OrderedDict
 

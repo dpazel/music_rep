@@ -1,11 +1,10 @@
 """
-Created on Jul 7, 2016
+
 File: observer.py
 
 Purpose: Observer in an observer pattern.  In short, a client to an observable
          that receives notification of event based on something 'happening' to the observable.
 
-@author: donald p pazel
 """
 from abc import ABCMeta, abstractmethod
 

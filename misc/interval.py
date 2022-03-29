@@ -2,7 +2,7 @@
 
 File: interval.py
 
-Purpose: Interval class primarily used in interval tree.
+Purpose: Interval class defines a numeric range object, and is primarily used in interval tree.
 
 """
 

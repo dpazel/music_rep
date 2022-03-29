@@ -1,6 +1,10 @@
+"""
 
-class Singleton(object):
-    """
+File: singleton.py
+
+Purpose: Defines a singleton class object.
+
+Notes:
     This is a class that implements singleton for its subclasses.
     The technique is based on a variant of other techniques found in:
     http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
@@ -11,8 +15,11 @@ class Singleton(object):
     Classes that use this must:
     1) Add Singleton as a superclass.
     2) Have this signature for the constructor: __init__(self, *args, **kwargs)
-    """
-    _instances = {}
+
+"""
+class Singleton(object):
+
+    _instances = {}  # sdict of global class instances: mapping class type to class instance.
 
     @classmethod
     def instance(cls, *args, **kwargs):
