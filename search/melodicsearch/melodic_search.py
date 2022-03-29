@@ -447,13 +447,13 @@ class MelodicSearch(object):
             if type(pattern_note_parent) != type(target_note_parent):
                 return False
             else:
-                A = pattern_note_parent in ref_map
-                B = target_note_parent in ref_map
-                if not A and not B:
-                    ref_map[A] = B
-                    ref_map[B] = A
-                elif A and B:
-                    if ref_map[A] != B or ref_map[B] != A:
+                a_note = pattern_note_parent in ref_map
+                b_note = target_note_parent in ref_map
+                if not a_note and not b_note:
+                    ref_map[a_note] = b_note
+                    ref_map[b_note] = a_note
+                elif a_note and b_note:
+                    if ref_map[a_note] != b_note or ref_map[b_note] != a_note:
                         return False
                 else:
                     return False

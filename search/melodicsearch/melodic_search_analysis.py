@@ -192,7 +192,7 @@ class NotePairInformation(object):
 
     def __str__(self):
         return '{0} \"{1} {2}\"'.format(self.first_note, NotePairInformation.rel_pair_symbol(self.relationship),
-                                    self.second_note)
+                                        self.second_note)
 
 
 class HCInformation(object):

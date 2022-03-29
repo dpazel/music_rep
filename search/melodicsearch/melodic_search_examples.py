@@ -38,6 +38,7 @@ def basic_search_example():
     assert Position(0) == answers[0]
     assert Position(3, 2) == answers[1]
 
+
 def structural_match():
     lge = LineGrammarExecutor()
 
@@ -66,6 +67,7 @@ def structural_match():
 
     assert answers is not None
     assert 1 == len(answers)
+
 
 basic_search_example()
 structural_match()
