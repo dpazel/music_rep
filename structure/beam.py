@@ -27,7 +27,7 @@ class Beam(AbstractNoteCollective):
     FACTOR = Fraction(1, 2)
     NOTE_QUALIFIER_DURATION = Duration(1, 4)
 
-    def __init__(self, abstract_note_list=list()):
+    def __init__(self, abstract_note_list=None):
         """
         Constructor
         
@@ -36,6 +36,8 @@ class Beam(AbstractNoteCollective):
         """
         AbstractNoteCollective.__init__(self)
 
+        if abstract_note_list is None:
+            abstract_note_list = list()
         self.append(abstract_note_list)
         
     @property

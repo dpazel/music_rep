@@ -65,8 +65,8 @@ class Voice(Observer):
         from misc.utility import convert_to_numeric
         from fractions import Fraction
         last = Fraction(0)
-        for l in self.lines:
-            ep = convert_to_numeric(l.relative_position + l.length())
+        for line in self.lines:
+            ep = convert_to_numeric(line.relative_position + line.length())
             if ep > last:
                 last = ep
         return Duration(last) 

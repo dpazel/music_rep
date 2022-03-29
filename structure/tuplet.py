@@ -20,7 +20,7 @@ class Tuplet(AbstractNoteCollective):
     2) unit_duration_factor: a numeric representing how many of the above the full duration should be.
     """
 
-    def __init__(self, unit_duration, unit_duration_factor, abstract_note_list=list()):
+    def __init__(self, unit_duration, unit_duration_factor, abstract_note_list=None):
         """
         unit_duration x unit_duration_factor gives the full intended duration for the construct.
         tuplets have bounded duration but variable scale factor based on its contents 
@@ -36,7 +36,9 @@ class Tuplet(AbstractNoteCollective):
         
         self.__unit_duration = unit_duration
         self.__unit_duration_factor = unit_duration_factor
-        
+
+        if abstract_note_list is None:
+            abstract_note_list = list()
         self.append(abstract_note_list)
         
     @property

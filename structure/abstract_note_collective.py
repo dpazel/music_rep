@@ -147,7 +147,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
     def get_next_child(self, child):
         index = self.sub_notes.index(child)
         if index == -1:
-            raise Exception('Could not find child {} in collective {1}'.format(child, self))
+            raise Exception('Could not find child {0} in collective {1}'.format(child, self))
         if index >= len(self.sub_notes) - 1:
             return None
         return self.sub_notes[index + 1]
@@ -155,7 +155,7 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
     def get_prior_child(self, child):
         index = self.sub_notes.index(child)
         if index == -1:
-            raise Exception('Could not find child {} in collective {1}'.format(child, self))
+            raise Exception('Could not find child {0} in collective {1}'.format(child, self))
         if index == 0:
             return None
         return self.sub_notes[index - 1]
@@ -207,11 +207,11 @@ class AbstractNoteCollective(AbstractNote, Observer, Observable):
     @AbstractNote.parent.setter
     def parent(self, p):
         if self.parent:
-            self.deregister(self.parent)  # make parent not observe me.
-        AbstractNote.parent.fset(self, p)
-        # super(AbstractNote, self.__class__).parent.fset(self, p)  ???
+            self.deregister(self.parent)    # make parent not observe me.
+        AbstractNote.parent.fset(self, p)   # this calls AbstractNote.parent(self, p) setter.
+        # super(AbstractNoteCollective, self.__class__).parent.fset(self, p)   Alternatively
         if self.parent:
-            self.register(self.parent)    # make the parent observe me
+            self.register(self.parent)      # make the parent observe me
 
     def notes_added(self, note_list):  
         self.update(AbstractNote.NOTES_ADDED_EVENT, None, note_list)

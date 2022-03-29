@@ -64,7 +64,6 @@ class BeatType(Enum):
             raise Exception('Illegal BeatType designation \'{0}\''.format(ltr))
 
 
-
 class TimeSignature(object):
     """
     Class representation of time signature.

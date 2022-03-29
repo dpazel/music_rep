@@ -121,6 +121,7 @@ class TempoType(Enum):
             raise Exception('Illegal argument type for get_range_for {0}'.format(type(tempo_type)))
         return TempoType.get_range(tempo_type)
 
+
 # Initialize the static tables in the TempoType class.   
 TempoType.class_init()
     
