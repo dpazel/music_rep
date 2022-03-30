@@ -52,4 +52,4 @@ class DynamicsFunctionEvent(Event):
         """
         return self.object.dynamics(
             position - self.time, next_event_position - self.time if next_event_position else
-            self.objct.function_range())
+            self.object.function_range())

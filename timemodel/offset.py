@@ -65,11 +65,17 @@ class Offset(object):
             return False
         if isinstance(other, Fraction) or isinstance(other, int) or isinstance(other, float):
             return self.offset == other
+        if not isinstance(other, Offset):
+            return False
         return self.offset == other.offset
     
     def __ne__(self, other):
+        if other is None:
+            return False
         if isinstance(other, Fraction) or isinstance(other, int) or isinstance(other, float):
             return self.offset != other
+        if not isinstance(other, Offset):
+            return False
         return self.offset != other.offset
     
     def __gt__(self, other):
@@ -77,6 +83,8 @@ class Offset(object):
             return False
         if isinstance(other, Fraction) or isinstance(other, int) or isinstance(other, float):
             return self.offset > other
+        if not isinstance(other, Offset):
+            return False
         return self.offset > other.offset
 
     def __ge__(self, other):

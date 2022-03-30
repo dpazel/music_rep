@@ -27,8 +27,6 @@ class TempoEventSequence(EventSequence):
         tfe = self.floor_event(position)
         if isinstance(tfe, TempoFunctionEvent):
             next_tfe = self.successor(tfe)
-            return tfe.tempo(position, next_tfe.time if next_tfe != None else None)
+            return tfe.tempo(position, next_tfe.time if next_tfe is not None else None)
         else:
             return tfe.tempo()
-
-        

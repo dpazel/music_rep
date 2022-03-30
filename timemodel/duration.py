@@ -126,11 +126,17 @@ class Duration(object):
             return False
         if isinstance(other, Fraction) or isinstance(other, int) or isinstance(other, float):
             return self.duration > other
+        if not isinstance(other, Duration):
+            return False
         return self.duration > other.duration
 
     def __ge__(self, other):
+        if other is None:
+            return False
         if isinstance(other, Fraction) or isinstance(other, int) or isinstance(other, float):
             return self.duration >= other
+        if not isinstance(other, Duration):
+            return False
         return self.duration >= other.duration
         
     def __add__(self, other):

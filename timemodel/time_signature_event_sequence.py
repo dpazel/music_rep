@@ -1,4 +1,12 @@
+"""
+
+File: time_signature_event_sequence.py
+
+Purpose: Defines a list time signature events as an event sequence.
+
+"""
 from timemodel.event_sequence import EventSequence
+
 
 class TimeSignatureEventSequence(EventSequence):
     """
@@ -10,7 +18,7 @@ class TimeSignatureEventSequence(EventSequence):
         Constructor.
 
         Args:
-            event_list: TempoEvents to initialize the sequence.
+            event_list: list of TempoEvents to initialize the sequence.
         """
         EventSequence.__init__(self, event_list)
 

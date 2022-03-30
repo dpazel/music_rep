@@ -23,7 +23,7 @@ class TimeSignatureEvent(Event):
           time: Position.
         """
         if not isinstance(time, Position):
-           raise Exception('time argument to TimeSignatureEvent must be Position not \'{0}\'.'.format(type(time)))
+            raise Exception('time argument to TimeSignatureEvent must be Position not \'{0}\'.'.format(type(time)))
         Event.__init__(self, time_signature, time)
 
     def time_signature(self):
