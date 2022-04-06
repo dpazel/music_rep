@@ -67,8 +67,8 @@ def print_filtered_results(scored_filtered_results):
         print('[{0}]   {1}  score({2})'.format(i, generate_comparative_line(line), scored_filtered_results[i - 1][1]))
 
 
-def schubert_D946():
-    print('----- test schubert D946 -----')
+def schubert_d946():
+    print('----- test schubert d946 -----')
 
     source_expression = '{<Eb-Major: I> q@Bb:4 <:I> iBb Eb:5 D <:I> ' \
                         'q@Eb iBb:4 iBb Bb <:I> qG <:IV> iAb <:I> Bb Ab G <:I> q@G <:V> F}'
@@ -122,8 +122,8 @@ def mozart_c_minor_example_with_italian():
     print_filtered_results(scored_filtered_results)
 
 
-def schubert_a_major_D959_v1():
-    print('----- test schubert D959 A-Major V1 -----')
+def schubert_a_major_d959_v1():
+    print('----- test schubert d959 A-Major V1 -----')
 
     source_expression = '{<A-Major: I> qC#:4 hE qa <:V> qA G# <:I> hA <:ii> q@B iB ' \
                         '<E-Major :viiHalfDim7> qC#:5 A:4 <A-Major:I> hA ig# f# e d}'
@@ -152,8 +152,8 @@ def schubert_a_major_D959_v1():
     print_filtered_results(scored_filtered_results)
 
 
-def schubert_a_major_D959_v2():
-    print('----- test schubert D959 A-Major V2 -----')
+def schubert_a_major_d959_v2():
+    print('----- test schubert d959 A-Major V2 -----')
 
     source_expression = '{<A-Major: I> qC#:4 hE qa <:V> qA G# <:I> hA <:ii> q@B iB ' \
                         '<E-Major :viiHalfDim7> qC#:5 A:4 <A-Major:I> hA ig# f# e d}'
@@ -182,8 +182,8 @@ def schubert_a_major_D959_v2():
     print_filtered_results(scored_filtered_results)
 
 
-def mozart_GMajor_KV283():
-    print('----- test mozart KV283 -----')
+def mozart_gmajor_kv283():
+    print('----- test mozart kv283 -----')
 
     #  D:5 < E:5 < G:5 < A:5 < C:6 < D:6 < E:6 < F#:6 > D:6 > C:6 > Bb:5 > A:5 > G:5 > F:5 >
     #  E:5 > D:5 > C#:5 < E:5 > C#:5 > A:4 < B:4 < D:5 > B:4 > G:4 < A:4  score(14)
@@ -211,8 +211,8 @@ def mozart_GMajor_KV283():
     print_filtered_results(scored_filtered_results)
 
 
-def mozart_GMajor_KV283_with_step_sequence_motif():
-    print('----- test mozart KV283 with motif-----')
+def mozart_gmajor_kv283_with_step_sequence_motif():
+    print('----- test mozart kv283 with motif-----')
     '''
     The idea is to make the first 8 notes scalar. This cannot be done since the 6th note is flagged to be chordal and
     no chordal pitch on the 6th note lies on a scalar path from the initial D:5 assignment - using G-melodic
@@ -259,7 +259,7 @@ def mozart_GMajor_KV283_with_step_sequence_motif():
 
 # Examples
 # mozart_c_minor_example_with_italian()
-# schubert_a_major_D959_v1()
-# schubert_a_major_D959_v2()
-# mozart_GMajor_KV283()
-# mozart_GMajor_KV283_with_step_sequence_motif()
+# schubert_a_major_d959_v1()
+# schubert_a_major_d959_v2()
+# mozart_gmajor_kv283()
+# mozart_gmajor_kv283_with_step_sequence_motif()
