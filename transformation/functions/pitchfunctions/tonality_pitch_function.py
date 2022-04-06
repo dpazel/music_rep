@@ -153,7 +153,7 @@ class TonalityPitchFunction(GeneralPitchFunction):
         remapped_tone = self._dlex[input_tone]
         remapped_tone_letter = remapped_tone.diatonic_letter
 
-        if (input_tone_ltr == 'C'or input_tone_ltr == 'D') and remapped_tone_letter < 'C':
+        if (input_tone_ltr == 'C' or input_tone_ltr == 'D') and remapped_tone_letter < 'C':
             octave = octave - 1
         elif (input_tone_ltr == 'B' or input_tone_ltr == 'A') and remapped_tone_letter >= 'C':
             octave = octave + 1

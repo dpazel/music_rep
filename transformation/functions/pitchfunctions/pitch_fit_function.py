@@ -1,4 +1,9 @@
-from structure.note import Note
+"""
+File: pitch_fit_function.py
+
+Purpose: Support for remapping a pitch at a position given a function.
+
+"""
 from structure.time_signature import BeatType
 from timemodel.duration import Duration
 from timemodel.position import Position
@@ -40,8 +45,9 @@ class PitchFitFunction(object):
             raise Exception('Expecting Position parameter, found {0}.'.format(type(position)))
 
         hc = self.hct[position.position] if self.hct is not None else None
-        #if hc is None:
-        #    raise Exception('Cannot find hc at position {0}'.format(position))
+        # TODO:
+        # if hc is None:
+        #     raise Exception('Cannot find hc at position {0}'.format(position))
 
         candidate_pitches = list()
         for p in self.pitch_function.eval_as_pitch(position.position):
@@ -72,12 +78,14 @@ class PitchFitFunction(object):
             interp = self.pitch_function.pitch_range_interpreter
             # If both scalar
             if candidate_pitches[0][1] and candidate_pitches[1][1]:
-                index = min(enumerate(candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - function_value))[0]
+                index = min(enumerate(candidate_pitches),
+                            key=lambda x: abs(interp.value_for(x[1][0]) - function_value))[0]
                 # return pitch closest to curve value
                 return candidate_pitches[index][0]
             elif not candidate_pitches[0][1] and not candidate_pitches[1][1]:
-                index = min(enumerate(candidate_pitches), key=lambda x: abs(interp.value_for(x[1][0]) - function_value))[0]
-                pitch = candidate_pitches[index]
+                index = min(enumerate(candidate_pitches),
+                            key=lambda x: abs(interp.value_for(x[1][0]) - function_value))[0]
+                pitch = candidate_pitches[index][1]
                 # if on beat and half step off from chord tone, do not use
                 if v_note_beat_position is not None and hc is not None:
                     if PitchFitFunction._pitch_is_halfstep_off_chord(pitch, hc):

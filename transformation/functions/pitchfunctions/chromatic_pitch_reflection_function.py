@@ -5,13 +5,9 @@ Purpose: Class defining a pitch function based on flipping about a tone or about
          chromatic reflection
 
 """
-from enum import Enum
-
 from tonalmodel.chromatic_scale import ChromaticScale
-from tonalmodel.diatonic_foundation import DiatonicFoundation
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from transformation.functions.pitchfunctions.general_pitch_function import GeneralPitchFunction
-from transformation.functions.tonalfunctions.tonality_permutation_function import TonalityPermutationFunction
 from transformation.functions.pitchfunctions.diatonic_pitch_reflection_function import FlipType
 from transformation.functions.tonalfunctions.chromatic_tonal_reflection_function import ChromaticTonalReflectionFunction
 
@@ -30,7 +26,6 @@ class ChromaticPitchReflectionFunction(GeneralPitchFunction):
         self.__tonal_function = ChromaticTonalReflectionFunction(domain_tonality, cue_pitch.diatonic_tone, reflect_type)
 
         GeneralPitchFunction.__init__(self, self._build_pitch_map())
-
 
     @property
     def tonal_function(self):
@@ -53,27 +48,28 @@ class ChromaticPitchReflectionFunction(GeneralPitchFunction):
         return self.__domain_pitch_range
 
     def _build_pitch_map(self):
-        LTRS = 'CDEFGAB'
-        index = LTRS.index(self.domain_tonality.diatonic_tone.diatonic_letter)
-        key_ltrs = list(LTRS[index:] + LTRS[:index])
+        ltrs = 'CDEFGAB'
+        index = ltrs.index(self.domain_tonality.diatonic_tone.diatonic_letter)
+        key_ltrs = list(ltrs[index:] + ltrs[:index])
         c_index = key_ltrs.index('C')
         low_octave = self.cue_pitch.octave if key_ltrs.index(self.cue_pitch.diatonic_tone.diatonic_letter) < c_index \
             else self.cue_pitch.octave - 1
         high_octave = low_octave + 1
 
-        RANGE_LTRS = 'CBAGFED'
-        index = RANGE_LTRS.index(self.range_tonality.diatonic_tone.diatonic_letter)
-        range_key_ltrs = list(RANGE_LTRS[index:] + RANGE_LTRS[:index])
+        range_ltrs = 'CBAGFED'
+        index = range_ltrs.index(self.range_tonality.diatonic_tone.diatonic_letter)
+        range_key_ltrs = list(range_ltrs[index:] + range_ltrs[:index])
         range_c_index = range_key_ltrs.index('C')
         range_low_octave = self.cue_pitch.octave if range_key_ltrs.index(self.cue_pitch.diatonic_tone.diatonic_letter) \
-                                                    > range_c_index else self.cue_pitch.octave - 1
+            > range_c_index else self.cue_pitch.octave - 1
         range_high_octave = range_low_octave + 1
 
         imap = dict()
         for tone in self.tonal_function.domain:
             domain_octave = low_octave if key_ltrs.index(tone.diatonic_letter) < c_index else high_octave
             value = self.tonal_function[tone]
-            range_octave = range_high_octave if range_key_ltrs.index(value.diatonic_letter) <= range_c_index else range_low_octave
+            range_octave = range_high_octave if range_key_ltrs.index(value.diatonic_letter) <= range_c_index \
+                else range_low_octave
             imap[DiatonicPitch(domain_octave, tone)] = DiatonicPitch(range_octave, value)
 
         full_map = dict()
@@ -90,7 +86,4 @@ class ChromaticPitchReflectionFunction(GeneralPitchFunction):
                 if self.domain_pitch_range.is_pitch_inbounds(new_pitch):
                     full_map[new_pitch] = DiatonicPitch(rrange.octave + octave_delta, rrange.diatonic_tone)
 
-
         return full_map
-
-

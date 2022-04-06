@@ -105,9 +105,9 @@ class CrossTonalityShiftPitchFunction(GeneralPitchFunction):
         note_letters = note_letters[i:] + note_letters[:i]
 
         domain_tones = list()
-        for l in note_letters:
+        for ltr in note_letters:
             for aug in ['bb', 'b', '', '#', '##']:
-                domain_tones.append(DiatonicFoundation.get_tone(l + aug))
+                domain_tones.append(DiatonicFoundation.get_tone(ltr + aug))
 
         first_domain_pitch = None
         first_range_pitch = None
@@ -173,9 +173,9 @@ class CrossTonalityShiftPitchFunction(GeneralPitchFunction):
         note_letters = note_letters[i:] + note_letters[:i]
 
         domain_tones = list()
-        for l in note_letters:
+        for ltr in note_letters:
             for aug in ['bb', 'b', '', '#', '##']:
-                domain_tones.append(DiatonicFoundation.get_tone(l + aug))
+                domain_tones.append(DiatonicFoundation.get_tone(ltr + aug))
 
         first_domain_pitch = None
         first_range_pitch = None

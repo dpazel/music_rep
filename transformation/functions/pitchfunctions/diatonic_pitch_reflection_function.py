@@ -127,7 +127,7 @@ class DiatonicPitchReflectionFunction(GeneralPitchFunction):
                 lower = self._tone_index
                 upper = (lower + 1) % n_tones
                 lower_tone = self.tones[lower]
-                upper_tone = self.tonal_function[lower_tone] #self.tones[upper]
+                upper_tone = self.tonal_function[lower_tone]  # self.tones[upper]
                 lower_octave = self._scale_origin_octave
                 upper_octave = self._scale_origin_octave + 1 if DiatonicPitch.crosses_c(lower_tone, upper_tone, True)\
                     else self._scale_origin_octave
@@ -135,7 +135,7 @@ class DiatonicPitchReflectionFunction(GeneralPitchFunction):
                 upper = self._tone_index
                 lower = (upper - 1) % n_tones
                 lower_tone = self.tones[lower]
-                upper_tone = self.tonal_function[lower_tone] #self.tones[upper]
+                upper_tone = self.tonal_function[lower_tone]  # self.tones[upper]
                 upper_octave = self._scale_origin_octave
                 lower_octave = self._scale_origin_octave if not DiatonicPitch.crosses_c(lower_tone, upper_tone, True) \
                     else self._scale_origin_octave - 1
@@ -166,10 +166,10 @@ class DiatonicPitchReflectionFunction(GeneralPitchFunction):
                 break
             if entered_range:
                 if not self._domain_pitch_range.is_pitch_inbounds(lower_pitch) and \
-                    not self._domain_pitch_range.is_pitch_inbounds(upper_pitch):
+                        not self._domain_pitch_range.is_pitch_inbounds(upper_pitch):
                     break
             elif self._domain_pitch_range.is_pitch_inbounds(lower_pitch) or \
-                self._domain_pitch_range.is_pitch_inbounds(upper_pitch):
+                    self._domain_pitch_range.is_pitch_inbounds(upper_pitch):
                 entered_range = True
             else:
                 continue
@@ -199,9 +199,9 @@ class DiatonicPitchReflectionFunction(GeneralPitchFunction):
         octave_start = self._domain_pitch_range.start_index // 12
         octave_end = self._domain_pitch_range.end_index // 12
         for octave in range(octave_start, octave_end + 1):
-            for l in 'ABCDEFG':
+            for ltr in 'ABCDEFG':
                 for aug in ['bb', 'b', '', '#', "##"]:
-                    p = DiatonicPitch(octave, DiatonicFoundation.get_tone(l + aug))
+                    p = DiatonicPitch(octave, DiatonicFoundation.get_tone(ltr + aug))
                     if self._domain_pitch_range.is_pitch_inbounds(p) and p not in pmap.keys():
                         closest_p, closest_distance = self._find_closest_pitch(p)
                         if closest_p not in pmap.keys():
@@ -218,7 +218,8 @@ class DiatonicPitchReflectionFunction(GeneralPitchFunction):
                                                                                       False) else closest_p_prime.octave
                         p_prime = DiatonicPitch(o, t)
                         pmap[p] = p_prime
-                        # The mapping is not-symmetrical. e.g. E-pentatonic reflection_tests on G#, f(A#)->G and f(g)->G##
+                        # The mapping is not-symmetrical.
+                        # e.g. E-pentatonic reflection_tests on G#, f(A#)->G and f(g)->G##
         return pmap
 
     '''
