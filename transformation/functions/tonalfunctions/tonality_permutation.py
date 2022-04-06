@@ -14,13 +14,15 @@ class TonalityPermutation(TonalPermutation):
     More restrictive than Permutation, in that tones of a given tonality are the elements of the permutation.
     """
 
-    def __init__(self, tonality, cycles=list()):
+    def __init__(self, tonality, cycles=None):
         """
         Constructor
         :param tonality:
         :param cycles:
         """
         self._tonality = tonality
+        if cycles is None:
+            cycles = list()
         domain_tones = tonality.annotation[:len(tonality.annotation) - 1]
         TonalPermutation.__init__(self, cycles, domain_tones)
 

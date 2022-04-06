@@ -167,33 +167,6 @@ class TonalFunction(DiscreteFunction):
 
         super(TonalFunction, self).__delitem__(key)
 
-    def extract_tonal_and_extension_maps(self):
-        """
-        Deprecated - use primary_map and extension_map
-
-        Extract the mapping information in two parts:
-        1) the mapping of the domain tonality tones.
-        2) the mapping of the non-domain tonality tones.
-        :return: (in order as described above)
-          1) domain_tonality_map
-          2) extension_map
-        """
-
-        domain_tonality_map = dict()
-        used = set()
-        for tone in self.domain_tonality.annotation:
-            domain_tonality_map[tone] = self[tone]
-            used.add(tone.placement)
-
-        extension_map = dict()
-        outside = set(range(0, 12)) - used
-        for p in outside:
-            enharmonics = DiatonicTone.DIATONIC_OFFSET_ENHARMONIC_MAPPING[p]
-            source_tone = DiatonicToneCache.get_tone(enharmonics[0])
-            extension_map[source_tone] = self[tone] if tone in self.map else None
-
-        return domain_tonality_map, extension_map
-
     def __str__(self):
         return '{{{0}}} --> {{{1}}}'.format(self.domain_tonality, self.range_tonality)
 

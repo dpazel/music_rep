@@ -139,9 +139,9 @@ class ChromaticTonalReflectionFunction(TonalFunction):
             upper_ltr_index = None
             upper_augmentation = None
 
-        for l in 'CDEFGAB':
+        for ltr in 'CDEFGAB':
             for aug in ['bb', 'b', '', '#', "##"]:
-                tone = DiatonicFoundation.get_tone(l + aug)
+                tone = DiatonicFoundation.get_tone(ltr + aug)
                 if tone not in self.tonal_map.keys():
                     if self.reflect_type == FlipType.CenterTone:
                         interval = Interval.calculate_tone_interval(tone, self.cue_tone)

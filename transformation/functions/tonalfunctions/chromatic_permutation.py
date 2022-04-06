@@ -12,9 +12,9 @@ from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
 class ChromaticPermutation(Permutation):
     """
-    Class implementation of a permuation chromatic tones.
+    Class implementation of a permutation chromatic tones.
     On the handling of enharmonics:
-      Internally we use an unambiguous represention as given by NORMALIZED_TONES.  That is, the mapping's domain and
+      Internally we use an unambiguous representation as given by NORMALIZED_TONES.  That is, the mapping's domain and
       range is based on that alone.
       However, the cycles given by the user do not need to be in that representation, and in a way represents
       a 'language' for tones that is user/usage dependent.  We use that representation to return values. For symbols
@@ -45,8 +45,11 @@ class ChromaticPermutation(Permutation):
         for k in v:
             NORMALIZED_MAPPING[k] = key
 
-    def __init__(self, cycles=list()):
+    def __init__(self, cycles=None):
         self._to_user_preference = dict()
+
+        if cycles is None:
+            cycles = list()
 
         norm_cycles = list()
         if len(cycles) == 0:

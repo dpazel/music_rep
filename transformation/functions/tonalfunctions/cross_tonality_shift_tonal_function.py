@@ -1,8 +1,8 @@
 """
-File: intervallic_key_change_tonal_function.py
+File: cross_tonality_shift_tonal_function.py
 
-Purpose: Class for mapping tonality to tonality of same cardinality an interval difference, based on the end point of the
-         interval.
+Purpose: Class for mapping tonality to tonality of same cardinality an interval difference,
+         based on the end point of the interval.
 
 """
 from tonalmodel.diatonic_foundation import DiatonicFoundation
@@ -87,20 +87,20 @@ class CrossTonalityShiftTonalFunction(TonalFunction):
         # Map domain tone augmentations to similarly augmented range tonality tones.
         #   e.g. if m[Db] == G, then m[D == Db#] == G#
         key_ltr_map = {d.diatonic_letter: d for d in self.domain_tonality.annotation}
-        for l, t in key_ltr_map.items():
-            target_tone = self.constr_primary_map[t]
+        for ltr_item, tone_item in key_ltr_map.items():
+            target_tone = self.constr_primary_map[tone_item]
             for aug in ['bb', 'b', '', '#', "##"]:
-                tone = DiatonicFoundation.get_tone(l + aug)
+                tone = DiatonicFoundation.get_tone(ltr_item + aug)
                 if tone not in self.constr_primary_map.keys():
-                    aug_difference = tone.augmentation_offset - t.augmentation_offset
+                    aug_difference = tone.augmentation_offset - tone_item.augmentation_offset
                     new_target = DiatonicTone.alter_tone_by_augmentation(target_tone, aug_difference)
                     extension[tone] = new_target
 
         # Map all the other cases, e.g. tones outside pentatonic tonal scale for example.
         tone_list = self.domain_tonality.annotation[:-1]
-        for l in 'ABCDEFG':
-            if l not in key_ltr_map.keys():
-                t = DiatonicFoundation.get_tone(l)
+        for ltr_item in 'ABCDEFG':
+            if ltr_item not in key_ltr_map.keys():
+                t = DiatonicFoundation.get_tone(ltr_item)
                 lo_tone, hi_tone = CrossTonalityShiftTonalFunction._compute_neighbor_tones(t, tone_list)
                 lo_target = self.constr_primary_map[lo_tone] if lo_tone in self.constr_primary_map.keys() else \
                     extension[lo_tone]
@@ -135,7 +135,7 @@ class CrossTonalityShiftTonalFunction(TonalFunction):
 
                 # Now that t is mappec, map all the augmentations.
                 for aug in ['bb', 'b', '#', "##"]:
-                    aug_tone = DiatonicFoundation.get_tone(l + aug)
+                    aug_tone = DiatonicFoundation.get_tone(ltr_item + aug)
                     if aug_tone not in self.constr_primary_map.keys() and aug_tone not in extension.keys():
                         aug_difference = aug_tone.augmentation_offset - t.augmentation_offset
                         new_target = DiatonicTone.alter_tone_by_augmentation(target_tone, aug_difference)

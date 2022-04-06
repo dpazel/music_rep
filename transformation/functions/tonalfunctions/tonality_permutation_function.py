@@ -17,7 +17,6 @@ class TonalityPermutationFunction(TonalFunction):
     def __init__(self, tonality_permutation, extension_map=None):
         """
         Concstructor using a tonality permutation.
-        :param domain_tonality:
         :param tonality_permutation: TonalityPermutation.
         :param extension_map:
 
@@ -31,7 +30,7 @@ class TonalityPermutationFunction(TonalFunction):
         TonalFunction.__init__(self, domain_tonality, domain_tonality, primary_map, extension_map)
 
     @staticmethod
-    def create(tonality, cycles, extension_map = None):
+    def create(tonality, cycles, extension_map=None):
         """
         Construction using a tonality and cycles.
         :param tonality:
