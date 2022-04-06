@@ -13,6 +13,10 @@ import re
 from enum import Enum
 
 
+class IntervalException(Exception):
+    def __init__(self, msg):
+        Exception.__init__(self, msg)
+
 class IntervalType(Enum):
     """
     Enum class for the quality of musical intervals.
@@ -396,7 +400,7 @@ class Interval(object):
     GROUP_DISTANCE_TAG = '?P<' + DISTANCE_NAME + '>'
     DISTANCE_PART = '(' + GROUP_DISTANCE_TAG + DISTANCE + ')'
     
-    INTERVAL_SIGN = '(\+|\-)'
+    INTERVAL_SIGN = '(\\+|\\-)'
     INTERVAL_SIGN_NAME = 'IntervalSign'
     INTERVAL_SIGN_TAG = '?P<' + INTERVAL_SIGN_NAME + '>'
     INTERVAL_SIGN_PART = '(' + INTERVAL_SIGN_TAG + INTERVAL_SIGN + ')'
@@ -463,8 +467,8 @@ class Interval(object):
         b_ct = chromatic_count - 12 * octaves        
         
         if (b_dc, b_ct) not in Interval.INTERVAL_MAP:
-            raise Exception('Illegal Addition {0} + {1}    ({2}, {3})'.format(a, b, diatonic_count + 1,
-                                                                              chromatic_count))
+            raise IntervalException('Illegal Addition {0} + {1}    ({2}, {3})'.format(a, b, diatonic_count + 1,
+                                                                                      chromatic_count))
         return Interval(diatonic_count + 1, Interval.INTERVAL_MAP[(b_dc, b_ct)])
     
     @staticmethod
@@ -540,8 +544,7 @@ class Interval(object):
             for j in range(0, len(ivls)):
                 try:
                     summ = ivls[i] + ivls[j]
-                except Exception as e:
+                except IntervalException:
                     summ = "X"
                 s = s + str(summ) + "  "
             print(s)
-

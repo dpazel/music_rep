@@ -9,6 +9,13 @@ Purpose: Defines the static class ModalityFactory and the static method to creat
 
 from tonalmodel.modality import Modality
 
+from tonalmodel.diatonic_modality import DiatonicModality
+from tonalmodel.blues_modality import BluesModality
+from tonalmodel.whole_tone_modality import WholeToneModality
+from tonalmodel.pentatonic_modality import PentatonicModality
+from tonalmodel.octatonic_modality import OctatonicModality
+
+
 class ModalityFactory(object):
     """
     Static class of utility method for Modality creation, of the system-based modalities.
@@ -48,22 +55,22 @@ class ModalityFactory(object):
 
         raise Exception('Unrecognized modality type {0} in create_modality'.format(modality_type))
 
-from tonalmodel.diatonic_modality import DiatonicModality
+
 for key, value in DiatonicModality.MODALITY_DEFINITION_MAP.items():
     ModalityFactory.register_modality(key, value)
 
-from tonalmodel.blues_modality import BluesModality
+
 for key, value in BluesModality.MODALITY_DEFINITION_MAP.items():
     ModalityFactory.register_modality(key, value)
 
-from tonalmodel.whole_tone_modality import WholeToneModality
+
 ModalityFactory.ModalityInitDict[WholeToneModality.WHOLE_TONE_SPEC.modality_type] = \
     WholeToneModality.WHOLE_TONE_SPEC
 
-from tonalmodel.pentatonic_modality import PentatonicModality
+
 for key, value in PentatonicModality.MODALITY_DEFINITION_MAP.items():
     ModalityFactory.register_modality(key, value)
 
-from tonalmodel.octatonic_modality import OctatonicModality
+
 for key, value in OctatonicModality.MODALITY_DEFINITION_MAP.items():
     ModalityFactory.register_modality(key, value)

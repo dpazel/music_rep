@@ -38,6 +38,9 @@ class Test(unittest.TestCase):
             assert incremental_intervals == blues_modality.incremental_intervals
         print('End test_minor_blues_key')
 
+    def test_print_blues(self):
+        string_array = BluesModality.blues_modality_types_as_string_array()
+        for s in string_array:
+            print(s)
+        assert len(string_array) == 2
 
-if __name__ == "__main__":
-    unittest.main()

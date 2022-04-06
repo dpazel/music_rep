@@ -2,8 +2,8 @@
 File: diatonic_foundation.py
 
 Purpose: Class defining diatonic foundation, a static class that ties the diatonic pitches to the chromatic scale.
-"""
 
+"""
 from tonalmodel.chromatic_scale import ChromaticScale
 from tonalmodel.diatonic_tone import DiatonicTone
 from tonalmodel.diatonic_tone_cache import DiatonicToneCache

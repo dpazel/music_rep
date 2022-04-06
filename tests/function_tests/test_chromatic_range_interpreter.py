@@ -2,7 +2,6 @@ import unittest
 from fractions import Fraction
 
 from function.chromatic_range_interpreter import ChromaticRangeInterpreter
-from tonalmodel.tonality import Tonality, ModalityType
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
 class TestScalarRangeInterpreter(unittest.TestCase):

@@ -2,7 +2,7 @@ import unittest
 
 import sys
 
-from tonalmodel.interval import Interval
+from tonalmodel.interval import Interval, IntervalException
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from tonalmodel.interval import IntervalType
 from tonalmodel.diatonic_tone import DiatonicTone
@@ -656,6 +656,15 @@ class TestInterval(unittest.TestCase):
             results = ', '.join(str(t) for t in answers)
             print('{0}   -->   {1}'.format(incrementals, results))
         print('end of test')
+
+    def test_interval_exception(self):
+        i1 = Interval.parse('d:4')
+        i2 = Interval.parse('d:3')
+        try:
+            i = i1 + i2
+        except IntervalException as e:
+            print('caught exception ' + str(e))
+            assert e
 
     def test_book_examples(self):
         # Interval Creation

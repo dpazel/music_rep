@@ -24,7 +24,7 @@ class BluesModality(Modality):
         }
 
     @staticmethod
-    def create(modality_type, modal_index = 0):
+    def create(modality_type, modal_index=0):
         if modality_type not in BluesModality.BLUES_MODALITIES:
             raise Exception('Type parameter is not blues.')
         if modality_type not in BluesModality.MODALITY_DEFINITION_MAP:
@@ -34,5 +34,5 @@ class BluesModality(Modality):
 
     @staticmethod
     def blues_modality_types_as_string_array():
-        answer = [ModalityType.to_str(t) for t in BluesModality.BLUES_MODALITIES]
+        answer = [str(t) for t in BluesModality.BLUES_MODALITIES]
         return answer

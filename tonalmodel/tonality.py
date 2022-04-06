@@ -5,7 +5,7 @@ File: tonality.py
 Purpose: to define the Tonality class.
 
 """
-from tonalmodel.modality import ModalityType, Modality
+from tonalmodel.modality import Modality
 from tonalmodel.modality_factory import ModalityFactory
 from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 
@@ -19,7 +19,7 @@ class Tonality(object):
     def __init__(self, modality, diatonic_tone):
         """
         Constructor.
-        :param modality_type: ModalityType being used.
+        :param modality: Modality specified.
         :param diatonic_tone: DiatonicTone being used as root.
 
         diatonic_tone is the modal_index tone into some tonality based on the given modality.

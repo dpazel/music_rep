@@ -99,7 +99,7 @@ class PitchScale(object):
                 if lowest_index < pitch_index:
                     tone_index = self.tone_scale.index(tone)
                     pitch_index = lowest_index
-        return (tone_index, pitch_index)
+        return tone_index, pitch_index
 
     @staticmethod
     def compute_closest_scale_tones(tonality, pitch):
@@ -154,10 +154,8 @@ class PitchScale(object):
         # Compute all pitches within that range
         low = max(starting_points[0].chromatic_distance + down_chrom, ChromaticScale.chromatic_start_index())
         high = min((starting_points[0].chromatic_distance if len(starting_points) == 1
-                                  else starting_points[1].chromatic_distance) + up_chrom, ChromaticScale.chromatic_end_index())
-        #pitch_range = PitchRange(starting_points[0].chromatic_distance + down_chrom,
-        #                         (starting_points[0].chromatic_distance if len(starting_points) == 1
-        #                          else starting_points[1].chromatic_distance) + up_chrom)
+                    else starting_points[1].chromatic_distance) + up_chrom, ChromaticScale.chromatic_end_index())
+
         pitch_range = PitchRange(low, high)
         pitch_scale = PitchScale(tonality, pitch_range).pitch_scale
 
@@ -178,4 +176,3 @@ class PitchScale(object):
             hi = upper_index + (lower_starting_index if upper_index < 0 else upper_starting_index)
             full_range = range(lo, hi + 1)
             return [pitch_scale[i] for i in full_range]
-

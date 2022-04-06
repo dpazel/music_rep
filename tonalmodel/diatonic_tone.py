@@ -183,33 +183,34 @@ class DiatonicTone(object):
         aug_symbol = DiatonicTone.augmentation(augmentation)
         return DiatonicToneCache.get_cache().get_tone(basic_symbol + aug_symbol)
 
+    LTRS = 'CDEFGAB'
+    POS_INC = [2, 2, 1, 2, 2, 2, 1]
+    NEG_INC = [-1, -2, -2, -1, -2, -2, -2]
+
     @staticmethod
     def enharmonic_adjust(ltr, augmentation):
-        '''
+        """
         In some cases, symbols like G#### or Abbbbb might come up. This is a check for those rare cases, so
         that enharmonic equivalents can be accessed.
         :param ltr:
         :param augmentation:
         :return:
-        '''
-        LTRS = 'CDEFGAB'
-        POS_INC = [2, 2, 1, 2, 2, 2, 1]
-        NEG_INC = [-1, -2, -2, -1, -2, -2, -2]
+        """
+
         if abs(augmentation) <= 3:
             return ltr, augmentation
         if augmentation > 0:
             while augmentation > 2:
-                i = LTRS.index(ltr.upper())
-                augmentation -= POS_INC[i]
-                ltr = LTRS[i + 1] if i < 6 else LTRS[0]
+                i = DiatonicTone.LTRS.index(ltr.upper())
+                augmentation -= DiatonicTone.POS_INC[i]
+                ltr = DiatonicTone.LTRS[i + 1] if i < 6 else DiatonicTone.LTRS[0]
         else:
             while augmentation < -2:
-                i = LTRS.index(ltr.upper())
-                augmentation -= NEG_INC[i]
-                ltr = LTRS[i - 1] if i > 0 else LTRS[6]
+                i = DiatonicTone.LTRS.index(ltr.upper())
+                augmentation -= DiatonicTone.NEG_INC[i]
+                ltr = DiatonicTone.LTRS[i - 1] if i > 0 else DiatonicTone.LTRS[6]
         return ltr, augmentation
 
-    
     @staticmethod   
     def parse(diatonic_tone_text):
         """
@@ -234,7 +235,6 @@ class DiatonicTone(object):
         if parts is None:
             return None
         return parts[0] + parts[1]
-
 
     @staticmethod
     def calculate_diatonic_distance(tone1, tone2):

@@ -85,4 +85,3 @@ class DiatonicModality(Modality):
                     if intervals == modality_spec.incremental_intervals:
                         answers.append(DiatonicModality.create(t, (-scale_start) % len(tones)))
         return answers
-

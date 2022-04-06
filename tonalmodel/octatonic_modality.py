@@ -38,5 +38,5 @@ class OctatonicModality(Modality):
     
     @staticmethod
     def octatonic_modality_types_as_string_array():
-        answer = [ModalityType.to_str(t) for t in OctatonicModality.OCTATONIC_MODALITIES]
+        answer = [str(t) for t in OctatonicModality.OCTATONIC_MODALITIES]
         return answer

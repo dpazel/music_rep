@@ -2,7 +2,8 @@ import unittest
 from fractions import Fraction
 
 from function.scalar_range_interpreter import ScalarRangeInterpreter
-from tonalmodel.tonality import Tonality, ModalityType
+from tonalmodel.tonality import Tonality
+from tonalmodel.modality import ModalityType
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
 

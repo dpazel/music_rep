@@ -18,7 +18,7 @@ class WholeToneModality(Modality):
                                                             'M:2', 'M:2', 'd:3'])
 
     @staticmethod
-    def create(modality_type, modal_index = 0):
+    def create(modality_type, modal_index=0):
         if modality_type != ModalityType.WholeTone:
             raise Exception('Type parameter is not WholeTone.')
         return Modality(WholeToneModality.WHOLE_TONE_SPEC, modal_index)
