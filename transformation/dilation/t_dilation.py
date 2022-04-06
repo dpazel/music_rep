@@ -144,8 +144,8 @@ class TDilation(Transformation):
                 new_to_old_map[t] = strct
                 return t
             elif isinstance(strct, Line):
-                l = Line()
-                new_to_old_map[l] = strct
+                line = Line()
+                new_to_old_map[line] = strct
                 for s in collect:
-                    l.pin(s, new_to_old_map[s].relative_position * self.dilation_factor)
-                return l
+                    line.pin(s, new_to_old_map[s].relative_position * self.dilation_factor)
+                return line

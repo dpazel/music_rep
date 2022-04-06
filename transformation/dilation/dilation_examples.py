@@ -17,7 +17,7 @@ from instruments.instrument_catalog import InstrumentCatalog
 from fractions import Fraction
 
 
-def bach_french_suite_II_BWV813():
+def bach_french_suite_ii_bwv813():
     print('----- Bach French Suite II BWV 813 -----')
 
     # Minuet MM 1-4 3/4 T.S. 42-46==dotted half  p.46 Bach text
@@ -38,7 +38,7 @@ def bach_french_suite_II_BWV813():
     print_score(title, new_score)
 
 
-def mozart_sonata_in_a_KV331():
+def mozart_sonata_in_a_kv331():
     print('----- Mozart example Sonata in A KV331 -----')
 
     # I MM 1-4 6/8 T.S. 42-46==dotted half  p.46 Bach text
@@ -152,5 +152,5 @@ def create_score(line_text, instrument, tmpo, ts):
 # odd_factor_example()
 
 # Examples
-# bach_french_suite_II_BWV813()
-# mozart_sonata_in_a_KV331()
+# bach_french_suite_ii_bwv813()
+# mozart_sonata_in_a_kv331()
