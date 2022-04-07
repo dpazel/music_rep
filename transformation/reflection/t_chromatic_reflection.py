@@ -138,7 +138,8 @@ class TChromaticReflection(Transformation):
         #  sequences, like V/ii, ii
         secondary_tonality = hc.chord.secondary_tonality
 
-        lo_cue_tone, hi_cue_tone = TChromaticReflection._compute_cue_tone(self.cue_pitch.diatonic_tone, secondary_tonality)
+        lo_cue_tone, hi_cue_tone = TChromaticReflection._compute_cue_tone(self.cue_pitch.diatonic_tone,
+                                                                          secondary_tonality)
         octave = self.cue_pitch.octave
         if hi_cue_tone is None:  # case where lo_cue_tone should be enharmonic to cue_pitch.diatonic_tone
             if self.cue_pitch.chromatic_distance < DiatonicPitch(octave, lo_cue_tone).chromatic_distance:
@@ -252,7 +253,6 @@ class TChromaticReflection(Transformation):
 
         return new_hct
 
-
     def remap_chord(self, hc):
         from tonalmodel.interval import Interval as TonalInterval
         chord = hc.chord
@@ -260,7 +260,7 @@ class TChromaticReflection(Transformation):
         if not isinstance(chord, SecondaryChord):
             f = self.__hc_flip_map[hc] if hc in self.__hc_flip_map.keys() else \
                 ChromaticPitchReflectionFunction(hc.tonality, self.cue_pitch, self.domain_pitch_range)
-                # FlipOnTonality(hc.tonality, self.cue_pitch, self.domain_pitch_range)
+            # FlipOnTonality(hc.tonality, self.cue_pitch, self.domain_pitch_range)
             new_chord_tones = [f.tonal_function[t[0]] for t in chord.tones]
             chords = ChordClassifier.classify_all_roots(new_chord_tones, f.range_tonality)
             if chords is not None and len(chords) > 0:
@@ -278,12 +278,12 @@ class TChromaticReflection(Transformation):
             root_mapped_tonality = base_f.range_tonality
             mapped_denominator = TonalInterval.calculate_tone_interval(
                 root_mapped_tonality.root_tone,
-
-                 secondary_function.range_tonality.root_tone).diatonic_distance + 1
+                secondary_function.range_tonality.root_tone).diatonic_distance + 1
 
             # Alternatively, in the else part, we could have done:
             #   secondary_function = f.tonal_function.create_adapted_function(secondary_tonality, secondary_tonality)
-            # but to be consistent within the logic, we go for the reflection_tests constructiobn of the secondary function
+            # but to be consistent within the logic, we go for the reflection_tests constructiobn of
+            # the secondary function
             # as embodied in tFlip._build_secondary_flip_function()
 
             new_chord_tones = [secondary_function[t[0]] for t in chord.tones]
@@ -296,13 +296,14 @@ class TChromaticReflection(Transformation):
                 raise Exception('Cannot remap/classify chord {0} based on chord.'.format(
                     ', '.join(str(t.diatonic_symbol) for t in new_chord_tones)))
 
-            mapped_numerator = TonalInterval.calculate_tone_interval(
-                new_chord.root_tone,
-                secondary_function.range_tonality.root_tone).diatonic_distance + 1
+            # mapped_numerator = TonalInterval.calculate_tone_interval(
+            #    new_chord.root_tone,
+            #    secondary_function.range_tonality.root_tone).diatonic_distance + 1
             secondary_chord_template = SecondaryChordTemplate(new_chord.chord_template,
                                                               mapped_denominator,
                                                               secondary_tonality.modality.modality_type)
-            secondary_chord = SecondaryChord(secondary_chord_template, root_mapped_tonality, secondary_function.range_tonality)
+            secondary_chord = SecondaryChord(secondary_chord_template, root_mapped_tonality,
+                                             secondary_function.range_tonality)
             return secondary_chord
 
     def _build_chromatic_reflection(self, hc):

@@ -14,7 +14,8 @@ from misc.interval import Interval
 from harmoniccontext.harmonic_context import HarmonicContext
 from timemodel.duration import Duration
 from timemodel.position import Position
-from transformation.functions.pitchfunctions.diatonic_pitch_reflection_function import FlipType, DiatonicPitchReflectionFunction
+from transformation.functions.pitchfunctions.diatonic_pitch_reflection_function import \
+    FlipType, DiatonicPitchReflectionFunction
 from harmonicmodel.chord_classifier import ChordClassifier
 from harmoniccontext.harmonic_context_track import HarmonicContextTrack
 from harmonicmodel.secondary_chord_template import SecondaryChordTemplate
@@ -44,6 +45,7 @@ class TDiatonicReflection(Transformation):
         self.cue_pitch = None
         self.pre_extent = None
         self.post_extent = None
+        self.flip_type = None
 
         self.hc_flip_map = dict()  # Maps hc to reflection_tests function - for reuse
 
@@ -81,6 +83,7 @@ class TDiatonicReflection(Transformation):
 
         :param temporal_extent: misc.Interval
         :param cue_pitch:  Possible override of the cue pitch.
+        :param flip_type:
         :param as_copy: True means to return copys of line, hct as source_line, source_hct would be modified otherwise.
         :return: modified line and hct (as objects, the same as passed in.)
         """
@@ -111,9 +114,11 @@ class TDiatonicReflection(Transformation):
                     else:
                         low, high = TDiatonicReflection._adjust_flip_cue_to_tonality(self.cue_pitch, hc.tonality)
                         if high is None:
-                            f = DiatonicPitchReflectionFunction(hc.tonality, self.cue_pitch, self.domain_pitch_range, self.flip_type)
+                            f = DiatonicPitchReflectionFunction(hc.tonality, self.cue_pitch, self.domain_pitch_range,
+                                                                self.flip_type)
                         else:
-                            f = DiatonicPitchReflectionFunction(hc.tonality, low, self.domain_pitch_range, FlipType.LowerNeighborOfPair)
+                            f = DiatonicPitchReflectionFunction(hc.tonality, low, self.domain_pitch_range,
+                                                                FlipType.LowerNeighborOfPair)
                     self.hc_flip_map[hc] = f
                 else:
                     f = self.hc_flip_map[hc]
@@ -130,7 +135,8 @@ class TDiatonicReflection(Transformation):
         #  sequences, like V/ii, ii
         secondary_tonality = hc.chord.secondary_tonality
 
-        lo_cue_tone, hi_cue_tone = TDiatonicReflection._compute_cue_tone(self.cue_pitch.diatonic_tone, secondary_tonality)
+        lo_cue_tone, hi_cue_tone = TDiatonicReflection._compute_cue_tone(self.cue_pitch.diatonic_tone,
+                                                                         secondary_tonality)
         octave = self.cue_pitch.octave
         if hi_cue_tone is None:  # case where lo_cue_tone should be enharmonic to cue_pitch.diatonic_tone
             if self.cue_pitch.chromatic_distance < DiatonicPitch(octave, lo_cue_tone).chromatic_distance:
@@ -144,7 +150,8 @@ class TDiatonicReflection(Transformation):
             if DiatonicPitch(octave, lo_cue_tone).chromatic_distance > self.cue_pitch.chromatic_distance:
                 octave = octave - 1
             lo_cue_pitch = DiatonicPitch(octave, lo_cue_tone)
-            f = DiatonicPitchReflectionFunction(secondary_tonality, lo_cue_pitch, self.domain_pitch_range, FlipType.LowerNeighborOfPair)
+            f = DiatonicPitchReflectionFunction(secondary_tonality, lo_cue_pitch, self.domain_pitch_range,
+                                                FlipType.LowerNeighborOfPair)
 
         #
         # Note: the above produces the same tonal function as TonalFunction.create_adapted_function
@@ -249,7 +256,8 @@ class TDiatonicReflection(Transformation):
 
             # Alternatively, in the else part, we could have done:
             #   secondary_function = f.tonal_function.create_adapted_function(secondary_tonality, secondary_tonality)
-            # but to be consistent within the logic, we go for the reflection_tests constructiobn of the secondary function
+            # but to be consistent within the logic, we go for the reflection_tests constructiobn
+            # of the secondary function
             # as embodied in tFlip._build_secondary_flip_function()
 
             new_chord_tones = [secondary_function[t[0]] for t in chord.tones]
