@@ -35,7 +35,7 @@ def comp(p1, p2):
         return '=='
 
 
-def print_results(results, pattern_line):
+def print_results(results):
     if results is None or len(results) == 0:
         print("There are no results")
         return
@@ -55,8 +55,10 @@ def print_results(results, pattern_line):
 def first_pattern_example():
     print('----- test explanation pattern example -----')
 
-    pattern_expression = '{<Bb-Major: i> qBb:3 Bb:4 ia sg eb qf <:iv> qEb:4 Eb:5 iD sEb F i@G sG <:iv> sF:5 Eb D C:4 D:5 C:4 G A <:i> hBb}'
-    replacement_expression = '{<Bb-Major: i> qBb:4 Bb:3 <:vi> iD:4 sEb G qf <:v> qF:5 F:4 <:i> iF:5 sEb D i@Bb:4 sG:5 <:iv> sEb:4 Eb:5 D C Bb:4 A G F <:I> hBb:3}'
+    pattern_expression = '{<Bb-Major: i> qBb:3 Bb:4 ia sg eb qf <:iv> qEb:4 Eb:5 iD sEb F i@G sG <:iv> sF:5 ' \
+                         'Eb D C:4 D:5 C:4 G A <:i> hBb}'
+    replacement_expression = '{<Bb-Major: i> qBb:4 Bb:3 <:vi> iD:4 sEb G qf <:v> qF:5 F:4 <:i> iF:5 sEb D i@Bb:4 ' \
+                             'sG:5 <:iv> sEb:4 Eb:5 D C Bb:4 A G F <:I> hBb:3}'
 
     replacement_hc_expressions = [
         '@0:i',
@@ -69,21 +71,23 @@ def first_pattern_example():
 
     t_pat_sub = TPatSub.create(pattern_expression, replacement_expression, replacement_hc_expressions)
 
-    source_instance_expression = '{<G-Major: i> D:4 D:5 ib:4 sa f qG <:v> qF#:4 F#:5 iB:4 sC:5 D i@F# sF# <:iii> sE D C B:4 C:5 B:4 G B <:V> hC:5}'
+    source_instance_expression = '{<G-Major: i> D:4 D:5 ib:4 sa f qG <:v> qF#:4 F#:5 iB:4 sC:5 D i@F# sF# <:iii> ' \
+                                 'sE D C B:4 C:5 B:4 G B <:V> hC:5}'
 
     lge = LineGrammarExecutor()
     replacement_instance_line, replacement_instance_hct = lge.parse(source_instance_expression)
 
     tag_map = {0: DiatonicPitch.parse('D:5')}
 
-    results, replacement_instance_hct = t_pat_sub.apply(replacement_instance_line, replacement_instance_hct, 'C:4', tag_map, t_pat_sub.target_height, 200)
+    results, replacement_instance_hct = t_pat_sub.apply(replacement_instance_line, replacement_instance_hct, 'C:4',
+                                                        tag_map, t_pat_sub.target_height, 200)
 
-    filter = MinContourFilter(t_pat_sub.substitution_pattern.target_pattern_line, results.pitch_results)
-    scored_filtered_results = filter.scored_results
+    mc_filter = MinContourFilter(t_pat_sub.substitution_pattern.target_pattern_line, results.pitch_results)
+    scored_filtered_results = mc_filter.scored_results
 
     print_hct(replacement_instance_hct)
 
-    print_results(scored_filtered_results, replacement_instance_line)
+    print_results(scored_filtered_results)
 
 
 def second_pattern_example():
@@ -94,7 +98,7 @@ def second_pattern_example():
 
     replacement_expression = '{<C-Major: i> q@C:4 iD qE <:iv> q@F:4 iG qA <:v> qG:4 D F ' \
                              '<G-Melodic:i> q@G:4 iA qBb <:V> qD:5 E F# ' \
-                        '<G-Natural:IV> qG:5 Eb C <C-Major:V> q@B:4 iA qG <:VI> q@a iG qE <:IV> qC:4 F D <:I> h@C}'
+                             '<G-Natural:IV> qG:5 Eb C <C-Major:V> q@B:4 iA qG <:VI> q@a iG qE <:IV> qC:4 F D <:I> h@C}'
 
     replacement_hc_expressions = [
         '@0:i',
@@ -119,17 +123,17 @@ def second_pattern_example():
 
     tag_map = {0: DiatonicPitch.parse('F:4')}
 
-    results, replacement_instance_hct = t_pat_sub.apply(source_instance_line, source_instance_hct, 'C:4', tag_map, t_pat_sub.target_height + 5, 300)
+    results, replacement_instance_hct = t_pat_sub.apply(source_instance_line, source_instance_hct, 'C:4', tag_map,
+                                                        t_pat_sub.target_height + 5, 300)
 
-    filter = MinContourFilter(t_pat_sub.substitution_pattern.target_pattern_line, results.pitch_results)
-    scored_filtered_results = filter.scored_results
+    mc_filter = MinContourFilter(t_pat_sub.substitution_pattern.target_pattern_line, results.pitch_results)
+    scored_filtered_results = mc_filter.scored_results
 
     print_hct(replacement_instance_hct)
 
-    print_results(scored_filtered_results, source_instance_line)
+    print_results(scored_filtered_results)
 
 
 # Examples
-first_pattern_example()
-#second_pattern_example()
-
+# first_pattern_example()
+# second_pattern_example()

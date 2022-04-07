@@ -5,8 +5,6 @@ File: min_contour_filter.py
 Purpose: To provide a ranking of patsub solutions.
 
 """
-from structure.line import Line
-from timemodel.offset import Offset
 
 
 class MinContourFilter(object):
@@ -56,21 +54,23 @@ class MinContourFilter(object):
 
         instance_results = list()
         for instance in self.target_instance_list:
-            instance_notes = self._get_pmap_notes(instance)
+            instance_notes = MinContourFilter._get_pmap_notes(instance)
 
             if len(pattern_notes) != len(instance_notes):
                 raise Exception('target pattern and instance have different numbers of notes')
 
             instance_diffs = [instance_notes[i].diatonic_pitch.chromatic_distance -
                               instance_notes[i - 1].diatonic_pitch.chromatic_distance
-                             for i in range(1, len(instance_notes))]
-            s = sum([(instance_diff - pattern_diff) * (instance_diff - pattern_diff) for instance_diff, pattern_diff in zip(instance_diffs, pattern_diffs)])
+                              for i in range(1, len(instance_notes))]
+            s = sum([(instance_diff - pattern_diff) * (instance_diff - pattern_diff)
+                     for instance_diff, pattern_diff in zip(instance_diffs, pattern_diffs)])
 
             instance_results.append((self.pmap_to_line(instance), s))
 
         return sorted(instance_results, key=lambda instance_result: instance_result[1])
 
-    def _get_pmap_notes(self, pmap):
+    @staticmethod
+    def _get_pmap_notes(pmap):
         target_notes = [k for k in pmap.keys()]
         target_notes = sorted(target_notes, key=lambda tn: tn.get_absolute_position())
         return [pmap[key].note for key in target_notes]

@@ -8,7 +8,6 @@ Purpose: To replace an image of the pattern in a host line, with a substitution,
 from harmoniccontext.harmonic_context_track import HarmonicContextTrack
 from melody.constraints.chordal_pitch_constraint import ChordalPitchConstraint
 from melody.constraints.comparative_pitch_constraint import ComparativePitchConstraint
-from melody.solver.melodic_constraint_solver import MelodicConstraintSolver
 from search.melodicsearch.melodic_search_analysis import NotePairInformation
 from structure.line import Line
 from structure.tempo import Tempo
@@ -20,7 +19,6 @@ from timemodel.tempo_event import TempoEvent
 from timemodel.tempo_event_sequence import TempoEventSequence
 from timemodel.time_signature_event import TimeSignatureEvent
 from tonalmodel.diatonic_pitch import DiatonicPitch
-from tonalmodel.pitch_range import PitchRange
 from transformation.harmonictranscription.t_harmonic_transcription import THarmonicTranscription
 from transformation.patsub.substitution_pattern import SubstitutionPattern
 from transformation.transformation import Transformation
@@ -53,7 +51,18 @@ class TPatSub(Transformation):
     def target_height(self):
         return self.substitution_pattern.target_height
 
-    def apply(self, source_instance_line, source_instance_hct, window_anchor_pitch, tag_map=None, window_height=None, num_solutions=-1):
+    def apply(self, source_instance_line, source_instance_hct, window_anchor_pitch, tag_map=None,
+              window_height=None, num_solutions=-1):
+        """
+        Apply for TPatSub.
+        :param source_instance_line:
+        :param source_instance_hct:
+        :param window_anchor_pitch:
+        :param tag_map:
+        :param window_height:
+        :param num_solutions:
+        :return:  MCSResults, target hct.
+        """
         window_anchor_pitch = DiatonicPitch.parse(window_anchor_pitch) if isinstance(window_anchor_pitch, str) \
             else window_anchor_pitch
 
