@@ -22,22 +22,6 @@ from transformation.transformation import Transformation
 
 from collections import OrderedDict
 
-'''
-Notes on TRESHAPE:
-
-The idea is to temporarily add an extra constraint to a melody that can be handled by the pitch constraint engine.
-The new constraint is labeled non-essential, meaning that:
-1) If there are essential constraints affecting a note - they must be met.  Then the non-essentials are tried. 
-   We do not allow the non-essentials to negate the essential results. 
-2) If there are no essential contraints, the non-essentials are tried, and if solved, we use those solutions.
-
-Note: There may be a difference in key between the a non-essential constraint's harmonic context and that of the 
-      pitch function. We defer to the key of the pitch function, except where a function result has an enharmonic
-      equivalent in the hc's key - we use that. 
-Note: If a pitch evaluation gives a pitch for a note on a strong beat, and that note is a 1/2 pitch off of some
-      note in the harmonic context's chord, we flag a failure, i.e. we return an empty set.
-'''
-
 
 class TReshape(Transformation):
     """
@@ -234,8 +218,7 @@ class TReshape(Transformation):
             for note in pitch_result_pmap.keys():
                 # map notes in pitch_result_score to what beat_score_result would
                 if pitch_result_pmap[note].note is None:
-                    raise Exception('Note at {0} not solved for value in constraint.'.format(
-                        note.get_absolute_position()))
+                    raise Exception('Note {0} not solved for value in constraint.'.format(note))
                 master_map[mm[note]] = pitch_result_pmap[note].note.diatonic_pitch
 
             # Map reshaped notes in pitch_result_score to their resolved notes into master
@@ -457,3 +440,21 @@ class TReshape(Transformation):
                                                pitch_result_score.time_signature_sequence))
 
         return final_results
+
+
+'''
+(These seem to be outdated notes, but as notes can be of value at some time to improve results.
+Notes on TRESHAPE:
+
+The idea is to temporarily add an extra constraint to a melody that can be handled by the pitch constraint engine.
+The new constraint is labeled non-essential, meaning that:
+1) If there are essential constraints affecting a note - they must be met.  Then the non-essentials are tried. 
+   We do not allow the non-essentials to negate the essential results. 
+2) If there are no essential contraints, the non-essentials are tried, and if solved, we use those solutions.
+
+Note: There may be a difference in key between the a non-essential constraint's harmonic context and that of the 
+      pitch function. We defer to the key of the pitch function, except where a function result has an enharmonic
+      equivalent in the hc's key - we use that. 
+Note: If a pitch evaluation gives a pitch for a note on a strong beat, and that note is a 1/2 pitch off of some
+      note in the harmonic context's chord, we flag a failure, i.e. we return an empty set.
+'''

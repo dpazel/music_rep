@@ -84,8 +84,10 @@ def str_line(line):
     s = ' '.join(annotation for annotation in note_annotations)
     return s
 
+
 def print_line(line):
     print(str_line(line))
+
 
 def sinasoidal(v):
     """
@@ -96,8 +98,10 @@ def sinasoidal(v):
     """
     return BASE + 19 * math.sin(2 * math.pi * v/3)
 
+
 def three_sin(v):
     return math.sin(2 * math.pi * v/3)
+
 
 def simple_reshape_no_pf():
     print('----- test_simple_reshape_no_pf -----')
@@ -106,7 +110,6 @@ def simple_reshape_no_pf():
 
     score = create_score(line_str, 'violin', (3, 4, 'sww'))
 
-    tonality = score.hct.get_hc_by_position(0).tonality
     all_notes = score.line.get_all_notes()
 
     pitch_function = GenericUnivariatePitchFunction(sinasoidal, Position(0), Position(3))
@@ -125,11 +128,11 @@ def simple_reshape_no_pf():
 
     results = treshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    mc_filter = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(mc_filter.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(mc_filter.scored_results))):
+        result = mc_filter.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
 
 
@@ -161,13 +164,12 @@ def reshape_with_pf():
 
     results = treshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    mc_filter = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(mc_filter.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(mc_filter.scored_results))):
+        result = mc_filter.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
-
 
     constraints = {
         ChordalPitchConstraint(all_notes[0]),
@@ -190,12 +192,13 @@ def reshape_with_pf():
 
     results = treshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    mc_filter = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(mc_filter.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(mc_filter.scored_results))):
+        result = mc_filter.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
+
 
 def reshape_to_scale():
     print('----- test_reshape_to_scale -----')
@@ -229,13 +232,12 @@ def reshape_to_scale():
 
     results = treshape.apply()
 
-    filter = MinCurveFitFilter(pitch_function, results)
-    print('{0} filtered results'.format(len(filter.scored_results)))
+    mc_filter = MinCurveFitFilter(pitch_function, results)
+    print('{0} filtered results'.format(len(mc_filter.scored_results)))
 
-    for index in range(0, min(5, len(filter.scored_results))):
-        result = filter.scored_results[index]
+    for index in range(0, min(5, len(mc_filter.scored_results))):
+        result = mc_filter.scored_results[index]
         print('[{0}] {1} ({2})'.format(index, str_line(result[0].line), result[1]))
-
 
 
 simple_reshape_no_pf()
