@@ -17,6 +17,7 @@ from harmonicmodel.tertian_chord_template import TertianChordTemplate
 
 from itertools import islice
 
+
 class SecondaryShiftType(enum.Enum):
     Standard = 1   # Change the numerator of a secondary chord.
     Tonal = 2      # Change the denominator of a secondary chord.
@@ -24,7 +25,7 @@ class SecondaryShiftType(enum.Enum):
 
 class TStepShift(Transformation):
 
-    def __init__(self, source_line, source_hct, default_secondary_shift_type = SecondaryShiftType.Standard):
+    def __init__(self, source_line, source_hct, default_secondary_shift_type=SecondaryShiftType.Standard):
         """
         Constructor
         :param source_line: The source Line of notes.
@@ -36,6 +37,11 @@ class TStepShift(Transformation):
         self.__source_hct = source_hct
         self.__default_secondary_shift_type = default_secondary_shift_type
         self.__secondary_shift_type = self.__default_secondary_shift_type
+        self.step_increment = 1
+        self.temporal_extent = None
+        self.pre_extent = None
+        self.post_extent = None
+        self.hc_step_pitch_function_map = None
 
         Transformation.__init__(self)
 
@@ -55,7 +61,7 @@ class TStepShift(Transformation):
     def secondary_shift_type(self):
         return self.__secondary_shift_type
 
-    def apply(self, step_increment=0, temporal_extent=None, secondary_shift_type = None,):
+    def apply(self, step_increment=0, temporal_extent=None, secondary_shift_type=None):
         """
         Do an apply action for this transform.
         :param step_increment: The number of scalar steps to do.
@@ -63,7 +69,7 @@ class TStepShift(Transformation):
         :param temporal_extent: The temporal extent over which to transform
         :return: A new score line and new score hct reflecting the transform changes in the extent.
         """
-        if step_increment == None or not isinstance(step_increment, int):
+        if step_increment is None or not isinstance(step_increment, int):
             raise Exception('Increment must be specified and be an integer.')
         self.step_increment = step_increment
 
@@ -113,7 +119,8 @@ class TStepShift(Transformation):
             new_hc = self.rebuild_hc(hc, position, duration)
             new_hct.append(new_hc)
 
-            f = self._build_step_shift_function(new_hc, hc)
+            # TODO: this has to be called, but not sure what side effects are necessary.
+            self._build_step_shift_function(new_hc, hc)
 
             position += new_hc.duration
             if hc.extent.upper > self.temporal_extent.upper:
@@ -143,13 +150,15 @@ class TStepShift(Transformation):
     def _reset_pitches(self, score_hct):
         line = self.source_line.clone()
         last_hc = None
+        f = None
         for note in line.get_all_notes():
             if self.temporal_extent.contains(note.get_absolute_position().position):
                 hc = score_hct.get_hc_by_position(note.get_absolute_position() - self.temporal_extent.lower)
                 if last_hc != hc:
                     f = self._build_step_shift_function(hc)
                     last_hc = hc
-                note.diatonic_pitch = f[note.diatonic_pitch]
+                if f is not None:
+                    note.diatonic_pitch = f[note.diatonic_pitch]
 
         return line
 
@@ -277,11 +286,9 @@ class PitchRemapFunction(object):
         result_tone = self.tonal_function(pitch.diatonic_tone)
 
         crosses = DiatonicPitch.crosses_c(pitch.diatonic_tone, result_tone,
-                                        True if self._sign(self.increment) >= 0 else False)
+                                          True if self._sign(self.increment) >= 0 else False)
 
-        #result_register = pitch.octave + ((self._sign(self.increment) * ((abs(self.increment) // 7)  + 1)) if crosses else 0)
-
-        result_register = pitch.octave + self._sign(self.increment) * ((abs(self.increment) // 7) + (1 if crosses else 0))
+        result_register = pitch.octave + self._sign(self.increment) * ((abs(self.increment) // 7) +
+                                                                       (1 if crosses else 0))
 
         return DiatonicPitch(result_register, result_tone)
-

@@ -127,9 +127,9 @@ def print_hct(hct):
 
 
 # Examples
-# simple_sequence_example()
-# standard_modulation_example()
-# tonal_modulation_example()
-# tonal_modulation_CMinor_tonal_example()
-# tonal_modulation_CNaturalMinor_tonal_example()
-# tonal_modulation_all_NaturalMinor_tonal_example()
+simple_sequence_example()
+standard_modulation_example()
+tonal_modulation_example()
+tonal_modulation_CMinor_tonal_example()
+tonal_modulation_CNaturalMinor_tonal_example()
+tonal_modulation_all_NaturalMinor_tonal_example()
