@@ -97,23 +97,14 @@ class TRetrograde(Transformation):
                              tag_map, t_ht.height + 6, results_sample_size,
                              tunnel_half_interval=Interval(4, IntervalType.Perfect))
 
-        # results is MSCResults
-        for pmap in results.pitch_results:
-            line = pmap.as_line()
-            # print('{0}'.format(str_line(line)))
-
         filtered_results = MinContourFilter(reduced_reversed_line, results.pitch_results)
         scored_filtered_results = filtered_results.scored_results
 
         if len(scored_filtered_results) == 0:
             return None, None
 
-
-        #for index in range(0, min(15, len(filtered_results.scored_results))):
-        #    result = filtered_results.scored_results[index]
-        #    print('[{0}] {1} ({2})'.format(index, str_line(result[0]), result[1]))
-
         return scored_filtered_results[0][0], reduced_hct
+
 
 def duration_ltr(duration):
     if duration.duration == Fraction(1, 16):
@@ -131,6 +122,7 @@ def duration_ltr(duration):
     elif duration.duration == Fraction(1):
         return 'w'
     return '>'
+
 
 def str_line(line):
     notes = line.get_all_notes()
@@ -152,13 +144,14 @@ def str_line(line):
     s = ' '.join(annotation for annotation in note_annotations)
     return s
 
+
 def gen_tag_map(note, hc):
     if note.diatonic_pitch is None:
         return None
 
     octave = note.diatonic_pitch.octave
     octaves = []
-    if octave -1 > 0:
+    if octave - 1 > 0:
         octaves.append(octave - 1)
     octaves.append(octave)
     if octave + 1 < 8:
@@ -169,13 +162,12 @@ def gen_tag_map(note, hc):
     closest_pitch = None
     dist = 10000
     for tone_info in chordals:
-       t = tone_info[0].diatonic_symbol
-       for o in octaves:
-           p = DiatonicPitch.parse(t + ':' + str(octave))
-           d = abs(p.chromatic_distance - note.diatonic_pitch.chromatic_distance)
-           if d < dist:
-               dist = d
-               closest_pitch = p
+        t = tone_info[0].diatonic_symbol
+        for octave in octaves:
+            p = DiatonicPitch.parse(t + ':' + str(octave))
+            d = abs(p.chromatic_distance - note.diatonic_pitch.chromatic_distance)
+            if d < dist:
+                dist = d
+                closest_pitch = p
 
     return {0: closest_pitch}
-
