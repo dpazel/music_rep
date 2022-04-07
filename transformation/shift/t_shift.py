@@ -41,10 +41,6 @@ class TShift(Transformation):
         Note: default_range_modality_type applies to any key in source_hct hc's.
         """
 
-        #if default_range_modality_type is not None:
-        #   if isinstance(default_range_modality_type, int):
-        #        default_range_modality_type = ModalityType(default_range_modality_type)
-
         if default_root_shift_interval is None:
             default_root_shift_interval = TonalInterval.parse('P:1')
 
@@ -148,13 +144,15 @@ class TShift(Transformation):
     def _reset_pitches(self, as_copy):
         line = self.source_line.clone() if as_copy else self.source_line
         last_hc = None
+        f = None
         for note in line.get_all_notes():
             if self.temporal_extent.contains(note.get_absolute_position().position):
                 hc = self.source_hct.get_hc_by_position(note.get_absolute_position())
                 if last_hc != hc:
                     f, _ = self._build_shift_function(hc)
                     last_hc = hc
-                note.diatonic_pitch = f[note.diatonic_pitch]
+                if f is not None:
+                    note.diatonic_pitch = f[note.diatonic_pitch]
 
         return line
 
@@ -225,22 +223,21 @@ class TShift(Transformation):
             range_tonality = f.range_tonality
         else:
             if self.root_shift_interval:
-                range_tonality = Tonality.create(self.range_modality_type if self.range_modality_type is not None else hc.tonality.modality_type,
+                range_tonality = Tonality.create(self.range_modality_type if self.range_modality_type is not None else
+                                                 hc.tonality.modality_type,
                                                  self.root_shift_interval.get_end_tone(hc.tonality.diatonic_tone),
-                                                 self.modal_index if self.modal_index is not None else hc.tonality.modal_index)
+                                                 self.modal_index if self.modal_index is not None else
+                                                 hc.tonality.modal_index)
             else:
                 range_tonality = hc.tonality
 
-
             # Range tone is the tone from the denominator, e.g. the ii in V/ii.
             range_tone = range_tonality.annotation[hc.chord.chord_template.secondary_scale_degree - 1]
-            #root_tone_interval = TShift.calculate_interval(hc.chord.secondary_tonality.root_tone,
-            #                                               range_tone,
-            #                                               self.root_shift_interval)
 
-            root_tone_interval = TonalInterval.calculate_tone_interval(hc.chord.secondary_tonality.root_tone, range_tone) \
-                                     if not TonalInterval.is_negative(self.root_shift_interval) else  \
-                                 -TonalInterval.calculate_tone_interval(range_tone, hc.chord.secondary_tonality.root_tone)
+            root_tone_interval = TonalInterval.calculate_tone_interval(hc.chord.secondary_tonality.root_tone,
+                                                                       range_tone) \
+                if not TonalInterval.is_negative(self.root_shift_interval) else  \
+                -TonalInterval.calculate_tone_interval(range_tone, hc.chord.secondary_tonality.root_tone)
 
             f = CrossTonalityShiftPitchFunction(hc.chord.secondary_tonality,
                                                 self.domain_pitch_range,
@@ -313,7 +310,7 @@ class TShift(Transformation):
                                                   self.root_shift_interval.get_end_tone(hc.tonality.diatonic_tone),
                                                   self.modal_index if self.modal_index is not None
                                                   else hc.tonality.modal_index) if self.root_shift_interval else \
-                                                  hc.tonality
+                hc.tonality
 
             secondary_chord_template = SecondaryChordTemplate(new_chord.chord_template,
                                                               chord.chord_template.secondary_scale_degree,
