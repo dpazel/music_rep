@@ -117,7 +117,3 @@ class TestInterval(unittest.TestCase):
         assert len(hc_track) == 2
         assert hc_track[Position(0)].duration == Duration(1, 2)
         assert hc_track[Position(1, 2)].duration == Duration(1, 3)
-
-
-if __name__ == "__main__":
-    unittest.main()
