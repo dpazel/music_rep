@@ -31,12 +31,12 @@ class TestPiecewiseLinearPitchFunction(unittest.TestCase):
         assert DiatonicPitch.parse('G:4').chromatic_distance == f.eval_as_chromatic_distance(Fraction(3, 4))
         assert DiatonicPitch.parse('A:5').chromatic_distance == f.eval_as_chromatic_distance(Position(1))
 
-
         print(f.eval_as_frequency(0))
         assert ChromaticScale.A0 == f.eval_as_frequency(0)
 
         print(ChromaticScale.index_to_location(DiatonicPitch.parse('C:5').chromatic_distance))
-        print(ChromaticScale.get_frequency(ChromaticScale.index_to_location(DiatonicPitch.parse('C:5').chromatic_distance)))
+        print(ChromaticScale.get_frequency(ChromaticScale.index_to_location(DiatonicPitch.parse('C:5').
+                                                                            chromatic_distance)))
         print(f.eval_as_frequency(0.5))
         assert math.isclose(ChromaticScale.get_frequency(
             ChromaticScale.index_to_location(DiatonicPitch.parse('C:5').chromatic_distance)),
@@ -73,10 +73,9 @@ class TestPiecewiseLinearPitchFunction(unittest.TestCase):
         print('[{0}]'.format(','.join(str(p) for p in f.eval_as_pitch(0.25))))
 
         # 0.625 between C:5 and E:4 comes to G#:4
-        print('[{0}]'.format(','.join(str(p) for p in f.eval_as_pitch(Fraction(5,8)))))
+        print('[{0}]'.format(','.join(str(p) for p in f.eval_as_pitch(Fraction(5, 8)))))
 
         print(DiatonicPitch.parse('A:4').chromatic_distance)
-        print( DiatonicPitch.parse('C:5').chromatic_distance)
-        print( DiatonicPitch.parse('E:4').chromatic_distance)
-        print( DiatonicPitch.parse('C:5').chromatic_distance)
-
+        print(DiatonicPitch.parse('C:5').chromatic_distance)
+        print(DiatonicPitch.parse('E:4').chromatic_distance)
+        print(DiatonicPitch.parse('C:5').chromatic_distance)

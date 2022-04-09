@@ -4,6 +4,7 @@ from fractions import Fraction
 from function.chromatic_range_interpreter import ChromaticRangeInterpreter
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
+
 class TestScalarRangeInterpreter(unittest.TestCase):
 
     def setUp(self):

@@ -61,19 +61,19 @@ class TestPermutation(unittest.TestCase):
         assert 1 == inverse[3]
         assert 3 == inverse[4]
 
-        id = p * inverse
+        id_array = p * inverse
 
-        assert 1 == id[1]
-        assert 2 == id[2]
-        assert 3 == id[3]
-        assert 4 == id[4]
+        assert 1 == id_array[1]
+        assert 2 == id_array[2]
+        assert 3 == id_array[3]
+        assert 4 == id_array[4]
 
-        id = inverse * p
+        id_array = inverse * p
 
-        assert 1 == id[1]
-        assert 2 == id[2]
-        assert 3 == id[3]
-        assert 4 == id[4]
+        assert 1 == id_array[1]
+        assert 2 == id_array[2]
+        assert 3 == id_array[3]
+        assert 4 == id_array[4]
 
     def test_book_example(self):
         domain = {1, 2, 3, 4, 5, 6, 7}
@@ -95,4 +95,3 @@ class TestPermutation(unittest.TestCase):
         print(i)
         print('p * i = {0}'.format(p * i))
         print('i * p = {0}'.format(i * p))
-

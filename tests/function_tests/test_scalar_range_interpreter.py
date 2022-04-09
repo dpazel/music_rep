@@ -90,7 +90,7 @@ class TestScalarRangeInterpreter(unittest.TestCase):
         gs_value = interpreter.value_for("G#:4")
         assert gs_value == 2
         gs_value = interpreter.value_for("G:4")
-        assert gs_value == None
+        assert gs_value is None
 
         pitches = interpreter.eval_as_pitch(5.2)
         print("[{0}]".format(', '.join(map(str, pitches))))

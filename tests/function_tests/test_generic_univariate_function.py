@@ -29,6 +29,3 @@ class TestGenericUnivariateFunction(unittest.TestCase):
     @staticmethod
     def square(x):
         return x*x
-
-if __name__ == "__main__":
-    unittest.main()
