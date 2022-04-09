@@ -77,20 +77,16 @@ class TestInstrumentCatalog(unittest.TestCase):
 
         catalog.print_catalog()
 
+    '''
+    Use this test to determine if local file can be loaded as instrument catalog.
     def atest1_open_outside(self):
         catalog = InstrumentCatalog.instance(xml_file='/Users/.../my_instruments.xml')
 
         c1 = InstrumentCatalog.instance()
 
         assert c1 == catalog
-
+    '''
 
     def test_print_catalog(self):
         c = InstrumentCatalog.instance()
         c.print_catalog()
-
-
-if __name__ == "__main__":
-    unittest.main()
-
-# test for token checkin
