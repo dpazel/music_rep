@@ -168,7 +168,3 @@ class TestQuartalChordTemplate(unittest.TestCase):
         template = QuartalChordTemplate.parse('IV')
         chord = template.create_chord(diatonic_tonality)
         print(chord)
-
-
-if __name__ == "__main__":
-    unittest.main()
