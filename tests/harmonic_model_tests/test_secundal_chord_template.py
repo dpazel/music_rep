@@ -55,10 +55,10 @@ class TestSecundalChordTemplate(unittest.TestCase):
             i += 1
             
         tones = {Tonality.create(ModalityType.Major, DiatonicTone("C")): (['a', 'b', 'c', 'd', 'e', 'f', 'g'],
-                                                                   ['A, B, C MajMin', 'B, C, D MinMaj',
-                                                                    'C, D, E MajMaj', 'D, E, F MajMin',
-                                                                    'E, F, G MinMaj', 'F, G, A MajMaj',
-                                                                    'G, A, B MajMaj']),
+                                                                          ['A, B, C MajMin', 'B, C, D MinMaj',
+                                                                           'C, D, E MajMaj', 'D, E, F MajMin',
+                                                                           'E, F, G MinMaj', 'F, G, A MajMaj',
+                                                                           'G, A, B MajMaj']),
                  Tonality.create(ModalityType.Major, DiatonicTone("Db")):
                      (['ab', 'bb',  'db', 'eb', 'gb'],
                       ['Ab, Bb, C MajMaj', 'Bb, C, Db MajMin', 'Db, Eb, F MajMaj', 'Eb, F, Gb MajMin',
@@ -167,6 +167,3 @@ class TestSecundalChordTemplate(unittest.TestCase):
         template = SecundalChordTemplate.parse('III')
         chord = template.create_chord(diatonic_tonality)
         print(chord)
-
-if __name__ == "__main__":
-    unittest.main()

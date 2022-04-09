@@ -302,6 +302,3 @@ class TestTertianTemplateChord(unittest.TestCase):
             if tones[i][0].diatonic_symbol != answer[i]:
                 return False
         return True
-
-if __name__ == "__main__":
-    unittest.main()
