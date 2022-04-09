@@ -14,6 +14,11 @@ from tonalmodel.chromatic_scale import ChromaticScale
 from misc.ordered_map import OrderedMap
 
 
+class ChromaticRangeInterpreterException(Exception):
+    def __init__(self, msg):
+        Exception.__init__(self, msg)
+
+
 class ChromaticRangeInterpreter(PitchRangeInterpreter):
     """
     Class that interprets a number as being in the chromatic range A:0-C:8,
@@ -86,6 +91,8 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
     def eval_as_pitch(self, v):
         floor_value = self.value_to_pitch.floor(v)
         ceil_value = self.value_to_pitch.ceil(v)
+        if floor_value is None or ceil_value is None:
+            raise ChromaticRangeInterpreterException('Illegal chromatic pitch range paramger value {0}.'.format(v))
         if math.isclose(v, self.value_for(self.value_to_pitch[floor_value])):
             return [self.value_to_pitch[floor_value]]
         else:
@@ -95,6 +102,8 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
 
     def eval_as_accurate_chromatic_distance(self, v):
         floor_value = self.value_to_pitch.floor(v)
+        if floor_value is None:
+            raise ChromaticRangeInterpreterException('Illegal chromatic pitch range paramger value {0}.'.format(v))
         low_pitch = self.value_to_pitch[floor_value]
         index = low_pitch.chromatic_distance
 
@@ -102,5 +111,5 @@ class ChromaticRangeInterpreter(PitchRangeInterpreter):
             return low_pitch.chromatic_distance
         high_pitch = DiatonicFoundation.map_to_diatonic_scale(index + 1)[0]
         return low_pitch.chromatic_distance + \
-               ((v - floor_value) / self.pitch_unit) * \
-               (high_pitch.chromatic_distance - low_pitch.chromatic_distance)
+            ((v - floor_value) / self.pitch_unit) * \
+            (high_pitch.chromatic_distance - low_pitch.chromatic_distance)
