@@ -157,7 +157,5 @@ class TestMelodicForm(unittest.TestCase):
         mf = MelodicForm([a, b], [phrase], mf_constraints, 'MF1')
         print('[{0}]'.format(','.join([str(n.diatonic_pitch) for n in mf.actors])))
 
-
         mf_dup = mf.copy_to(notes[8])
         print('[{0}]'.format(','.join([str(n.diatonic_pitch) for n in mf_dup.actors])))
-

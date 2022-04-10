@@ -14,7 +14,6 @@ from structure.note import Note
 from structure.tuplet import Tuplet
 from timemodel.offset import Offset
 from tonalmodel.diatonic_pitch import DiatonicPitch
-from tonalmodel.range import Range
 
 from timemodel.duration import Duration
 

@@ -206,5 +206,3 @@ class TestMotif(unittest.TestCase):
         assert isinstance(c_motif.constraints[1], NotEqualPitchConstraint)
         assert c_motif.constraints[1].actors[0] == c_motif.actors[1]
         assert c_motif.constraints[1].actors[1] == c_motif.actors[3]
-
-
