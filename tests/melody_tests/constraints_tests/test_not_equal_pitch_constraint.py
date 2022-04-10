@@ -29,24 +29,17 @@ class TestNotEqualPitchConstraint(unittest.TestCase):
 
     def test_is_not_equal(self):
         logging.debug('Start test_is_not_equal')
-        upper_policy_context = TestNotEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                      'C:2', 'C:8')
         note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
-
         lower_policy_context = TestNotEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                      'C:2', 'C:8')
-
+                                                                          'C:2', 'C:8')
         lower_context_note_a = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:6'),
                                                                          Duration(1, 8)))
-
         p_map = PMap()
         p_map[note1] = lower_context_note_a
 
         other_source = []
         for tone in ['B:5', 'D:5', 'E:5']:
             n = Note(DiatonicPitch.parse(tone), Duration(1, 8))
-            upper_context_note = ContextualNote(upper_policy_context, Note(DiatonicPitch.parse(tone),
-                                                                           Duration(1, 8)))
             lower_context_note = ContextualNote(lower_policy_context)
             p_map[n] = lower_context_note
             other_source.append(n)
@@ -93,6 +86,3 @@ class TestNotEqualPitchConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

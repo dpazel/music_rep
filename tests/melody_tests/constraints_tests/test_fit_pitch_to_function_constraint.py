@@ -40,15 +40,6 @@ class TestFitPitchToFunctionConstraint(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_sample(self):
-
-        # index = min(enumerate(self.candidate_pitches), key=lambda x: abs(x[0] - self.function_value))[0]
-
-        p = [(32, True), (25, True)]
-        lll = min(enumerate(p), key=lambda x: abs(x[1][0]))
-        index = lll[0]
-        print('---v={0}'.format(index))
-
     def test_compute_simple_function_tone(self):
         print('--- test_compute_simple_function_tone ---')
         line = Line()
@@ -127,7 +118,6 @@ class TestFitPitchToFunctionConstraint(unittest.TestCase):
         for i in range(0, 33):
             print('[{0}] {1}'.format(i, str(result_pitches[i])))
 
-        # checks = ['C:4', 'Ab:4', 'D:5', 'F:5', 'G:5', 'F:5', 'D:5', 'Ab:4', 'C:4']
         checks = ['C:4', 'G:4', 'D:5', 'F:5', 'G:5', 'F:5', 'D:5', 'G:4', 'C:4']
         for i in range(0, len(checks)):
             assert checks[i] == str(result_pitches[i])
@@ -159,6 +149,3 @@ class TestFitPitchToFunctionConstraint(unittest.TestCase):
         ts_seq.add(TimeSignatureEvent(TimeSignature(3, Duration(1, 4), 'sww'), Position(0)))
 
         return FitPitchToFunctionConstraint(v_note, f, tempo_seq, ts_seq), lower_policy_context
-
-    if __name__ == "__main__":
-        unittest.main()

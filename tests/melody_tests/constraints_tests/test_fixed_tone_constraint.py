@@ -30,7 +30,7 @@ class TestFixedToneConstraint(unittest.TestCase):
         logging.debug('Start test_simple_fixed_tone')
         note = Note(DiatonicPitch.parse("C:5"), Duration(1, 4))
         lower_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('C'), 'tIV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
 
         policy = FixedToneConstraint(note, DiatonicToneCache.get_tone("Ab"))
 
@@ -62,7 +62,7 @@ class TestFixedToneConstraint(unittest.TestCase):
         policy = FixedToneConstraint(note, DiatonicToneCache.get_tone("Bbb"))
 
         lower_policy_context = TestFixedToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
         lower_contextual_note = ContextualNote(lower_policy_context)
         m = dict([(note, lower_contextual_note)])
 
@@ -93,6 +93,3 @@ class TestFixedToneConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

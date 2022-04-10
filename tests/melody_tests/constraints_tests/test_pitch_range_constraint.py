@@ -30,11 +30,8 @@ class TestPitchRangeConstraint(unittest.TestCase):
 
     def test_in_range(self):
         logging.debug('Start test_in_range')
-
-        upper_policy_context = TestPitchRangeConstraint.policy_creator(ModalityType.Major, DiatonicTone('C'), 'tIV',
-                                                                   'C:2', 'C:8')
         lower_policy_context = TestPitchRangeConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                   'C:2', 'C:8')
+                                                                       'C:2', 'C:8')
 
         v_notes = []
         p_map = PMap()
@@ -80,6 +77,3 @@ class TestPitchRangeConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

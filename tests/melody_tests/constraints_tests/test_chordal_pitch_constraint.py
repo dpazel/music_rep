@@ -27,18 +27,13 @@ class TestChordalToneConstraint(unittest.TestCase):
 
     def test_is_chordal(self):
         logging.debug('Start test_is_chordal')
-        upper_policy_context = TestChordalToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                    'C:2', 'C:8')
 
         upper_context_note = Note(DiatonicPitch.parse('F:5'), Duration(1, 4))
 
         lower_policy_context = TestChordalToneConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                    'C:2', 'C:8')
-
+                                                                        'C:2', 'C:8')
         lower_context_note = ContextualNote(lower_policy_context)
-
         parameter_map = dict([(upper_context_note, lower_context_note)])
-
         policy = ChordalPitchConstraint(upper_context_note)
 
         v_result = policy.values(parameter_map, upper_context_note)
@@ -67,6 +62,3 @@ class TestChordalToneConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

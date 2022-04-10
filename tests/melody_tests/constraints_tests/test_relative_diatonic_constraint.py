@@ -29,11 +29,8 @@ class TestRelativeDiatonicConstraint(unittest.TestCase):
 
     def test_simple_diatonic_test(self):
         logging.debug('Start test_simple_diatonic_test')
-
-        upper_policy_context = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                         'C:2', 'C:8')
-        lower_policy_context = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                         'C:2', 'C:8')
+        lower_policy_context = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
+                                                                             'tV', 'C:2', 'C:8')
         upper_note_1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
         upper_note_2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
         lower_note_1 = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:5'), Duration(1, 8)))
@@ -72,13 +69,10 @@ class TestRelativeDiatonicConstraint(unittest.TestCase):
 
     def test_across_tonalities(self):
         logging.debug('Start test_across_tonalities.')
-
-        upper_policy_context = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                         'C:2', 'C:8')
-        lower_policy_context_1 = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                           'C:2', 'C:8')
-        lower_policy_context_2 = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tI',
-                                                                           'C:2', 'C:8')
+        lower_policy_context_1 = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
+                                                                               'tV', 'C:2', 'C:8')
+        lower_policy_context_2 = TestRelativeDiatonicConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'),
+                                                                               'tI', 'C:2', 'C:8')
 
         upper_note_1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
         upper_note_2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
@@ -112,6 +106,3 @@ class TestRelativeDiatonicConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

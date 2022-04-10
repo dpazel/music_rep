@@ -32,17 +32,13 @@ class TestEqualPitchConstraint(unittest.TestCase):
         logging.debug('Start test_is_equal')
 
         note1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
-
         note2 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                   'C:2', 'C:8')
-
+                                                                       'C:2', 'C:8')
         lower_context_note_a = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:6'),
                                                                          Duration(1, 8)))
-
         lower_context_note_b = ContextualNote(lower_policy_context)
-
         parameter_map = dict([(note1, lower_context_note_a),
                               (note2, lower_context_note_b)])
         parameter_map = PMap(parameter_map)
@@ -71,14 +67,11 @@ class TestEqualPitchConstraint(unittest.TestCase):
         note2 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
 
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                   'C:2', 'C:8')
-
+                                                                       'C:2', 'C:8')
         lower_context_note_a = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:6'),
                                                                          Duration(1, 8)))
-
         lower_context_note_b = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('G:6'),
                                                                          Duration(1, 8)))
-
         parameter_map = dict([(note1, lower_context_note_a),
                               (note2, lower_context_note_b)])
 
@@ -92,7 +85,7 @@ class TestEqualPitchConstraint(unittest.TestCase):
         logging.debug('Start test_more_than_two')
 
         lower_policy_context = TestEqualPitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                   'C:2', 'C:8')
+                                                                       'C:2', 'C:8')
 
         upper_notes = list()
         for i in range(0, 5):
@@ -140,5 +133,3 @@ class TestEqualPitchConstraint(unittest.TestCase):
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
 
-    if __name__ == "__main__":
-        unittest.main()

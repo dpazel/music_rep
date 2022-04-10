@@ -28,14 +28,12 @@ class TestPitchStepConstraint(unittest.TestCase):
 
     def test_simple_major_scale_ascent(self):
         logging.debug('Start test_simple_major_scale_ascent')
-        upper_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                  'C:2', 'C:8')
         upper_context_notes = list()
         for s in ['C:5', 'D:5', 'E:5', 'F:5', 'G:5', 'A:5', 'B:5', 'C:6']:
             upper_context_notes.append(Note(DiatonicPitch.parse(s), Duration(1, 8)))
 
         lower_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
 
         lower_context_notes = list()
         for s in range(0, len(upper_context_notes)):
@@ -64,14 +62,12 @@ class TestPitchStepConstraint(unittest.TestCase):
 
     def test_simple_major_scale_descent(self):
         logging.debug('Start test_simple_major_scale_descent')
-        upper_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                  'C:2', 'C:8')
         upper_context_notes = list()
         for s in ['C:6', 'B:5', 'A:5', 'G:5', 'F:5', 'E:5', 'D:5', 'C:5']:
             upper_context_notes.append(Note(DiatonicPitch.parse(s), Duration(1, 8)))
 
         lower_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
 
         lower_context_notes = list()
         for s in range(0, len(upper_context_notes)):
@@ -101,14 +97,12 @@ class TestPitchStepConstraint(unittest.TestCase):
 
     def test_simple_major_scale_descent_two_steps(self):
         logging.debug('Start test_simple_major_scale_descent_two_steps')
-        upper_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                  'C:2', 'C:8')
         upper_context_notes = list()
         for s in ['C:6', 'A:5', 'F:5', 'D:5', 'B:4']:
             upper_context_notes.append(Note(DiatonicPitch.parse(s), Duration(1, 8)))
 
         lower_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
 
         lower_context_notes = list()
         for s in range(0, len(upper_context_notes)):
@@ -138,11 +132,8 @@ class TestPitchStepConstraint(unittest.TestCase):
 
     def test_reverse_arguments(self):
         logging.debug('Start test_reverse_arguments')
-
-        upper_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                  'C:2', 'C:8')
         lower_policy_context = TestPitchStepConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                  'C:2', 'C:8')
+                                                                      'C:2', 'C:8')
 
         upper_context_notes = list()
         for s in ['C:6', 'B5']:
@@ -172,6 +163,3 @@ class TestPitchStepConstraint(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()

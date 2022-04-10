@@ -24,8 +24,8 @@ class TestComparativePitchConstraint(unittest.TestCase):
     def test_basic_policy(self):
         logging.debug('Start test_basic_policy')
 
-        lower_policy_context = TestComparativePitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                         'C:4', 'C:6')
+        lower_policy_context = TestComparativePitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
+                                                                             'tV', 'C:4', 'C:6')
         upper_note_1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
         upper_note_2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
         lower_note_1 = ContextualNote(lower_policy_context, Note(DiatonicPitch.parse('F#:5'), Duration(1, 8)))
@@ -34,8 +34,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
         p_map = dict([(upper_note_1, lower_note_1),
                       (upper_note_2, lower_note_2)])
 
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.LESS_THAN)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.LESS_THAN)
         result = policy.values(p_map, upper_note_2)
 
         pitches = sorted([note.diatonic_pitch for note in result])
@@ -57,8 +56,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Do less than
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.GREATER_THAN)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.GREATER_THAN)
         result = policy.values(p_map, upper_note_2)
 
         pitches = sorted([note.diatonic_pitch for note in result])
@@ -79,8 +77,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Do greater than or equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.LESS_EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.LESS_EQUAL)
         result = policy.values(p_map, upper_note_2)
 
         pitches = sorted([note.diatonic_pitch for note in result])
@@ -101,8 +98,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Do less than or equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.GREATER_EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.GREATER_EQUAL)
         result = policy.values(p_map, upper_note_2)
 
         pitches = sorted([note.diatonic_pitch for note in result])
@@ -123,8 +119,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Do equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.EQUAL)
         result = policy.values(p_map, upper_note_2)
 
         pitches = sorted([note.diatonic_pitch for note in result])
@@ -148,10 +143,8 @@ class TestComparativePitchConstraint(unittest.TestCase):
     def test_comparative_reversal(self):
         logging.debug('Start test_comparative_reversal')
 
-        upper_policy_context = TestComparativePitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('Ab'), 'tIV',
-                                                                         'C:4', 'C:6')
-        lower_policy_context = TestComparativePitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'), 'tV',
-                                                                         'C:4', 'C:6')
+        lower_policy_context = TestComparativePitchConstraint.policy_creator(ModalityType.Major, DiatonicTone('G'),
+                                                                             'tV', 'C:4', 'C:6')
         upper_note_1 = Note(DiatonicPitch.parse('C:5'), Duration(1, 8))
         upper_note_2 = Note(DiatonicPitch.parse('D:5'), Duration(1, 8))
         lower_note_1 = ContextualNote(lower_policy_context)
@@ -183,8 +176,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Test Less than
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.GREATER_THAN)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.GREATER_THAN)
         result = policy.values(p_map, upper_note_1)
 
         pitches = sorted([note.diatonic_pitch for note in result], key=attrgetter('chromatic_distance'))
@@ -206,8 +198,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Test greater than or equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.LESS_EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.LESS_EQUAL)
         result = policy.values(p_map, upper_note_1)
 
         pitches = sorted([note.diatonic_pitch for note in result], key=attrgetter('chromatic_distance'))
@@ -229,8 +220,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Test less than or equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.GREATER_EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.GREATER_EQUAL)
         result = policy.values(p_map, upper_note_1)
 
         pitches = sorted([note.diatonic_pitch for note in result], key=attrgetter('chromatic_distance'))
@@ -252,8 +242,7 @@ class TestComparativePitchConstraint(unittest.TestCase):
 
         # Test equal
         logging.debug('------')
-        policy = ComparativePitchConstraint(upper_note_1, upper_note_2,
-                                            ComparativePitchConstraint.EQUAL)
+        policy = ComparativePitchConstraint(upper_note_1, upper_note_2, ComparativePitchConstraint.EQUAL)
         result = policy.values(p_map, upper_note_1)
 
         pitches = sorted([note.diatonic_pitch for note in result], key=attrgetter('chromatic_distance'))
@@ -284,5 +273,3 @@ class TestComparativePitchConstraint(unittest.TestCase):
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
 
-    if __name__ == "__main__":
-        unittest.main()
