@@ -109,9 +109,9 @@ class TestPMap(unittest.TestCase):
             assert str(all_notes[i].diatonic_pitch) == answers[i - 1]
 
     def test_create(self):
-        l = '{<Ab-Major:I> qC:4 D E F <Db-Major:IV> iDb:4 Eb F Gb <C-Major:IV> qE:4 F G A }'
+        music_line = '{<Ab-Major:I> qC:4 D E F <Db-Major:IV> iDb:4 Eb F Gb <C-Major:IV> qE:4 F G A }'
         pr = PitchRange.create('Ab:3', 'C:5')
-        pm = PMap.create(l, pr)
+        pm = PMap.create(music_line, pr)
         assert pm is not None
         assert len(pm.keys()) == 12
         assert pm.actors[11].diatonic_pitch is not None
@@ -125,7 +125,7 @@ class TestPMap(unittest.TestCase):
         target_harmonic_list = [('A-Melodic:iv', 1),
                                 ('A-Natural:i', Duration(1, 4)),
                                 ('A-Melodic:V', 1)]
-        pm = PMap.create(l, pr, target_harmonic_list)
+        pm = PMap.create(music_line, pr, target_harmonic_list)
         assert pm is not None
         assert len(pm.keys()) == 12
 

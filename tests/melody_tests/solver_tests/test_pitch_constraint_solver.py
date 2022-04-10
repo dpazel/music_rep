@@ -62,7 +62,8 @@ class TestPitchConstraintSolver(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse('C:4').chromatic_distance,
                                  DiatonicPitch.parse('C:6').chromatic_distance)
 
-        p_map = PMap.create(source_instance_expression, pitch_range, [('G-Major:I', Duration(3, 4)), ('G-Major:IV', Duration(3, 4))])
+        p_map = PMap.create(source_instance_expression, pitch_range, [('G-Major:I', Duration(3, 4)),
+                                                                      ('G-Major:IV', Duration(3, 4))])
 
         actors = p_map.actors
 
@@ -74,7 +75,8 @@ class TestPitchConstraintSolver(unittest.TestCase):
         policies.add(StepSequenceConstraint([actors[8], actors[9], actors[10], actors[11]], [1, -1, -1]))
         policies.add(EqualPitchConstraint([actors[0], actors[12]]))
         policies.add(EqualPitchConstraint([actors[4], actors[7]]))
-        policies.add(RelativeDiatonicConstraint(actors[4], actors[5], Interval(3, IntervalType.Major), Interval(1, IntervalType.Perfect)))
+        policies.add(RelativeDiatonicConstraint(actors[4], actors[5], Interval(3, IntervalType.Major),
+                                                Interval(1, IntervalType.Perfect)))
         policies.add(StepSequenceConstraint([actors[5], actors[6]], [-1]))
 
         # policies.add(ChordalPitchConstraint(actors[7]))
@@ -118,8 +120,10 @@ class TestPitchConstraintSolver(unittest.TestCase):
         policies.add(PitchStepConstraint(actors[7], actors[8], 1, PitchStepConstraint.UP))
         policies.add(EqualPitchConstraint([actors[3], actors[4]]))
         policies.add(EqualPitchConstraint([actors[8], actors[9]]))
-        policies.add(RelativeDiatonicConstraint(actors[4], actors[5], Interval(3, IntervalType.Major), Interval(1, IntervalType.Perfect)))
-        policies.add(RelativeDiatonicConstraint(actors[3], actors[8], Interval(5, IntervalType.Perfect), Interval(1, IntervalType.Perfect)))
+        policies.add(RelativeDiatonicConstraint(actors[4], actors[5], Interval(3, IntervalType.Major),
+                                                Interval(1, IntervalType.Perfect)))
+        policies.add(RelativeDiatonicConstraint(actors[3], actors[8], Interval(5, IntervalType.Perfect),
+                                                Interval(1, IntervalType.Perfect)))
         policies.add(ChordalPitchConstraint(actors[4]))
         policies.add(ChordalPitchConstraint(actors[9]))
 
@@ -131,7 +135,7 @@ class TestPitchConstraintSolver(unittest.TestCase):
         for pm in full_results:
             print("{0}".format(pm))
 
-    def atest_for_debugging(self):
+    def test_for_debugging(self):
         logging.debug('Start test_for_debugging')
 
         p_map, policies = TestPitchConstraintSolver.generate_generic_sample(TestPitchConstraintSolver.example_2)
@@ -200,13 +204,10 @@ class TestPitchConstraintSolver(unittest.TestCase):
 
     @staticmethod
     def generate_generic_sample(sample):
-        upper_policy_context = TestPitchConstraintSolver.policy_creator(sample[0][0], sample[0][1],
-                                                                        sample[0][2], sample[0][3], sample[0][4])
-
         lower_policy_context = TestPitchConstraintSolver.policy_creator(sample[1][0], sample[1][1],
                                                                         sample[1][2], sample[1][3], sample[0][4])
 
-        upper_notes = TestPitchConstraintSolver.create_plain_notes(sample[2][0], sample[2][1], upper_policy_context)
+        upper_notes = TestPitchConstraintSolver.create_plain_notes(sample[2][0], sample[2][1])
 
         p_map = TestPitchConstraintSolver.create_pmap(upper_notes, lower_policy_context)
 
@@ -234,17 +235,12 @@ class TestPitchConstraintSolver(unittest.TestCase):
 
     @staticmethod
     def generate_sample():
-        upper_policy_context = \
-            TestPitchConstraintSolver.policy_creator(ModalityType.Major,
-                                                     TestPitchConstraintSolver.tone_cache.get_tone('C'), 'tIV',
-                                                     'C:2', 'C:8')
         lower_policy_context = \
             TestPitchConstraintSolver.policy_creator(ModalityType.Major,
                                                      TestPitchConstraintSolver.tone_cache.get_tone('G'), 'tV',
                                                      'C:2', 'C:8')
 
-        upper_notes = TestPitchConstraintSolver.create_plain_notes(['C:6', 'B:5', 'A:5', 'G:5'], ['e', 'e', 'e', 'e'],
-                                                                   upper_policy_context)
+        upper_notes = TestPitchConstraintSolver.create_plain_notes(['C:6', 'B:5', 'A:5', 'G:5'], ['e', 'e', 'e', 'e'])
 
         p_map = TestPitchConstraintSolver.create_pmap(upper_notes, lower_policy_context)
 
@@ -278,7 +274,7 @@ class TestPitchConstraintSolver(unittest.TestCase):
         return result
 
     @staticmethod
-    def create_plain_notes(pitch_list, duration_list, policy_context):
+    def create_plain_notes(pitch_list, duration_list):
         assert len(pitch_list) == len(duration_list)
         assert len(pitch_list) > 0
 
@@ -315,6 +311,3 @@ class TestPitchConstraintSolver(unittest.TestCase):
         pitch_range = PitchRange(DiatonicPitch.parse(low_pitch_txt).chromatic_distance,
                                  DiatonicPitch.parse(hi_pitch_txt).chromatic_distance)
         return PolicyContext(hc, pitch_range)
-
-    if __name__ == "__main__":
-        unittest.main()
