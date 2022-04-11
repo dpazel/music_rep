@@ -8,8 +8,7 @@ from timemodel.duration import Duration
 from timemodel.position import Position
 from timemodel.offset import Offset
 from tonalmodel.diatonic_pitch import DiatonicPitch
-from midi.score_to_vst_midi_converter import ScoreToVstMidiConverter, MidiMessage, NoteMessage, MetaMessage, \
-    ExpressionVelocityMessage
+from midi.score_to_vst_midi_converter import ScoreToVstMidiConverter, NoteMessage
 
 from timemodel.time_signature_event import TimeSignatureEvent
 from structure.time_signature import TimeSignature
@@ -22,9 +21,6 @@ from structure.beam import Beam
 
 
 import logging
-from timemodel.dynamics_function_event import DynamicsFunctionEvent
-from function.piecewise_linear_function import PiecewiseLinearFunction
-from timemodel.tempo_function_event import TempoFunctionEvent
 
 
 class TestScoreToVstMidiConverter(unittest.TestCase):

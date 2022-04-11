@@ -311,8 +311,5 @@ class TestScoreToMidiConverter(unittest.TestCase):
         smc = ScoreToMidiConverter(score)
         smc.create('book_example_midi_file.mid', True)
 
-        ScoreToMidiConverter.convert_line(line, 'line_example_midi_file.mid', Tempo(90, Duration(1, 8)), instrument_name='violin')
-
-
-if __name__ == "__main__":
-    unittest.main()
+        ScoreToMidiConverter.convert_line(line, 'line_example_midi_file.mid', Tempo(90, Duration(1, 8)),
+                                          instrument_name='violin')
