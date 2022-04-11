@@ -4,12 +4,8 @@ from misc.interval_tree import IntervalTree
 from misc.rb_node import RBNode
 from misc.interval import Interval
 from fractions import Fraction
-import sys
 
-if sys.version_info[0] < 3:
-    from mock import Mock, MagicMock
-else:
-    from unittest.mock import Mock, MagicMock
+from unittest.mock import MagicMock
 
 
 class TestRBNode(unittest.TestCase):
@@ -21,7 +17,7 @@ class TestRBNode(unittest.TestCase):
         pass
 
     def test_access(self):
-        mock = MagicMock(spec = IntervalTree)
+        mock = MagicMock(spec=IntervalTree)
         interval = Interval(2, 4)
         value = Fraction(2, 5)
         node = RBNode(interval, value, mock)
@@ -35,6 +31,3 @@ class TestRBNode(unittest.TestCase):
         assert not node.parent
         assert node.left == node.nil
         assert node.right == node.nil
-
-if __name__ == "__main__":
-    unittest.main()

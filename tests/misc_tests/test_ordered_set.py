@@ -2,15 +2,17 @@ import unittest
 
 from misc.ordered_set import OrderedSet
 
-class test_object(object):
-    def __init__(self, ord):
-        self.ord = ord
+
+class TestObject(object):
+    def __init__(self, ordd):
+        self.ord = ordd
 
     def ord_value(self):
         return self.ord
 
     def __repr__(self):
         return str(self.ord)
+
 
 class TestOrderedSet(unittest.TestCase):
 
@@ -23,18 +25,18 @@ class TestOrderedSet(unittest.TestCase):
     def test_ordering(self):
         s1 = OrderedSet()
         for i in range(1, 10):
-            s1.add(test_object(i))
+            s1.add(TestObject(i))
         objects = [t.ord_value() for t in s1]
         assert objects == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     def test_union(self):
         s1 = OrderedSet()
         for i in range(1, 10):
-            s1.add(test_object(i))
+            s1.add(TestObject(i))
 
         s2 = OrderedSet()
         for i in range(100, 110):
-            to = test_object(i)
+            to = TestObject(i)
             s2.add(to)
 
         s = s1.union(s2)
@@ -47,7 +49,7 @@ class TestOrderedSet(unittest.TestCase):
         fmid = None
         flast = None
         for i in range(1, 10):
-            item = test_object(i)
+            item = TestObject(i)
             if i == 1:
                 fone = item
             elif i == 6:
@@ -65,14 +67,14 @@ class TestOrderedSet(unittest.TestCase):
     def test_copy(self):
         s = OrderedSet()
         for i in range(1, 10):
-            to = test_object(i)
+            to = TestObject(i)
             s.add(to)
 
         s1 = s.copy()
         assert id(s1) != id(s)
 
         objects = [t.ord_value() for t in s1]
-        assert objects == [1,2, 3, 4, 5, 6, 7, 8, 9]
+        assert objects == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     def test_constructor(self):
         s = OrderedSet([1, 2, 3, 4, 5])

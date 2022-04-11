@@ -15,8 +15,8 @@ class TestOrderedMap(unittest.TestCase):
         pass
 
     def test_order(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         keys = om.keys()
         last_key = -1
         for k in keys:
@@ -24,8 +24,8 @@ class TestOrderedMap(unittest.TestCase):
             self.assertTrue(last_key < k)
             last_key = k
             
-        l = [(Fraction(2, 3), 200), (Fraction(1, 10), 10), (Fraction(1, 2), 50), (Fraction(1, 8), 20)]
-        om = OrderedMap(l)
+        ordered_list = [(Fraction(2, 3), 200), (Fraction(1, 10), 10), (Fraction(1, 2), 50), (Fraction(1, 8), 20)]
+        om = OrderedMap(ordered_list)
         keys = om.keys()
         last_key = -1
         for k in keys:
@@ -33,8 +33,8 @@ class TestOrderedMap(unittest.TestCase):
             self.assertTrue(last_key < k)
             last_key = k
             
-        l = [(Position(2, 3), 200), (Position(1, 10), 10), (Position(1, 2), 50), (Position(1, 8), 20)]
-        om = OrderedMap(l)
+        ordered_list = [(Position(2, 3), 200), (Position(1, 10), 10), (Position(1, 2), 50), (Position(1, 8), 20)]
+        om = OrderedMap(ordered_list)
         keys = om.keys()
         last_key = -Fraction(1, 1)
         for k in keys:
@@ -42,8 +42,8 @@ class TestOrderedMap(unittest.TestCase):
             self.assertTrue(last_key < k.position)
             last_key = k.position
             
-        l = [(Duration(2, 3), 200), (Duration(1, 10), 10), (Duration(1, 2), 50), (Duration(1, 8), 20)]
-        om = OrderedMap(l)
+        ordered_list = [(Duration(2, 3), 200), (Duration(1, 10), 10), (Duration(1, 2), 50), (Duration(1, 8), 20)]
+        om = OrderedMap(ordered_list)
         keys = om.keys()
         last_key = -Fraction(1, 1)
         for k in keys:
@@ -52,8 +52,8 @@ class TestOrderedMap(unittest.TestCase):
             last_key = k.duration
             
     def test_insert(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)        
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         om.insert(6, 60)
         keys = om.keys()
         last_key = -1
@@ -63,8 +63,8 @@ class TestOrderedMap(unittest.TestCase):
             last_key = k
             
     def test_merge(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         sup = [(3, 60), (15, 2)]
         om.merge(sup)
         self.assertTrue(3 in om.keys())
@@ -90,8 +90,8 @@ class TestOrderedMap(unittest.TestCase):
         self.assertTrue(5 in om.keys())
         
     def test_floor(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         answers = [2, 2, 2, 5, 5, 7, 7, 7, 10, 10]
         for i in range(2, 12):
             key = om.floor(i)
@@ -100,8 +100,8 @@ class TestOrderedMap(unittest.TestCase):
             print('find {0} is {1} --> {2}'.format(i, key, mapto))
 
     def test_ceil(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         answers = [2, 5, 5, 5, 7, 7, 10, 10, 10, None, None]
         for i in range(1, 12):
             key = om.ceil(i)
@@ -110,8 +110,8 @@ class TestOrderedMap(unittest.TestCase):
             print('find {0} is {1} --> {2}'.format(i, key, mapto))
             
     def test_get(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         
         a = om.get(5)
         assert a == 20
@@ -126,14 +126,11 @@ class TestOrderedMap(unittest.TestCase):
         assert x == tse
         
     def test_remove(self):
-        l = [(10, 100), (5, 20), (7, 70), (2, 50)]
-        om = OrderedMap(l)
+        ordered_list = [(10, 100), (5, 20), (7, 70), (2, 50)]
+        om = OrderedMap(ordered_list)
         
         assert 5 in om
         
         assert om.get(5) == 20
         om.remove_key(5)
         assert 5 not in om
-
-if __name__ == "__main__":
-    unittest.main()

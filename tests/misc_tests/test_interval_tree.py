@@ -288,8 +288,3 @@ class TestInterval(unittest.TestCase):
         assert result[0].interval == Interval(16, 30)
 
         print(tree)
-
-
-if __name__ == "__main__":
-    unittest.main()
-
