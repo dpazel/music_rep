@@ -6,7 +6,7 @@ from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from structure.beam import Beam
 from structure.tuplet import Tuplet
 from timemodel.duration import Duration
-from tonalmodel.modality import ModalityType, ModalitySpec, Modality
+from tonalmodel.modality import ModalityType, ModalitySpec
 from tonalmodel.modality_factory import ModalityFactory
 
 
@@ -22,10 +22,10 @@ class TestTuplet(unittest.TestCase):
     def test_note_identities(self):
         print('----- test_note_identities -----')
 
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{C:4 D:4 E:4 F:4 G:4 A:4 B:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -39,7 +39,7 @@ class TestTuplet(unittest.TestCase):
         assert 'B:4' == str(notes[6].diatonic_pitch)
 
         s = '{c:4 d:4 e:4 f:4 g:4 a:4 b:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -53,7 +53,7 @@ class TestTuplet(unittest.TestCase):
         assert 'B:4' == str(notes[6].diatonic_pitch)
 
         s = '{Cb:4 Db:4 Eb:4 Fb:4 Gb:4 Ab:4 Bb:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -67,7 +67,7 @@ class TestTuplet(unittest.TestCase):
         assert 'Bb:4' == str(notes[6].diatonic_pitch)
 
         s = '{Cbb:4 Dbb:4 Ebb:4 Fbb:4 Gbb:4 Abb:4 Bbb:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -81,7 +81,7 @@ class TestTuplet(unittest.TestCase):
         assert 'Bbb:4' == str(notes[6].diatonic_pitch)
 
         s = '{C#:4 D#:4 E#:4 F#:4 G#:4 A#:4 B#:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -95,7 +95,7 @@ class TestTuplet(unittest.TestCase):
         assert 'B#:4' == str(notes[6].diatonic_pitch)
 
         s = '{C##:4 D##:4 E##:4 F##:4 G##:4 A##:4 B##:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -110,10 +110,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_durations(self):
         print('----- test_durations -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{wC:4 hD:4 qE:4 iF:4 sG:4 tA:4 xB:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -127,7 +127,7 @@ class TestTuplet(unittest.TestCase):
         assert Duration(1, 64) == notes[6].duration
 
         s = '{WC:4 HD:4 QE:4 IF:4 SG:4 TA:4 XB:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -141,7 +141,7 @@ class TestTuplet(unittest.TestCase):
         assert Duration(1, 64) == notes[6].duration
 
         s = '{(2:1)C:4 (3:2)D:4 (4:3)E:4}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -152,10 +152,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_beam(self):
         print('----- test_beam -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{qC:4 D:4 [E:3 F G A B:4]}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -174,7 +174,7 @@ class TestTuplet(unittest.TestCase):
         assert 'B:4' == str(b_notes[4].diatonic_pitch)
 
         s = '{C:4 [E:3 F [G:5 A B C] B]}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -198,10 +198,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_tuplet(self):
         print('----- test_tuplet -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{qC:4 D:4 ((1:8), 2)[E:3 F G]}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -220,7 +220,7 @@ class TestTuplet(unittest.TestCase):
         assert Duration(1, 12) == t_notes[0].duration
 
         s = '{C:4 (q, 3)[E:3 F (i, 2)[G:5 A B] B]}'
-        line, _ = l.parse(s)
+        line, _ = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -247,10 +247,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_default_hct(self):
         print('----- test_default_hct -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{qC:4 D:4 F}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -263,10 +263,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_simple_hct(self):
         print('----- test_simple_hct -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{<Bb-Minor: ii>qC:4 D:4 <Cb-Major: IV> F G A}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -280,16 +280,16 @@ class TestTuplet(unittest.TestCase):
         assert 'Cb-Major' == str(second.tonality)
         assert ['Fb', 'Ab', 'Cb'] == [t[0].diatonic_symbol for t in second.chord.tones]
 
-        assert Duration(1,2) == first.duration
+        assert Duration(1, 2) == first.duration
         assert Duration(3, 4) == second.duration
 
     def test_embedded_harmonic_tag(self):
         print('----- embedded_harmonic_tag -----')
 
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{qC:4 D:4 [<E-Major: IV> F G A]}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -303,11 +303,11 @@ class TestTuplet(unittest.TestCase):
         assert 'E-Major' == str(second.tonality)
         assert ['A', 'C#', 'E'] == [t[0].diatonic_symbol for t in second.chord.tones]
 
-        assert Duration(1,2) == first.duration
+        assert Duration(1, 2) == first.duration
         assert Duration(3, 8) == second.duration
 
         s = '{qC:4 D:4 <E-Major: IV> [F G A]}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -321,14 +321,14 @@ class TestTuplet(unittest.TestCase):
         assert 'E-Major' == str(second.tonality)
         assert ['A', 'C#', 'E'] == [t[0].diatonic_symbol for t in second.chord.tones]
 
-        assert Duration(1,2) == first.duration
+        assert Duration(1, 2) == first.duration
         assert Duration(3, 8) == second.duration
 
     def test_entangled_harmonic_tag(self):
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{qC:4 D:4 [E:3 <F-Major: IV> F A C]}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -346,7 +346,7 @@ class TestTuplet(unittest.TestCase):
         assert Duration(3, 8) == second.duration
 
         s = '{qC:4 D:4 (q, 3)[E:3 <F-Major: IV> F A C]}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -365,10 +365,10 @@ class TestTuplet(unittest.TestCase):
 
     def test_secondary_chord(self):
         print('----- test_secondary_chord -----')
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{<C-Major: V/V> F#:4 A D}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -383,7 +383,7 @@ class TestTuplet(unittest.TestCase):
         assert 5 == first.chord.chord_template.principal_chord_template.scale_degree
 
         s = '{<F-Major: IIIDom7/V-Natural> F#:4 A D}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
 
@@ -411,12 +411,9 @@ class TestTuplet(unittest.TestCase):
         modality_spec = ModalitySpec(modality_type, incremental_interval_strs)
         ModalityFactory.register_modality(modality_type, modality_spec)
 
-        l = LineGrammarExecutor()
+        music_text_line = LineGrammarExecutor()
 
         s = '{<C-!MyModality: I> F#:4 A D}'
-        line, hct = l.parse(s)
+        line, hct = music_text_line.parse(s)
         print(line)
         print('-----')
-
-
-

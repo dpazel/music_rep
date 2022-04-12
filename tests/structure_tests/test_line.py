@@ -39,7 +39,7 @@ class TestLine(unittest.TestCase):
         assert 'F:4' == str(notes[1].diatonic_pitch)
 
         with self.assertRaises(Exception) as context:
-            sub_line, start, duration = source_instance_line.sub_line(Interval(Fraction(1), Fraction(5, 4)))
+            source_instance_line.sub_line(Interval(Fraction(1), Fraction(5, 4)))
             self.assertTrue('This is broken' in str(context.exception))
 
         sub_line, start, duration = source_instance_line.sub_line()
@@ -58,11 +58,11 @@ class TestLine(unittest.TestCase):
         line.pin(Line(l1_notes), Offset(1, 8))
         line.pin(Line(l2_notes), Offset(1, 4))
 
-        N = line.get_all_notes();
+        all_notes = line.get_all_notes()
         print('... pinned notes ...')
-        for n in N:
+        for n in all_notes:
             print('({0}) : {1}'.format(n.get_absolute_position(), n.diatonic_pitch))
-        print ('... end pinned notes ...')
+        print('... end pinned notes ...')
 
         print('End test_pin')
 
@@ -83,11 +83,11 @@ class TestLine(unittest.TestCase):
 
         print(voice_line)
 
-        N = voice_line.get_all_notes();
+        all_notes = voice_line.get_all_notes()
         print('... pinned notes ...')
-        for n in N:
+        for n in all_notes:
             print('({0}) : {1}'.format(n.get_absolute_position(), n.diatonic_pitch))
-        print ('... end pinned notes ...')
+        print('... end pinned notes ...')
 
         print('End test_pin')
 

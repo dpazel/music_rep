@@ -77,16 +77,10 @@ class TestScore(unittest.TestCase):
         score.add_instrument_voice(clarinet_instrument_voice)
         
         # Add notes to the score
-        x = [Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'abcdef']
-        vnote0 = Note(DiatonicPitch(4, 'a'), Duration(1, 8))
-        vnote1 = Note(DiatonicPitch(4, 'b'), Duration(1, 8))
-        vnote2 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))     
-        vnote3 = Note(DiatonicPitch(4, 'd'), Duration(1, 8)) 
-        vnote4 = Note(DiatonicPitch(4, 'e'), Duration(1, 8))     
-        vnote5 = Note(DiatonicPitch(4, 'f'), Duration(1, 8))   
-        
+        note_list = [Note(DiatonicPitch(4, y), Duration(1, 8)) for y in 'abcdef']   
+
         # Set up a violin voice with 6 8th notes 
-        vline = Line([vnote0, vnote1, vnote2, vnote3, vnote4, vnote5])
+        vline = Line(note_list)
         violin_voice.pin(vline)
         
         cnote0 = Note(DiatonicPitch(5, 'a'), Duration(1, 4))
@@ -155,7 +149,8 @@ class TestScore(unittest.TestCase):
         assert duration == Duration(1, 1)
         
         with self.assertRaises(Exception):
-            score.beat_duration
+            bd = score.beat_duration
+            print(bd)
         
         # 3/4 TS + 60 beats per minute, 1 beat == 1 sec
         score.tempo_sequence.add(TempoEvent(Tempo(60), Position(0)))

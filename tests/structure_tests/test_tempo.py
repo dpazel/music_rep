@@ -4,6 +4,7 @@ from structure.tempo import Tempo, TempoType
 from fractions import Fraction
 from timemodel.duration import Duration
 
+
 class TempoTest(unittest.TestCase):
 
     def setUp(self):
@@ -75,7 +76,3 @@ class TempoTest(unittest.TestCase):
 
         tempo = Tempo(TempoType.Adagio, Duration(1, 4))
         print(tempo)
-
-if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test_tempo_type']
-    unittest.main()

@@ -8,13 +8,16 @@ from timemodel.duration import Duration
 from timemodel.offset import Offset
 
 
-class BeamTest(unittest.TestCase):
+class TestBeam(unittest.TestCase):
 
     def setUp(self):
         pass
 
     def tearDown(self):
         pass
+
+    def test_simple_beam_reverse(self):
+        print('test simple beam reverse')
 
     def test_simple_beam(self):
         note = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
@@ -25,7 +28,7 @@ class BeamTest(unittest.TestCase):
         
         notes = beam.get_all_notes()
         assert len(notes) == 1
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         
     def test_multi_notes(self):
         note0 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
@@ -44,7 +47,7 @@ class BeamTest(unittest.TestCase):
         assert notes[2].relative_position == Offset(5, 16)
               
         assert len(notes) == 3
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         
     def test_nested_notes(self):        
         note1 = Note(DiatonicPitch(4, 'c'), Duration(1, 8))
@@ -72,34 +75,34 @@ class BeamTest(unittest.TestCase):
         assert notes[2].relative_position == Offset(1, 16)
         assert notes[3].relative_position == Offset(1, 8)
         assert notes[4].relative_position == Offset(9, 32)
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
 
         notes = sub_beam.get_all_notes()
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
 
         b = Beam()
         b.append(beam)
 
         notes = sub_beam.get_all_notes()
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         assert notes[0].duration == Duration(1, 32)
         assert str(notes[0].diatonic_pitch) == 'C:4'
 
         sub_beam_prime = sub_beam.clone()
         notes = sub_beam_prime.get_all_notes()
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         assert notes[0].duration == Duration(1, 8)
         assert str(notes[0].diatonic_pitch) == 'C:4'
 
         beam_prime = beam.clone()
         notes = beam_prime.get_all_notes()
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         assert notes[0].duration == Duration(1, 8)
         assert str(notes[0].diatonic_pitch) == 'F:4'
 
         b_prime = b.clone()
         notes = b_prime.get_all_notes()
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         assert notes[0].duration == Duration(1, 16)
         assert str(notes[0].diatonic_pitch) == 'F:4'
         
@@ -128,7 +131,7 @@ class BeamTest(unittest.TestCase):
         
         notes = beam.get_all_notes()
         assert len(notes) == 7
-        BeamTest.print_all_notes(notes)
+        TestBeam.print_all_notes(notes)
         assert notes[0].diatonic_pitch == DiatonicPitch(4, 'f')
         assert notes[1].diatonic_pitch == DiatonicPitch(4, 'c')
         assert notes[2].diatonic_pitch == DiatonicPitch(3, 'c')
@@ -189,13 +192,6 @@ class BeamTest(unittest.TestCase):
 
     def test_odd_structure(self):
         print('test odd structure')
-        n1 = Note(DiatonicPitch(4, 'c'), Duration(1, 24))
-        n2 = Note(DiatonicPitch(4, 'c'), Duration(1, 24))
-        n3 = Note(DiatonicPitch(4, 'd'), Duration(1, 8))
-
-        beam = Beam([n1, n2, n3])
-
-        #AbstractNote.print_structure((beam))
 
         n1 = Note(DiatonicPitch(4, 'c'), Duration(1, 12))
         n2 = Note(DiatonicPitch(4, 'c'), Duration(1, 12))
@@ -239,7 +235,3 @@ class BeamTest(unittest.TestCase):
         for n in notes:
             print('{0} at {1}'.format(n, n.relative_position))
         print('----------')
-            
-
-if __name__ == "__main__":
-    unittest.main()

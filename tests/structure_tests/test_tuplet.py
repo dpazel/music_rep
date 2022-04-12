@@ -304,6 +304,3 @@ class TestTuplet(unittest.TestCase):
         print(final_beam2)
 
         print("end test_book_example")
-
-if __name__ == "__main__":
-    unittest.main()

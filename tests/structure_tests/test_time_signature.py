@@ -44,6 +44,3 @@ class TSTest(unittest.TestCase):
         ts = TimeSignature(7, Duration(8, 9))
         self.assertTrue(ts.beats_per_measure == 7)
         self.assertTrue(ts.beat_duration == Fraction(8, 9))
-
-if __name__ == "__main__":
-    unittest.main()

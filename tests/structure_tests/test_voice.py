@@ -18,6 +18,7 @@ from structure.tuplet import Tuplet
 
 from misc.interval import Interval
 
+
 class TestVoice(unittest.TestCase):
 
     def setUp(self):
@@ -374,6 +375,3 @@ class TestVoice(unittest.TestCase):
             if n.diatonic_pitch == pitch:
                 return True
         return False
-
-if __name__ == "__main__":
-    unittest.main()

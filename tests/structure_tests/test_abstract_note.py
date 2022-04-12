@@ -10,7 +10,7 @@ from timemodel.offset import Offset
 from timemodel.offset import Position
 
 
-class Test(unittest.TestCase):
+class TestAbstractNote(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -197,7 +197,3 @@ class Test(unittest.TestCase):
             print('{0} abs. position = {1}'.format(n, n.get_absolute_position()))
             assert n.get_absolute_position() == results[index]
             index += 1
-
-
-if __name__ == "__main__":
-    unittest.main()
