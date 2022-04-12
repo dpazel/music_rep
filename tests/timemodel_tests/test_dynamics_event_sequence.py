@@ -115,7 +115,3 @@ class TestDynamicsEventSequence(unittest.TestCase):
         assert des.velocity(Position(3, 2)) == v_1
         assert des.velocity(Position(7, 4)) == v_2
         assert des.velocity(Position(2)) == v_3
-
-
-if __name__ == "__main__":
-    unittest.main()

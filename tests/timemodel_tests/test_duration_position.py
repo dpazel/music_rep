@@ -5,7 +5,7 @@ from timemodel.duration import Duration
 from timemodel.position import Position
 
 
-class DurationPositionTest(unittest.TestCase):
+class TestDurationPosition(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -129,7 +129,10 @@ class DurationPositionTest(unittest.TestCase):
         
         d1 = Duration(1, 2)
         d1 *= 2
-        assert d1.duration == Fraction(1, 1)  
+        assert d1.duration == Fraction(1, 1)
+
+        d1 = Duration(3, 4)
+        assert d1 > Duration(1, 4)
         
     def test_position(self):
         
@@ -261,8 +264,3 @@ class DurationPositionTest(unittest.TestCase):
         print('p={0}'.format(p))
         d = Duration(1, 4) + d
         print('d={0}'.format(d))
-
-
-
-if __name__ == "__main__":
-    unittest.main()

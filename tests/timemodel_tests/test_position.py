@@ -23,7 +23,3 @@ class TestPosition(unittest.TestCase):
         p = 2 - p
         print(p)
         assert p.position == -1
-
-
-if __name__ == "__main__":
-    unittest.main()

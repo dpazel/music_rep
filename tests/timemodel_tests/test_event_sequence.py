@@ -152,6 +152,3 @@ class TestEventSequence(unittest.TestCase):
         
         assert es.first == events[0]
         assert es.last == events[4]
-
-if __name__ == "__main__":
-    unittest.main()

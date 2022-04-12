@@ -2,7 +2,7 @@ import unittest
 from timemodel.beat_position import BeatPosition
 
 
-class Test(unittest.TestCase):
+class TestBeatDuration(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -52,7 +52,3 @@ class Test(unittest.TestCase):
         
         bp1 = BeatPosition(6, 1)
         self.assertTrue(bp < bp1)
-
-
-if __name__ == "__main__":
-    unittest.main()

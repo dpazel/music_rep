@@ -1,6 +1,5 @@
 import unittest
 from timemodel.time_signature_event_sequence import TimeSignatureEventSequence
-from timemodel.tempo_function_event import TempoFunctionEvent
 
 from timemodel.position import Position
 from timemodel.time_signature_event import TimeSignatureEvent
@@ -30,5 +29,3 @@ class TestTimeSignatureEventSequence(unittest.TestCase):
             event = seq.successor(event)
 
         print('----- End test_book_example -----')
-
-

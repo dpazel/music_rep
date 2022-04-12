@@ -140,7 +140,3 @@ class TestTempoEventSequence(unittest.TestCase):
             event = seq.successor(event)
 
         print('----- End test_book_tempo_sequence -----')
-
-        
-if __name__ == "__main__":
-    unittest.main()

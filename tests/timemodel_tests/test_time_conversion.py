@@ -246,6 +246,3 @@ class TestTimeConversion(unittest.TestCase):
         bp = conversion.position_to_bp(Position(15, 4))
         print(bp)
         self.assertTrue(bp == BeatPosition(4, 2), 'bp is {0}, not BP[4, 2]'.format(bp)) 
-
-if __name__ == "__main__":
-    unittest.main()
