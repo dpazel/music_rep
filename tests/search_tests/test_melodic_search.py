@@ -314,7 +314,8 @@ class TestMelodicSearch(unittest.TestCase):
 
         search = MelodicSearch.create(pattern)
 
-        answers = search.search(target_line, target_hct, GlobalSearchOptions(note_match_chordal=True, note_match_chordal_precision=True))
+        answers = search.search(target_line, target_hct, GlobalSearchOptions(note_match_chordal=True,
+                                                                             note_match_chordal_precision=True))
         assert answers is not None
         assert 0 == len(answers)
 
@@ -324,7 +325,8 @@ class TestMelodicSearch(unittest.TestCase):
 
         search = MelodicSearch.create(pattern)
 
-        answers = search.search(target_line, target_hct, GlobalSearchOptions(note_match_chordal=True, note_match_chordal_precision=True))
+        answers = search.search(target_line, target_hct, GlobalSearchOptions(note_match_chordal=True,
+                                                                             note_match_chordal_precision=True))
         assert answers is not None
         assert 1 == len(answers)
 
@@ -370,6 +372,3 @@ class TestMelodicSearch(unittest.TestCase):
         answers = search.search(target_line, target_hct, GlobalSearchOptions(note_match_non_scalar_to_scalar=True))
         assert answers is not None
         assert 1 == len(answers)
-
-
-
