@@ -234,8 +234,8 @@ class TestTDilation(unittest.TestCase):
         new_score = trans.apply(Fraction(2), True, True)
         line = new_score.line
         notes = line.get_all_notes()
-        print()
-
+        for note in notes:
+            print(note)
 
     @staticmethod
     def create_score(line_expression, instrument, ts):
@@ -263,4 +263,3 @@ class TestTDilation(unittest.TestCase):
         instrument = c.get_instrument(instrument)
 
         return LiteScore(line, hct, instrument, tempo_seq, ts_seq)
-
