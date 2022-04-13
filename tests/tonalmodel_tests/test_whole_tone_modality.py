@@ -24,6 +24,3 @@ class Test(unittest.TestCase):
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == whole_tone_modality.incremental_intervals
         print('End test_whole_tone_key')
-
-if __name__ == "__main__":
-    unittest.main()

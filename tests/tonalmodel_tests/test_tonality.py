@@ -3,6 +3,7 @@ from tonalmodel.modality import Modality, ModalityType, ModalitySpec
 from tonalmodel.tonality import Tonality
 from tonalmodel.modality_factory import ModalityFactory
 
+
 class TestTonality(unittest.TestCase):
 
     def setUp(self):
@@ -63,4 +64,3 @@ class TestTonality(unittest.TestCase):
         print('{0}:  [{1}]'.format(tonality_a, ','.join(tone.diatonic_symbol for tone in tonality_a.annotation)))
         print('{0}:  [{1}]'.format(tonality_b, ','.join(tone.diatonic_symbol for tone in tonality_b.annotation)))
         print('{0}:  [{1}]'.format(tonality_c, ','.join(tone.diatonic_symbol for tone in tonality_c.annotation)))
-

@@ -59,16 +59,12 @@ class TestDiatonicTone(unittest.TestCase):
     def test_chromatic_extension(self):
         inc = 2
         tone = DiatonicFoundation.get_tone('E')
-        results = set()
         for i in range(tone.diatonic_index, tone.diatonic_index + inc):
             ltr = DiatonicTone.DIATONIC_LETTERS[i % len(DiatonicTone.DIATONIC_LETTERS)]
             ltr_tone = DiatonicFoundation.get_tone(ltr)
             for a in range(-2, 3):
                 t = DiatonicTone.alter_tone_by_augmentation(ltr_tone, a)
-                dist = t.placement - tone.placement if t.placement > tone.placement else t.placement - tone.placement + 12
+                dist = t.placement - tone.placement if t.placement > tone.placement else \
+                    t.placement - tone.placement + 12
                 if dist == inc:
                     print(t)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -1,6 +1,6 @@
 import unittest
 from tonalmodel.diatonic_pitch import DiatonicPitch
-from tonalmodel.diatonic_tone import DiatonicTone
+
 
 class TestDiatonicPitch(unittest.TestCase):
 

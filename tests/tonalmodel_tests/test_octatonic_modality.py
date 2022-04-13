@@ -38,6 +38,3 @@ class Test(unittest.TestCase):
             incremental_intervals = build_incremental_intervals(scale)           
             assert incremental_intervals == octatonic_modality.incremental_intervals
         print('End test_WHOctatonic_key')
-
-if __name__ == "__main__":
-    unittest.main()

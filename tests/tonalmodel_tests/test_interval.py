@@ -149,7 +149,7 @@ class TestInterval(unittest.TestCase):
         for i in range(1, 13):
             for interval_type in TestInterval.INTERVAL_TYPES:
                 if i == 1 and interval_type == IntervalType(IntervalType.Diminished):
-                        continue
+                    continue
                 if i == 1 or i == 4 or i == 5 or i == 8 or i == 11 or i == 12:
                     if interval_type == IntervalType(IntervalType.Minor) or \
                        interval_type == IntervalType(IntervalType.Major):
@@ -168,7 +168,7 @@ class TestInterval(unittest.TestCase):
         for i in range(1, 13):
             for interval_type in TestInterval.INTERVAL_TYPES:
                 if i == 1 and interval_type == IntervalType(IntervalType.Diminished):
-                        continue
+                    continue
                 if i == 1 or i == 4 or i == 5 or i == 8 or i == 11 or i == 12:
                     if interval_type == IntervalType(IntervalType.Minor) or \
                        interval_type == IntervalType(IntervalType.Major):
@@ -179,7 +179,7 @@ class TestInterval(unittest.TestCase):
                 try:
                     interval = Interval(i, interval_type)
                     p = interval.get_start_pitch(pitch)
-                except:
+                except Exception:
                     e = sys.exc_info()[0]
                     print('exception {0} for interval i={1} interval={2} pitch={3}'.format(e, i, interval_type, pitch))
                     raise Exception('exception {0} for creating interval i={1} type={2} pitch={3}'.format(e, i,
@@ -621,13 +621,13 @@ class TestInterval(unittest.TestCase):
         assert cc == 4
 
         end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('C'), 4, 6)
-        assert 'Gb'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+        assert 'Gb' == DiatonicTone.to_upper(end_tone.diatonic_symbol)
 
         end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('G'), 2, 5)
-        assert 'B#'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+        assert 'B#' == DiatonicTone.to_upper(end_tone.diatonic_symbol)
 
         end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('Gb'), 4, 6, False)
-        assert 'C'== DiatonicTone.to_upper(end_tone.diatonic_symbol)
+        assert 'C' == DiatonicTone.to_upper(end_tone.diatonic_symbol)
 
         end_tone = Interval.end_tone_from_pure_distance(DiatonicToneCache.get_tone('B#'), 2, 5, False)
         assert 'G' == DiatonicTone.to_upper(end_tone.diatonic_symbol)
@@ -665,6 +665,8 @@ class TestInterval(unittest.TestCase):
         except IntervalException as e:
             print('caught exception ' + str(e))
             assert e
+        else:
+            assert i is not None
 
     def test_book_examples(self):
         # Interval Creation
@@ -719,6 +721,3 @@ class TestInterval(unittest.TestCase):
                     sys.stdout.write('    X '.format(result[index]))
                 index += 1
             print()
-
-if __name__ == "__main__":
-    unittest.main()

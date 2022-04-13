@@ -1,4 +1,5 @@
 import unittest
+
 from tonalmodel.pitch_range import PitchRange
 from tonalmodel.chromatic_scale import ChromaticScale
 
@@ -18,14 +19,12 @@ class TestPitchRange(unittest.TestCase):
         with self.assertRaises(Exception):
             PitchRange(9, 97)
 
-
         with self.assertRaises(Exception):
             PitchRange('Ab:0', 'C:8')
 
         with self.assertRaises(Exception):
             PitchRange.create('A:0', 'C#:8')
 
-        
     def test_pitch_inbounds(self):
         pr = PitchRange.create('C:4', 'B:4')
         scale = list('CDEFGAB')
@@ -48,13 +47,9 @@ class TestPitchRange(unittest.TestCase):
 
         with self.assertRaises(Exception):
             pr.find_lowest_placement_in_range(12)
-
         
     def test_odd_ranges(self):
         pr = PitchRange.create('Cb:4', 'B#:4')
         print(str(pr))
         self.assertTrue(pr.start_index == 4 * 12 - 1)
         self.assertTrue(pr.end_index == 4 * 12 + 12)
-
-if __name__ == "__main__":
-    unittest.main()

@@ -157,6 +157,3 @@ class TestDiatonicModality(unittest.TestCase):
                 incremental_intervals = build_incremental_intervals(scale)
                 assert incremental_intervals == diatonic_modality.incremental_intervals
         print('End test_major_modal_indexed_key')
-          
-if __name__ == "__main__":
-    unittest.main()

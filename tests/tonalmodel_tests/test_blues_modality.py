@@ -6,7 +6,7 @@ from tests.utility import build_incremental_intervals
 from tonalmodel.modality_factory import ModalityFactory
 
 
-class Test(unittest.TestCase):
+class TestBluesModality(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -43,4 +43,3 @@ class Test(unittest.TestCase):
         for s in string_array:
             print(s)
         assert len(string_array) == 2
-

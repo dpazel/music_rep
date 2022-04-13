@@ -3,7 +3,7 @@ from tonalmodel.diatonic_foundation import DiatonicFoundation
 from tonalmodel.diatonic_pitch import DiatonicPitch
 
 
-class DiatonicFoundationTest(unittest.TestCase):
+class TestDiatonicFoundation(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -57,6 +57,3 @@ class DiatonicFoundationTest(unittest.TestCase):
         
         assert DiatonicFoundation.semitone_difference(a, b) == 6
         assert DiatonicFoundation.semitone_difference(b, a) == -6
-
-if __name__ == "__main__":
-    unittest.main()

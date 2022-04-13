@@ -19,7 +19,6 @@ class TestRange(unittest.TestCase):
 
         with self.assertRaises(Exception):
             Range(30, 25)
-
         
     def test_inbounds(self):
         ranger = Range(12, 40)
@@ -42,6 +41,3 @@ class TestRange(unittest.TestCase):
         self.assertTrue(ranger.start_index == 10)
         self.assertTrue(ranger.end_index == 10)
         self.assertTrue(ranger.is_inbounds(10))
-
-if __name__ == "__main__":
-    unittest.main()
