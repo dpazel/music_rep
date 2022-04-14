@@ -7,9 +7,7 @@ from structure.LineGrammar.core.line_grammar_executor import LineGrammarExecutor
 from timemodel.duration import Duration
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from transformation.harmonictranscription.t_harmonic_transcription import THarmonicTranscription
-from transformation.patsub.hc_expression import HCExpression
 from transformation.patsub.min_contour_filter import MinContourFilter
-from transformation.patsub.t_patsub import TPatSub
 
 
 class TestTHarmonicTranscription(unittest.TestCase):
@@ -35,7 +33,7 @@ class TestTHarmonicTranscription(unittest.TestCase):
         tag_map = {0: DiatonicPitch.parse('D:4')}
         results = t_sub.apply(target_hct, 'B:3', tag_map, t_sub.height + 5)
 
-        self.print_results(results, t_sub.source_line)
+        TestTHarmonicTranscription.print_results(results, t_sub.source_line)
 
     @staticmethod
     def build_hct(hc_expressed_list):
@@ -53,10 +51,10 @@ class TestTHarmonicTranscription(unittest.TestCase):
             new_hct.append(new_hc)
         return new_hct
 
-    def print_results(self, results, pattern_line):
-        filter = MinContourFilter(pattern_line, results.pitch_results)
-        scored_filtered_results = filter.scored_results
-
+    @staticmethod
+    def print_results(results, pattern_line):
+        min_filter = MinContourFilter(pattern_line, results.pitch_results)
+        scored_filtered_results = min_filter.scored_results
 
         print(len(results.pitch_results))
         for i in range(1, len(results.pitch_results) + 1):
@@ -67,7 +65,8 @@ class TestTHarmonicTranscription(unittest.TestCase):
             t = ''
             for j in range(0, len(pmap_notes)):
                 if j > 0:
-                    t = t + ' ' + self.comp(pmap_notes[j - 1].diatonic_pitch, pmap_notes[j].diatonic_pitch) + ' '
+                    t = t + ' ' + TestTHarmonicTranscription.comp(pmap_notes[j - 1].diatonic_pitch,
+                                                                  pmap_notes[j].diatonic_pitch) + ' '
                 t = t + str(pmap_notes[j].diatonic_pitch)
             print('[{0}]   {1}'.format(i, t))
 
@@ -78,11 +77,13 @@ class TestTHarmonicTranscription(unittest.TestCase):
             t = ''
             for j in range(0, len(notes)):
                 if j > 0:
-                    t = t + ' ' + self.comp(notes[j - 1].diatonic_pitch, notes[j].diatonic_pitch) + ' '
+                    t = t + ' ' + \
+                        TestTHarmonicTranscription.comp(notes[j - 1].diatonic_pitch, notes[j].diatonic_pitch) + ' '
                 t = t + str(notes[j].diatonic_pitch)
             print('[{0}]   {1}  score({2})'.format(i, t, scored_filtered_results[i - 1][1]))
 
-    def comp(self, p1, p2):
+    @staticmethod
+    def comp(p1, p2):
         p1_d = p1.chromatic_distance
         p2_d = p2.chromatic_distance
         if p1_d < p2_d:
