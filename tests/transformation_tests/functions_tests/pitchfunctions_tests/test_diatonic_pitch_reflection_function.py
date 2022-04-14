@@ -8,7 +8,8 @@ from tonalmodel.diatonic_tone_cache import DiatonicToneCache
 from tonalmodel.modality import ModalityType
 from tonalmodel.pitch_range import PitchRange
 from tonalmodel.tonality import Tonality
-from transformation.functions.pitchfunctions.diatonic_pitch_reflection_function import FlipType, DiatonicPitchReflectionFunction
+from transformation.functions.pitchfunctions.diatonic_pitch_reflection_function import FlipType, \
+    DiatonicPitchReflectionFunction
 
 
 class TestFlipOnTonality(unittest.TestCase):
@@ -24,7 +25,8 @@ class TestFlipOnTonality(unittest.TestCase):
         t_domain = Tonality.create(ModalityType.Major, DiatonicTone('E'))
         r = PitchRange.create('E:3', 'E:7')
 
-        f = DiatonicPitchReflectionFunction(t_domain, DiatonicPitch(4, DiatonicToneCache.get_tone('A')), r, FlipType.CenterTone)
+        f = DiatonicPitchReflectionFunction(t_domain,
+                                            DiatonicPitch(4, DiatonicToneCache.get_tone('A')), r, FlipType.CenterTone)
 
         print('f={0}'.format(f))
 
@@ -51,7 +53,8 @@ class TestFlipOnTonality(unittest.TestCase):
         t_domain = Tonality.create(ModalityType.HWOctatonic, DiatonicTone('C'))
         r = PitchRange.create('E:3', 'E:7')
 
-        f = DiatonicPitchReflectionFunction(t_domain, DiatonicPitch(4, DiatonicToneCache.get_tone('A')), r, FlipType.CenterTone)
+        f = DiatonicPitchReflectionFunction(t_domain,
+                                            DiatonicPitch(4, DiatonicToneCache.get_tone('A')), r, FlipType.CenterTone)
 
         TestFlipOnTonality.print_map('test_centered_even_function', f)
 

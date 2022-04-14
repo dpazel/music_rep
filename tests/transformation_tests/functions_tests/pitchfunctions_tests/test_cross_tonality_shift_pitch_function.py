@@ -218,13 +218,11 @@ class TestCrossTonalityShiftPitchFunction(unittest.TestCase):
         for key in keys:
             print('{0} --> {1}'.format(key, fctn[key]))
 
-
     @staticmethod
     def print_book_map(tag, f):
         print(tag)
         domain_tonality = f.domain_tonality
         range_tonality = f.range_tonality
-        tonal_function = f.tonal_function
 
         print('CrossTonalityShiftPitchFunction {0}--> {1}'.format(domain_tonality, range_tonality))
 
@@ -234,13 +232,16 @@ class TestCrossTonalityShiftPitchFunction(unittest.TestCase):
         last_pitch = None
         for t in domain_annotation:
             domain_pitch = DiatonicPitch(presentation_reg, t)
+            # augment register if crossing past C, e.g. B:4 > C:4
             if last_pitch is not None and last_pitch.chromatic_distance > domain_pitch.chromatic_distance:
                 presentation_reg = presentation_reg + 1
+                domain_pitch = DiatonicPitch(presentation_reg, t)
 
             for a in [-1, 0, 1]:
                 a_tone = DiatonicTone.alter_tone_by_augmentation(t, a)
-                domain_pitch = DiatonicPitch(presentation_reg, a_tone)
-                domain_presentation_pitches.append(domain_pitch)
+                domain_pitch_mod = DiatonicPitch(presentation_reg, a_tone)
+                domain_presentation_pitches.append(domain_pitch_mod)
+            last_pitch = domain_pitch
 
         for domain_pitch in domain_presentation_pitches:
             range_pitch = f[domain_pitch]
