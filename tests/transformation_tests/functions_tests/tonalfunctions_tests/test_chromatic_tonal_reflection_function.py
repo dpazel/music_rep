@@ -33,11 +33,12 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
         ]
 
         index = 0
-        for l in list('CDEFGAB'):
-            modal_tonality = Tonality.create(ModalityType.Major, DiatonicToneCache.get_tone(l), index)
-            f = ChromaticTonalReflectionFunction(modal_tonality, DiatonicToneCache.get_tone(l), FlipType.CenterTone)
+        for letter in list('CDEFGAB'):
+            modal_tonality = Tonality.create(ModalityType.Major, DiatonicToneCache.get_tone(letter), index)
+            f = ChromaticTonalReflectionFunction(modal_tonality, DiatonicToneCache.get_tone(letter),
+                                                 FlipType.CenterTone)
 
-            TestChromaticTonalReflectionFunction.print_map(modal_tonality, f, l)
+            TestChromaticTonalReflectionFunction.print_map(modal_tonality, f, letter)
             for tone, i in zip(modal_tonality.annotation[:-1], range(0, 6)):
                 assert f[tone] == DiatonicToneCache.get_tone(answers[index][i]), \
                     'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
@@ -60,10 +61,11 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
         ]
 
         index = 0
-        for l in list('CDEFGAB'):
-            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(l), FlipType.CenterTone)
+        for letter in list('CDEFGAB'):
+            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(letter),
+                                                 FlipType.CenterTone)
 
-            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, l)
+            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, letter)
             for tone, i in zip(domain_tonality.annotation[:-1], range(0, 6)):
                 assert f[tone] == DiatonicToneCache.get_tone(answers[index][i]), \
                     'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
@@ -84,11 +86,11 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
         ]
 
         index = 0
-        for l in list('CDEFGAB'):
-            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(l),
+        for letter in list('CDEFGAB'):
+            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(letter),
                                                  FlipType.LowerNeighborOfPair)
 
-            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, l)
+            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, letter)
             for tone, i in zip(domain_tonality.annotation[:-1], range(0, 6)):
                 assert f[tone] == DiatonicToneCache.get_tone(answers[index][i]), \
                     'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
@@ -111,11 +113,11 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
         ]
 
         index = 0
-        for l in list('CDEFGAB'):
-            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(l),
+        for letter in list('CDEFGAB'):
+            f = ChromaticTonalReflectionFunction(domain_tonality, DiatonicToneCache.get_tone(letter),
                                                  FlipType.UpperNeighborOfPair)
 
-            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, l)
+            TestChromaticTonalReflectionFunction.print_map(domain_tonality, f, letter)
             for tone, i in zip(domain_tonality.annotation[:-1], range(0, 6)):
                 assert f[tone] == DiatonicToneCache.get_tone(answers[index][i]), \
                     'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
@@ -206,7 +208,7 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
         for tone, i in zip(tones, range(0, 7)):
             assert f[tone] == DiatonicToneCache.get_tone(answers[i]), \
                'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
-                                           DiatonicToneCache.get_tone(answers[i]).diatonic_symbol)
+                                          DiatonicToneCache.get_tone(answers[i]).diatonic_symbol)
 
     def test_C_pentatonic(self):
         print('test_C_pentatonic: C-Pentatonic, variable cue')
@@ -224,7 +226,6 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
                 'f[{0}]={1} != {2}'.format(tone.diatonic_symbol, f[tone].diatonic_symbol,
                                            DiatonicToneCache.get_tone(answers[i]).diatonic_symbol)
 
-
     @staticmethod
     def print_map(tonality, f, cue):
         map_list = list()
@@ -232,4 +233,3 @@ class TestChromaticTonalReflectionFunction(unittest.TestCase):
             ft = f.tonal_map[tone]
             map_list.append('{0}-->{1}'.format(tone.diatonic_symbol, ft.diatonic_symbol))
         print('[{0}] ({1})  {2}'.format(cue, f.range_tonality, ', '.join([s for s in map_list])))
-

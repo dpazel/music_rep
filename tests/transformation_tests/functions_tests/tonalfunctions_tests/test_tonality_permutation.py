@@ -44,4 +44,3 @@ class TestTonalityPermutation(unittest.TestCase):
         assert DiatonicToneCache.get_tone('B') == p['B']
         assert DiatonicToneCache.get_tone('C#') == p['C#']
         assert DiatonicToneCache.get_tone('D#') == p['D#']
-

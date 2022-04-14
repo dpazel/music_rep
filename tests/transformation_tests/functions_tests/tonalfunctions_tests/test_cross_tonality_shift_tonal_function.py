@@ -112,6 +112,7 @@ class TestCrossTonalityShiftTonalFunction(unittest.TestCase):
         assert 'G' == f['B'].diatonic_symbol
         assert 'D' == f['F'].diatonic_symbol
 
+    @staticmethod
     def print_function(f):
         domain_tonality = f.domain_tonality
         tones = domain_tonality.annotation[:len(domain_tonality.annotation) - 1]
@@ -120,14 +121,13 @@ class TestCrossTonalityShiftTonalFunction(unittest.TestCase):
             print('{0} --> {1}'.format(t.diatonic_symbol, f[t].diatonic_symbol))
 
         print('------------------------')
-        #print for domain tone letters not int the domain tonality
-
-        for l in 'ABCDEFG':
+        # print for domain tone letters not in the domain tonality
+        for letter in 'ABCDEFG':
             found = False
             for t in tones:
-                if t.diatonic_letter == l:
+                if t.diatonic_letter == letter:
                     found = True
                     break
             if not found:
-                ltr_tone = DiatonicFoundation.get_tone(l)
+                ltr_tone = DiatonicFoundation.get_tone(letter)
                 print('{0} --> {1}'.format(ltr_tone.diatonic_symbol, f[ltr_tone].diatonic_symbol))

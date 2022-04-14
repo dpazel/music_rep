@@ -139,8 +139,6 @@ class TestTonalFunction(unittest.TestCase):
         assert DiatonicToneCache.get_tone('C#') == pf['F']
         assert DiatonicToneCache.get_tone('D#') == pf['G']
 
-
-
     def test_adapted_function(self):
         t_domain = Tonality.create(ModalityType.Major, DiatonicTone('F'))
         t_range = Tonality.create(ModalityType.MelodicMinor, DiatonicTone('G'))
@@ -171,6 +169,7 @@ class TestTonalFunction(unittest.TestCase):
         assert 'D##' == str(pf['B'].diatonic_symbol)
         assert 'Bb' == str(pf['D'].diatonic_symbol)  # D is aug 4th in Ab; Bb is dim 5th in e minor
 
+    @staticmethod
     def print_function(f):
         domain_tonality = f.domain_tonality
         tones = domain_tonality.annotation[:len(domain_tonality.annotation) - 1]
