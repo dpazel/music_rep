@@ -256,10 +256,6 @@ class TestTReshape(unittest.TestCase):
         ]
         chords = [('tI', 1), ('tIV', 1), ('tV', 1), ('tVI', 1)]
 
-        line_str = '{<Bb-Major: I> iE:4 E E E E E E E <:IV> E E E E E E E E <:V> <:I>}'
-        lge = LineGrammarExecutor()
-        target_line, target_hct = lge.parse(line_str)
-
         score = TestTReshape.create_score(s_notes, ModalityType.Major, 'Bb', chords, 'violin', (4, 4, 'swww'))
         all_notes = score.line.get_all_notes()
 
