@@ -38,8 +38,6 @@ class TestTRetrograde(unittest.TestCase):
         print('--- With harmonic reversal ---')
         reversed_line, hct = trans.apply()
 
-        #print(str(lite_score.line))
-        #print(str(lite_score.hct))
         print(str(reversed_line))
         print(str(hct))
 
@@ -62,8 +60,6 @@ class TestTRetrograde(unittest.TestCase):
         print('--- No harmonic reversal - original harmony ---')
         reversed_line, hct = trans.apply(False)
 
-        #print(str(lite_score.line))
-        #print(str(lite_score.hct))
         print(str(reversed_line))
         print(str(hct))
 
@@ -75,7 +71,7 @@ class TestTRetrograde(unittest.TestCase):
         assert hct_list[1].is_equal(score_hct_list[1])
         assert hct_list[2].is_equal(score_hct_list[2])
 
-    def atest_sub_line_reversal(self):
+    def test_sub_line_reversal(self):
         print('----- test sub line reversal -----')
 
         source_instance_expression = '{<C-Major:I> qC:4 D E F <:v> [iD:5 B:4 A G] qC:5 D <:IV> A:4 iF E hC}'
