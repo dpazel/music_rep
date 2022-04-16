@@ -68,7 +68,7 @@ class TestTStepShift(unittest.TestCase):
         assert len(hclist) == 1
         assert str(hclist[0].tonality) == 'C-MelodicMinor'
         assert hclist[0].chord.chord_template.secondary_scale_degree == 5
-        assert str(hclist[0].chord.secondary_tonality) =='G-MelodicMinor'
+        assert str(hclist[0].chord.secondary_tonality) == 'G-MelodicMinor'
         assert hclist[0].chord.primary_chord.chord_template.scale_degree == 6
         assert str(hclist[0].chord.chord_type) == 'Dom7'
 
@@ -97,7 +97,6 @@ class TestTStepShift(unittest.TestCase):
 
         print_line(new_line)
         print_hct(new_hct)
-
 
     def test_multiple_hcs(self):
         print('----- test multiple hcs -----')
@@ -129,7 +128,7 @@ class TestTStepShift(unittest.TestCase):
         assert notes[12].diatonic_pitch == DiatonicPitch.parse('C#:4')
 
         hc_list = new_hct.hc_list()
-        assert str(hc_list[0].chord) =='TIMaj [G, B, D]'
+        assert str(hc_list[0].chord) == 'TIMaj [G, B, D]'
         assert str(hc_list[1].chord) == 'TIIIMin [B, D, F#]'
         assert str(hc_list[2].chord) == 'TVIIDim [C#, E, G]'
 
@@ -153,6 +152,7 @@ def print_line(line):
     for i in range(0, len(notes)):
         note = notes[i]
         print('[{0}]  {1}({2})'.format(i, note.diatonic_pitch, note.duration))
+
 
 def print_hct(hct):
     hcs = hct.hc_list()
