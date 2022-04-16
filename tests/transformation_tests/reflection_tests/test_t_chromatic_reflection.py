@@ -135,7 +135,6 @@ class TestTChromaticFlip(unittest.TestCase):
 
         tflip = TChromaticReflection(line, hc_track, cue)
 
-        temporal_extent = Interval(Fraction(0), Fraction(4))
         score_line, score_hct = tflip.apply()
         TestTChromaticFlip.print_notes(score_line)
         TestTChromaticFlip.print_hct(score_hct)
@@ -156,7 +155,7 @@ class TestTChromaticFlip(unittest.TestCase):
         print("--------")
 
     @staticmethod
-    def print_map(f, source_hct, cue):
+    def print_map(f, source_hct):
         for hc in source_hct.hc_list():
             if hc in f.hc_flip_map:
                 pitch_map = f.hc_flip_map[hc]
@@ -176,9 +175,9 @@ class TestTChromaticFlip(unittest.TestCase):
                 domain_tones = pitch_map.domain_tonality.annotation[:-1]
                 map_list = list()
                 for p in domain:
-                     r = pitch_map[p]
-                     if p.diatonic_tone in domain_tones:
-                          map_list.append('{0} --> {1}'.format(p, r))
+                    r = pitch_map[p]
+                    if p.diatonic_tone in domain_tones:
+                        map_list.append('{0} --> {1}'.format(p, r))
 
                 print('[{0}] ({1}) {2}:  {3}'.format(pitch_map.domain_tonality,
                                                      pitch_map.cue_pitch,

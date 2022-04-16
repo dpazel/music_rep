@@ -96,21 +96,10 @@ class TestTFlip(unittest.TestCase):
         hc_track.append(HarmonicContext(diatonic_tonality, chord_vi, Duration(1)))
         TestTFlip.print_hct(hc_track)
 
-        cnote0 = Note(DiatonicPitch(5, 'a'), Duration(1, 2))
-        cnote1 = Note(DiatonicPitch(5, 'b'), Duration(1, 2))
-        cnote2 = Note(DiatonicPitch(5, 'c#'), Duration(1, 2))
-        cnote3 = Note(DiatonicPitch(5, 'd'), Duration(1, 4))
-        cnote4 = Note(DiatonicPitch(5, 'e'), Duration(1, 4))
-        cnote5 = Note(DiatonicPitch(5, 'f#'), Duration(1, 2))
-        cnote6 = Note(DiatonicPitch(5, 'g'), Duration(1, 4))
-        cnote7 = Note(DiatonicPitch(5, 'a'), Duration(1, 4))
-
         line_str = '{<D-Major: I> hA:5 <:IV> B  C# <:V> qD E <:VI> hF# qG A}'
         lge = LineGrammarExecutor()
         target_line, target_hct = lge.parse(line_str)
         TestTFlip.print_hct(target_hct)
-
-        line = Line([cnote0, cnote1, cnote2, cnote3, cnote4, cnote5, cnote6, cnote7])
 
         cue = DiatonicPitch(5, 'f#')
 
