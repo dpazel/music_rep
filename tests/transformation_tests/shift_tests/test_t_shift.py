@@ -9,9 +9,7 @@ from tonalmodel.modality import ModalityType
 from tonalmodel.diatonic_tone import DiatonicTone
 from tonalmodel.diatonic_pitch import DiatonicPitch
 from structure.note import Note
-from structure.lite_score import LiteScore
 from structure.line import Line
-from tonalmodel.pitch_range import PitchRange
 from misc.interval import Interval
 from timemodel.duration import Duration
 from harmonicmodel.tertian_chord_template import TertianChordType
