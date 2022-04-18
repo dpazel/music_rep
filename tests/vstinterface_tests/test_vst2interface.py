@@ -1,7 +1,7 @@
 import sys
 
 from timemodel.tempo_function_event import TempoFunctionEvent
-from vstinterface.vst_interface import vst_interface_launch, VstAppUserInterface
+from vstinterface.vst_interface import VstAppUserInterface
 
 from harmoniccontext.harmonic_context import HarmonicContext
 from harmoniccontext.harmonic_context_track import HarmonicContextTrack
@@ -31,7 +31,7 @@ from midi.score_to_vst_midi_converter import ScoreToVstMidiConverter
 from timemodel.time_conversion import TimeConversion
 
 VST2_LIB0 = '/Library/Audio/Plug-Ins/VST/Aria Player VST Multi.vst'
-VST2_LIB =  '/Library/Audio/Plug-Ins/VST/Aria Player VST.vst'
+VST2_LIB = '/Library/Audio/Plug-Ins/VST/Aria Player VST.vst'
 VST2_LIB2 = '/Library/Audio/Plug-Ins/VST/Play.vst'
 
 VST2_SAVE_PRESET_FILENAME = '/Users/xxxx/Temp/VST2_PRESET.PRESET'
@@ -44,7 +44,6 @@ def build_vst_midi_list():
     :return:
     """
     c = InstrumentCatalog.instance()
-    violin = c.get_instrument("violin")
 
     # Add notes to the score
     vnote0 = Note(DiatonicPitch(4, 'a'), Duration(1, 8))

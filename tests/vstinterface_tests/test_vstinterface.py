@@ -1,7 +1,5 @@
-import sys
-
 from timemodel.tempo_function_event import TempoFunctionEvent
-from vstinterface.vst_interface import vst_interface_launch, VstAppUserInterface
+from vstinterface.vst_interface import VstAppUserInterface
 
 from harmoniccontext.harmonic_context import HarmonicContext
 from harmoniccontext.harmonic_context_track import HarmonicContextTrack
@@ -34,13 +32,13 @@ VST3_LIB = '/Library/Application Support/Steinberg/Components/HALion Sonic SE.vs
 VST3_SAVE_PRESET_FILENAME = '/Users/xxxx/Temp/VST3_PRESET.PRESET'
 VST3_LOAD_PRESET_FILENAME = '/Users/xxxx/Temp/VST3_PRESET.PRESET'
 
+
 def build_vst_midi_list():
     """
 
     :return: 
     """
     c = InstrumentCatalog.instance()
-    violin = c.get_instrument("violin")
 
     # Add notes to the score
     vnote0 = Note(DiatonicPitch(4, 'a'), Duration(1, 8))

@@ -16,6 +16,7 @@ import os
 
 LIBRARY = 'lib/libvst23host'
 
+
 class PyEvent(Structure):
     _fields_ = [('msg_type', c_int32),
                 ('channel', c_int32),
@@ -24,6 +25,7 @@ class PyEvent(Structure):
                 ('rel_frame_time', c_int32),
                 ('abs_frame_time', c_int32)
                ]
+
 
 CHUNK = 1024
 SAMPLE_RATE = 44100  # samples per second
