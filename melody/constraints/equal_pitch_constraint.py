@@ -43,8 +43,8 @@ class EqualPitchConstraint(AbstractConstraint):
 
         # We compare diatonic distances, as the notes may be enharmonic due to differing tonalities.
         for i in range(0, len(equal_notes) - 1):
-            if p_map[equal_notes[i]].note.diatonic_pitch.diatonic_distance != \
-                    p_map[equal_notes[i + 1]].note.diatonic_pitch.diatonic_distance:
+            if p_map[equal_notes[i]].note.diatonic_pitch.diatonic_distance() != \
+                    p_map[equal_notes[i + 1]].note.diatonic_pitch.diatonic_distance():
                 return False
         return True
 

@@ -83,7 +83,7 @@ class NotEqualPitchConstraint(AbstractConstraint):
         for i in range(0, len(note_list)):
             for j in range(0, len(note_list)):
                 if i != j:
-                    if note_list[i].diatonic_pitch.diatonic_distance == \
-                            note_list[j].diatonic_pitch.diatonic_distance:
+                    if note_list[i].diatonic_pitch.diatonic_distance() == \
+                            note_list[j].diatonic_pitch.diatonic_distance():
                         return False, note_list[i]
         return True, None
